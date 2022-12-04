@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-var uniqueValidator = require('mongoose-unique-validator'); //for errors
+const uniqueValidator = require('mongoose-unique-validator'); //for errors
 
 const FileSchema = new mongoose.Schema({
 	name: {

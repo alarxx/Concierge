@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose');
 
-var uniqueValidator = require('mongoose-unique-validator'); //for errors
+const uniqueValidator = require('mongoose-unique-validator'); //for errors
 
 const PostSchema = new Schema({
   title: {
@@ -18,6 +18,10 @@ const PostSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
+  },
+  createdDate: {
+    type: Date,
+    default: new Date()
   }
 });
 

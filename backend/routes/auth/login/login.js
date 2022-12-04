@@ -10,7 +10,8 @@ Router.get('/', (req, res)=>{
 });
 
 Router.post('/', passport.authenticate('local', {failureMessage: true}), (req, res)=>{
-    res.json({
+    console.log(req.user);
+	res.json({
 			message:'success',
 			name: req.user.name,
 			email: req.user.email,

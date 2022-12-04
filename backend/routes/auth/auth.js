@@ -2,6 +2,9 @@ const express = require('express');
 const Router = express.Router();
 
 Router.get('/', (req, res)=>{
+	if(req.isAuthenticated())
+		return res.json(req.user);
+
 	res.redirect(303, '/auth/login');
 });
 

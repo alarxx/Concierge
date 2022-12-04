@@ -1,14 +1,13 @@
 import React, {useEffect} from 'react';
+import Login from "./pages/auth/Login";
+import CreatePost from "./pages/post/CreatePost";
 
 function App(props){
-	useEffect(()=>{
-		(async ()=>{
-			const response = await fetch('/api');
-			const data = await response.json();
-			console.log(data);
-		})();
-	})
-	return <h1>Concierge Service</h1>;
+	return (
+		<>
+			<CreatePost />
+		</>
+	);
 }
 
 export default App;
