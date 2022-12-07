@@ -7,7 +7,7 @@ const express = require('express');
 
 const app = express();
 
-if(app.get('env') === 'development')
+// if(app.get('env') === 'development')
 	app.use(require('cors')());
 
 app.use(express.static(__dirname + '/public'));
@@ -48,7 +48,12 @@ app.use(passport.session());
 const LocalStrategy = require('./auth/passport');
 LocalStrategy();
 
-app.use('/', require('./routes/root'));
+app.use('/api', (req, res)=>{
+	console.log('concierge')
+	res.json({data: "concierge"});
+});
+
+// app.use('/', require('./routes/root'));
 
 const port = process.env.PORT || 3000;
 app.listen(port, ()=>console.log(`server is listening on port ${port}`));

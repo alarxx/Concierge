@@ -1,9 +1,10 @@
 import React from 'react';
 
-export default function CreatePost(props){
+export default function CreatePost({alar}){
     return (
         <>
             <h1>Create Post Page</h1>
+            <h1>{alar}</h1>
             <form action="/api/post" method="POST" encType="multipart/form-data">
                 <div>
                     <label htmlFor="InputOrder">Order</label>
