@@ -52,12 +52,8 @@ app.use(passport.session());
 const LocalStrategy = require('./auth/passport');
 LocalStrategy();
 
-app.use('/api', (req, res)=>{
-	console.log('concierge')
-	res.json({data: "concierge"});
-});
-
 app.use('/', require('./routes/root'));
+
 if(app.get('env') === 'production') {
 	app.use((req, res) => {
 		res.sendFile(require('path').resolve(__dirname, 'view/index.html'));
