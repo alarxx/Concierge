@@ -4,7 +4,7 @@ export default function Register(props){
     return (
         <>
             <h1>Register Page</h1>
-            <form action="/auth/register" method="POST">
+            <form action="/auth/Register" method="POST">
                 <div>
                     <label htmlFor="InputName">Name</label>
                     <input type="text" id="InputName" name="name"/>
@@ -24,7 +24,7 @@ export default function Register(props){
                 <button type="submit" className="btn btn-primary">Submit</button>
 
                 <br/>
-                <button><a href="/auth/login">Sign in</a></button>
+                <button><a href="/auth/Login">Sign in</a></button>
 
             </form>
 

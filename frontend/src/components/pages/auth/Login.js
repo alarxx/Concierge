@@ -4,7 +4,7 @@ export default function Login(props){
     return (
         <>
             <h1>Login Page</h1>
-            <form action="/auth/login" method="POST">
+            <form action="/auth/Login" method="POST">
                 <div>
                     <label htmlFor="InputEmail">Email</label>
                     <input type="text" id="InputEmail" name="email" />
@@ -19,7 +19,7 @@ export default function Login(props){
                 <button type="submit" className="btn btn-primary">Submit</button>
 
                 <br/>
-                <button><a href="/auth/register">Sign up</a></button>
+                <button><a href="/auth/Register">Sign up</a></button>
             </form>
         </>
     );
