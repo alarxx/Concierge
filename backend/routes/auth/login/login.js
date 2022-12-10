@@ -6,7 +6,7 @@ const Router = express.Router();
 
 
 Router.get('/', (req, res)=>{
-	res.sendFile(require.main.path + '/views/auth/login.html');
+	res.sendFile(require.main.path + '/view/auth/login.html');
 });
 
 Router.post('/', passport.authenticate('local', {failureMessage: true}), (req, res)=>{

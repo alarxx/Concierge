@@ -7,7 +7,7 @@ const express = require('express');
 
 const app = express();
 
-// if(app.get('env') === 'development')
+if(app.get('env') === 'development')
 	app.use(require('cors')());
 
 app.use(express.static(__dirname + '/public'));
@@ -58,6 +58,11 @@ app.use('/api', (req, res)=>{
 });
 
 app.use('/', require('./routes/root'));
+if(app.get('env') === 'production') {
+	app.use((req, res) => {
+		res.sendFile(require('path').resolve(__dirname, 'view/index.html'));
+	});
+}
 
 const port = process.env.PORT || 3000;
 app.listen(port, ()=>console.log(`server is listening on port ${port}`));

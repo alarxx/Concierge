@@ -6,7 +6,7 @@ const Router = express.Router();
 const PostModel = require(rootDir + '/models/Post');
 
 Router.get('/', (req, res)=>{
-	res.sendFile(rootDir + '/views/post/create_post.html');
+	res.sendFile(rootDir + '/view/post/create_post.html');
 });
 
 Router.post('/', async (req, res)=>{

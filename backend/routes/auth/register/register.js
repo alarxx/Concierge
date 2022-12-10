@@ -6,7 +6,7 @@ const register = require(require.main.path + '/auth/register');
 const Router = express.Router();
 
 Router.get('/', (req, res)=>{
-	res.sendFile(require.main.path + '/views/auth/register.html');
+	res.sendFile(require.main.path + '/view/auth/register.html');
 });
 
 Router.post('/', register('local'));
