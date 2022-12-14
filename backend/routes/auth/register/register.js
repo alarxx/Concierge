@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 
-const register = require(require.main.path + '/auth/register');
+const register = require.main.require('./auth/register');
 
 const Router = express.Router();
 
