@@ -19,7 +19,7 @@ const PostSchema = new Schema({
         required: true,
     },
     files: [{type: Schema.Types.ObjectId, ref: 'File'}],
-    accessHoldersIds: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    accessHolders: [{type: Schema.Types.ObjectId, ref: 'User'}],
     createdDate: {
         type: Date,
         immutable: true,
@@ -52,7 +52,7 @@ PostSchema.methods.setFields = async function(data){
 }
 
 /**
- * Метод создает, сохраняет локально файл и добавляет его id пост
+ * Метод создает, сохраняет локально файл и добавляет его id в файлы пост
  * */
 PostSchema.methods.addFile = async function(multifile, userId){
     // Метод полностью опирается на FileModel.createAndMove

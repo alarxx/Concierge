@@ -1,8 +1,8 @@
 const {Schema, model} = require('mongoose');
 
-const Price = require('./Price');
-const User = require('../User');
-const File = require('../binaries/File');
+const PriceModel = require('./Price');
+const UserModel = require('../User');
+const FileModel = require("../binaries/File");
 
 const BillSchema = new Schema({
 	customer: {
@@ -23,6 +23,22 @@ const BillSchema = new Schema({
 		ref: 'File',
 	},
 });
+
+/**
+ * Метод создает, сохраняет локально файл и добавляет его id в файлы пост
+ * */
+BillSchema.methods.addFile = async function(multifile, userId){
+	// Метод полностью опирается на FileModel.createAndMove
+	const res = await FileModel.createAndMove(multifile, userId);
+
+	if(!this.files)
+		this.files = [];
+
+	if(res.status === 'success')
+		this.files.push(res.doc.id);
+
+	return res;
+}
 
 BillSchema.plugin(require('mongoose-unique-validator'));
 

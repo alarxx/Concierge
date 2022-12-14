@@ -1,5 +1,7 @@
 const {Schema, model} = require('mongoose');
 
+const Company = require('./Company');
+
 const UserSchema = new Schema({
 	name: {
 		type: String,
@@ -16,7 +18,15 @@ const UserSchema = new Schema({
 		type: String,
 		required: true,
 	},
-
+	company: {
+		type: Schema.Types.ObjectId,
+		ref: 'Company'
+	},
+	entity: {
+		type: String,
+		enum: ['individual', 'juridical'], // Может ли он делать какие то действия от лица компании или только пользоваться
+		default: 'individual'
+	},
 	roles: {
 		type: String,
 		enum: ['client', 'manager', 'moderator', 'admin'],

@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose');
 
-const Company = require('../Company');
+const Company = require('../../Company');
 
 const HotelSchema = new Schema({
     company: {
