@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose');
 
-const UserSchema = new Schema({
+const PriceSchema = new Schema({
 	price: {
 		type: Number, // or String?
 		required: true,
@@ -9,10 +9,15 @@ const UserSchema = new Schema({
 		type: Number,
 		min: 0,
 		max: 100,
-		required: true,
+		default: 0
+	},
+	currency: {
+		enum: ['usd', 'kzt'],
+		type: String,
+		default: 'kzt'
 	}
 });
 
-UserSchema.plugin(require('mongoose-unique-validator'));
+PriceSchema.plugin(require('mongoose-unique-validator'));
 
-module.exports = model('User', UserSchema);
+module.exports = model('Price', PriceSchema);

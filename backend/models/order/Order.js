@@ -1,14 +1,9 @@
-/**
- * Набор предложений от Concierge
- * */
-
 const {Schema, model} = require('mongoose');
 
 const User = require('../User');
-const Order = require('../order/Order_Block');
-const Service = require('../services/Service');
-const Order_Block = require('./Order_Block');
 const Order_Meta = require('./Order_Meta');
+const Booking = require('../services/Booking');
+const Bill = require('../payment/Bill');
 
 const OrderSchema = new Schema({
     customer: {
@@ -17,13 +12,21 @@ const OrderSchema = new Schema({
         immutable: true,
         required: true
     },
-    meta:{
+    meta: {
         type: Schema.Types.ObjectId,
-        ref: 'Order_Meta'
+        ref: 'Order_Meta',
+        immutable: true,
+        required: true
     },
-    block: {
+    bookings: [{
         type: Schema.Types.ObjectId,
-        ref: 'Order_Block'
+        ref: 'Booking',
+        immutable: true,
+        required: true
+    }],
+    bill: { // Счет от Concierge, который оплачивает клиент
+        type: Schema.Types.ObjectId,
+        ref: 'Bill'
     },
 });
 

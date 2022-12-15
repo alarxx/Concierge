@@ -1,48 +1,34 @@
-const rootDir = require.main.path;
+const absPath = path => require('path').join(require.main.path, path);
+
 const express = require('express');
-const fs = require('fs');
+
 const Router = express.Router();
 
-const PostModel = require(rootDir + '/models/Post');
+const PostModel = require(absPath('models/Post'));
 
-Router.get('/', (req, res)=>{
-	res.sendFile(rootDir + '/view/post/create_post.html');
-});
-
-Router.post('/', async (req, res)=>{
-	const photo = req.files.photo;
-
-	const savedPhotoDir = `${rootDir}/data/files/${req.body.order}`;
-	fs.mkdir(savedPhotoDir, (err)=>{});
-
-	const photosPath = `${savedPhotoDir}/${photo.name}`;
-
-	await photo.mv(photosPath, async (err) => {
-		console.log(err, photosPath);
-	});
-
-	const newModel = new PostModel({
-		title: req.body.title,
-		body: req.body.body,
-		image: `/data/files/${req.body.order}/${photo.name}`,
-		user_id: req.user.id
-	});
-
+Router.get('/create', (req, res)=>{
 	try{
-		const created = await newModel.save();
-		res.json({status: 'success', post: created});
-  	}
-  	catch(err){
-		const errors = Object.keys(err.errors).map(key => err.errors[key].message);
-		res.json({status: 'fail', message: errors});
-  	}
+		res.sendFile(absPath('views/post/CreatePost.html'));
+	}catch (e){
+		res.send(e.message);
+	}
 });
 
-Router.put('/', (req, res)=>{
+Router.get('/:id', async (req, res)=>{
+	const doc = await PostModel
+		.where('_id').equals(req.params.id)
+		.where('user_id').equals(req.user.id);
 
-});
-Router.delete('/', (req, res)=>{
+	if(!doc.length)
+		res.status(404).json({message: 'not found'});
 
+	res.json(doc[0]);
 });
+
+const {c, r, u, d} = require.main.require('./controllers/api/post/post');
+Router.post('/', c);
+Router.get('/', r);
+Router.put('/', u);
+Router.delete('/', d);
 
 module.exports = Router;

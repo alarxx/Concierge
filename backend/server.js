@@ -54,11 +54,5 @@ LocalStrategy();
 
 app.use('/', require('./routes/root'));
 
-if(app.get('env') === 'production') {
-	app.use((req, res) => {
-		res.sendFile(require('path').resolve(__dirname, 'view/index.html'));
-	});
-}
-
 const port = process.env.PORT || 3000;
 app.listen(port, ()=>console.log(`server is listening on port ${port}`));

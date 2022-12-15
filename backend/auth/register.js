@@ -16,11 +16,11 @@ async function local(userData){
 
   try{
     const created = await UserModel.create(newUser);
-    return {status: 'success', user: created};
+    return {status: 'success', doc: created, message: 'User created'};
   }
   catch(err){
     const errors = Object.keys(err.errors).map(key => err.errors[key].message);
-    return {status: 'fail', message: errors};
+    return {status: 'fail', doc: null, message: errors};
   }
 }
 

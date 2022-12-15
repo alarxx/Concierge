@@ -8,7 +8,7 @@
 const mongoose = require('mongoose');
 const {Schema} = require('mongoose');
 
-const User = require.main.require('./User'); // ref на User
+const User = require('../User'); // ref на User
 const localFile = require('./localFile');
 
 const FileSchema = new Schema({

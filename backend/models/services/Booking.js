@@ -1,29 +1,32 @@
+/**
+ * Обертка над всеми booking-ами услуг.
+ * Используется при заказе
+ * */
+
 const {Schema, model} = require('mongoose');
 
-const User = require('../User');
-const Service = require('./Service');
-const Bill = require('../payment/Bill');
-const File = require('../binaries/File');
+// const Hotel_Class = require('');
+// const Flight_Class = require('');
 
 const BookingSchema = new Schema({
-    customer: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+    field: {
+        type: String,
+        enum: ['hotel_booking', 'flight_booking', 'informal_booking'],
         immutable: true,
         required: true
     },
-    service: {
+    hotel_booking: {
         type: Schema.Types.ObjectId,
-        ref: 'Service'
+        ref: 'Hotel_Booking'
     },
-    bill: { // Счет выставленный нам и оплачиваемый Concierge
+    flight_booking: {
         type: Schema.Types.ObjectId,
-        ref: 'Bill'
+        ref: 'Flight_Booking'
     },
-    file: {
+    informal_booking: {
         type: Schema.Types.ObjectId,
-        ref: 'File'
-    },
+        ref: 'Informal_Booking'
+    }
 });
 
 BookingSchema.plugin(require('mongoose-unique-validator'));

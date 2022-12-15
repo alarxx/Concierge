@@ -5,6 +5,11 @@ const CompanySchema = new Schema({
         type: String,
         required: true,
     },
+    description: String,
+    images: [{
+        type: Schema.Types.ObjectId,
+        ref: 'File'
+    }],
 });
 
 CompanySchema.plugin(require('mongoose-unique-validator'));

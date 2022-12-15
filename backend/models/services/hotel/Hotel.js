@@ -19,7 +19,11 @@ const HotelSchema = new Schema({
         type: Number,
         min: 1,
         max: 5,
-    }
+    },
+    images: [{
+        type: Schema.Types.ObjectId,
+        ref: 'File'
+    }],
 });
 
 HotelSchema.plugin(require('mongoose-unique-validator'));
