@@ -7,7 +7,8 @@ const File = require('../../binaries/File');
 const ClassSchema = new Schema({
     hotel: {
         type: Schema.Types.ObjectId,
-        ref: 'Hotel'
+        ref: 'Hotel',
+        required: true,
     },
     class: {
         type: String,
@@ -27,5 +28,30 @@ const ClassSchema = new Schema({
 });
 
 ClassSchema.plugin(require('mongoose-unique-validator'));
+
+
+ClassSchema.methods.setFields = function(data){
+    if(data) {
+        if (data.hotel) this.hotel = data.hotel;
+        if (data.class) this.class = data.class;
+        if (data.price) this.price = data.price;
+        if (data.description) this.description = data.description;
+        if (data.isActive) this.isActive = data.isActive;
+        // if(data.images) this.images = data.images; // опасно
+    }
+    return this;
+}
+
+
+ClassSchema.methods.deepDelete = async function(){
+    await this.populate('price').delete();
+
+    await Promise.all(this.images.map(async id => await File.deleteAndRemoveById(id)));
+
+    await this.deepDelete();
+
+    return this;
+}
+
 
 module.exports = model('Hotel_Class', ClassSchema);

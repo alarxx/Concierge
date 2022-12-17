@@ -2,16 +2,7 @@ const express = require('express');
 
 const Router = express.Router();
 
-/*Router.get('/create', (req, res)=>{
-    try{
-        res.sendFile(absPath('views/order/CreateOrder.html'));
-    }catch (e){
-        res.send(e.message);
-    }
-});*/
-
 Router.use('/meta', require('./meta/meta'));
-Router.use('/block', require('./block/block'));
 
 const controller = require.main.require('./controllers/api/order/order');
 
