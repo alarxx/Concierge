@@ -15,10 +15,21 @@ const ClassSchema = new Schema({
         required: true,
     },
     price: {
-        type: Schema.Types.ObjectId,
-        ref: 'Price'
+        type: Number, // or String?
+        required: true,
+    },
+    discount: {
+        type: Number,
+        min: 0,
+        max: 100,
+        default: 0
     },
     description: String,
+
+    logo: {
+        type: Schema.Types.ObjectId,
+        ref: 'File'
+    },
     images: [{ //?
         type: Schema.Types.ObjectId,
         ref: 'File'
@@ -44,11 +55,11 @@ ClassSchema.methods.setFields = function(data){
 
 
 ClassSchema.methods.deepDelete = async function(){
-    await this.populate('price').delete();
+    // const await this.populate('price').delete();
 
     await Promise.all(this.images.map(async id => await File.deleteAndRemoveById(id)));
 
-    await this.deepDelete();
+    await this.delete();
 
     return this;
 }

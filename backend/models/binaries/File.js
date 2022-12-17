@@ -41,27 +41,27 @@ FileSchema.plugin(require('mongoose-unique-validator'));
  * function arguments: express-fileupload file and owner user id
  * returns {status, created_doc, message}
  * */
-FileSchema.statics.createAndMove = async function(multifile, userId){
-    if(!userId)
-        return {status: 'fail', message: 'createAndMove did not get userId'}
+FileSchema.statics.createAndMove = async function(multifile, user){
+    if(!user)
+        return {status: 'fail', doc: null, message: 'createAndMove did not get userId'}
 
     // local storage
     const path = await localFile.moveFile(multifile)
     if(!path)
-        return {status: 'fail', message: 'Can not move file'};
+        return {status: 'fail', doc: null, message: 'Can not move file'};
 
     // mongo
     try{
         const created = await new this({
             path: path,
-            owner: userId,
+            owner: user,
             mimetype: multifile.mimetype,
         }).save();
-        return {status: 'success', doc: created};
+        return {status: 'success', doc: created, message: null};
     }
     catch(err){
         const errors = Object.keys(err.errors).map(key => err.errors[key].message);
-        return {status: 'fail', message: errors};
+        return {status: 'fail', doc: null, message: errors};
     }
 }
 
@@ -72,9 +72,9 @@ FileSchema.statics.createAndMove = async function(multifile, userId){
 FileSchema.statics.deleteAndRemoveById = async function(id){
     const file = await this.findById(id);
     if(!file)
-        return {status: 'fail', message: `Not found file with id ${id}`}
+        return ({status: 'fail', doc: null, message: `Not found file with id ${id}`});
 
-    return file.deleteAndRemove();
+    return await file.deleteAndRemove();
 }
 
 /**
@@ -87,15 +87,15 @@ FileSchema.methods.deleteAndRemove = async function(){
     // local storage
     const isRemoved = await localFile.removeFile(this.path)
     if(!isRemoved)
-        return {status: 'fail', message: `Can not remove file on path ${this.path}`};
+        return {status: 'fail', doc: null, message: `Can not remove file on path ${this.path}`};
 
     // mongo
     try{
         await this.delete();
-        return {status: 'success', doc: this};
+        return {status: 'success', doc: this, message: null};
     }
     catch(err){
-        return {status: 'fail', message: `Can not remove file from mongo ${this.id}}`};
+        return {status: 'fail', doc: null, message: `Can not remove file from mongo ${this.id}}`};
     }
 }
 

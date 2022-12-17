@@ -31,17 +31,4 @@ const BookingSchema = new Schema({
 
 BookingSchema.plugin(require('mongoose-unique-validator'));
 
-BookingSchema.method.wrapper = async function(){
-    //return Booking or Booking_id idk
-    const booking = await new BookingModel.findOne({informal_booking: this.id});
-
-    if(!booking)
-        return await new BookingModel({
-            type: 'informal_booking',
-            informal_booking: this.id
-        }).save();
-
-    return booking;
-}
-
 module.exports = model('Informal_Booking', BookingSchema);

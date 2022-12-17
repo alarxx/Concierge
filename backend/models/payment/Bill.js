@@ -10,9 +10,14 @@ const BillSchema = new Schema({
 		ref: 'User'
 	},
 	price: {
-		type: Schema.Types.ObjectId,
-		ref: 'Price',
+		type: Number, // or String?
 		required: true,
+	},
+	discount: {
+		type: Number,
+		min: 0,
+		max: 100,
+		default: 0
 	},
 	isPaid: {
 		type: Boolean,

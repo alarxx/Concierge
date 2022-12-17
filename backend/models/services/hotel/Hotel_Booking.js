@@ -6,7 +6,6 @@ const Bill = require('../../payment/Bill');
 const File = require('../../binaries/File');
 const Booking = require('../Booking');
 
-
 const BookingSchema = new Schema({
     customer: {
         type: Schema.Types.ObjectId,
@@ -30,11 +29,27 @@ const BookingSchema = new Schema({
         default: () => new Date(), // Просто хз как из postman-a ставить
         required: true,
     },
+
+    // Bill
+    price: {
+        type: Number, // or String?
+        required: true,
+    },
+    discount: {
+        type: Number,
+        min: 0,
+        max: 100,
+        default: 0
+    },
     bill: { // Счет выставленный нам и оплачиваемый Concierge
         type: Schema.Types.ObjectId,
-        ref: 'Bill'
+        ref: 'File',
     },
-    file: { // Подтверждающий документ
+    isPaid: {
+        type: Boolean,
+        default: false
+    },
+    file: { // Подтверждающий документ, не знаю
         type: Schema.Types.ObjectId,
         ref: 'File'
     },
@@ -61,7 +76,6 @@ BookingSchema.methods.deepDelete = async function(){
     await this.delete();
     return this;
 }
-
 
 
 module.exports = model('Hotel_Booking', BookingSchema);

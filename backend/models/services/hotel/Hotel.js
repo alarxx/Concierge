@@ -22,6 +22,10 @@ const HotelSchema = new Schema({
         min: 1,
         max: 5,
     },
+    logo: {
+        type: Schema.Types.ObjectId,
+        ref: 'File'
+    },
     images: [{
         type: Schema.Types.ObjectId,
         ref: 'File'

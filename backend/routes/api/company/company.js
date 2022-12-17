@@ -17,7 +17,22 @@ Router.put('/', u)
 Router.delete('/', d);
 
 const {addImage, removeImage} = controller;
-Router.put('/images', addImage);
+/*{
+    id: company_id,
+    image: File
+}*/
+Router.post('/images', addImage);
 Router.delete('/images', removeImage);
+
+
+const {setLogo, removeLogo} = controller;
+/*{
+    id,
+    logo: File
+}*/
+Router.post('/logo', setLogo);
+/*{ id }*/
+Router.delete('/logo', removeLogo);
+
 
 module.exports = Router;

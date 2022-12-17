@@ -20,6 +20,15 @@ const {addImage, removeImage} = controller;
 Router.put('/images', addImage);
 Router.delete('/images', removeImage);
 
+const {setLogo, removeLogo} = controller;
+/*{
+    id,
+    logo: File
+}*/
+Router.post('/logo', setLogo);
+/*{ id }*/
+Router.delete('/logo', removeLogo);
+
 Router.use('/class', require('./class/class'));
 Router.use('/booking', require('./booking/booking'));
 

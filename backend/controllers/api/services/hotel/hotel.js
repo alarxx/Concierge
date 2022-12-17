@@ -66,24 +66,59 @@ module.exports.d = async (req, res) => {
 }
 
 
-/*
-{company, image}
-*/
 module.exports.addImage = async (req, res) => {
-    if(!req.body.hotel)
-        res.status(400).json({message: '\'hotel\' field not provided'});
-    if(!req.body.image)
-        res.status(400).json({message: '\'image\' field not provided'});
 
-    const hotel = await HotelModel.findById(req.body.hotel);
-    const image = await FileModel.findById(req.body.image);
-
-    if(!hotel)
-        res.status(404).json({message: 'Hotel not found'});
-    if(!image)
-        res.status(404).json({message: 'Image file not found'});
-
-    // как нибудь добавлять image и уведомлять об этом пользователя
 }
 module.exports.removeImage = async (req, res) => {
+}
+
+
+/*
+{id, logo: File}
+*/
+module.exports.setLogo = async (req, res) => {
+    if(!req.body.id)
+        return res.status(400).json({message: '\'id\' field not provided'});
+    if(!req.files?.logo)
+        return res.status(400).json({message: '\'image\' field not provided'});
+
+    const hotel = await HotelModel.findById(req.body.id);
+    if(!hotel)
+        return res.status(404).json({message: 'Hotel not found'});
+
+    // Удаляем старое лого
+    if(hotel.logo) {
+        const old = await FileModel.deleteAndRemoveById(hotel.logo);
+        if (old.status === 'fail')
+            return res.status(404).json({message: old.message});
+    }
+
+    const image = await FileModel.createAndMove(req.files.logo, req.user.id);
+    if(image.status === 'fail')
+        return res.status(404).json({message: image.message});
+
+    hotel.logo = image.doc.id;
+
+    res.json(await hotel.save());
+}
+/*
+{ id }
+*/
+module.exports.removeLogo = async (req, res) => {
+    if(!req.body.id)
+        return res.status(400).json({message: '\'id\' field not provided'});
+
+    const hotel = await HotelModel.findById(req.body.id);
+    if(!hotel)
+        return res.status(404).json({message: 'Company not found'});
+    if(!hotel.logo)
+        return res.status(400).json({message: 'The company doesn\'t have a logo'});
+
+    const image = await FileModel.deleteAndRemoveById(hotel.logo);
+    if(image.status === 'fail')
+        return res.status(404).json({message: image.message});
+
+    hotel.logo = null;
+
+    res.json(await hotel.save());
 }

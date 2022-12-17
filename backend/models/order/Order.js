@@ -24,6 +24,14 @@ const OrderSchema = new Schema({
         immutable: true,
         required: true
     }],
+    // bill: { // Счет от Concierge, который оплачивает клиент
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Bill'
+    // },
+    price: {
+        type: Number, // or String?
+        required: true,
+    },
     bill: { // Счет от Concierge, который оплачивает клиент
         type: Schema.Types.ObjectId,
         ref: 'Bill'

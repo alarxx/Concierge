@@ -6,6 +6,10 @@ const CompanySchema = new Schema({
         required: true,
     },
     description: String,
+    logo: {
+        type: Schema.Types.ObjectId,
+        ref: 'File'
+    },
     images: [{
         type: Schema.Types.ObjectId,
         ref: 'File'

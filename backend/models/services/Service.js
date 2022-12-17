@@ -44,8 +44,9 @@ ServiceSchema.methods.setFields = function(data){
 }
 
 ServiceSchema.methods.deepDelete = async function(){
-    await this.populate(this.type);
-    await this[this.type].deepDelete();
+    // А нужно ли удалять?
+    // await this.populate(this.type);
+    // await this[this.type].deepDelete();
     await this.delete();
     return this;
 }

@@ -13,13 +13,21 @@ module.exports.permission = async (req, res, next) => {
 module.exports.c = async (req, res) => {
     const exist = await HotelClassModel.findOne(req.body)
     if(exist)
-        return res.status(409).json(exist);
+        return res.status(409).json({message: 'Hotel Class already exist'});
 
     try{
         // Здесь можно обойтись без setFields,
         // думаю поможет не забывать о нужности этого метода при update
-        const hotelClass = await new HotelClassModel({}).setFields(req.body).save();
-        return res.json(hotelClass);
+        const hotelClass = new HotelClassModel({}).setFields(req.body);
+
+        if(req.files?.logo){
+            const image = await FileModel.createAndMove(req.files.logo, req.user.id);
+            if(image.status === 'fail')
+                return res.status(404).json({message: image.message});
+            hotelClass.logo = image.doc.id;
+        }
+
+        return res.json(await hotelClass.save());
     }
     catch(err){
         const errors = Object.keys(err.errors).map(key => err.errors[key].message);
@@ -73,23 +81,97 @@ module.exports.d = async (req, res) => {
 
 
 /*
-{company, image}
+{id, multifile}
 */
 module.exports.addImage = async (req, res) => {
-    if(!req.body.hotelClass)
-        res.status(400).json({message: '\'hotelClass\' field not provided'});
-    if(!req.body.image)
-        res.status(400).json({message: '\'image\' field not provided'});
+    if(!req.body.id)
+        return res.status(400).json({message: '\'id\' field not provided'});
+    if(!req.files?.image)
+        return res.status(400).json({message: '\'image\' field not provided'});
 
-    const hotelClass = await HotelClassModel.findById(req.body.hotelClass);
-    const image = await FileModel.findById(req.body.image);
-
+    const hotelClass = await HotelClassModel.findById(req.body.id);
     if(!hotelClass)
-        res.status(404).json({message: 'Hotel Class not found'});
-    if(!image)
-        res.status(404).json({message: 'Image file not found'});
+        return res.status(404).json({message: 'Hotel Class not found'});
 
-    // как нибудь добавлять image и уведомлять об этом пользователя
+    const image = await FileModel.createAndMove(req.files.image, req.user.id);
+    if(image.status === 'fail')
+        return res.status(404).json({message: image.message});
+
+    hotelClass.images.push(image.doc.id)
+
+    res.json(await hotelClass.save());
 }
+/*
+{id, image_id}
+*/
 module.exports.removeImage = async (req, res) => {
+    if(!req.body.id)
+        return res.status(400).json({message: '\'id\' field not provided'});
+    if(!req.body.image)
+        return res.status(400).json({message: '\'image\' field not provided'});
+
+    const hotelClass = await HotelClassModel.findById(req.body.id);
+    if(!hotelClass)
+        return res.status(404).json({message: 'Hotel Class not found'});
+
+    const image = await FileModel.deleteAndRemoveById(req.body.image);
+    if(image.status === 'fail')
+        return res.status(404).json({message: image.message});
+
+    // Удаляем объект из массива файлов поста
+    const index = hotelClass.images.indexOf(req.body.image)
+    hotelClass.images.splice(index, 1);
+
+    res.json(await hotelClass.save());
+}
+
+
+/*
+{id, logo: File}
+*/
+module.exports.setLogo = async (req, res) => {
+    if(!req.body.id)
+        return res.status(400).json({message: '\'id\' field not provided'});
+    if(!req.files?.logo)
+        return res.status(400).json({message: '\'image\' field not provided'});
+
+    const hotelClass = await HotelClassModel.findById(req.body.id);
+    if(!hotelClass)
+        return res.status(404).json({message: 'Company not found'});
+
+    // Удаляем старое лого
+    if(hotelClass.logo) {
+        const old = await FileModel.deleteAndRemoveById(hotelClass.logo);
+        if (old.status === 'fail')
+            return res.status(404).json({message: old.message});
+    }
+
+    const image = await FileModel.createAndMove(req.files.logo, req.user.id);
+    if(image.status === 'fail')
+        return res.status(404).json({message: image.message});
+
+    hotelClass.logo = image.doc.id;
+
+    res.json(await hotelClass.save());
+}
+/*
+{ id }
+*/
+module.exports.removeLogo = async (req, res) => {
+    if(!req.body.id)
+        return res.status(400).json({message: '\'id\' field not provided'});
+
+    const hotelClass = await HotelClassModel.findById(req.body.id);
+    if(!hotelClass)
+        return res.status(404).json({message: 'Company not found'});
+    if(!hotelClass.logo)
+        return res.status(400).json({message: 'The company doesn\'t have a logo'});
+
+    const image = await FileModel.deleteAndRemoveById(hotelClass.logo);
+    if(image.status === 'fail')
+        return res.status(404).json({message: image.message});
+
+    hotelClass.logo = null;
+
+    res.json(await hotelClass.save());
 }
