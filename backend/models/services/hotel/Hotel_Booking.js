@@ -64,7 +64,10 @@ BookingSchema.methods.setFields = function(data){
         if (data.hotel_class) this.hotel_class = data.hotel_class;
         if (data.checkInDate) this.checkInDate = data.checkInDate;
         if (data.checkOutDate) this.checkOutDate = data.checkOutDate;
+        if (data.price) this.price = data.price;
+        if (data.discount) this.discount = data.discount;
         if (data.bill) this.bill = data.bill;
+        if (data.isPaid) this.isPaid = data.isPaid;
         if (data.file) this.file = data.file;
     }
     return this;

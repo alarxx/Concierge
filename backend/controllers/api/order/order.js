@@ -1,20 +1,23 @@
 
-const OrderMetaModel = require('../../../models/order/Order_Meta');
 const OrderModel = require('../../../models/order/Order');
+const OrderMetaModel = require('../../../models/order/Order_Meta');
+const BookingModel = require('../../../models/services/Booking');
 const BillModel = require('../../../models/payment/Bill');
+const FileModel = require("../../../models/binaries/File");
 
 /**
  * new Order({ customer })
  * new Order_Meta({ order });
  * */
-module.exports.c_one = async (req, res) => {
+module.exports.c = async (req, res) => {
     try{
-        const meta = await new OrderMetaModel({}).save();
-        const order = await new OrderModel({
+        const order = new OrderModel({}).setFields({
             customer: req.user.id,
-            meta: meta.id,
-        }).save();
-        return res.json({doc: order});
+            // meta: meta.id,
+            ...req.body,
+        });
+        const meta = await new OrderMetaModel({order: order.id}).save();
+        return res.json(await order.save());
     }
     catch(err){
         const errors = Object.keys(err.errors).map(key => err.errors[key].message);
@@ -22,56 +25,111 @@ module.exports.c_one = async (req, res) => {
     }
 }
 /** All users orders */
-module.exports.r_all = async (req, res) => {
-    res.json(await OrderModel.find({customer: req.user.id}));
+module.exports.r = async (req, res) => {
+    const obj = {...req.query};
+
+    if (req.user.role === 'client')
+        obj.customer = req.user.id
+
+    res.json(await OrderModel.find(obj));
 }
-
-/** Returns order of id */
-module.exports.r_id = async (req, res) => {
-    const doc = await OrderModel.findById(req.params.id);
-    if(!doc)
-        res.status(404).json({message: 'Not found'});
-
-    if(doc.customer != req.user.id)
-        res.status(403).json({message: 'Permission denied'});
-
-    res.json(doc);
-};
 
 /** Sets bill */
 module.exports.u = async (req, res) => {
-    // res.json(await updateOrder(req));
-    res.status(500).json({message: 'update not implemented yet'});
+    if(!req.body.id)
+        return res.status(400).json({message: '\'id\' field not provided'});
+
+    const order = await OrderModel.findById(req.body.id);
+
+    if(!order)
+        return res.status(404).json({message: 'Order not found'});
+
+    if(req.user.role !== 'manager' && order.customer != req.user.id)
+        return res.status(403).json({message: 'Permission denied'});
+
+    try{
+        res.json(await order.setFields(req.body).save());
+    } catch(err){
+        const errors = Object.keys(err.errors).map(key => err.errors[key].message);
+        return res.status(500).json({message: errors});
+    }
 }
 
 module.exports.d = async (req, res) => {
     try{
-        const order = await OrderModel.findById(req.params.id);
+        if(!req.body.id)
+            return res.status(400).json({message: '\'id\' field not provided'});
+
+        const order = await OrderModel.findById(req.body.id);
 
         if(!order)
-            res.status(404).json({message: 'Not found'});
+            res.status(404).json({message: 'Order not found'});
 
-        if(order.customer != req.user.id)
+        if(req.user.role === 'client' && order.customer != req.user.id)
             res.status(403).json({message: 'Permission denied'});
 
-        const meta = await OrderMetaModel.findByIdAndDelete(order.meta);
+        await order.deepDelete();
 
-        await order.populate('bookings');
-        await Promise.all(order.bookings.map(async doc => await doc.delete()));
-
-        await order.delete();
-
-        return res.json({doc: order});
+        return res.json(order);
     }
     catch(err){
+        console.log(err);
         return res.status(500).json({message: err.message});
     }
 }
 
 
-module.exports.addBookings = async (req, res) => {
+module.exports.addBooking = async (req, res) => {
+    const {id, booking} = req.body;
 
+    if(!id)
+        return res.status(400).json({message: '\'id\' field not provided'});
+    if(!booking)
+        return res.status(400).json({message: '\'booking\' field not provided'});
+
+    const bookingFound = await BookingModel.findById(booking);
+    if(!bookingFound)
+        return res.status(404).json({message: 'Booking not found. You are trying to place a booking that doesn\'t exist'});
+
+    const order = await OrderModel.findById(id);
+    if(!order)
+        return res.status(404).json({message: 'Order not found'});
+
+    const index = order.bookings.indexOf(booking)
+    if(index > -1)
+        return res.status(400).json({message: `The booking of id(${booking}) is already in the order.bookings array`});
+
+    try{
+        order.bookings.push(booking)
+        res.json(await order.save());
+    }
+    catch(err){
+        res.json({message: err.message});
+    }
 }
-module.exports.removeBookings = async (req, res) => {
 
+
+module.exports.removeBooking = async (req, res) => {
+    const {id, booking} = req.body;
+
+    if (!id)
+        return res.status(400).json({message: '\'id\' field not provided'});
+    if (!booking)
+        return res.status(400).json({message: '\'booking\' field not provided'});
+
+    const order = await OrderModel.findById(id);
+    if (!order)
+        return res.status(404).json({message: 'Order not found'});
+
+    // Удаляем объект из массива файлов поста
+    const index = order.bookings.indexOf(booking)
+    if (index === -1)
+        return res.status(404).json({message: 'Booking is not in the order.bookings array'});
+
+    try {
+        order.bookings.splice(index, 1);
+        res.json(await order.save());
+    }catch(e){
+        res.json(500).json({message: e.message});
+    }
 }

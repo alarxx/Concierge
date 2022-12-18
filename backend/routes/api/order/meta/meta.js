@@ -1,5 +1,5 @@
 /**
- * Meta мы можем только редактировать,
+ * Meta мы можем только читать и редактировать,
  * за создание и удаления отвечает Order.
  * */
 
@@ -9,10 +9,12 @@ const Router = express.Router();
 
 const controller = require.main.require('./controllers/api/order/meta/meta');
 
+Router.get('/', controller.r);
+
 /** назначает field-ы */
 /*
 {
-    order: id,
+    id,
     ...primitive fields
 }
 */
@@ -21,8 +23,8 @@ Router.put('/', controller.u);
 /** Работа с массивом preferred_services */
 /*
 {
-    order: id,
-    ...[Services]
+    id,
+    ...Service
 }
 */
 Router.post('/preferred_services', controller.addService);

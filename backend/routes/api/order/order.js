@@ -2,34 +2,31 @@ const express = require('express');
 
 const Router = express.Router();
 
-Router.use('/meta', require('./meta/meta'));
-
 const controller = require.main.require('./controllers/api/order/order');
 
 /** Просто создает новый Order и Meta */
-Router.post('/', controller.c_one);
+Router.post('/', controller.c);
 
 /** Возвращает все order-а клиента */
-Router.get('/', controller.r_all);
-/** Возвращает order of id,
- * но только если он принадлежит клиенту */
-Router.get('/:id', controller.r_id)
+Router.get('/', controller.r);
 
 /**  */
 Router.put('/', controller.u);
 
 /** Глубокое удаление Order-а */
-Router.delete('/:id', controller.d);
+Router.delete('/', controller.d);
 
 
 /** Работа с массивом bookings */
 /*
 {
     order: id,
-    ...[Bookings]
+    Booking
 }
 */
-Router.post('/bookings', controller.addBookings);
-Router.delete('/bookings', controller.removeBookings);
+Router.post('/bookings', controller.addBooking);
+Router.delete('/bookings', controller.removeBooking);
+
+Router.use('/meta', require('./meta/meta'));
 
 module.exports = Router;

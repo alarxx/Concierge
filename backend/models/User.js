@@ -27,10 +27,9 @@ const UserSchema = new Schema({
 		enum: ['individual', 'juridical'], // Может ли он делать какие то действия от лица компании или только пользоваться
 		default: 'individual'
 	},
-	roles: {
+	role: {
 		type: String,
 		enum: ['client', 'manager', 'moderator', 'admin'],
-		lowercase: true,
 		default: 'client',
 	},
 });
