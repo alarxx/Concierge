@@ -8,14 +8,15 @@ const HotelSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Company',
         required: true,
+        immutable: true,
     },
     name: {
         type: String,
         required: true,
     },
     address: {
-        type: Schema.Types.ObjectId,
-        ref: 'Address'
+        type: String,
+        // ref: 'Address'
     },
     stars: {
         type: Number,
@@ -34,19 +35,19 @@ const HotelSchema = new Schema({
 
 HotelSchema.plugin(require('mongoose-unique-validator'));
 
-HotelSchema.methods.setFields = function(data){
-    if(data) {
-        if (data.company) this.company = data.company;
-        if (data.name) this.name = data.name;
-        if (data.address) this.address = data.address;
-        if (data.stars) this.stars = data.stars;
-        // if(data.images) this.images = data.images; // опасно
-    }
+const handlers = require('../../handlers');
+
+HotelSchema.methods.firstFilling = async function({body, user}){
     return this;
 }
 
 HotelSchema.methods.deepDelete = async function(){
-    await Promise.all(this.images.map(async id => await File.deleteAndRemoveById(id)));
+    // if(this.logo) await File.deepDeleteById(this.logo);
+    await handlers.deleteModels(this, ['logo']);
+
+    // await Promise.all(this.images.map(async id => await File.deepDeleteById(id)));
+    await handlers.deleteArraysOfModels(this, ['images']);
+
     await this.delete();
     return this;
 }

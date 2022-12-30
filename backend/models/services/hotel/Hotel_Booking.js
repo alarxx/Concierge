@@ -2,22 +2,30 @@ const {Schema, model} = require('mongoose');
 
 const User = require('../../User');
 const Hotel_Class = require('./Hotel_Class');
-const Bill = require('../../payment/Bill');
+const Bill = require('../../../public/arch/payment/Bill');
 const File = require('../../binaries/File');
 const Booking = require('../Booking');
+const handlers = require("../../handlers");
 
 const BookingSchema = new Schema({
+    booking:{
+        type: Schema.Types.ObjectId,
+        ref: 'Booking',
+        required: true,
+        immutable: true,
+        unique: true,
+    },
     customer: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        immutable: true,
-        required: true
-    },
-    hotel_class: {
-        type: Schema.Types.ObjectId,
-        ref: 'Hotel_Class',
-        immutable: true,
         required: true,
+        immutable: true,
+    },
+    'hotel/class': {
+        type: Schema.Types.ObjectId,
+        ref: 'Hotel/Class',
+        required: true,
+        immutable: true,
     },
     checkInDate: {
         type: Date,
@@ -58,27 +66,32 @@ const BookingSchema = new Schema({
 BookingSchema.plugin(require('mongoose-unique-validator'));
 
 
-BookingSchema.methods.setFields = function(data){
-    if(data) {
-        if (data.customer) this.customer = data.customer;
-        if (data.hotel_class) this.hotel_class = data.hotel_class;
-        if (data.checkInDate) this.checkInDate = data.checkInDate;
-        if (data.checkOutDate) this.checkOutDate = data.checkOutDate;
-        if (data.price) this.price = data.price;
-        if (data.discount) this.discount = data.discount;
-        if (data.bill) this.bill = data.bill;
-        if (data.isPaid) this.isPaid = data.isPaid;
-        if (data.file) this.file = data.file;
-    }
+BookingSchema.methods.firstFilling = async function({body, user}){
+    // Creating booking
+    const booking = await new Booking({
+        type: 'hotel/booking',
+        'hotel/booking': this.id
+    }).save();
+    this.booking = booking.id;
+
+    this.customer = user.id;
+
     return this;
 }
 
 
 BookingSchema.methods.deepDelete = async function(){
     // Должны удалить Bill, File
+    await handlers.deleteModels(this, ['bill', 'file', 'booking']);
+
+    await handlers.deleteArraysOfModels(this, []);
     await this.delete();
     return this;
 }
 
+BookingSchema.virtual('current_price').get(function(){
+    return this.price - this.price * (this.discount / 100)
+});
 
-module.exports = model('Hotel_Booking', BookingSchema);
+
+module.exports = model('Hotel/Booking', BookingSchema);

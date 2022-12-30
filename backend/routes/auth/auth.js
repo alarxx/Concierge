@@ -4,7 +4,7 @@ const Router = express.Router();
 Router.get('/', (req, res)=>{
 	if(req.isAuthenticated())
 		return res.json(req.user);
-	res.json({message: 'Unauthorized'});
+	res.status(401).json({message: 'Unauthorized'});
 });
 
 Router.use('/logout', require('./logout/logout'));

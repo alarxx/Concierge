@@ -36,4 +36,5 @@ const UserSchema = new Schema({
 
 UserSchema.plugin(require('mongoose-unique-validator'));
 
+
 module.exports = model('User', UserSchema);

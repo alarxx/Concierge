@@ -1,6 +1,5 @@
 /**
- * Полный CRUD
- * + add, remove to field images: Array
+ *
  * */
 
 const express = require('express');
@@ -10,29 +9,22 @@ const Router = express.Router();
 
 const controller = require('../../../controllers/api/company/company');
 
-const {c, r, u, d} = controller;
-Router.post('/', c);
-Router.get('/', r)
-Router.put('/', u)
-Router.delete('/', d);
+const {
+    c, r, u, d,
+    findOne, find,
+    filesValidation, roleAccess, changeAccess, readAccess,
+    addToArray, removeFromArray, arrayField
+} = controller;
 
-const {addImage, removeImage} = controller;
-/*{
-    id: company_id,
-    image: File
-}*/
-Router.post('/images', addImage);
-Router.delete('/images', removeImage);
+Router.route('/')
+    .post(roleAccess, filesValidation, c)
+    .get(find, readAccess, r)
+    .put(roleAccess, filesValidation, findOne, changeAccess, u)
+    .delete(roleAccess, findOne, changeAccess, d);
 
 
-const {setLogo, removeLogo} = controller;
-/*{
-    id,
-    logo: File
-}*/
-Router.post('/logo', setLogo);
-/*{ id }*/
-Router.delete('/logo', removeLogo);
+// Router.post('/images', addImage);
+// Router.delete('/images', removeImage);
 
 
 module.exports = Router;

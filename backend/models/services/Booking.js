@@ -11,42 +11,31 @@ const {Schema, model} = require('mongoose');
 const BookingSchema = new Schema({
     type: {
         type: String,
-        enum: ['hotel_booking', 'flight_booking', 'informal_booking'],
+        enum: ['hotel/booking', 'flight/booking', 'informal/booking'],
         immutable: true,
         required: true
     },
-    hotel_booking: {
+    'hotel/booking': {
         type: Schema.Types.ObjectId,
         immutable: true,
-        ref: 'Hotel_Booking'
+        ref: 'Hotel/Booking',
+        unique: true,
     },
-    flight_booking: {
+    'flight/booking': {
         type: Schema.Types.ObjectId,
         immutable: true,
-        ref: 'Flight_Booking'
+        ref: 'Flight/Booking',
     },
-    informal_booking: {
+    'informal/booking': {
         type: Schema.Types.ObjectId,
         immutable: true,
-        ref: 'Informal_Booking'
+        ref: 'Informal/Booking',
     }
 });
 
 BookingSchema.plugin(require('mongoose-unique-validator'));
 
-BookingSchema.methods.setFields = function(data){
-    if(data){
-        if (data.type) this.type = data.type;
-        if (data.hotel_booking) this.hotel_booking = data.hotel_booking;
-        if (data.flight_booking) this.flight_booking = data.flight_booking;
-        if (data.informal_booking) this.informal_booking = data.informal_booking;
-    }
-    return this;
-}
-
 BookingSchema.methods.deepDelete = async function(){
-    await this.populate(this.type);
-    await this[this.type].deepDelete();
     await this.delete();
     return this;
 }

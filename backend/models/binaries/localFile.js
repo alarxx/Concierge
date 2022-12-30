@@ -1,39 +1,39 @@
 /**
- * Отвечает за сохранения файлов локально и их удаления
+ * Отвечает за сохранения файлов локально и их удаления.
+ * По-моему, методы не могут выдать ошибку.
  * */
 
 const fs = require("fs");
 const pathModule = require('path');
 const BD_FILE_DIR = `data/files`;
 
-/** Законченный метод */
+/**
+ * Законченный метод.
+ * Завязан на express-fileupload
+ * Могут ли здесь быть ошибки? Нет, никак, если не косячить с аргументами.
+ * Только об отсутствии метода mv.
+ * */
 async function moveFile(multifile){
-    try{
-        const date = Date.now();
+    const date = Date.now();
 
-        const dir = `${BD_FILE_DIR}/${date}`;
+    const dir = `${BD_FILE_DIR}/${date}`;
 
-        fs.mkdirSync(dir);
+    await fs.mkdir(dir, e => { if(e) console.log(e) });
 
-        const fullPath = `${dir}/${multifile.name}`
+    const fullPath = `${dir}/${multifile.name}`
 
-        await multifile.mv(fullPath);
+    await multifile.mv(fullPath);
 
-        return fullPath;
-    }catch(err){
-        return null;
-    }
+    return fullPath;
 }
 
-/** Законченный метод */
+/**
+ * Законченный метод.
+ * Ошибки возможны в случае отсутствия path.
+ * */
 async function removeFile(path){
-    try{
-        fs.unlinkSync(path)
-        fs.rmdirSync(pathModule.join(path, '..'));
-        return true;
-    }catch(err){
-        return false;
-    }
+    fs.unlinkSync(path);
+    await fs.rmdir(pathModule.join(path, '..'), (e)=>{ if(e) throw e });
 }
 
 module.exports = {moveFile, removeFile}

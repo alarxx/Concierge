@@ -6,6 +6,7 @@ const {Schema, model} = require('mongoose');
 
 const Order = require('./Order');
 const Service = require('../services/Service');
+const handlers = require("../handlers");
 
 const MetaSchema = new Schema({
     order: {
@@ -26,23 +27,16 @@ const MetaSchema = new Schema({
 
 MetaSchema.plugin(require('mongoose-unique-validator'));
 
-MetaSchema.methods.setFields = function(data){
-    if(data){
-        if(data.description) this.description = data.description;
-        if(data.flow_passed) this.flow_passed = data.flow_passed;
-        if(data.numOfPeople) this.numOfPeople = data.numOfPeople;
-        if(data.description) this.description = data.description;
-    }
-    return this;
-}
 
 MetaSchema.methods.deepDelete = async function(){
-    await this.populate('preferred_services');
-    await Promise.all(this.preferred_services.map(async service => await service.deepDelete()));
+    await handlers.deleteModels(this, []);
+
+    await handlers.deleteArraysOfModels(this, ['preferred_services']);
 
     await this.delete();
 
     return this;
 }
 
-module.exports = model('Order_Meta', MetaSchema);
+
+module.exports = model('Order/Meta', MetaSchema);

@@ -1,5 +1,7 @@
 const {Schema, model} = require('mongoose');
 
+const File = require('./binaries/File');
+
 const CompanySchema = new Schema({
     name: {
         type: String,
@@ -16,14 +18,24 @@ const CompanySchema = new Schema({
     }],
 });
 
+
 CompanySchema.plugin(require('mongoose-unique-validator'));
 
-CompanySchema.methods.setFields = function(data){
-    if(data) {
-        if (data.name) this.name = data.name;
-        if (data.description) this.description = data.description;
-        // if(data.images) this.images = data.images; // опасно по идее
-    }
+const handlers = require('./handlers');
+
+CompanySchema.methods.firstFilling = async function({body, user}){
+    return this;
+}
+
+CompanySchema.methods.deepDelete = async function (){
+    // if(this.logo) await File.deepDeleteById(this.logo);
+    await handlers.deleteModels(this, ['logo']);
+
+    // await Promise.all(this.images.map(async id => await File.deepDeleteById(id)));
+    await handlers.deleteArraysOfModels(this, ['images']);
+
+    await this.delete();
+
     return this;
 }
 

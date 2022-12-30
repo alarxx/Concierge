@@ -1,14 +1,22 @@
 const {Schema, model} = require('mongoose');
 
 const Hotel = require('./Hotel');
-const Price = require('../../payment/Price');
 const File = require('../../binaries/File');
+const Service = require('../Service');
 
 const ClassSchema = new Schema({
+    service: { // primary key
+        type: Schema.Types.ObjectId,
+        ref: 'Service',
+        required: true,
+        immutable: true,
+        unique: true,
+    },
     hotel: {
         type: Schema.Types.ObjectId,
         ref: 'Hotel',
         required: true,
+        immutable: true,
     },
     class: {
         type: String,
@@ -25,6 +33,7 @@ const ClassSchema = new Schema({
         default: 0
     },
     description: String,
+    isActive: Boolean, // Например, поменяли цену, мы можем заменить напрямую цену?
 
     logo: {
         type: Schema.Types.ObjectId,
@@ -34,30 +43,28 @@ const ClassSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'File'
     }],
-
-    isActive: Boolean, // Например, поменяли цену
 });
 
 ClassSchema.plugin(require('mongoose-unique-validator'));
 
 
-ClassSchema.methods.setFields = function(data){
-    if(data) {
-        if (data.hotel) this.hotel = data.hotel;
-        if (data.class) this.class = data.class;
-        if (data.price) this.price = data.price;
-        if (data.description) this.description = data.description;
-        if (data.isActive) this.isActive = data.isActive;
-        // if(data.images) this.images = data.images; // опасно
-    }
+const handlers = require('../../handlers');
+
+ClassSchema.methods.firstFilling = async function({body, user}){
+    // Creating service
+    const service = await new Service({
+        type: 'hotel/class',
+        'hotel/class': this.id
+    }).save();
+    this.service = service.id;
+
     return this;
 }
 
-
 ClassSchema.methods.deepDelete = async function(){
-    // const await this.populate('price').delete();
+    await handlers.deleteModels(this, ['logo', 'service']);
 
-    await Promise.all(this.images.map(async id => await File.deleteAndRemoveById(id)));
+    await handlers.deleteArraysOfModels(this, ['images']);
 
     await this.delete();
 
@@ -65,4 +72,4 @@ ClassSchema.methods.deepDelete = async function(){
 }
 
 
-module.exports = model('Hotel_Class', ClassSchema);
+module.exports = model('Hotel/Class', ClassSchema);

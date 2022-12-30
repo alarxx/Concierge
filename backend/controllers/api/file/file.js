@@ -4,7 +4,7 @@ const path = require('path');
 const FileModel = require("../../../models/binaries/File");
 
 
-module.exports.r = async (req, res) => {
+module.exports.r_id = async (req, res) => {
     const file = await FileModel.findById(req.params.id);
     if(!file)
         return res.status(404).json({message: 'File not found'});

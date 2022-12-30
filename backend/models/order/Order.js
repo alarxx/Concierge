@@ -1,9 +1,14 @@
+/**
+ * Order при get запросе будет populate-ить meta и не надо будет делать 2 запроса,
+ * но если нужно отредачить meta, то мы отправляемся на api/order/meta
+ * */
+
 const {Schema, model} = require('mongoose');
 
 const User = require('../User');
 const Order_Meta = require('./Order_Meta');
 const Booking = require('../services/Booking');
-const Bill = require('../payment/Bill');
+// const Bill = require('../../public/arch/payment/Bill');
 const File = require("../binaries/File");
 
 const OrderSchema = new Schema({
@@ -13,15 +18,24 @@ const OrderSchema = new Schema({
         immutable: true,
         required: true
     },
+    meta: {
+        type: Schema.Types.ObjectId,
+        ref: 'Order/Meta',
+        required: true,
+        immutable: true,
+        unique: true,
+    },
     bookings: [{
         type: Schema.Types.ObjectId,
         ref: 'Booking',
-        required: true
     }],
     // bill: { // Счет от Concierge, который оплачивает клиент
     //     type: Schema.Types.ObjectId,
     //     ref: 'Bill'
     // },
+    price: {
+        type: Number
+    },
     discount: {
         type: Number,
         min: 0,
@@ -30,37 +44,38 @@ const OrderSchema = new Schema({
     },
     bill: { // Счет от Concierge, который оплачивает клиент
         type: Schema.Types.ObjectId,
-        ref: 'File'
+        ref: 'File',
     },
 });
 
 OrderSchema.plugin(require('mongoose-unique-validator'));
 
-OrderSchema.methods.setFields = function(data){
-    if(data){
-        if(data.customer) this.customer = data.customer;
-        if(data.meta) this.meta = data.meta;
-        if(data.discount) this.discount = data.discount;
-        if(data.bill) this.bill = data.bill;
-    }
+
+const handlers = require("../handlers");
+
+
+OrderSchema.methods.firstFilling = async function({body, user}){
+    // Creating meta
+    const meta = await new Order_Meta({order: this.id}).save();
+    this.meta = meta.id;
+
+    this.customer = user.id;
+
     return this;
 }
 
-OrderSchema.methods.deepDelete = async function(){
-    if(this.bill){
-        await this.populate('bill');
-        await this.bill.delete();
-    }
 
-    const meta = await Order_Meta.findOne({order: this.id});
-    await meta.deepDelete();
+OrderSchema.methods.deepDelete = async function (){
+    // if(this.logo) await File.deepDeleteById(this.logo);
+    await handlers.deleteModels(this, ['bill', 'meta']);
 
-    await this.populate('bookings');
-    await Promise.all(this.bookings.map(async booking => await booking.deepDelete()));
+    // await Promise.all(this.images.map(async id => await File.deepDeleteById(id)));
+    await handlers.deleteArraysOfModels(this, ['bookings']);
 
     await this.delete();
 
     return this;
 }
+
 
 module.exports = model('Order', OrderSchema);

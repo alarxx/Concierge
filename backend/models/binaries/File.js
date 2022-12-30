@@ -1,4 +1,10 @@
 /**
+ * Пользоваться только static методами createFile и deepDelete.
+ * из api мы можем его только прочитать, мы не можем напрямую создать его или изменить?
+ *
+ * File отличается от других моделей, его нельзя создать или изменить напрямую через api.
+ * Все взаимодействия с File должны происходить из других моделей.
+ *
  * Двоичный файл можно создать, удалить и прочитать.
  * Как можно изменить двоичный файл? Удалить документ из mongo и создать заново.
  * Что мы можем изменить в документе?
@@ -33,6 +39,7 @@ const FileSchema = new Schema({
     private: { type: Boolean, default: true },
 });
 
+
 FileSchema.plugin(require('mongoose-unique-validator'));
 
 
@@ -41,62 +48,59 @@ FileSchema.plugin(require('mongoose-unique-validator'));
  * function arguments: express-fileupload file and owner user id
  * returns {status, created_doc, message}
  * */
-FileSchema.statics.createAndMove = async function(multifile, user){
+FileSchema.statics.createFile = async function(multifile, user){
+    if(!multifile)
+        throw new Error('createFile did not get multifile')
     if(!user)
-        return {status: 'fail', doc: null, message: 'createAndMove did not get userId'}
+        throw new Error('createFile did not get user');
 
     // local storage
     const path = await localFile.moveFile(multifile)
     if(!path)
-        return {status: 'fail', doc: null, message: 'Can not move file'};
+        throw new Error('Can not move file');
 
     // mongo
-    try{
-        const created = await new this({
-            path: path,
-            owner: user,
-            mimetype: multifile.mimetype,
-        }).save();
-        return {status: 'success', doc: created, message: null};
-    }
-    catch(err){
-        const errors = Object.keys(err.errors).map(key => err.errors[key].message);
-        return {status: 'fail', doc: null, message: errors};
-    }
+    const file = new this({
+        path: path,
+        owner: user.id,
+        mimetype: multifile.mimetype,
+    });
+
+    // Никогда не выдаст ошибку
+    await file.save();
+
+    return file;
 }
 
 /**
  * delete by Id
  * returns deleted doc
  * */
-FileSchema.statics.deleteAndRemoveById = async function(id){
+FileSchema.statics.deepDeleteById = async function(id){
     const file = await this.findById(id);
-    if(!file)
-        return ({status: 'fail', doc: null, message: `Not found file with id ${id}`});
+    if(!file){
+        // throw new Error(`Not found file with id ${id}`);
+        return `Not found file with id ${id}`; // ничего страшного, если не найден
+    }
 
-    return await file.deleteAndRemove();
+    return await file.deepDelete();
 }
 
 /**
+ * PRIVATE
  * Почему не воспользоваться сразу встроенным методом delete?
  * Метод нужен для удаления файла не только из mongo, а еще из локального хранилаща бинарного файла
  * if we already found doc, we can call just delete
  * returns itself
  * */
-FileSchema.methods.deleteAndRemove = async function(){
+FileSchema.methods.deepDelete = async function(){
     // local storage
-    const isRemoved = await localFile.removeFile(this.path)
-    if(!isRemoved)
-        return {status: 'fail', doc: null, message: `Can not remove file on path ${this.path}`};
+    await localFile.removeFile(this.path);
 
     // mongo
-    try{
-        await this.delete();
-        return {status: 'success', doc: this, message: null};
-    }
-    catch(err){
-        return {status: 'fail', doc: null, message: `Can not remove file from mongo ${this.id}}`};
-    }
+    await this.delete();
+
+    return this;
 }
 
 // Только сохранения и удаления будет достаточно пока

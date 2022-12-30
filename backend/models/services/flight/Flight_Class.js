@@ -1,7 +1,7 @@
 const {Schema, model} = require('mongoose');
 
 const Flight = require('./Flight');
-const Price = require('../../payment/Price');
+const Price = require('../../../public/arch/payment/Price');
 const File = require('../../binaries/File');
 
 const ClassSchema = new Schema({

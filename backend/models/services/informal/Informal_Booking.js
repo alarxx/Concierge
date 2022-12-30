@@ -2,7 +2,7 @@ const {Schema, model} = require('mongoose');
 
 const User = require('../../User');
 const Informal = require('./Informal');
-const Bill = require('../../payment/Bill');
+const Bill = require('../../../public/arch/payment/Bill');
 const File = require('../../binaries/File');
 const BookingModel = require('../Booking');
 
