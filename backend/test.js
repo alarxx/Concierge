@@ -1,8 +1,9 @@
-const obj = {id: 1234, 'hotel/booking': 1234};
-const arr = ['hotel/booking'];
+const io = require('socket.io')(3000, {
+    cors: {
+        origin: ['http://localhost:9000']
+    },
+});
 
-const matchedKeys = (obj, keys) => keys.filter(key => obj.hasOwnProperty(key));
-
-// console.log(arr.some(key => obj.hasOwnProperty(key)));
-
-console.log(matchedKeys(obj, arr));
+io.on('connection', socket => {
+    console.log(socket.id);
+});

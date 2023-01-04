@@ -240,7 +240,7 @@ module.exports = (Model) => {
         next();
     };
 
-    /** Для работы с полями массивами. Назначает как примитивные поля. */
+    /** Для работы с полями массивами. Назначает как примитивные поля. С файлами по-другому должно быть*/
     controller.addToArray = async (req, res) => {
         const {model, array, key} = res.locals;
         if (!model || !array) return;

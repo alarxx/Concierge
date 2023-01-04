@@ -2,7 +2,7 @@ const express = require('express');
 const Router = express.Router();
 
 Router.get('/', (req, res)=>{
-	res.send({page: 'home', name: req.user?.name});
+	res.json({page: 'home', name: req.user?.name});
 });
 
 Router.use('/auth', require('./auth/auth'));

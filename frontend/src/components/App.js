@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
 
-import {BrowserRouter as Router, Link, Route, Routes} from "react-router-dom";
+import Main from "./test/websocket/Main";
+import BooksMain from "./test/Router/BooksMain";
 
-import Login from './pages/auth/Login';
-import Register from './pages/auth/Register';
-import useFetch from "./hooks/useFetch";
-import Logout from "./pages/auth/Logout";
-
-function App(){
-	const {loading: userLoading, data: user, error: userError} = useFetch('/auth');
+export default function App(){
+	// return <BooksMain />;
+	return <Main />;
+	/*const {loading: userLoading, data: user, error: userError} = useFetch('/auth');
 
 	return (
 		<Router>
@@ -40,7 +38,5 @@ function App(){
 			</Routes>
 
 		</Router>
-	);
+	);*/
 }
-
-export default App;
