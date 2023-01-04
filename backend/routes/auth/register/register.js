@@ -13,10 +13,11 @@ Router.post('/', register('local'));
 
 Router.post('/', passport.authenticate('local'), (req, res)=>{
 	    res.json({
-				message: 'User registered',
-				name: req.user.name,
-				email: req.user.email,
-			});
+			name: req.user.name,
+			email: req.user.email,
+			entity: req.user.entity,
+			role: req.user.role,
+		});
 });
 
 module.exports = Router;

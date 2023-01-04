@@ -12,9 +12,11 @@ Router.get('/', (req, res)=>{
 Router.post('/', passport.authenticate('local', {failureMessage: true}), (req, res)=>{
     // console.log(req.user);
 	res.json({
-			name: req.user.name,
-			email: req.user.email,
-		});
+		name: req.user.name,
+		email: req.user.email,
+		entity: req.user.entity,
+		role: req.user.role,
+	});
 });
 
 module.exports = Router;

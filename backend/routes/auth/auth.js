@@ -2,9 +2,16 @@ const express = require('express');
 const Router = express.Router();
 
 Router.get('/', (req, res)=>{
-	if(req.isAuthenticated())
-		return res.json(req.user);
-	res.status(401).json({message: 'Unauthorized'});
+	// console.log(req.user);
+	if(req.isAuthenticated()) {
+		return res.json({
+			name: req.user.name,
+			email: req.user.email,
+			entity: req.user.entity,
+			role: req.user.role,
+		});
+	}
+	return res.status(401).json({message: 'Unauthorized'});
 });
 
 Router.use('/logout', require('./logout/logout'));

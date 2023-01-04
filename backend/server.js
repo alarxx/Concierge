@@ -6,6 +6,8 @@ mongoose.connect(credentials.dbUri, {useNewUrlParser: true});
 const express = require('express');
 
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
 
 if(app.get('env') === 'development')
 	app.use(require('cors')());
@@ -44,7 +46,7 @@ const sessionMiddleware = session({
 
 app.use(sessionMiddleware);
 
-const io = require('./socket.io')(app, sessionMiddleware)
+const io = require('./socket.io')(server, sessionMiddleware, app.get('env'));
 
 const passport = require('passport');
 app.use(passport.initialize());
@@ -55,4 +57,4 @@ LocalStrategy();
 app.use('/', require('./routes/root'));
 
 const port = process.env.PORT || 3000;
-app.listen(port, ()=>console.log(`server is listening on port ${port}`));
+server.listen(port, ()=>console.log(`server is listening on port ${port}`));

@@ -1,19 +1,25 @@
 import React, {useEffect, useState} from 'react';
 
-import Main from "./test/websocket/Main";
-import BooksMain from "./test/Router/BooksMain";
+import {Link, Routes, Route} from "react-router-dom";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import Logout from "./pages/auth/Logout";
+import {SocketProvider} from "./hooks/socket-context";
+import Chat from "./pages/chat/Chat";
+import useFetch from "./hooks/useFetch";
+import useAuth from "./hooks/useAuth";
 
 export default function App(){
-	// return <BooksMain />;
-	return <Main />;
-	/*const {loading: userLoading, data: user, error: userError} = useFetch('/auth');
+	const auth = useAuth();
+	const {user, userLoading} = auth;
 
 	return (
-		<Router>
+		<SocketProvider>
 			<h1>[Application]</h1>
-			{user?.email && <h2>{user.email}</h2>}
+
+			{!userLoading && user?.email && <h2>{user.email}</h2>}
+			{!userLoading && !user?.email && <h2>Unauthorized</h2>}
 			{userLoading && <h2>Loading...</h2>}
-			{userError && <h2>{userError.message}</h2>}
 
 			<nav>
 				<li><Link to="/">Home page</Link></li>
@@ -22,21 +28,17 @@ export default function App(){
 				<li><Link to="/logout">Log Out</Link></li>
 				<li><Link to="/chat">Chat</Link></li>
 				<li><Link to="/order">Order</Link></li>
-				<li><Link to="/post/create">Create Post</Link></li>
 			</nav>
 
 			<Routes>
 				<Route path="/" element={<h1>[Home page]</h1>} />
 
-				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<Register />} />
-				<Route path="/logout" element={<Logout />} />
+				<Route path="/login" element={<Login auth={auth}/>} />
+				<Route path="/register" element={<Register auth={auth}/>} />
+				<Route path="/logout" element={<Logout auth={auth}/>} />
 
-				<Route path='/post'>
-					<Route path='create' element={<h1>Hellol</h1>} />
-				</Route>
+				<Route path='/chat' element={<Chat />} />
 			</Routes>
-
-		</Router>
-	);*/
+		</SocketProvider>
+	);
 }

@@ -14,9 +14,8 @@ Router.get('/', (req, res)=>{
 Router.delete('/', (req, res)=>{
 	req.logout((err)=>{
 		if(err)
-			res.status(500).json({message: err});
-		else
-			res.json({message: 'success logout'});
+			return res.status(500).json({message: err});
+		res.json({message: 'successful logout'});
 	});
 });
 

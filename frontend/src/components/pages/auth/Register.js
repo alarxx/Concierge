@@ -1,10 +1,21 @@
 import React from 'react';
+import {useNavigate} from "react-router-dom";
 
-export default function Register(props){
+export default function Register({auth}){
+    const navigate = useNavigate();
+    const onSubmit = (e) => {
+        e.preventDefault();
+        auth.register({
+            name: e.target.name.value,
+            email: e.target.email.value,
+            password: e.target.password.value,
+        });
+        navigate('/', {replace: true});
+    }
     return (
         <>
             <h1>Register Page</h1>
-            <form action="/auth/Register" method="POST">
+            <form onSubmit={onSubmit} action="/auth/Register" method="POST">
                 <div>
                     <label htmlFor="InputName">Name</label>
                     <input type="text" id="InputName" name="name"/>
