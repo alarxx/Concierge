@@ -36,7 +36,11 @@ const MessageSchema = new Schema({
     timeSent: {
         type: Date,
         default: new Date(),
-    }
+    },
+    readBy: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+    }],
 });
 
 

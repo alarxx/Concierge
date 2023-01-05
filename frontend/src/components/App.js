@@ -1,16 +1,19 @@
 import React, {useEffect, useState} from 'react';
 
-import {Link, Routes, Route} from "react-router-dom";
+/*import {Link, Routes, Route} from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Logout from "./pages/auth/Logout";
 import {SocketProvider} from "./hooks/socket-context";
 import Chat from "./pages/chat/Chat";
 import useFetch from "./hooks/useFetch";
-import useAuth from "./hooks/useAuth";
+import useAuth from "./hooks/useAuth";*/
+
+import MultistepForm from './multistep_form/MultistepForm';
 
 export default function App(){
-	const auth = useAuth();
+	return <MultistepForm/>;
+	/*const auth = useAuth();
 	const {user, userLoading} = auth;
 
 	return (
@@ -40,5 +43,5 @@ export default function App(){
 				<Route path='/chat' element={<Chat />} />
 			</Routes>
 		</SocketProvider>
-	);
+	);*/
 }
