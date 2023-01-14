@@ -52,8 +52,11 @@ body {
 .form-controls-done {
     justify-content: end;
 }
-.date_component .conditions__item {
+.conditions__item {
     margin-top: 18px;
+}
+.date_component {
+    margin-top: 40px;
 }
 .date_component label {
     font-weight: 600;
@@ -522,7 +525,7 @@ body {
 .custom-checkbox:checked+label::before {
     border-color: #1E262F;
     background-color: #1E262F;
-    background-image: url("../../../backend/public/img/check.png");
+    background-image: url("../img/check.png");
 }
 .custom-checkbox:checked+label  {
     font-weight: 600;
@@ -623,6 +626,7 @@ body {
     /* карточка */
     box-shadow: 2px 4px 4px rgba(30, 38, 47, 0.02);
     border-radius: 16px;
+    text-align: center;
 }
 .tac {
     text-align: center;
@@ -705,7 +709,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: rgba(0, 0, 0, 0);
     opacity: 1;
     display: block;
-    background: url("../../../backend/public/img/calendar.png") no-repeat;
+    background: url("../img/calendar.png") no-repeat;
     width: 20px;
     height: 20px;
     border-width: thin;
@@ -890,6 +894,24 @@ input[type="date"]:not(:empty) {
     background: #FFFFFF;
     box-shadow: 0px 8px 16px rgba(30, 38, 47, 0.04);
 }
+.navbar__left, .navbar__right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-center {
+    justify-content: center;
+}
+.navbar-between {
+    justify-content: space-between;
+}
+.navbar-between .navbar__right {
+    opacity: 0;
+}
+.navbar-left {
+    justify-content: start;
+}
 
 .info-control path {
     stroke: #A3A5A6;
@@ -1026,15 +1048,20 @@ input[type="date"]:not(:empty) {
     height: 80px;    
     background: #FFFFFF;
     box-shadow: 0px 8px 16px rgba(30, 38, 47, 0.04);
-}
-
-.chat__controlpanel {
     width: 100%;
     padding: 14px 20px 26px 20px;
     position: absolute;
     bottom: 0;
     left: 0;
 }
+
+.chat__controlpanel-unarchive {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+}
+
 .chat-choice {
     margin-bottom: 18px;
 }
@@ -1093,4 +1120,36 @@ input[type="date"]:not(:empty) {
 }
 .btn-withicon path {
     stroke: white;
+}
+
+.archives {
+    height: 595px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.chat-download {
+    margin-top: 24px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.chat-download__file {
+    font-weight: 600;
+    font-size: 14px;
+    margin-right: 25px;
+}
+
+.chat-download__block {
+    width: 28px;
+    height: 40px;
+    background: #D9D9D9; 
+    margin-right: 12px;
+    border-radius: 4px;
+}
+.chat-download__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
