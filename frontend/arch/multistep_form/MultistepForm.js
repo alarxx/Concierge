@@ -1,27 +1,40 @@
 import React, {useEffect, useState} from 'react';
 import useMultistepForm from "./useMultistepForm";
+import UserForm from "./forms/UserForm";
+import AddressForm from "./forms/AddressForm";
+import AccountForm from "./forms/AccountForm";
 
-export default function MultistepForm({ INITIAL_DATA, forms, onSubmit=f=>f }) {
+const INITIAL_DATA = {
+    firstName: '',
+    lastName: '',
+    age: '',
+    street: '',
+    city: '',
+    state: '',
+    email: '',
+    password: '',
+}
+
+export default function MultistepForm() {
     const [data, setData] = useState(INITIAL_DATA);
 
     function updateFields(fields){
-        // console.log(fields);
+        console.log(fields);
         setData(prev => ({...prev, ...fields}));
     }
 
-    const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next} = useMultistepForm(
-        forms.map(form => form({...data, updateFields}) )
-    );
+    const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next} = useMultistepForm([
+        <UserForm {...data} updateFields={updateFields} />,
+        <AddressForm {...data} updateFields={updateFields} />,
+        <AccountForm {...data} updateFields={updateFields} />,
+    ]);
 
-    function onSubmitMulti(e){
+    function onSubmit(e){
         e.preventDefault();
-        if(!isLastStep){
+        if(!isLastStep)
             return next();
-        }
-        else {
-            // что делать после того, как у нас готова форма?
-            onSubmit(data);
-        }
+        console.log(data);
+        alert('success');
     }
 
     return (
@@ -34,7 +47,7 @@ export default function MultistepForm({ INITIAL_DATA, forms, onSubmit=f=>f }) {
             borderRadius: "0.5rem",
             fontFamily: "Arial"
         }}>
-            <form onSubmit={onSubmitMulti}>
+            <form onSubmit={onSubmit}>
                 <div style={{
                     position: "absolute", top: "0.5rem", right: "0.5rem",
                 }}>

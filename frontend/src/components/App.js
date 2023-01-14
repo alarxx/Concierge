@@ -9,7 +9,11 @@ import Chat from "./pages/chat/Chat";
 import useFetch from "./hooks/useFetch";
 import useAuth from "./hooks/useAuth";
 
-import MultistepForm from './multistep_form/MultistepForm';
+import Order from './pages/order/Order'
+
+import '../css/style.css'
+import '../css/adaptive.css'
+import '../css/App.css'
 
 export default function App(){
 	const auth = useAuth();
@@ -40,7 +44,7 @@ export default function App(){
 				<Route path="/logout" element={<Logout auth={auth}/>} />
 
 				<Route path='/chat' element={<Chat />} />
-				<Route path='/order' element={<MultistepForm />} />
+				<Route path='/order' element={<Order />} />
 			</Routes>
 		</SocketProvider>
 	);
