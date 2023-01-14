@@ -11,55 +11,59 @@
 */
 
 import React from 'react';
+import FormWrapper from "../FormWrapper";
 
 export default function F1({}){
     return (
         <>
-        <div className="title">Что вам может понадобиться?</div>
-        <div className="uslug__wrapper needed_component in_form_wrapper">
-            <div className="uslug-item " htmlFor="uslugs1">
-                <div className="uslug-item__icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 22H22" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"
-                              stroke-linecap="round" stroke-linejoin="round"/>
-                        <path
-                            d="M2.94995 22L2.99995 9.96999C2.99995 9.35999 3.28995 8.78004 3.76995 8.40004L10.77 2.95003C11.49 2.39003 12.4999 2.39003 13.2299 2.95003L20.23 8.39003C20.72 8.77003 21 9.34999 21 9.96999V22"
-                            stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/>
-                        <path d="M13 17H11C10.17 17 9.5 17.67 9.5 18.5V22H14.5V18.5C14.5 17.67 13.83 17 13 17Z"
-                              stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"
-                              stroke-linejoin="round"/>
-                        <path
-                            d="M9.5 13.75H7.5C6.95 13.75 6.5 13.3 6.5 12.75V11.25C6.5 10.7 6.95 10.25 7.5 10.25H9.5C10.05 10.25 10.5 10.7 10.5 11.25V12.75C10.5 13.3 10.05 13.75 9.5 13.75Z"
-                            stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/>
-                        <path
-                            d="M16.5 13.75H14.5C13.95 13.75 13.5 13.3 13.5 12.75V11.25C13.5 10.7 13.95 10.25 14.5 10.25H16.5C17.05 10.25 17.5 10.7 17.5 11.25V12.75C17.5 13.3 17.05 13.75 16.5 13.75Z"
-                            stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/>
-                        <path d="M19.0001 7L18.9701 4H14.5701" stroke="#292D32" stroke-width="1.5"
-                              stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <div className="uslug-item__info">
-                    <div className="uslug-item__caption">Жилье</div>
-                    <div className="uslug-item__address">Мы подберем идеальное место, где вы могли бы
-                        остановиться
+            <FormWrapper title={"Что вам может понадобиться?"}>
+
+                <div className="uslug-item " htmlFor="uslugs1">
+                    <div className="uslug-item__icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 22H22" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"
+                                  stroke-linecap="round" stroke-linejoin="round"/>
+                            <path
+                                d="M2.94995 22L2.99995 9.96999C2.99995 9.35999 3.28995 8.78004 3.76995 8.40004L10.77 2.95003C11.49 2.39003 12.4999 2.39003 13.2299 2.95003L20.23 8.39003C20.72 8.77003 21 9.34999 21 9.96999V22"
+                                stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/>
+                            <path d="M13 17H11C10.17 17 9.5 17.67 9.5 18.5V22H14.5V18.5C14.5 17.67 13.83 17 13 17Z"
+                                  stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"
+                                  stroke-linejoin="round"/>
+                            <path
+                                d="M9.5 13.75H7.5C6.95 13.75 6.5 13.3 6.5 12.75V11.25C6.5 10.7 6.95 10.25 7.5 10.25H9.5C10.05 10.25 10.5 10.7 10.5 11.25V12.75C10.5 13.3 10.05 13.75 9.5 13.75Z"
+                                stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/>
+                            <path
+                                d="M16.5 13.75H14.5C13.95 13.75 13.5 13.3 13.5 12.75V11.25C13.5 10.7 13.95 10.25 14.5 10.25H16.5C17.05 10.25 17.5 10.7 17.5 11.25V12.75C17.5 13.3 17.05 13.75 16.5 13.75Z"
+                                stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/>
+                            <path d="M19.0001 7L18.9701 4H14.5701" stroke="#292D32" stroke-width="1.5"
+                                  stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                </div>
-                </div>
-                    <div className="uslug-item " htmlFor="uslugs1">
-                        <div className="uslug-item__icon">
-                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M9.02999 22.19L11.36 20.23C11.71 19.93 12.29 19.93 12.64 20.23L14.97 22.19C15.51 22.46 16.17 22.19 16.37 21.61L16.81 20.28C16.92 19.96 16.81 19.49 16.57 19.25L14.3 16.97C14.13 16.81 14 16.49 14 16.26V13.41C14 12.99 14.31 12.79 14.7 12.95L19.61 15.07C20.38 15.4 21.01 14.99 21.01 14.15V12.86C21.01 12.19 20.51 11.42 19.89 11.16L14.3 8.75001C14.14 8.68001 14 8.47001 14 8.29001V5.29001C14 4.35001 13.31 3.24001 12.47 2.81001C12.17 2.66001 11.82 2.66001 11.52 2.81001C10.68 3.24001 9.98999 4.36001 9.98999 5.30001V8.30001C9.98999 8.48001 9.84999 8.69001 9.68999 8.76001L4.10999 11.17C3.48999 11.42 2.98999 12.19 2.98999 12.86V14.15C2.98999 14.99 3.61999 15.4 4.38999 15.07L9.29999 12.95C9.67999 12.78 9.99999 12.99 9.99999 13.41V16.26C9.99999 16.49 9.86999 16.81 9.70999 16.97L7.43999 19.25C7.19999 19.49 7.08999 19.95 7.19999 20.28L7.63999 21.61C7.81999 22.19 8.47999 22.47 9.02999 22.19Z"
-                                    stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <div className="uslug-item__info">
-                            <div className="uslug-item__caption">Билеты</div>
-                            <div className="uslug-item__address">Бронь билетов на самолет или поезд</div>
+
+                    <div className="uslug-item__info">
+                        <div className="uslug-item__caption">Жилье</div>
+                        <div className="uslug-item__address">Мы подберем идеальное место, где вы могли бы
+                            остановиться
                         </div>
                     </div>
+                </div>
+
+                <div className="uslug-item " htmlFor="uslugs1">
+                    <div className="uslug-item__icon">
+                        <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M9.02999 22.19L11.36 20.23C11.71 19.93 12.29 19.93 12.64 20.23L14.97 22.19C15.51 22.46 16.17 22.19 16.37 21.61L16.81 20.28C16.92 19.96 16.81 19.49 16.57 19.25L14.3 16.97C14.13 16.81 14 16.49 14 16.26V13.41C14 12.99 14.31 12.79 14.7 12.95L19.61 15.07C20.38 15.4 21.01 14.99 21.01 14.15V12.86C21.01 12.19 20.51 11.42 19.89 11.16L14.3 8.75001C14.14 8.68001 14 8.47001 14 8.29001V5.29001C14 4.35001 13.31 3.24001 12.47 2.81001C12.17 2.66001 11.82 2.66001 11.52 2.81001C10.68 3.24001 9.98999 4.36001 9.98999 5.30001V8.30001C9.98999 8.48001 9.84999 8.69001 9.68999 8.76001L4.10999 11.17C3.48999 11.42 2.98999 12.19 2.98999 12.86V14.15C2.98999 14.99 3.61999 15.4 4.38999 15.07L9.29999 12.95C9.67999 12.78 9.99999 12.99 9.99999 13.41V16.26C9.99999 16.49 9.86999 16.81 9.70999 16.97L7.43999 19.25C7.19999 19.49 7.08999 19.95 7.19999 20.28L7.63999 21.61C7.81999 22.19 8.47999 22.47 9.02999 22.19Z"
+                                stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div className="uslug-item__info">
+                        <div className="uslug-item__caption">Билеты</div>
+                        <div className="uslug-item__address">Бронь билетов на самолет или поезд</div>
+                    </div>
+                </div>
+
                 <div className="uslug-item " htmlFor="uslugs1">
                     <div className="uslug-item__icon">
                         <svg width="36" height="25" viewBox="0 0 36 25" fill="none"
@@ -77,6 +81,7 @@ export default function F1({}){
                         </div>
                     </div>
                 </div>
+
                 <div className="uslug-item " htmlFor="uslugs1">
                     <div className="uslug-item__icon">
                         <svg width="36" height="25" viewBox="0 0 36 25" fill="none"
@@ -92,7 +97,8 @@ export default function F1({}){
                         <div className="uslug-item__address">?</div>
                     </div>
                 </div>
-            </div>
+                
+            </FormWrapper>
         </>
     );
 }
