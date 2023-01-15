@@ -1,44 +1,71 @@
-import React from 'react';
-import {useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
 
-export default function Register({auth}){
-    const navigate = useNavigate();
-    const onSubmit = (e) => {
-        e.preventDefault();
-        auth.register({
-            name: e.target.name.value,
-            email: e.target.email.value,
-            password: e.target.password.value,
-        });
-        navigate('/', {replace: true});
+import useMultistepForm from "../../hooks/useMultistepForm";
+
+import WorkTypes from "./forms/WorkTypes";
+import UserForm from "./forms/UserForm";
+
+// arrow-right, -
+import ArrowRight from '../../../icons/arrow-right.svg'
+
+const INITIAL_DATA = {
+
+}
+
+const forms = [WorkTypes, UserForm]
+
+export default function Register({ }) {
+    const [data, setData] = useState(INITIAL_DATA);
+
+    function updateFields(fields){
+        // console.log(fields);
+        setData(prev => ({...prev, ...fields}));
     }
+
+    const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next} = useMultistepForm(
+        forms.map(form => form({...data, updateFields}) )
+    );
+
+    function onSubmit(e){
+        e.preventDefault();
+
+        if(!isLastStep){
+            return next();
+        }
+        else {
+            // что делать после того, как у нас готова форма?
+            console.log(e);
+        }
+    }
+
     return (
-        <>
-            <h1>Register Page</h1>
-            <form onSubmit={onSubmit} action="/auth/Register" method="POST">
-                <div>
-                    <label htmlFor="InputName">Name</label>
-                    <input type="text" id="InputName" name="name"/>
+        <div>
+            <form className="container">
+                <div className="form-workflow">
+                    {step}
                 </div>
 
-                <div>
-                    <label htmlFor="InputEmail">Email</label>
-                    <input type="text" id="InputEmail" name="email"/>
+                <div className={isFirstStep ? "form-controls form-controls-done" : "form-controls"}>
+
+                    {!isFirstStep &&
+                    <div className="btn btn-secondary btn-prev mr-5" onClick={back}>
+                        <ArrowRight svg={{width: 16, height: 16}}/>
+                        <span>Назад</span>
+                    </div>}
+
+                    <div className="btn btn-main btn-next" onClick={next}>
+                        <span>{isLastStep ? "Создать аккаунт" : "Далее"}</span>
+                        {/*<Arrow width={"24"} height={"24"}/>*/}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.4299 5.92993L20.4999 11.9999L14.4299 18.0699" stroke="#ffff" stroke-width="1.5"
+                                  stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3.5 12H20.33" stroke="#ffff" stroke-width="1.5" stroke-miterlimit="10"
+                                  stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
                 </div>
-
-                <div>
-                    <label htmlFor="InputPassword">Password</label>
-                    <input type="text" id="InputPassword" name="password"/>
-                </div>
-
-                <br/>
-                <button type="submit" className="btn btn-primary">Submit</button>
-
-                <br/>
-                <button><a href="/auth/Login">Sign in</a></button>
 
             </form>
-
-        </>
+        </div>
     );
 }

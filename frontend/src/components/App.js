@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import {Link, Routes, Route} from "react-router-dom";
 import Login from "./pages/auth/Login";
+import RegisterSimple from "../../arch/RegisterSimple";
 import Register from "./pages/auth/Register";
 import Logout from "./pages/auth/Logout";
 import {SocketProvider} from "./hooks/socket-context";

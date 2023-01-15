@@ -19,7 +19,15 @@ module.exports = {
             plugins: ['@babel/plugin-proposal-object-rest-spread']
           }
         }
-      }, 
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'react-svg-loader'
+          }
+        ]
+      },
       {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],

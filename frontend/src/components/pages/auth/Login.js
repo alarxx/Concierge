@@ -31,7 +31,7 @@ export default function Login({auth}){
                 <button type="submit" className="btn btn-primary">Sign In</button>
 
                 <br/>
-                <button><a href="/auth/Register">Sign Up</a></button>
+                <button><a href="/frontend/arch/RegisterSimple.js">Sign Up</a></button>
             </form>
         </>
     );
