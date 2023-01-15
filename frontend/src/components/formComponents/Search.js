@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Search({}){
+export default function Search({ }){
     return (
         <div className="search">
             <input type="text" className="search-input" placeholder="Найти" />

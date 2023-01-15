@@ -4,7 +4,7 @@ import ServiceItem from "../../../formComponents/ServiceItem";
 
 import HouseSVG from "../../../../icons/house.svg";
 
-export default function F2({}){
+export default function F2_Needs({updateFields= f=>f}){
     return (
         <>
             <FormWrapper title={"Что вам может понадобиться?"}>

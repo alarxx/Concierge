@@ -6,7 +6,7 @@ import HouseSVG from "../../../../icons/house.svg";
 import DatesPicker from "../../../formComponents/DatesPicker";
 import Checkbox from "../../../formComponents/Checkbox";
 
-export default function F5({}){
+export default function F5_Housing({updateFields= f=>f}){
     return (
         <>
             <FormWrapper title={"Где вы хотите оставновиться?"}>

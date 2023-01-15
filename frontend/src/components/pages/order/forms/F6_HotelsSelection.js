@@ -5,7 +5,7 @@ import Search from "../../../formComponents/Search";
 import CardItem from "../../../formComponents/CardItem";
 import Cards from "../../../formComponents/Cards";
 
-const itemsD = [
+const hotelsDefault = [
     {
         img_url: "/img/hotelimg.png",
         name: "Название",
@@ -29,10 +29,11 @@ const itemsD = [
     }
 ]
 
-export default function F6({
-                               data=itemsD
+export default function HotelsSelection6({
+                               hotels=hotelsDefault,
+                               updateFields=f=>f
 }){
-    const [items, setItems] = useState(data);
+    const [items, setItems] = useState(hotels);
 
     return (
         <>

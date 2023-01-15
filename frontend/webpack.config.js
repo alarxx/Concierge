@@ -24,7 +24,7 @@ module.exports = {
         test: /\.svg$/,
         use: [
           {
-            loader: 'react-svg-loader'
+            loader: 'react-svg-loader',
           }
         ]
       },

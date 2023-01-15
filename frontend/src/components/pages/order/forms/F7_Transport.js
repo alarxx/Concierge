@@ -8,7 +8,7 @@ import ServiceItem from "../../../formComponents/ServiceItem";
 import HouseSVG from "../../../../icons/house.svg";
 import Checkbox from "../../../formComponents/Checkbox";
 
-export default function F7({}){
+export default function F7_Transport({updateFields= f=>f}){
     return (
         <>
             <FormWrapper title={"Транспорт для командировки"}>

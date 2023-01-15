@@ -1,6 +1,6 @@
 /**
  * Обертка над всеми booking-ами услуг.
- * Используется только в Order
+ * Используется только в OrderArch
  * */
 
 const {Schema, model} = require('mongoose');

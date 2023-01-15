@@ -6,7 +6,7 @@ import HouseSVG from "../../../../icons/house.svg";
 import DatesPicker from "../../../formComponents/DatesPicker";
 import Checkbox from "../../../formComponents/Checkbox";
 
-export default function F4({}){
+export default function F4_Tickets({updateFields= f=>f}){
     return (
         <>
             <FormWrapper title={"Билеты"} undertitle={"На чем вы хотите добраться до места назначения?"}>

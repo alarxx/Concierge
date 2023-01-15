@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 
 import {Link, Routes, Route} from "react-router-dom";
 import Login from "./pages/auth/Login";
-import RegisterSimple from "../../arch/RegisterSimple";
 import Register from "./pages/auth/Register";
 import Logout from "./pages/auth/Logout";
 import {SocketProvider} from "./hooks/socket-context";
@@ -14,7 +13,6 @@ import Order from './pages/order/Order'
 
 import '../css/style.css'
 import '../css/adaptive.css'
-import '../css/App.css'
 
 export default function App(){
 	const auth = useAuth();
