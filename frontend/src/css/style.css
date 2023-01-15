@@ -1153,3 +1153,62 @@ input[type="date"]:not(:empty) {
     align-items: center;
     justify-content: center;
 }
+
+
+
+.details {
+    margin-top: 24px;
+    padding-bottom: 40px;
+}
+.details-card {
+    padding: 14px 12px;
+    background: #FFFFFF;
+    border: 1px solid rgba(30, 38, 47, 0.06);
+    /* карточка */
+    /* box-shadow: 2px 4px 40px rgba(30, 38, 47, 0.04); */
+    border-radius: 16px;
+    margin-bottom: 8px;
+}
+.details-card:last-child {
+    margin-bottom: 0;
+}
+.details-card__title {
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+.details-card .card-item__img {
+    height: 92px;
+    border-radius: 6px;
+}
+.details-card .card-item__img img {
+    height: 100%;
+}
+.details-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(53, 53, 53, 0.08);
+}
+.details-card__body {
+    padding-top: 8px;
+}
+.details-card__footer {
+    padding-top: 8px;
+    margin-top: 8px;
+    font-weight: 500;
+    font-size: 12px;
+    border-top: 1px solid rgba(53, 53, 53, 0.08);
+}
+.details-card__body {
+    font-weight: 400;
+    font-size: 12px;
+}
+.details-card__descr {
+    margin-top: 8px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 12px;
+    /* identical to box height, or 100% */
+    color: rgba(53, 53, 53, 0.6);
+}
