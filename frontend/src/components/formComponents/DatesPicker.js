@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function DatesPicker({}){
+export default function DatesPicker({  }){
     return (
         <div className="date_component">
             <label>Даты</label>

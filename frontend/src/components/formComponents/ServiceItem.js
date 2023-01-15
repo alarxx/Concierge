@@ -1,15 +1,18 @@
 import React from 'react';
 import HouseSVG from "../../icons/house.svg";
 
-export default function ServiceItem({caption, address, icon=HouseSVG, updateFields=f=>f}){
+export default function ServiceItem({caption, address, icon=<HouseSVG/>,
+                                        active=false,
+                                        onClick=f=>f
+}){
     return (
-        <div className="uslug-item">
-            <div className="uslug-item__icon">
-                    {icon({width:36, height:25})}
+        <div className={`service-item ${active?'service-item-active':''}`} onClick={onClick}>
+            <div className="service-item__icon">
+                    {icon}
             </div>
-            <div className="uslug-item__info">
-                <div className="uslug-item__caption">{caption}</div>
-                <div className="uslug-item__address">{address}</div>
+            <div className="service-item__info">
+                <div className="service-item__caption">{caption}</div>
+                <div className="service-item__address">{address}</div>
             </div>
         </div>
     );

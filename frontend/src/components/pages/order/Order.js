@@ -13,7 +13,25 @@ import F8_Calculation from "./forms/F8_Calculation";
 import MultistepForm from "../../formComponents/MultistepForm";
 
 const INITIAL_DATA = {
+    type: '',
+    needs: [],
+    num_of_people: 0,
+    departure_place: '',
+    destination_place: '',
 
+    travel_transport: '',
+    date_start: '',
+    date_end: '',
+    roundTrip: '',
+
+    housing: '',
+    separateApartments: '',
+
+    transport: '',
+    driverNeeded: false,
+
+    description: '',
+    preferred_services: []
 }
 
 const forms = [

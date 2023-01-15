@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import useMultistepForm from "../src/components/hooks/useMultistepForm";
 
-import WorkTypes from "../src/components/pages/auth/forms/WorkTypes";
+import WorkTypes from "../src/components/pages/auth/forms/WorkTypesForm";
 import UserForm from "../src/components/pages/auth/forms/UserForm";
 
 // arrow-right, -

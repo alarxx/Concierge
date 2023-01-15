@@ -12,6 +12,7 @@ const hotelsDefault = [
         description: "Описание описание описание описание описание",
         price: "10 000",
         address: "Адрес",
+        rate: "4.2"
     },
     {
         img_url: "/img/hotelimg.png",
@@ -29,7 +30,7 @@ const hotelsDefault = [
     }
 ]
 
-export default function HotelsSelection6({
+export default function F6_HotelsSelection({
                                hotels=hotelsDefault,
                                updateFields=f=>f
 }){

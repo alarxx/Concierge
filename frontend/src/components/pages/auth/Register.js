@@ -1,24 +1,26 @@
 import React, {useEffect, useState} from 'react';
 
-import useMultistepForm from "../../hooks/useMultistepForm";
-
-import WorkTypes from "./forms/WorkTypes";
+import WorkTypes from "./forms/WorkTypesForm";
 import UserForm from "./forms/UserForm";
 
-// arrow-right, -
-import ArrowRight from '../../../icons/arrow-right.svg'
 import MultistepForm from "../../formComponents/MultistepForm";
 
 const INITIAL_DATA = {
-
+    entity: '',
+    name: '',
+    company: '',
+    phone: '',
+    email: '',
 }
 
+// forms.map(form => form({...data, updateFields}) )
 const forms = [WorkTypes, UserForm]
 
 export default function Register({ auth }) {
-    function onSubmit(e){
+
+    function onSubmit(data){
             // что делать после того, как у нас готова форма?
-            console.log(e);
+            console.log(data);
     }
 
     return (

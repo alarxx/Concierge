@@ -16,9 +16,63 @@ const MetaSchema = new Schema({
         required: true,
         unique: true,
     },
+
+    needs: [{
+        type: String,
+        enum: ['housing', 'transport', 'travel', 'informal']
+    }],
+
+    type: {
+      type: String,
+      enum: ['business_trip', 'event'],
+    },
+
+    num_of_people: Number,
+    // если в needs входит 'tickets'
+    departure_place:{
+        type: String,
+    },
+    destination_place: {
+        type: String,
+    },
+
+    // если в needs входит 'tickets'
+    travel_transport: {
+        type: String,
+        enum: ['airplane', 'train']
+    },
+    date_start: {
+      type: Date,
+    },
+    date_end: {
+        type: Date,
+    },
+    roundTrip: {
+        type: Boolean,
+        default: false,
+    },
+
+    housing: {
+        type: String,
+        enum: ['hotel', 'apartment'],
+    },
+    separateApartments: {
+        type: Boolean,
+        default: false,
+    },
+
+    transport: {
+        type: String,
+        enum: ['car', 'limousine']
+    },
+    driverNeeded: {
+        type: Boolean,
+        default: false,
+    },
+
     description: String,
+
     flow_passed: Boolean,
-    numOfPeople: Number,
     preferred_services:[{
         type: Schema.Types.ObjectId,
         ref: 'Service'

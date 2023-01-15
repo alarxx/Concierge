@@ -12,8 +12,8 @@ export default function F7_Transport({updateFields= f=>f}){
     return (
         <>
             <FormWrapper title={"Транспорт для командировки"}>
-                <ServiceItem caption={"Машина"} icon={HouseSVG}/>
-                <ServiceItem caption={"Лимузин"} address={"70 квартир"} icon={HouseSVG}/>
+                <ServiceItem caption={"Машина"} icon={<HouseSVG/>}/>
+                <ServiceItem caption={"Лимузин"} address={"70 квартир"} icon={<HouseSVG/>}/>
                 <Checkbox label={"С водителем"} for_id={"condition1"}/>
             </FormWrapper>
         </>
