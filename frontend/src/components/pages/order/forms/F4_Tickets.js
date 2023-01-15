@@ -36,15 +36,20 @@ export default function F4_Tickets({
 
                 <DatesPicker
                     date_start={date_start}
+                    date_start_key={"date_start"}
+
                     date_end={date_end}
+                    date_end_key={"date_end"}
+
                     roundTrip={roundTrip}
+
                     updateFields={updateFields}
                 />
 
                 <Checkbox
                     label={"Билет в обе стороны"} for_id={"condition1"}
-                    roundTrip={roundTrip}
-                    updateFields={updateFields}
+                    checked={roundTrip}
+                    onChange={e => updateFields({roundTrip: e.target.checked})}
                 />
 
             </FormWrapper>

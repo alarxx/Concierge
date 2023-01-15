@@ -4,9 +4,11 @@ import FormWrapper from "../../../formComponents/FormWrapper";
 import Search from "../../../formComponents/Search";
 import CardItem from "../../../formComponents/CardItem";
 import Cards from "../../../formComponents/Cards";
+import toggleArrayElement from "../../../../handlers/toggleArrayElement";
 
 const hotelsDefault = [
     {
+        service: 1,
         img_url: "/img/hotelimg.png",
         name: "Название",
         description: "Описание описание описание описание описание",
@@ -15,6 +17,7 @@ const hotelsDefault = [
         rate: "4.2"
     },
     {
+        service: 2,
         img_url: "/img/hotelimg.png",
         name: "Название",
         description: "Описание описание описание описание описание",
@@ -22,6 +25,7 @@ const hotelsDefault = [
         address: "Адрес",
     },
     {
+        service: 3,
         img_url: "/img/hotelimg.png",
         name: "Название",
         description: "Описание описание описание описание описание",
@@ -31,10 +35,10 @@ const hotelsDefault = [
 ]
 
 export default function F6_HotelsSelection({
-                               hotels=hotelsDefault,
-                               updateFields=f=>f
+                                               preferred_services=[],
+                                               updateFields=f=>f
 }){
-    const [items, setItems] = useState(hotels);
+    const [items, setItems] = useState(hotelsDefault);
 
     return (
         <>
@@ -42,7 +46,14 @@ export default function F6_HotelsSelection({
                 <Search />
                 <Cards>
                     {items.map((item, i)=>{
-                        return (<CardItem key={i} {...item} />)
+                        return (
+                            <CardItem
+                                key={i}
+                                { ...item }
+                                active={ preferred_services.includes(item.service) }
+                                onClick={ e => updateFields({preferred_services: toggleArrayElement(preferred_services, item.service)})}
+                            />
+                        )
                     })}
                 </Cards>
             </FormWrapper>

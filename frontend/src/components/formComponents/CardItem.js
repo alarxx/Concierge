@@ -3,9 +3,18 @@ import React from 'react';
 import Star from '../../icons/star.svg'
 import Location from '../../icons/location.svg'
 
-export default function CardItem({ name, img_url, rate, address, description, price, rooms_num}){
+export default function CardItem({
+                                     name,
+                                     img_url,
+                                     rate, address,
+                                     description,
+                                     price,
+                                     rooms_num,
+                                     active,
+                                     onClick
+}){
     return (
-        <div className="card-item">
+        <div className={`card-item ${active?'card-item-active':''}`} onClick={onClick}>
 
             {img_url &&
             <div className="card-item__img">

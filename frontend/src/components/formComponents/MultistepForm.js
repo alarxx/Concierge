@@ -19,7 +19,10 @@ export default function MultistepForm({
     const [data, setData] = useState(INITIAL_DATA);
 
     function updateFields(fields){
-        setData(prev => ({...prev, ...fields}));
+        setData(prev => {
+            console.log({...prev, ...fields});
+            return ({...prev, ...fields})
+        });
     }
 
     const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next} = useMultistepForm(

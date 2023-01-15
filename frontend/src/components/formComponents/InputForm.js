@@ -7,7 +7,7 @@ export default function InputForm({
                                       value = "",
                                       field_key="",
                                       type="string"
-}){
+                                  }){
 
     function check(value, type){
         if (typeof value === type){
