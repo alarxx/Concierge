@@ -646,7 +646,7 @@ body {
 .chat-message {
     display: flex;
     flex-direction: column;
-    max-width: 252px;
+    width: fit-content;
     padding: 16px 12px;
     background: #FFFFFF;
     border: 1px solid rgba(30, 38, 47, 0.06);
@@ -668,7 +668,7 @@ body {
     /* identical to box height */
     color: rgba(53, 53, 53, 0.5);
 }
-.mymssg {
+.mymssg .chat-message {
     background: #4D545C;
     border: 1px solid rgba(30, 38, 47, 0.06);
     /* карточка */
@@ -684,7 +684,10 @@ body {
 }
 .chat-message__wrapper {
     display: flex;
+}
+.mymssg {
     justify-content: end;
+
 }
 
 .input-date {
