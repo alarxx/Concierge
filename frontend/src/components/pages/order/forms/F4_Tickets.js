@@ -1,11 +1,10 @@
 import React from 'react';
-import FormWrapper from "../../../formComponents/FormWrapper";
-import ServiceItem from "../../../formComponents/ServiceItem";
+import FormWrapper from "../../../form/FormWrapper";
+import ServiceItem from "../../../form/ServiceItem";
 
 import HouseSVG from "../../../../icons/house.svg";
-import DatesPicker from "../../../formComponents/DatesPicker";
-import Checkbox from "../../../formComponents/Checkbox";
-import toggleArrayElement from "../../../../handlers/toggleArrayElement";
+import DatesPicker from "../../../form/DatesPicker";
+import Checkbox from "../../../form/Checkbox";
 
 export default function F4_Tickets({
                                        travel_transport,

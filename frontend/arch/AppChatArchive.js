@@ -2,9 +2,9 @@
  * Придется писать хук для отправки и получения сообщений
  * */
 import React, {useEffect, useState} from 'react';
-import { useSocket } from '../../hooks/socket-context';
+import { useSocket } from '../src/components/hooks/socket-context';
 
-export default function Chat(){
+export default function AppChatArchive(){
     const {socket, isConnected} = useSocket();
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');

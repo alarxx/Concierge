@@ -4,12 +4,11 @@ import {Link, Routes, Route} from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Logout from "./pages/auth/Logout";
-import {SocketProvider} from "./hooks/socket-context";
-import Chat from "./pages/chat/Chat";
-import useFetch from "./hooks/useFetch";
-import useAuth from "./hooks/useAuth";
-
+import ChatApp from "./pages/chat/ChatApp";
 import Order from './pages/order/Order'
+
+import {SocketProvider} from "./hooks/socket-context";
+import useAuth from "./hooks/useAuth";
 
 import '../css/style.css'
 import '../css/adaptive.css'
@@ -42,7 +41,8 @@ export default function App(){
 				<Route path="/register" element={<Register auth={auth}/>} />
 				<Route path="/logout" element={<Logout auth={auth}/>} />
 
-				<Route path='/chat' element={<Chat />} />
+				<Route path='/chat' element={<ChatApp />} />
+
 				<Route path='/order' element={<Order />} />
 			</Routes>
 		</SocketProvider>

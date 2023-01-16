@@ -10,7 +10,7 @@ import F6_HotelsSelection from "./forms/F6_HotelsSelection";
 import F7_Transport from "./forms/F7_Transport";
 import F8_Calculation from "./forms/F8_Calculation";
 
-import MultistepForm from "../../formComponents/MultistepForm";
+import MultistepForm from "../../form/MultistepForm";
 
 const INITIAL_DATA = {
     type: '',

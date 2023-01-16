@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import FormWrapper from "../../../formComponents/FormWrapper";
+import FormWrapper from "../../../form/FormWrapper";
 
 import People from '../../../../icons/people.svg';
 import Profile from '../../../../icons/profile.svg';

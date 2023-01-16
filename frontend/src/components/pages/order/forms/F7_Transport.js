@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import FormWrapper from "../../../formComponents/FormWrapper";
+import FormWrapper from "../../../form/FormWrapper";
 
-import Search from "../../../formComponents/Search";
-import CardItem from "../../../formComponents/CardItem";
-import Cards from "../../../formComponents/Cards";
-import ServiceItem from "../../../formComponents/ServiceItem";
+import Search from "../../../form/Search";
+import CardItem from "../../../form/CardItem";
+import Cards from "../../../form/Cards";
+import ServiceItem from "../../../form/ServiceItem";
 import HouseSVG from "../../../../icons/house.svg";
-import Checkbox from "../../../formComponents/Checkbox";
+import Checkbox from "../../../form/Checkbox";
 
 export default function F7_Transport({transport, driverNeeded, updateFields= f=>f}){
     return (

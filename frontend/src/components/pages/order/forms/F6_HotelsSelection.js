@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import FormWrapper from "../../../formComponents/FormWrapper";
+import FormWrapper from "../../../form/FormWrapper";
 
-import Search from "../../../formComponents/Search";
-import CardItem from "../../../formComponents/CardItem";
-import Cards from "../../../formComponents/Cards";
+import Search from "../../../form/Search";
+import CardItem from "../../../form/CardItem";
+import Cards from "../../../form/Cards";
 import toggleArrayElement from "../../../../handlers/toggleArrayElement";
 
 const hotelsDefault = [
@@ -23,6 +23,7 @@ const hotelsDefault = [
         description: "Описание описание описание описание описание",
         price: "10 000",
         address: "Адрес",
+        rate: "4.2"
     },
     {
         service: 3,
@@ -31,6 +32,7 @@ const hotelsDefault = [
         description: "Описание описание описание описание описание",
         price: "10 000",
         address: "Адрес",
+        rate: "4.2"
     }
 ]
 
@@ -48,7 +50,7 @@ export default function F6_HotelsSelection({
                     {items.map((item, i)=>{
                         return (
                             <CardItem
-                                key={i}
+                                key={ i }
                                 { ...item }
                                 active={ preferred_services.includes(item.service) }
                                 onClick={ e => updateFields({preferred_services: toggleArrayElement(preferred_services, item.service)})}

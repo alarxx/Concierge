@@ -1,0 +1,66 @@
+import React, {useState} from 'react'
+import Cards from "../form/Cards";
+import CardItem from "../form/CardItem";
+
+import toggleArrayElement from '../../handlers/toggleArrayElement'
+
+const hotelsDefault = [
+    {
+        service: 1,
+        img_url: "/img/hotelimg.png",
+        name: "Название",
+        description: "Описание описание описание описание описание",
+        price: "10 000",
+        address: "Адрес",
+        rate: "4.2"
+    },
+    {
+        service: 2,
+        img_url: "/img/hotelimg.png",
+        name: "Название",
+        description: "Описание описание описание описание описание",
+        price: "10 000",
+        address: "Адрес",
+        rate: "4.2"
+    },
+    {
+        service: 3,
+        img_url: "/img/hotelimg.png",
+        name: "Название",
+        description: "Описание описание описание описание описание",
+        price: "10 000",
+        address: "Адрес",
+        rate: "4.2"
+    }
+]
+
+export default function ChoiceForm({
+                                       items=hotelsDefault,
+                                       multiple=false,
+                                       onSubmit=console.log,
+                                   }){
+
+    const [selected, setSelected] = useState([]);
+
+    function addSelected(item){
+        setSelected(toggleArrayElement(multiple?selected:[], item.service))
+    }
+
+    return (
+        <div className="chat-choice">
+            <Cards>
+                {items.map((item, i) => (
+                    <CardItem key={i} {...item}
+                              active={selected.includes(item.service)}
+                              onClick={e => addSelected(item)}
+                    />
+                ))}
+            </Cards>
+            <div className="chat-choice__link link" onClick={e=>onSubmit(selected)}>
+                <div className="link__text">
+                    Подобрать другой вариант
+                </div>
+            </div>
+        </div>
+    );
+}

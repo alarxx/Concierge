@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import WorkTypes from "./forms/WorkTypesForm";
 import UserForm from "./forms/UserForm";
 
-import MultistepForm from "../../formComponents/MultistepForm";
+import MultistepForm from "../../form/MultistepForm";
 
 const INITIAL_DATA = {
     entity: '',

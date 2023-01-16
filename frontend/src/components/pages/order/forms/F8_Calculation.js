@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import FormWrapper from "../../../formComponents/FormWrapper";
-import CalculationResult from "../../../formComponents/CalculationResult";
+import FormWrapper from "../../../form/FormWrapper";
+import CalculationResult from "../../../form/CalculationResult";
 
 export default function F8_Calculation({updateFields=f=>f}){
     return (
