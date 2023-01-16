@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import GalleryIcon from "../../icons/gallery.svg";
-import SendIcon from "../../icons/send.svg";
+import GalleryIcon from "../src/icons/gallery.svg";
+import SendIcon from "../src/icons/send.svg";
 
 export default function ControlPanel({
                                          choice=false,

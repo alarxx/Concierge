@@ -25,10 +25,83 @@ const conversationsDefault = [
     }
 ]
 
+const user = {id: '1'};
+const hotelsDefault = [
+    {
+        service: 1,
+        img_url: "/img/hotelimg.png",
+        name: "Название",
+        description: "Описание описание описание описание описание",
+        price: "10 000",
+        address: "Адрес",
+        rate: "4.2"
+    },
+    {
+        service: 2,
+        img_url: "/img/hotelimg.png",
+        name: "Название",
+        description: "Описание описание описание описание описание",
+        price: "10 000",
+        address: "Адрес",
+        rate: "4.2"
+    },
+    {
+        service: 3,
+        img_url: "/img/hotelimg.png",
+        name: "Название",
+        description: "Описание описание описание описание описание",
+        price: "10 000",
+        address: "Адрес",
+        rate: "4.2"
+    }
+]
+const messagesDefault = [
+    {
+        type: 'form',
+        id: '103',
+        items: hotelsDefault,
+        selected: [1],
+        submitted: true,
+        sender: '1',
+        multiple_choice: true,
+    },
+    {
+        type: 'form',
+        id: '113',
+        items: hotelsDefault,
+        selected: [1],
+        submitted: false,
+        sender: '1',
+        multiple_choice: true,
+    },
+    {
+        type: 'form',
+        id: '123',
+        items: hotelsDefault,
+        selected: [],
+        submitted: false,
+        sender: '1',
+        multiple_choice: false,
+    },
+    {
+        type: 'text',
+        text: 'Текст текст',
+        id: '124',
+        time: '01 : 00',
+        sender: '2'
+    },
+    {
+        type: 'text',
+        text: 'Текст текст2',
+        id: '125',
+        time: '01 : 00',
+        sender: '1'
+    },
+]
 
 export default function ChatApp(){
     const {socket, isConnected} = useSocket();
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState(messagesDefault);
     const [message, setMessage] = useState('');
     const [room, setRoom] = useState('');
 
@@ -63,26 +136,7 @@ export default function ChatApp(){
     return (
         <>
             {!isChatOpen && <Conversations conversations={conversationsDefault} openChat={openChat}/>}
-            {isChatOpen && <Messanger messages={"messagesOn"} closeChat={closeChat}/>}
+            {isChatOpen && <Messanger user={user} messages={messages} setMessages={setMessages} closeChat={closeChat}/>}
         </>
     );
 };
-
-/*
-<div>
-    <ul>
-        {messages.map((msg, i) => (
-            <li key={i}>{msg}</li>
-        ))}
-    </ul>
-    <form onSubmit={submitMessage}>
-        <input value={message} onChange={e => setMessage(e.target.value)} />
-        <button type="submit">Send</button>
-    </form>
-
-    <form onSubmit={submitRoom}>
-        <input value={room} onChange={e => setRoom(e.target.value)} />
-        <button type="submit">Join</button>
-    </form>
-</div>
-* */

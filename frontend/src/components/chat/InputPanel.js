@@ -9,7 +9,7 @@ export default function InputPanel({
 
     const [input, setInput] = useState(initInput);
 
-    function send(e){
+    function send( e ){
         onSend(input)
         setInput("")
     }

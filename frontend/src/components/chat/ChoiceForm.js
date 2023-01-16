@@ -1,72 +1,42 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Cards from "../form/Cards";
 import CardItem from "../form/CardItem";
 
 import toggleArrayElement from '../../handlers/toggleArrayElement'
 
-const hotelsDefault = [
-    {
-        service: 1,
-        img_url: "/img/hotelimg.png",
-        name: "Название",
-        description: "Описание описание описание описание описание",
-        price: "10 000",
-        address: "Адрес",
-        rate: "4.2"
-    },
-    {
-        service: 2,
-        img_url: "/img/hotelimg.png",
-        name: "Название",
-        description: "Описание описание описание описание описание",
-        price: "10 000",
-        address: "Адрес",
-        rate: "4.2"
-    },
-    {
-        service: 3,
-        img_url: "/img/hotelimg.png",
-        name: "Название",
-        description: "Описание описание описание описание описание",
-        price: "10 000",
-        address: "Адрес",
-        rate: "4.2"
-    }
-]
-
+//message={type=form, id, items, selected, multiple_choice}
 export default function ChoiceForm({
-                                       message,
-                                       multiple=false,
-                                       onSubmit=console.log,
-                                       selected=[],
-                                       setSelected=f=>f
+                                       message={},
+                                       onAnother=f=>f,
+                                       onItem=f=>f
 }){
-    // На самом деле мы должны распарсивать как нибудь message.items
-    const [items, setItems] = useState(hotelsDefault)
 
-    function addSelected(item){
-        if(multiple){
-            setSelected(toggleArrayElement(selected, item.service))
+    /*function addSelected(item){
+        if(message.multiple_choice){
+            setMessage({...message, selected: toggleArrayElement(message.selected, item.service)})
         } else {
-            setSelected(selected.includes(item.service)?[]:[item.service])
+            setMessage({...message, selected: message.selected.includes(item.service)?[]:[item.service]})
         }
-    }
+    }*/
 
     return (
         <div className="chat-choice">
+
             <Cards>
-                {items.map((item, i) => (
-                    <CardItem key={i} {...item}
-                              active={selected.includes(item.service)}
-                              onClick={e => addSelected(item)}
-                    />
-                ))}
+                {message.items.map((item, i) => (
+                        <CardItem key={i} {...item}
+                                  active={message.selected.includes(item.service)}
+                                  onClick={e => onItem(item)}
+                        />
+                    )
+                )}
             </Cards>
-            <div className="chat-choice__link link" onClick={e => onSubmit(selected)}>
+
+            {!message.submitted && <div className="chat-choice__link link" onClick={e => onAnother(message)}>
                 <div className="link__text">
                     Подобрать другой вариант
                 </div>
-            </div>
+            </div>}
         </div>
     );
 }
