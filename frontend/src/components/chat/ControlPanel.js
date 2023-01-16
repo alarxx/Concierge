@@ -23,8 +23,8 @@ export default function ControlPanel({
         <div className="chat__controlpanel">
 
             {choice &&
-                <div class="chat-controls__btn" onClick={onChoiceInside}>
-                    <div class="btn btn-main btn-active">
+                <div className="chat-controls__btn" onClick={onChoiceInside}>
+                    <div className="btn btn-main btn-active">
                         <span>Сделать выбор</span>
                     </div>
                 </div>

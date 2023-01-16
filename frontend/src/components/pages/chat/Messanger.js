@@ -7,6 +7,8 @@ import Workflow from "../../phone/Workflow";
 import Day from "../../chat/Day";
 import ChoiceForm from "../../chat/ChoiceForm";
 import DocAttach from "../../chat/DocAttach";
+import InputPanel from "../../chat/InputPanel";
+import ChoicePanel from "../../chat/ChoicePanel";
 
 const hotelsDefault = [
     {
@@ -39,6 +41,7 @@ const hotelsDefault = [
 ]
 
 export default function Messanger({ messages, closeChat, onSend=console.log, onChoice=f=>f }){
+    //message: {type=form, id, items, selected} должно быть так
     const [selected, setSelected] = useState([]);
 
     return (
@@ -47,6 +50,8 @@ export default function Messanger({ messages, closeChat, onSend=console.log, onC
 
             <Container chat>
                 <Message text={"Текст"} time={"01 : 00"} mymssg />
+                <Message text={"Текст"} time={"01 : 04"} />
+                <Message text={"Текст"} time={"01 : 04"} />
                 <Message text={"Текст"} time={"01 : 04"} />
 
                 <Day day={"Сегодня"}/>
@@ -57,12 +62,8 @@ export default function Messanger({ messages, closeChat, onSend=console.log, onC
                 <DocAttach />
             </Container>
 
-
-            <ControlPanel
-                choice={selected.length!==0}
-                onSend={onSend}
-                onChoice={()=>console.log(selected)}
-            />
+            {selected.length===0 && <InputPanel onSend={onSend}/>}
+            {selected.length!==0 && <ChoicePanel onClick={f=>f}/>}
 
             {/* Menu */}
         </Workflow>
