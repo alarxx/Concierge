@@ -35,12 +35,14 @@ const hotelsDefault = [
 ]
 
 export default function ChoiceForm({
-                                       items=hotelsDefault,
+                                       message,
                                        multiple=false,
                                        onSubmit=console.log,
                                        selected=[],
                                        setSelected=f=>f
-                                   }){
+}){
+    // На самом деле мы должны распарсивать как нибудь message.items
+    const [items, setItems] = useState(hotelsDefault)
 
     function addSelected(item){
         if(multiple){
