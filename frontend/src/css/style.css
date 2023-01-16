@@ -1075,8 +1075,12 @@ input[type="date"]:not(:empty) {
     font-size: 12px;
 }
 .chat-choice .card-item {
+    margin-bottom: 8px;
+}
+.chat-choice .card-item:nth-last-of-type(-n+2) {
     margin-bottom: 0;
 }
+
 
 .btn-unactive {
     background: rgba(30, 38, 47, 0.5);
