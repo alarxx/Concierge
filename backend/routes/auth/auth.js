@@ -5,6 +5,7 @@ Router.get('/', (req, res)=>{
 	// console.log(req.user);
 	if(req.isAuthenticated()) {
 		return res.json({
+			id: req.user.id,
 			name: req.user.name,
 			email: req.user.email,
 			entity: req.user.entity,

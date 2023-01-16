@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 /**
  * Придется писать хук для отправки и получения сообщений
  * */
-import { useSocket } from '../../hooks/socket-context';
+import { useSocket } from '../../../websocket/socket-context';
 import Conversations from "./Conversations";
 import Messanger from "./Messanger";
 
@@ -26,7 +26,7 @@ const conversationsDefault = [
 ]
 
 
-export default function AppChatArchive(){
+export default function ChatApp(){
     const {socket, isConnected} = useSocket();
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
@@ -36,7 +36,7 @@ export default function AppChatArchive(){
     const [chat, setChat] = useState();
 
     function openChat(conversation){
-        setChat(conversation.id)
+        setChat(conversation)
         setIsChatOpen(true)
     }
     function closeChat(){

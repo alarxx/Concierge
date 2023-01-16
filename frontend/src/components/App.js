@@ -7,7 +7,7 @@ import Logout from "./pages/auth/Logout";
 import ChatApp from "./pages/chat/ChatApp";
 import Order from './pages/order/Order'
 
-import {SocketProvider} from "./hooks/socket-context";
+import {SocketProvider} from "../websocket/socket-context";
 import useAuth from "./hooks/useAuth";
 
 import '../css/style.css'

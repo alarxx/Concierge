@@ -12,6 +12,7 @@ Router.get('/', (req, res)=>{
 Router.post('/', passport.authenticate('local', {failureMessage: true}), (req, res)=>{
     // console.log(req.user);
 	res.json({
+		id: req.user.id,
 		name: req.user.name,
 		email: req.user.email,
 		entity: req.user.entity,

@@ -14,7 +14,7 @@ function SocketProvider({ children }){
     useEffect(()=>{
         socket.on('connect', ()=>{
             setIsConnected(true);
-            // console.log(`you connected with id: ${socket.id}`);
+            // console.log(`you connected with id: ${websocket.id}`);
         });
         socket.on('disconnect', () => {
             setIsConnected(false);
@@ -22,7 +22,7 @@ function SocketProvider({ children }){
         return () => {
             socket.off('connect');
             socket.off('disconnect');
-            //socket.disconnect();
+            //websocket.disconnect();
         };
     },  [])
 

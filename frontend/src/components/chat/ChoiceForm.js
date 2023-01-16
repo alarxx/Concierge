@@ -38,12 +38,16 @@ export default function ChoiceForm({
                                        items=hotelsDefault,
                                        multiple=false,
                                        onSubmit=console.log,
+                                       selected=[],
+                                       setSelected=f=>f
                                    }){
 
-    const [selected, setSelected] = useState([]);
-
     function addSelected(item){
-        setSelected(toggleArrayElement(multiple?selected:[], item.service))
+        if(multiple){
+            setSelected(toggleArrayElement(selected, item.service))
+        } else {
+            setSelected(selected.includes(item.service)?[]:[item.service])
+        }
     }
 
     return (
@@ -56,7 +60,7 @@ export default function ChoiceForm({
                     />
                 ))}
             </Cards>
-            <div className="chat-choice__link link" onClick={e=>onSubmit(selected)}>
+            <div className="chat-choice__link link" onClick={e => onSubmit(selected)}>
                 <div className="link__text">
                     Подобрать другой вариант
                 </div>

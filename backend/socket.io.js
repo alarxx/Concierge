@@ -13,12 +13,12 @@ module.exports = (server, sessionMiddleware, env) => {
     io.use(wrap(sessionMiddleware));
 
     io.use((socket, next)=>{
-        // console.log(socket.request.session);
+        // console.log(websocket.request.session);
         next();
     });
 
     io.on('connection', socket => {
-        // console.log(`connected socket ${socket.id}`);
+        // console.log(`connected websocket ${websocket.id}`);
     });
 
     return io;

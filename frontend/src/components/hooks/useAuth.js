@@ -20,6 +20,7 @@ export default function useAuth(){
                     ...opt
                 });
                 const user = await res.json();
+                console.log(user)
                 setUserLoading(false);
                 setUserError(null);
                 setUser(user);
