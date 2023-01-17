@@ -1142,6 +1142,9 @@ input[type="date"]:not(:empty) {
 .chat-attach {
     width: 228px;
 }
+.attach, .send {
+    cursor: pointer;
+}
 .btn-withicon {
     padding: 14px;
     align-items: center;
@@ -1281,7 +1284,7 @@ textarea::-webkit-scrollbar {
     position: absolute;
     bottom: 0;
     left: 0;
-    padding: 17px 20px 26px 20px;
+    padding: 10px 20px 26px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1294,7 +1297,6 @@ textarea::-webkit-scrollbar {
     width: 100%;
 }
 .chat-controls-attach__title {
-    margin-top: 16px;
     margin-bottom: 16px;
     font-weight: 600;
     font-size: 14px;
@@ -1304,6 +1306,10 @@ textarea::-webkit-scrollbar {
 }
 .chat-controls-attach__actions .btn:last-child {
     margin-bottom: 0;
+}
+.chat-controls-attach__close {
+    padding: 12px;
+    cursor: pointer;
 }
 .btn-toarchive {
     background: rgba(77, 84, 92, 0.08);
