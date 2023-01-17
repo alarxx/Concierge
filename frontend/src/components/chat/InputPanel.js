@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import MenuIcon from "../../icons/menu.svg";
 import SendIcon from "../../icons/send.svg";
-import AttachPanel from "../../components/chat/AttachPanel";
 
 export default function InputPanel({
                                          initInput="",
@@ -17,11 +16,6 @@ export default function InputPanel({
 
     return (
         <div className="chat__controlpanel">
-<<<<<<< HEAD
-
-=======
-            
->>>>>>> 296f7332006a3c3307da3312fa1ad9db2deb4d72
             <div className="chat-controls-panel">
                 <div className="chat-controls-panel__left attach">
                     <MenuIcon />
