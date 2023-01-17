@@ -6,7 +6,7 @@ import ControlPanel from "../../../../arch/ControlPanel";
 import Workflow from "../../phone/Workflow";
 import Day from "../../chat/Day";
 import ChoiceForm from "../../chat/ChoiceForm";
-import DocAttach from "../../chat/DocAttach";
+import Document from "../../chat/Document";
 import InputPanel from "../../chat/InputPanel";
 import ChoicePanel from "../../chat/ChoicePanel";
 import toggleArrayElement from "../../../handlers/toggleArrayElement";
@@ -51,7 +51,7 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
                         );
                     }
                     else if(message.type==='file') {
-                        return (<DocAttach />);
+                        return (<Document isLoaded={message.isLoaded}/>);
                     }
                     else if(message.type==='form'){
                         // В messageForm должно отличаться только selected,
@@ -89,7 +89,8 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
                 })}
 
                 {/*<Day day={"Сегодня"}/>*/}
-                {/*<DocAttach />*/}
+                {/*<Document />*/}
+
             </Container>
 
             {formsSelected.length===0 &&

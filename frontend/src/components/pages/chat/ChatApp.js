@@ -106,6 +106,7 @@ const messagesDefault = [
     },
     {
         type: 'file',
+        isLoaded: true,
         id: '127',
         time: '01 : 00',
         sender: '2'
