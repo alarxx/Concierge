@@ -115,17 +115,21 @@ body {
 .btn-next, .btn-prev {
     /* width: 110px; */
 }
-.btn-next svg {
+
+.btn-next svg, .btn-icon svg {
     width: 16px;
     margin-left: 10px;
 }
-.btn-next svg path {
+.btn-next svg path, .btn-icon svg path {
     stroke: #ffff;
 }
 .btn-prev svg {
     width: 16px;
     margin-right: 10px;
     transform: rotate(180deg);    
+}
+.btn-attchinchat {
+    background: #4D545C;
 }
 
 .input {
@@ -1036,7 +1040,7 @@ input[type="date"]:not(:empty) {
 .phone_workspace {
     /* height: 640px; */
     position: relative;
-    padding-bottom: 40px;
+    padding-bottom: 10px;
 }
 
 .chat_workflow {
@@ -1245,4 +1249,45 @@ textarea::-webkit-scrollbar {
 .backbtn-control, .info-control {
     width: 40px;
     cursor: pointer;
+}
+
+
+.chat-controls-attach {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 17px 20px 26px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    box-shadow: 0px 8px 16px rgba(30, 38, 47, 0.04);
+    border-radius: 32px 32px 0px 0px;
+}
+.chat-controls-attach__actions {
+    width: 100%;
+}
+.chat-controls-attach__title {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.chat-controls-attach__actions .btn {
+    margin-bottom: 16px;
+}
+.chat-controls-attach__actions .btn:last-child {
+    margin-bottom: 0;
+}
+.btn-toarchive {
+    background: rgba(77, 84, 92, 0.08);
+    color: black;
+}
+.btn-toarchive svg path {
+    stroke: #4D545C;
+}
+.chat__controlpanel {
+    position: relative;
 }
