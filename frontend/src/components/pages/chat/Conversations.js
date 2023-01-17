@@ -4,10 +4,11 @@ import Workflow from "../../phone/Workflow";
 import Navbar from "../../phone/Navbar";
 import Menu from "../../phone/Menu";
 import Container from "../../phone/Container";
-import NewButton from "../../phone/NewButton";
+import ArchiveButton from "../../chat/ArchiveButton";
 import Chats from "../../chat/Chats";
-import ArchiveLink from "../../chat/ArchiveLink";
+import YummyButton from "../../chat/YummyButton";
 import ChatItem from "../../chat/ChatItem";
+import CreateIcon from "../../../icons/arrow-right.svg"
 
 export default function Conversations({ conversations, openChat }){
     return (
@@ -15,7 +16,8 @@ export default function Conversations({ conversations, openChat }){
             <Navbar title={"Мои заявки"}/>
 
             <Container>
-                <NewButton name={"Новый запрос"}/>
+                <ArchiveButton />
+                <YummyButton name={"Заказать услугу"} icon={<CreateIcon/>} />
 
                 <Chats>
                     {conversations.map((conversation, i) => {
@@ -27,7 +29,6 @@ export default function Conversations({ conversations, openChat }){
                     })}
                 </Chats>
 
-                <ArchiveLink />
 
             </Container>
 
