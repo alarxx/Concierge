@@ -5,80 +5,29 @@ import {useNavigate} from "react-router-dom";
 
 const conversationsDefault = [
     {
+        id: 1,
         name:"Командировка",
         last_message:"Сообщение сообщение",
         unread_num:3
     },
     {
-        name:"Командировка",
+        id: 2,
+        name:"Командировка2",
         last_message:"Сообщение сообщение",
         unread_num:3
     },
     {
-        name:"Командировка",
+        id: 3,
+        name:"Командировка3",
         last_message:"Сообщение сообщение",
         unread_num:0
     },
     {
-        name:"Командировка",
+        id: 4,
+        name:"Командировка4 ",
         last_message:"Сообщение сообщение",
         unread_num:0
     },
-    {
-        name:"Командировка",
-        last_message:"Сообщение сообщение",
-        unread_num:0
-    },
-    {
-        name:"Командировка",
-        last_message:"Сообщение сообщение",
-        unread_num:0
-    },
-    {
-        name:"Командировка",
-        last_message:"Сообщение сообщение",
-        unread_num:0
-    },
-    {
-        name:"Командировка",
-        last_message:"Сообщение сообщение",
-        unread_num:0
-    },
-    {
-        name:"Командировка",
-        last_message:"Сообщение сообщение",
-        unread_num:0
-    },
-    {
-        name:"Командировка",
-        last_message:"Сообщение сообщение",
-        unread_num:0
-    },
-    {
-        name:"Командировка",
-        last_message:"Сообщение сообщение",
-        unread_num:0
-    },
-    {
-        name:"Командировка",
-        last_message:"Сообщение сообщение",
-        unread_num:0
-    },
-    {
-        name:"Командировка",
-        last_message:"Сообщение сообщение",
-        unread_num:0
-    },
-    {
-        name:"Командировка",
-        last_message:"Сообщение сообщение",
-        unread_num:0
-    },
-    {
-        name:"Командировка",
-        last_message:"Сообщение сообщение",
-        unread_num:0
-    }
 ]
 const hotelsDefault = [
     {
@@ -125,7 +74,7 @@ const messagesDefault = [
         items: hotelsDefault,
         selected: [1],
         submitted: false,
-        sender: '1',
+        sender: 1,
         multiple_choice: true,
     },
     {
@@ -134,7 +83,7 @@ const messagesDefault = [
         items: hotelsDefault,
         selected: [],
         submitted: false,
-        sender: '1',
+        sender: 1,
         multiple_choice: false,
     },
     {
@@ -142,21 +91,21 @@ const messagesDefault = [
         text: 'Текст текст',
         id: '124',
         time: '01 : 00',
-        sender: '2'
+        sender: 2
     },
     {
         type: 'text',
         text: 'Текст текст2',
         id: '125',
         time: '01 : 00',
-        sender: '1'
+        sender: 1
     },
     {
         type: 'text',
         text: 'Прикрепите файл',
         id: '126',
         time: '01 : 00',
-        sender: '2'
+        sender: 2
     },
     {
         type: 'file',
@@ -164,7 +113,7 @@ const messagesDefault = [
         filename: 'userfile.ext',
         id: '127',
         time: '01 : 00',
-        sender: '2'
+        sender: 2
     },
 ]
 
@@ -191,7 +140,7 @@ export default function useChat(socket, order){
 
     function openConversation(conversation){
         // Мы должны проверить состоит ли пользователь в этом conversation
-        navigate(`/chat/${conversation}`)
+        navigate(`/chat/${conversation.id}`)
     }
     function closeConversation(){
         navigate(`/chat`)

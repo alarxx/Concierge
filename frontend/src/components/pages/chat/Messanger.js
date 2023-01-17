@@ -14,6 +14,7 @@ import toggleArrayElement from "../../../handlers/toggleArrayElement";
 
 //message: {type=form, id, items, selected, submitted}
 export default function Messanger({
+                                      conversation,
                                       user,
                                       messages,
                                       setMessages=f=>f,
@@ -36,7 +37,7 @@ export default function Messanger({
 
     return (
         <Workflow>
-            <Navbar title={"Имя консультанта"} back info onBackClick={closeConversation}/>
+            <Navbar title={conversation.name} back info onBackClick={closeConversation}/>
 
             <Container chat>
                 {messages.map((message, messageIndex) => {

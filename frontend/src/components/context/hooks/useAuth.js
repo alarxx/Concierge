@@ -11,6 +11,11 @@ export default function useAuth(socket){
         setInterval(()=>check(), 1000*60*60); // раз в 5 минут перепроверять пользователя
     }, [])
 
+    useEffect(()=>{
+        if(user)
+            console.log(user)
+    }, [user])
+
     const userFetch = (url, opt={}) => {
         (async ()=>{
             setUserLoading(true);
@@ -26,10 +31,9 @@ export default function useAuth(socket){
                     ...opt
                 });
                 const user = await res.json();
-                // console.log(user)
                 setUserLoading(false);
                 setUserError(null);
-                setUser(user);
+                setUser({...user, id: 1}); // id в продакшене не меняем!
             }catch (err){
                 setUserLoading(false);
                 setUserError(err.message);

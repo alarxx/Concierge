@@ -13,15 +13,28 @@ import {useParams} from "react-router-dom";
 export default function ChatApp(){
     const {chatHandler, authHandler} = useAppContext()
 
-    const { conversation } = useParams()
+    const { id } = useParams()
+    const [conversation, setConversation] = useState(id)
 
     const {messages, setMessages, conversations, openConversation, closeConversation} = chatHandler;
     const {user} = authHandler;
 
+    useEffect(()=>{
+        setConversation(conversations.find(obj => obj.id == id))
+    }, [id]);
+
     return (
         <>
             {!conversation && <Conversations conversations={conversations} openConversation={openConversation}/>}
-            {conversation && <Messanger user={user} messages={messages} setMessages={setMessages} closeConversation={closeConversation}/>}
+
+            {conversation &&
+            <Messanger
+                conversation={conversation}
+                user={user}
+                messages={messages}
+                setMessages={setMessages}
+                closeConversation={closeConversation}
+            />}
         </>
     );
 };
