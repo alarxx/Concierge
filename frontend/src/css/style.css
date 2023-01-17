@@ -1135,6 +1135,9 @@ input[type="date"]:not(:empty) {
     border-radius: 8px;
     font-size: 14px;
 }
+.chat__input:focus {
+    outline: 1px solid #1E262F;
+}
 .chat__input::-webkit-input-placeholder {
     color: rgba(53, 53, 53, 0.2);
 }
