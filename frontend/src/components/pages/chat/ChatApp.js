@@ -30,7 +30,7 @@ export default function ChatApp(){
             {conversation &&
             <Messanger
                 conversation={conversation}
-                user={user}
+                user={user?user:{id: 1}}
                 messages={messages}
                 setMessages={setMessages}
                 closeConversation={closeConversation}
