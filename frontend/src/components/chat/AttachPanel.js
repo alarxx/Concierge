@@ -1,12 +1,15 @@
 import React, {useState} from 'react'
 
 import CloseIcon from "../../icons/close.svg";
+<<<<<<< HEAD
 import HouseIcon from "../../icons/house.svg";
 import PersonalCardIcon from "../../icons/personalcard.svg";
 import ArchiveIcon from "../../icons/direct-normal.svg";
 import GalleryIcon from '../../icons/gallery.svg'
+=======
+>>>>>>> 296f7332006a3c3307da3312fa1ad9db2deb4d72
 
-export default function AttachPanel(){
+export default function AttachPanel({title, children}){
 
     return (
         <div className="chat__controlpanel">
@@ -15,6 +18,7 @@ export default function AttachPanel(){
                     <CloseIcon />
                 </div>
                 <div className="chat-controls-attach__title">
+<<<<<<< HEAD
                     Выберите паттерн
                 </div>
                 <div className="chat-controls-attach__actions">
@@ -38,7 +42,11 @@ export default function AttachPanel(){
                         <span>Отправить в архив</span>
                         <ArchiveIcon />
                     </div>
+=======
+                    {title} 
+>>>>>>> 296f7332006a3c3307da3312fa1ad9db2deb4d72
                 </div>
+                {children}
             </div>
         </div>
     );
