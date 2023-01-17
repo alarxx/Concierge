@@ -12,7 +12,7 @@ export default function Home(){
             <h1>[Home page]</h1>
 
             {!userLoading && isAuthenticated() && <h2>{user.email}</h2>}
-            {!userLoading && !isAuthenticated() && <h2>{user.message}</h2>}
+            {!userLoading && !isAuthenticated() && <h2>{user?.message}</h2>}
             {userLoading && <h2>Loading...</h2>}
 
             <nav>
