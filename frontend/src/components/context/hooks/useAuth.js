@@ -5,6 +5,12 @@ export default function useAuth(socket){
     const [userLoading, setUserLoading] = useState(true);
     const [userError, setUserError] = useState();
 
+    useEffect(()=>{
+        // Нужно как-нибудь добавить listener на socket, потому что пользователь может удалиться во время сеанса с другого сеанса
+        check()
+        setInterval(()=>check(), 1000*60*60); // раз в 5 минут перепроверять пользователя
+    }, [])
+
     const userFetch = (url, opt={}) => {
         (async ()=>{
             setUserLoading(true);
@@ -20,7 +26,7 @@ export default function useAuth(socket){
                     ...opt
                 });
                 const user = await res.json();
-                console.log(user)
+                // console.log(user)
                 setUserLoading(false);
                 setUserError(null);
                 setUser(user);
@@ -39,15 +45,12 @@ export default function useAuth(socket){
 
     const logout = () => userFetch('/auth/logout', {method: 'DELETE'})
 
-    useEffect(()=>{
-        check();
-    }, [])
-
     return {
         user, userLoading, userError,
         login,
         register,
         check,
-        logout
+        logout,
+        isAuthenticated: () => Boolean(user?.email),
     };
 }

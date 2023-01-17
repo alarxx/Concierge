@@ -4,6 +4,7 @@ import WorkTypes from "./forms/WorkTypesForm";
 import UserForm from "./forms/UserForm";
 
 import MultistepForm from "../../form/MultistepForm";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const INITIAL_DATA = {
     entity: '',
@@ -16,11 +17,36 @@ const INITIAL_DATA = {
 // forms.map(form => form({...data, updateFields}) )
 const forms = [WorkTypes, UserForm]
 
+/**
+ * Регистрация может перенаправлять с сохранением состояния.
+ * {
+ *  state: {
+ *     redirect, // куда перенаправить после регистрации,
+ *     ...state // все остальное состояние
+ *  }
+ * }
+ * После регистрации у нас удаляется поле state.redirect
+ * */
 export default function Register() {
+
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        console.log("register state", location.state);
+    }, [])
 
     function onSubmit(data){
             // что делать после того, как у нас готова форма?
-            console.log(data);
+            console.log("register", data);
+            if(location.state?.redirect){
+                const state = {...location.state};
+                delete state.redirect;
+                navigate(location.state.redirect, {replace: true, state});
+            }
+            else {
+                navigate('/', {replace: true});
+            }
     }
 
     return (

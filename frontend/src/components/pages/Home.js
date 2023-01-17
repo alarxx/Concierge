@@ -1,18 +1,18 @@
-import React from 'react';
-import {Link} from "react-router-dom";
+import React, {useEffect} from 'react';
+import {Link, useLocation} from "react-router-dom";
 
 import {useAppContext} from "../context/AppContext";
 
 export default function Home(){
     const {authHandler} = useAppContext();
-    const {user, userLoading} = authHandler;
+    const {user, userLoading, isAuthenticated} = authHandler;
 
     return (
         <>
             <h1>[Home page]</h1>
 
-            {!userLoading && user?.email && <h2>{user.email}</h2>}
-            {!userLoading && !user?.email && <h2>Unauthorized</h2>}
+            {!userLoading && isAuthenticated() && <h2>{user.email}</h2>}
+            {!userLoading && !isAuthenticated() && <h2>{user.message}</h2>}
             {userLoading && <h2>Loading...</h2>}
 
             <nav>

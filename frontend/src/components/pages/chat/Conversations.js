@@ -12,7 +12,7 @@ import YummyButton from "../../chat/YummyButton";
 import ChatItem from "../../chat/ChatItem";
 import CreateIcon from "../../../icons/arrow-right.svg"
 
-export default function Conversations({ conversations, openChat }){
+export default function Conversations({ conversations, openConversation }){
     const navigate = useNavigate();
 
     return (
@@ -21,14 +21,14 @@ export default function Conversations({ conversations, openChat }){
 
             <Container>
                 <ArchiveButton />
-                <YummyButton name={"Заказать услугу"} icon={<CreateIcon/>} onClick={e=>navigate('/order')}/>
+                <YummyButton name={"Заказать услугу"} icon={<CreateIcon/>} onClick={ e => navigate('/order')}/>
 
                 <Chats>
                     {conversations.map((conversation, i) => {
                         return <ChatItem
                             key={i}
                             {...conversation}
-                            onClick={e => openChat(conversation)}
+                            onClick={e => openConversation(conversation)}
                         />
                     })}
                 </Chats>

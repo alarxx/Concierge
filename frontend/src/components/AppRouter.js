@@ -26,6 +26,7 @@ export default function AppRouter(){
 				<Route path="/logout" element={<Logout />} />
 
 				<Route path='/chat' element={<ChatApp />} />
+				<Route path='/chat/:conversation' element={<ChatApp />} />
 
 				<Route path='/order' element={<Order />} />
 

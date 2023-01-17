@@ -10,6 +10,7 @@ const forms = [F1_Plans, F2_Needs, F3, F4_Tickets, F5_Housing, HotelsSelection6,
 export default function MultistepForm({
                                           forms=[],
                                           INITIAL_DATA={},
+                                          INIT_STEP=0,
                                           onSubmit=f=>f,
                                           nextButtonName="Далее",
                                           backButtonName="Назад",
@@ -20,14 +21,18 @@ export default function MultistepForm({
 
     function updateFields(fields){
         setData(prev => {
-            console.log({...prev, ...fields});
+            // console.log({...prev, ...fields});
             return ({...prev, ...fields})
         });
     }
 
-    const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next} = useMultistepForm(
+    const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo} = useMultistepForm(
         forms.map(form => form({...data, updateFields}) )
     );
+
+    useEffect(()=>{
+        goTo(INIT_STEP)
+    }, [])
 
     function onSubmitInside(data){
         if(!isLastStep){

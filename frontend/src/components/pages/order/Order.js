@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 import F1_Plans from "./forms/F1_Plans";
 import F2_Needs from "./forms/F2_Needs";
@@ -12,7 +12,9 @@ import F8_Calculation from "./forms/F8_Calculation";
 
 import MultistepForm from "../../form/MultistepForm";
 
-const INITIAL_DATA = {
+import {useAppContext} from "../../context/AppContext";
+
+const INITIAL_DATA_DEFAULT = {
     type: '',
     needs: [],
     num_of_people: 0,
@@ -34,7 +36,7 @@ const INITIAL_DATA = {
     preferred_services: []
 }
 
-const forms = [
+const FORMS = [
     F1_Plans,
     F2_Needs,
     F3_General,
@@ -45,21 +47,49 @@ const forms = [
     F8_Calculation
 ]
 
+const useInitialData = (DATA_DEFAULT) => {
+    const location = useLocation();
+    const [filledBefore, ] = useState(location.state?.order)
+    const [initData, ] = useState( filledBefore ? location.state.order : DATA_DEFAULT)
+    return {initData, filledBefore}
+}
+
+/**
+ * Нам нужно как-то сохранять контекст между роутами
+ * */
 export default function Order({ }) {
     const navigate = useNavigate();
 
-    function onSubmit(data){
-        // что делать после того, как у нас готова форма?
-        console.log(data);
-        navigate('/register')
+    const {initData, filledBefore} = useInitialData(INITIAL_DATA_DEFAULT);
+
+    const {authHandler} = useAppContext();
+    const {isAuthenticated} = authHandler;
+
+    function onSubmit(data) {
+        if (!isAuthenticated()) {
+            navigate('/register', {
+                replace: true,
+                state: {
+                    redirect: '/order',
+                    order: data
+                }
+            });
+        }
+        else {
+            // Убеждаемся, что пользователь авторизован и создаем заказ
+            console.log("order", data);
+        }
     }
 
     return (
-        <MultistepForm
-            forms={forms}
-            INITIAL_DATA={INITIAL_DATA}
-            onSubmit={onSubmit}
-            submitButtonName={"Оставить заявку"}
-        />
+        <>
+            <MultistepForm
+                forms={FORMS}
+                INITIAL_DATA={initData}
+                INIT_STEP={filledBefore ? 'last' : 0}
+                onSubmit={onSubmit}
+                submitButtonName={"Оставить заявку"}
+            />
+        </>
     );
 }

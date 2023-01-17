@@ -5,18 +5,23 @@ import React, {useEffect, useState} from 'react'
 import Conversations from "./Conversations";
 import Messanger from "./Messanger";
 import {useAppContext} from "../../context/AppContext";
-
+import {useParams} from "react-router-dom";
 
 /**
- * Должен грузить
+ * Должен показывать компонент Conversations на desktop-e, на мобилке же нет.
  * */
 export default function ChatApp(){
-    const {socketHandler} = useAppContext()
+    const {chatHandler, authHandler} = useAppContext()
+
+    const { conversation } = useParams()
+
+    const {messages, setMessages, conversations, openConversation, closeConversation} = chatHandler;
+    const {user} = authHandler;
 
     return (
         <>
-            {/*{!isChatOpen && <Conversations conversations={conversationsDefault} openChat={openChat}/>}*/}
-            {/*{isChatOpen && <Messanger user={user} messages={messages} setMessages={setMessages} closeChat={closeChat}/>}*/}
+            {!conversation && <Conversations conversations={conversations} openConversation={openConversation}/>}
+            {conversation && <Messanger user={user} messages={messages} setMessages={setMessages} closeConversation={closeConversation}/>}
         </>
     );
 };

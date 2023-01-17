@@ -13,7 +13,14 @@ import toggleArrayElement from "../../../handlers/toggleArrayElement";
 
 
 //message: {type=form, id, items, selected, submitted}
-export default function Messanger({ user, messages, setMessages=f=>f, closeChat, onSend=console.log, onChoice=f=>f }){
+export default function Messanger({
+                                      user,
+                                      messages,
+                                      setMessages=f=>f,
+                                      closeConversation=f=>f,
+                                      onSend=console.log,
+                                      onChoice= f=>f,
+                                  }){
 
     const [formsSelected, setFormsSelected] = useState([])
     useEffect(()=>{
@@ -29,7 +36,7 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
 
     return (
         <Workflow>
-            <Navbar title={"Имя консультанта"} back info onBackClick={closeChat}/>
+            <Navbar title={"Имя консультанта"} back info onBackClick={closeConversation}/>
 
             <Container chat>
                 {messages.map((message, messageIndex) => {

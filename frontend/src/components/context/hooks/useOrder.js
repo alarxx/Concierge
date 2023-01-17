@@ -1,11 +1,14 @@
 import React, {useState} from 'react'
 
+/**
+ * Должен предоставлять все функции для загрузки всех ордеров, создания нового, удаления, изменения,
+ * */
 export default function useOrder(socket){
     const [orders, setOrders] = useState();
-    const [userLoading, setUserLoading] = useState(true);
-    const [userError, setUserError] = useState();
+    const [ordersLoading, setUserLoading] = useState(true);
+    const [ordersError, setUserError] = useState();
 
-    const userFetch = (url, opt={}) => {
+    const ordersFetch = (url, opt={}) => {
         (async ()=>{
             setUserLoading(true);
             try{
@@ -30,4 +33,6 @@ export default function useOrder(socket){
             }
         })();
     }
+
+    return {};
 }

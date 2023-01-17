@@ -1,13 +1,17 @@
 import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
+import {useAppContext} from "../../context/AppContext";
 
 export default function Login(){
     const navigate = useNavigate();
 
+    const {authHandler} = useAppContext();
+    const {login} = authHandler;
+
     const onSubmit = e => {
         e.preventDefault();
-        auth.login({
+        login({
             email: e.target.email.value,
             password: e.target.password.value,
         });
@@ -17,7 +21,7 @@ export default function Login(){
     return (
         <>
             <h1>Login Page</h1>
-            <form onSubmit={onSubmit} action="/auth/Login" method="POST">
+            <form onSubmit={onSubmit}>
                 <div>
                     <label htmlFor="InputEmail">Email</label>
                     <input type="text" id="InputEmail" name="email" />

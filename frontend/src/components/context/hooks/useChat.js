@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -168,42 +169,50 @@ const messagesDefault = [
 ]
 
 /**
- * Должен предоставлять Conversations, Messages, Notifications
+ * Мы сразу загружаем всю нужную информацию (Все беседы, сообщения, где состоит пользователь, мы с бэка это делаем. Когда мы присоединяемся к беседе, мы должны дополнить наши данные)
+ * Должен предоставлять Conversations, Messages, Notifications, возможно Participants
+ * Должен предоставлять данные о том, какая комната сейчас открыта у пользователя
  * */
 export default function useChat(socket, order){
+    const navigate = useNavigate()
 
+    const [conversations, setConversations] = useState(conversationsDefault)
     const [messages, setMessages] = useState(messagesDefault);
-    const [message, setMessage] = useState('');
-    const [room, setRoom] = useState('');
 
-    const [isChatOpen, setIsChatOpen] = useState(false)
-    const [conversation, setConversation] = useState();
-
-    function openChat(conv){
-        setConversation(conv)
-        setIsChatOpen(true)
-    }
-    function closeChat(){
-        setConversation(null)
-        setIsChatOpen(false)
+    function _addMessage(message){
+        setMessages(prevMessages => [...prevMessages, message]);
     }
 
     useEffect(() => {
-        socket.on('chat-message', (msg) => {
-            setMessages(prevMessages => [...prevMessages, msg]);
+        socket.on('request-message', (message) => {
+            _addMessage(message);
         });
     }, []);
 
-    const submitMessage = e => {
-        e.preventDefault();
-        socket.emit('chat-message', message, room);
-        setMessage('');
+    function openConversation(conversation){
+        // Мы должны проверить состоит ли пользователь в этом conversation
+        navigate(`/chat/${conversation}`)
+    }
+    function closeConversation(){
+        navigate(`/chat`)
+    }
+
+    const sendMessage = (message, conversation) => {
+        socket.emit('send-message', message, conversation);
+        _addMessage(message);
     };
 
-    const submitRoom = e => {
-        e.preventDefault();
-        socket.emit('join-room', room);
+    const joinConversation = conversation => {
+        socket.emit('join-conversation', conversation);
     };
 
-    return {}
+    return {
+        conversations,
+        messages,
+        setMessages,
+        openConversation,
+        closeConversation,
+        sendMessage,
+        joinConversation,
+    }
 }
