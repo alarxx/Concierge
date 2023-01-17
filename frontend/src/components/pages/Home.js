@@ -25,6 +25,7 @@ export default function Home(){
                 <li><Link to="/logout">Log Out</Link></li>
                 <li><Link to="/chat">Chat</Link></li>
                 <li><Link to="/order">Order</Link></li>
+                <li><Link to="/partners">Partners</Link></li>
             </nav>
         </>
     );
