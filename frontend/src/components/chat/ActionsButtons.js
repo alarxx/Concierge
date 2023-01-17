@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
 
 import HouseIcon from "../../icons/house.svg";
-import PersonalcardIcon from "../../icons/personalcard.svg";
+import PersonalCardIcon from "../../icons/personalcard.svg";
 import ArchiveIcon from "../../icons/direct-normal.svg";
+import GalleryIcon from "../../icons/gallery.svg"
 
 export default function ActionButtons(){
 
@@ -14,7 +15,7 @@ export default function ActionButtons(){
             </div>
             <div className="btn btn-main btn-icon btn-attchinchat">
                 <span>Получить файлы</span>  
-                <PersonalcardIcon />
+                <PersonalCardIcon />
             </div>
             <div className="btn btn-main btn-icon btn-attchinchat">
                 <span>Отправить файл</span>  

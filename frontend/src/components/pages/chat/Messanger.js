@@ -39,14 +39,15 @@ export default function Messanger({
 
     const [control, setControl] = useState();
     const [isAttach, setIsAttach] = useState(false);
+
     useEffect(()=>{
         if(formsSelected.length !== 0)
-            setControl('form')
+            setControl('choice')
         else if(isAttach){
             setControl('attach')
         }
         else{
-
+            setControl('input')
         }
     })
 
@@ -106,7 +107,8 @@ export default function Messanger({
                 // Отправка на сервер наверное с помощью onSend хз
             }}/>}
 
-            {control==='input' && <InputPanel onSend={onSend}/>}
+            {control==='input' && <InputPanel onLeftClick={e=>setIsAttach(true)}
+                                              onSend={onSend}/>}
             {control==='attach' &&
                 <AttachPanel title="Выберите паттерн" >
                     <ActionButtons/>

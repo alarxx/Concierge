@@ -3,9 +3,10 @@ import MenuIcon from "../../icons/menu.svg";
 import SendIcon from "../../icons/send.svg";
 
 export default function InputPanel({
-                                         initInput="",
-                                         onSend=console.log,
-                                     }){
+                                       initInput="",
+                                       onSend=console.log,
+                                       onLeftClick=f=>f,
+                                   }){
 
     const [input, setInput] = useState(initInput);
 
@@ -17,7 +18,7 @@ export default function InputPanel({
     return (
         <div className="chat__controlpanel">
             <div className="chat-controls-panel">
-                <div className="chat-controls-panel__left attach">
+                <div className="chat-controls-panel__left attach" onClick={onLeftClick}>
                     <MenuIcon />
                 </div>
                 <div className="chat-controls-panel__input">
