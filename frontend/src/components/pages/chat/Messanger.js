@@ -110,7 +110,7 @@ export default function Messanger({
             {control==='input' && <InputPanel onLeftClick={e=>setIsAttach(true)}
                                               onSend={onSend}/>}
             {control==='attach' &&
-                <AttachPanel title="Выберите паттерн" >
+                <AttachPanel title="Выберите паттерн" onClose={e=>setIsAttach(false)}>
                     <ActionButtons/>
                 </AttachPanel>
             }

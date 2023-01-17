@@ -11,6 +11,7 @@ export default function InputPanel({
     const [input, setInput] = useState(initInput);
 
     function send( e ){
+        if(!input) return;
         onSend(input)
         setInput("")
     }
