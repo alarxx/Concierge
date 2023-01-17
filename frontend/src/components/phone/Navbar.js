@@ -33,8 +33,8 @@ export default function Navbar({
                 <InfoCirce />
             </div>}
             {select &&
-            <div class="select-navbar">
-                <div class="select__name">
+            <div className="select-navbar">
+                <div className="select__name">
                     Жилье
                 </div>
                 <ArrowDownIcon/>
