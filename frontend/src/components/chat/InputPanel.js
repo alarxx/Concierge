@@ -34,7 +34,7 @@ export default function InputPanel({
                         }}
                     />
                 </div>
-                <div className="chat-controls-panel__right send" onClick={e => send(e)}>
+                <div className="chat-controls-panel__right send" onClick={send}>
                     <SendIcon />
                 </div>
             </div>

@@ -97,6 +97,19 @@ const messagesDefault = [
         time: '01 : 00',
         sender: '1'
     },
+    {
+        type: 'text',
+        text: 'Прикрепите файл',
+        id: '126',
+        time: '01 : 00',
+        sender: '2'
+    },
+    {
+        type: 'file',
+        id: '127',
+        time: '01 : 00',
+        sender: '2'
+    },
 ]
 
 export default function ChatApp(){

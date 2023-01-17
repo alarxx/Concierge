@@ -30,6 +30,9 @@ const MessageSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'File'
     },
+    description: {
+      type: String,
+    },
     form: {
         type: Object,
     },

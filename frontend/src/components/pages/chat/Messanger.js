@@ -50,6 +50,9 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
                             />
                         );
                     }
+                    else if(message.type==='file') {
+                        return (<DocAttach />);
+                    }
                     else if(message.type==='form'){
                         // В messageForm должно отличаться только selected,
                         // Как еще можно решить проблему куда именно вставлять selected? Чувствую что можно подругому
@@ -102,6 +105,7 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
                     return false
                 }))
                 setMessages(messagesClone)
+                // Отправка на сервер
             }}/>}
 
             {/* Menu */}
