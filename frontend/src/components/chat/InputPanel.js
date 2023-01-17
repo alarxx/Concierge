@@ -22,17 +22,18 @@ export default function InputPanel({
                     <GalleryIcon />
                 </div>
                 <div className="chat-controls-panel__input">
-                    <input
+                    <textarea
                         type="text"
                         className="chat__input"
                         placeholder="Введите сообщение"
+                        rows="1"
                         value={input}
                         onChange={ e => setInput(e.target.value) }
                         onKeyDown={ e => {
                             if(e.key==='Enter')
                                 send(e)
                         }}
-                    />
+                    ></textarea>
                 </div>
                 <div className="chat-controls-panel__right send" onClick={e => send(e)}>
                     <SendIcon />
