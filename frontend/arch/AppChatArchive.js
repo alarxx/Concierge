@@ -2,7 +2,7 @@
  * Придется писать хук для отправки и получения сообщений
  * */
 import React, {useEffect, useState} from 'react';
-import { useSocket } from '../src/websocket/socket-context';
+import { useSocket } from '../src/websocket/context/socket-context';
 
 export default function AppChatArchive(){
     const {socket, isConnected} = useSocket();

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 /**
  * Придется писать хук для отправки и получения сообщений
  * */
-import { useSocket } from '../../../websocket/socket-context';
+import { useSocket } from '../../../websocket/context/socket-context';
 import Conversations from "./Conversations";
 import Messanger from "./Messanger";
 
