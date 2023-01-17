@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 
 import {BrowserRouter} from "react-router-dom";
 
-import App from "./components/App.js"
+import AppRouter from "./components/AppRouter.js"
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(<BrowserRouter><App/></BrowserRouter>);
+root.render(<BrowserRouter><AppRouter/></BrowserRouter>);

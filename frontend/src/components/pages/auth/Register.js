@@ -16,7 +16,7 @@ const INITIAL_DATA = {
 // forms.map(form => form({...data, updateFields}) )
 const forms = [WorkTypes, UserForm]
 
-export default function Register({ auth }) {
+export default function Register() {
 
     function onSubmit(data){
             // что делать после того, как у нас готова форма?

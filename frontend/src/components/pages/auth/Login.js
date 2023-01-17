@@ -1,7 +1,8 @@
 import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
-import useAuth from "../../hooks/useAuth";
-export default function Login({auth}){
+
+export default function Login(){
     const navigate = useNavigate();
 
     const onSubmit = e => {

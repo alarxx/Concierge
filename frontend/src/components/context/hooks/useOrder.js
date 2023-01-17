@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react'
 
-export default function useAuth(){
-    const [user, setUser] = useState();
+export default function useOrder(socket){
+    const [orders, setOrders] = useState();
     const [userLoading, setUserLoading] = useState(true);
     const [userError, setUserError] = useState();
 
@@ -30,24 +30,4 @@ export default function useAuth(){
             }
         })();
     }
-
-    const login = (body) => userFetch('/auth/login', {method: 'POST', body})
-
-    const register = (body) => userFetch('/auth/register', {method: 'POST', body})
-
-    const check = () => userFetch('/auth')
-
-    const logout = () => userFetch('/auth/logout', {method: 'DELETE'})
-
-    useEffect(()=>{
-        check();
-    }, [])
-
-    return {
-        user, userLoading, userError,
-        login,
-        register,
-        check,
-        logout
-    };
 }
