@@ -1049,6 +1049,7 @@ input[type="date"]:not(:empty) {
     box-shadow: 0px 1px 15px -4px rgb(34 60 80 / 20%);
     color: white;
     cursor: pointer;
+    font-size: 14px;
 }
 .btn-create-order svg path {
     stroke: white;
@@ -1318,6 +1319,7 @@ textarea::-webkit-scrollbar {
 .btn-second {
     background: rgba(30, 38, 47, 0.08);
     color: #5e5e5e;
+    font-size: 14px;
 }
 .btn-second svg {
     margin-left: 8px;
@@ -1558,9 +1560,10 @@ textarea::-webkit-scrollbar {
 }
 
 .reverse-column {
+    margin-top: 0;
     display: flex;
     flex-direction: column-reverse;
 }
-.reverse-column .in_form_wrapper {
+.reverse-column .form__body {
     margin-top: 36px;
 }
