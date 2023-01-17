@@ -25,7 +25,7 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
             return acc;
         }, []);
         setFormsSelected(indexes)
-    },[])
+    },[messages])
 
     /*useEffect(()=>{
         console.log(formsSelected);
@@ -51,7 +51,7 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
                         );
                     }
                     else if(message.type==='file') {
-                        return (<Document isLoaded={message.isLoaded}/>);
+                        return (<Document key={messageIndex} message={message} />);
                     }
                     else if(message.type==='form'){
                         // В messageForm должно отличаться только selected,
@@ -65,7 +65,7 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
                                                     {...message, selected: toggleArrayElement(message.selected, item.service)} :
                                                     {...message, selected: message.selected.includes(item.service)?[]:[item.service]}
 
-                                                setFormsSelected(formSelected_prev => {
+                                                /*setFormsSelected(formSelected_prev => {
                                                     const newV = [...formSelected_prev]
                                                     const indexOfForm = newV.indexOf(messageIndex)
                                                     if(msg.selected.length===0) {
@@ -75,7 +75,7 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
                                                             newV.push(messageIndex)
                                                     }
                                                     return newV;
-                                                })
+                                                })*/
 
                                                 const messagesCopy = [...messages];
                                                 messagesCopy[messageIndex] = msg
@@ -93,21 +93,22 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
 
             </Container>
 
-            {formsSelected.length===0 &&
-            <InputPanel onSend={onSend}/>}
+            {formsSelected.length === 0 ?
 
-            {/*Нужно сделать чтобы сообщение-форма помечалось как submitted и отправку нужно сделать и измененить состояние меседжс*/}
-            {formsSelected.length!==0 &&
-            <ChoicePanel onClick={e => {
-                const messagesClone = [...messages]
-                setFormsSelected(formsSelected.filter(i => {
-                    console.log(`chose ${i}`, messagesClone[i])
-                    messagesClone[i].submitted = true;
-                    return false
-                }))
-                setMessages(messagesClone)
-                // Отправка на сервер
-            }}/>}
+                <InputPanel onSend={onSend}/> :
+
+                <ChoicePanel onClick={e => {
+                    const messagesClone = [...messages]
+                    setFormsSelected(formsSelected.filter(i => {
+                        console.log(`chose ${i}`, messagesClone[i])
+                        messagesClone[i].submitted = true;
+                        return false
+                    }))
+                    setMessages(messagesClone)
+                    // Отправка на сервер наверное с помощью onSend хз
+                }}/>
+            }
+
 
             {/* Menu */}
         </Workflow>
