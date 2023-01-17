@@ -115,17 +115,21 @@ body {
 .btn-next, .btn-prev {
     /* width: 110px; */
 }
-.btn-next svg {
+
+.btn-next svg, .btn-icon svg {
     width: 16px;
     margin-left: 10px;
 }
-.btn-next svg path {
+.btn-next svg path, .btn-icon svg path {
     stroke: #ffff;
 }
 .btn-prev svg {
     width: 16px;
     margin-right: 10px;
     transform: rotate(180deg);    
+}
+.btn-attchinchat {
+    background: #4D545C;
 }
 
 .input {
@@ -859,6 +863,8 @@ input[type="date"]:not(:empty) {
 .phone_workflow {
     position: relative;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 .menu {
     width: 100%;
@@ -896,6 +902,7 @@ input[type="date"]:not(:empty) {
     padding: 21px;
     background: #FFFFFF;
     box-shadow: 0px 8px 16px rgba(30, 38, 47, 0.04);
+    flex: 0 0 auto;
 }
 .navbar__left, .navbar__right {
     display: flex;
@@ -1031,15 +1038,16 @@ input[type="date"]:not(:empty) {
     transform: translate(-50%, -50%);
 }
 .phone_workspace {
-    height: 640px;
+    /* height: 640px; */
     position: relative;
-    padding-bottom: 40px;
+    padding-bottom: 10px;
 }
 
 .chat_workflow {
-    height: 700px;
+    height: 100px;
     padding-top: 14px;
     overflow: auto;
+    flex: 1 0 auto;
 }
 .chat-day__wrapper {
     display: flex;
@@ -1053,9 +1061,7 @@ input[type="date"]:not(:empty) {
     box-shadow: 0px 8px 16px rgba(30, 38, 47, 0.04);
     width: 100%;
     padding: 14px 20px 26px 20px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    flex: 0 0 auto;
 }
 
 .chat__controlpanel-unarchive {
@@ -1179,6 +1185,11 @@ input[type="date"]:not(:empty) {
 .details-card:last-child {
     margin-bottom: 0;
 }
+.details-card-comment {
+    background: rgba(227, 227, 227, 0.4);
+    border: none;
+}
+
 .details-card__title {
     font-weight: 600;
     font-size: 12px;
@@ -1218,4 +1229,65 @@ input[type="date"]:not(:empty) {
     line-height: 12px;
     /* identical to box height, or 100% */
     color: rgba(53, 53, 53, 0.6);
+}
+
+textarea {
+    width: 100%;
+    border: 1px solid rgba(30, 38, 47, 0.2);
+    border-radius: 8px;
+    resize: none;
+    padding: 16px 20px;
+    font-size: 14px;
+}
+textarea:focus {
+    outline: 1px solid #1E262F;
+}
+textarea::-webkit-scrollbar {
+    display: none;
+}
+
+.backbtn-control, .info-control {
+    width: 40px;
+    cursor: pointer;
+}
+
+
+.chat-controls-attach {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 17px 20px 26px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    box-shadow: 0px 8px 16px rgba(30, 38, 47, 0.04);
+    border-radius: 32px 32px 0px 0px;
+}
+.chat-controls-attach__actions {
+    width: 100%;
+}
+.chat-controls-attach__title {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.chat-controls-attach__actions .btn {
+    margin-bottom: 16px;
+}
+.chat-controls-attach__actions .btn:last-child {
+    margin-bottom: 0;
+}
+.btn-toarchive {
+    background: rgba(77, 84, 92, 0.08);
+    color: black;
+}
+.btn-toarchive svg path {
+    stroke: #4D545C;
+}
+.chat__controlpanel {
+    position: relative;
 }

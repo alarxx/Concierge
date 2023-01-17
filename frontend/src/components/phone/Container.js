@@ -13,9 +13,9 @@ export default function Container({chat=false, children }){
     });*/
 
     return (
-        <div className="container">
+        <div className={`phone_workspace ${chat?'chat_workflow':''}`}>
             {/*ref={chat?chatList:null}*/}
-            <div className={`phone_workspace ${chat?'chat_workflow':''}`} >
+            <div className="container" >
                 {children}
             </div>
 
