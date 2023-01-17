@@ -181,13 +181,14 @@ export default function ChatApp(){
     const [room, setRoom] = useState('');
 
     const [isChatOpen, setIsChatOpen] = useState(false)
-    const [chat, setChat] = useState();
+    const [conversation, setConversation] = useState();
 
-    function openChat(conversation){
-        setChat(conversation)
+    function openChat(conv){
+        setConversation(conv)
         setIsChatOpen(true)
     }
     function closeChat(){
+        setConversation(null)
         setIsChatOpen(false)
     }
 
