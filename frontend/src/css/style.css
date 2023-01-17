@@ -868,14 +868,12 @@ input[type="date"]:not(:empty) {
 }
 .menu {
     width: 100%;
-    position: absolute;
-    left: 0px;
-    bottom: 0;
     padding-top: 26px;
     padding-bottom: 30px;
     background: #1E262F;
     box-shadow: 0px -7px 16px rgba(30, 38, 47, 0.12);
     z-index: 10000;
+    flex: 0 0 auto;
 }
 .menu__li {
     margin-right: 74px;
@@ -898,7 +896,6 @@ input[type="date"]:not(:empty) {
 .navbar {    
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 21px;
     background: #FFFFFF;
     box-shadow: 0px 8px 16px rgba(30, 38, 47, 0.04);
@@ -927,6 +924,7 @@ input[type="date"]:not(:empty) {
     stroke: #A3A5A6;
 }
 .navbar__title {
+    width: 100%;
     font-weight: 600;
     font-size: 16px;
     line-height: 22px;
@@ -935,13 +933,9 @@ input[type="date"]:not(:empty) {
     text-align: center;
 }
 
-.applications__new {
+.archive {
     margin-top: 18px;
     margin-bottom: 8px;
-}
-.chats {
-    height: 530px;
-    overflow: auto;
 }
 .chat-item {
     position: relative;
@@ -1007,6 +1001,7 @@ input[type="date"]:not(:empty) {
 }
 
 .link {
+    display: flex;
     color: #2086E5; 
     cursor: pointer;
 }
@@ -1028,19 +1023,34 @@ input[type="date"]:not(:empty) {
 .link__icon path {
     stroke: #2086E5
 }
-.archive {
+.btn-create-order {
+    padding: 20px;
     position: absolute;
-    bottom: 0;
+    bottom: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 11;
+    background: #1E262F;
+    border-radius: 22px;
+    box-shadow: 0px 1px 15px -4px rgb(34 60 80 / 20%);
+    color: white;
+    cursor: pointer;
 }
+.btn-create-order svg path {
+    stroke: white;
+}
+.btn-create-order span {
+    margin-right: 8px;
+}
+
 .phone_workspace {
-    /* height: 640px; */
-    position: relative;
+    height: 100%;
+    /* position: relative; */
     padding-bottom: 10px;
+    overflow: auto;
 }
 
 .chat_workflow {
@@ -1135,11 +1145,11 @@ input[type="date"]:not(:empty) {
     stroke: white;
 }
 
-.archives {
+/* .archives {
     height: 595px;
     margin-top: 16px;
     margin-bottom: 8px;
-}
+} */
 
 .chat-download {
     margin-top: 24px;
@@ -1290,4 +1300,14 @@ textarea::-webkit-scrollbar {
 }
 .chat__controlpanel {
     position: relative;
+}
+
+.btn-second {
+    background: rgba(30, 38, 47, 0.08);
+    color: #5e5e5e;
+}
+.btn-second svg {
+    margin-left: 8px;
+    color: #5e5e5e;
+    opacity: 60%;
 }
