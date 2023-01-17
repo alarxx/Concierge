@@ -123,6 +123,9 @@ body {
 .btn-next svg path, .btn-icon svg path {
     stroke: #ffff;
 }
+.btn-prev {
+    padding: 10px 20px 10px 0;
+}
 .btn-prev svg {
     width: 16px;
     margin-right: 10px;
@@ -1558,4 +1561,6 @@ textarea::-webkit-scrollbar {
     display: flex;
     flex-direction: column-reverse;
 }
-/* .reverse-column . */
+.reverse-column {
+
+}
