@@ -711,6 +711,10 @@ body {
 
     color: rgba(53, 53, 53, 0.5);
     cursor: pointer;
+    margin-right: 10px;
+}
+.input-date:last-child {
+    margin-right: 0;
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
     color: rgba(0, 0, 0, 0);
@@ -938,7 +942,7 @@ input[type="date"]:not(:empty) {
 }
 
 .archive {
-    margin-top: 18px;
+    /* margin-top: 18px; */
     margin-bottom: 8px;
 }
 .chat-item {
@@ -1051,18 +1055,20 @@ input[type="date"]:not(:empty) {
 }
 
 .phone_workspace {
-    height: 100%;
-    /* position: relative; */
+    height: 100px;
     padding-bottom: 10px;
+    padding-top: 14px;
+    overflow: auto;
+    flex: 1 0 auto;
     overflow: auto;
 }
 
-.chat_workflow {
+/* .chat_workflow {
     height: 100px;
     padding-top: 14px;
     overflow: auto;
     flex: 1 0 auto;
-}
+} */
 .chat-day__wrapper {
     display: flex;
     align-items: center;
@@ -1547,3 +1553,9 @@ textarea::-webkit-scrollbar {
 .tal {
     text-align: left;
 }
+
+.reverse-column {
+    display: flex;
+    flex-direction: column-reverse;
+}
+/* .reverse-column . */

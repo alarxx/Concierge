@@ -46,14 +46,14 @@ export default function MultistepForm({
 
     return (
         <div>
-            <form className="container">
+            <form className="form-workflow">
                 <div style={{
                     position: "absolute", top: "0.5rem", right: "0.5rem",
                 }}>
                     {currentStepIndex + 1} / {steps.length}
                 </div>
 
-                <div className="form-workflow">
+                <div className="container">
                     {step}
                 </div>
 
