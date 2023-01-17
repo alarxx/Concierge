@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import Cards from "../form/Cards";
-import CardItem from "../form/CardItem";
+import Cards from "../cards/Cards";
+import CardItem from "../cards/CardItem";
 
 import toggleArrayElement from '../../handlers/toggleArrayElement'
 

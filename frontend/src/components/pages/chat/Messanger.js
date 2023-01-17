@@ -27,14 +27,6 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
         setFormsSelected(indexes)
     },[messages])
 
-    /*useEffect(()=>{
-        console.log(formsSelected);
-    }, [formsSelected])*/
-
-    /*useEffect(()=>{
-        console.log(messages)
-    }, [messages])*/
-
     return (
         <Workflow>
             <Navbar title={"Имя консультанта"} back info onBackClick={closeChat}/>
@@ -65,18 +57,6 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
                                                     {...message, selected: toggleArrayElement(message.selected, item.service)} :
                                                     {...message, selected: message.selected.includes(item.service)?[]:[item.service]}
 
-                                                /*setFormsSelected(formSelected_prev => {
-                                                    const newV = [...formSelected_prev]
-                                                    const indexOfForm = newV.indexOf(messageIndex)
-                                                    if(msg.selected.length===0) {
-                                                        newV.splice(indexOfForm, 1)
-                                                    } else {
-                                                        if(indexOfForm === -1)
-                                                            newV.push(messageIndex)
-                                                    }
-                                                    return newV;
-                                                })*/
-
                                                 const messagesCopy = [...messages];
                                                 messagesCopy[messageIndex] = msg
                                                 setMessages(messagesCopy);
@@ -89,7 +69,6 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
                 })}
 
                 {/*<Day day={"Сегодня"}/>*/}
-                {/*<Document />*/}
 
             </Container>
 

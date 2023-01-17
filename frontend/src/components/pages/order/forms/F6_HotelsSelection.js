@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import FormWrapper from "../../../form/FormWrapper";
 
 import Search from "../../../form/Search";
-import CardItem from "../../../form/CardItem";
-import Cards from "../../../form/Cards";
+import CardItem from "../../../cards/CardItem";
+import Cards from "../../../cards/Cards";
 import toggleArrayElement from "../../../../handlers/toggleArrayElement";
 
 const hotelsDefault = [
