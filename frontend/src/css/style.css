@@ -1561,6 +1561,6 @@ textarea::-webkit-scrollbar {
     display: flex;
     flex-direction: column-reverse;
 }
-.reverse-column {
-
+.reverse-column .in_form_wrapper {
+    margin-top: 36px;
 }

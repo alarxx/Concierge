@@ -10,6 +10,10 @@ import Document from "../../chat/Document";
 import InputPanel from "../../chat/InputPanel";
 import ChoicePanel from "../../chat/ChoicePanel";
 import toggleArrayElement from "../../../handlers/toggleArrayElement";
+import AttachPanel from '../../chat/AttachPanel';
+
+import ActionButtons from "../../chat/ActionsButtons"
+
 
 
 //message: {type=form, id, items, selected, submitted}
@@ -95,6 +99,10 @@ export default function Messanger({
                     // Отправка на сервер наверное с помощью onSend хз
                 }}/>
             }
+            
+            <AttachPanel title="Выберите паттерн" >
+                <ActionButtons/>
+            </AttachPanel>
 
 
             {/* Menu */}
