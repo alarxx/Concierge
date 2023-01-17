@@ -10,15 +10,9 @@ import Document from "../../chat/Document";
 import InputPanel from "../../chat/InputPanel";
 import ChoicePanel from "../../chat/ChoicePanel";
 import toggleArrayElement from "../../../handlers/toggleArrayElement";
-<<<<<<< HEAD
-import AttachPanel from "../../chat/AttachPanel";
-=======
 import AttachPanel from '../../chat/AttachPanel';
 
 import ActionButtons from "../../chat/ActionsButtons"
-
->>>>>>> 296f7332006a3c3307da3312fa1ad9db2deb4d72
-
 
 //message: {type=form, id, items, selected, submitted}
 export default function Messanger({
@@ -112,29 +106,12 @@ export default function Messanger({
                 // Отправка на сервер наверное с помощью onSend хз
             }}/>}
 
-<<<<<<< HEAD
             {control==='input' && <InputPanel onSend={onSend}/>}
-            {control==='attach' && <AttachPanel />}
-=======
-                <InputPanel onSend={onSend}/> :
-
-                <ChoicePanel onClick={e => {
-                    const messagesClone = [...messages]
-                    setFormsSelected(formsSelected.filter(i => {
-                        console.log(`chose ${i}`, messagesClone[i])
-                        messagesClone[i].submitted = true;
-                        return false
-                    }))
-                    setMessages(messagesClone)
-                    // Отправка на сервер наверное с помощью onSend хз
-                }}/>
+            {control==='attach' &&
+                <AttachPanel title="Выберите паттерн" >
+                    <ActionButtons/>
+                </AttachPanel>
             }
-            
-            <AttachPanel title="Выберите паттерн" >
-                <ActionButtons/>
-            </AttachPanel>
->>>>>>> 296f7332006a3c3307da3312fa1ad9db2deb4d72
-
 
             {/* Menu */}
         </Workflow>
