@@ -18,8 +18,6 @@ export default function InputPanel({
     return (
         <div className="chat__controlpanel">
 
-            <AttachPanel />
-            
             <div className="chat-controls-panel">
                 <div className="chat-controls-panel__left attach">
                     <MenuIcon />

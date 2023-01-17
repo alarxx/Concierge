@@ -27,8 +27,17 @@ export default function MultistepForm({
     }
 
     const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo} = useMultistepForm(
-        forms.map(form => form({...data, updateFields}) )
+        forms.map((form) => form({...data, updateFields}) )
     );
+
+    const [inverted,] = useState(forms.map((form, i) => {
+        if(form.isControlPanelOnTop)
+            return i;
+    }));
+
+    useEffect(()=>{
+
+    }, [])
 
     useEffect(()=>{
         goTo(INIT_STEP)
@@ -46,7 +55,7 @@ export default function MultistepForm({
 
     return (
         <div className='container'>
-            <form className="form-workflow">
+            <form className={`form-workflow ${inverted.includes(currentStepIndex) ? 'reverse-column' : ''}`}>
                 <div style={{
                     position: "absolute", top: "0.5rem", right: "0.5rem",
                 }}>

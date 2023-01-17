@@ -36,7 +36,7 @@ const hotelsDefault = [
     }
 ]
 
-export default function F6_HotelsSelection({
+function F6_HotelsSelection({
                                                preferred_services=[],
                                                updateFields=f=>f
 }){
@@ -62,3 +62,11 @@ export default function F6_HotelsSelection({
         </>
     );
 }
+
+const f = () => {
+    const Component = F6_HotelsSelection;
+    Component.isControlPanelOnTop = true;
+    return Component;
+}
+
+export default f();

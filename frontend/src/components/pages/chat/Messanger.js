@@ -10,6 +10,7 @@ import Document from "../../chat/Document";
 import InputPanel from "../../chat/InputPanel";
 import ChoicePanel from "../../chat/ChoicePanel";
 import toggleArrayElement from "../../../handlers/toggleArrayElement";
+import AttachPanel from "../../chat/AttachPanel";
 
 
 //message: {type=form, id, items, selected, submitted}
@@ -34,6 +35,19 @@ export default function Messanger({
         }, []);
         setFormsSelected(indexes)
     },[messages])
+
+    const [control, setControl] = useState();
+    const [isAttach, setIsAttach] = useState(false);
+    useEffect(()=>{
+        if(formsSelected.length !== 0)
+            setControl('form')
+        else if(isAttach){
+            setControl('attach')
+        }
+        else{
+
+        }
+    })
 
     return (
         <Workflow>
@@ -80,21 +94,19 @@ export default function Messanger({
 
             </Container>
 
-            {formsSelected.length === 0 ?
+            {control==='choice' && <ChoicePanel onClick={e => {
+                const messagesClone = [...messages]
+                setFormsSelected(formsSelected.filter(i => {
+                    console.log(`chose ${i}`, messagesClone[i])
+                    messagesClone[i].submitted = true;
+                    return false
+                }))
+                setMessages(messagesClone)
+                // Отправка на сервер наверное с помощью onSend хз
+            }}/>}
 
-                <InputPanel onSend={onSend}/> :
-
-                <ChoicePanel onClick={e => {
-                    const messagesClone = [...messages]
-                    setFormsSelected(formsSelected.filter(i => {
-                        console.log(`chose ${i}`, messagesClone[i])
-                        messagesClone[i].submitted = true;
-                        return false
-                    }))
-                    setMessages(messagesClone)
-                    // Отправка на сервер наверное с помощью onSend хз
-                }}/>
-            }
+            {control==='input' && <InputPanel onSend={onSend}/>}
+            {control==='attach' && <AttachPanel />}
 
 
             {/* Menu */}
