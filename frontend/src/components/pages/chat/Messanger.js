@@ -51,7 +51,7 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
                         );
                     }
                     else if(message.type==='file') {
-                        return (<Document message={message} />);
+                        return (<Document key={messageIndex} message={message} />);
                     }
                     else if(message.type==='form'){
                         // В messageForm должно отличаться только selected,
@@ -105,7 +105,7 @@ export default function Messanger({ user, messages, setMessages=f=>f, closeChat,
                         return false
                     }))
                     setMessages(messagesClone)
-                    // Отправка на сервер
+                    // Отправка на сервер наверное с помощью onSend хз
                 }}/>
             }
 
