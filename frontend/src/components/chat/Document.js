@@ -3,21 +3,21 @@ import React from 'react'
 import DocumentTextIcon from '../../icons/document-text.svg'
 import DocumentDownload from '../../icons/document-download.svg'
 
-export default function Document({ isLoaded }){
+export default function Document({ message, onClick }){
     return (
         <>
-            {isLoaded &&
+            {message.isLoaded &&
                 <div className="chat-download">
                     <div className="chat-download__block"></div>
                     <div className="chat-download__file">
-                        File.name
+                        {message.filename ? message.filename : 'File.name'}
                     </div>
                     <div className="chat-download__btn">
                         <DocumentDownload />
                     </div>
                 </div>
             }
-            {!isLoaded &&
+            {!message.isLoaded &&
                 <div className="chat-attach">
                     <div className="btn btn-main btn-withicon">
                         <div className="btn__icon">

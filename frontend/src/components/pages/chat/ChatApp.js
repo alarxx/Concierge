@@ -107,6 +107,7 @@ const messagesDefault = [
     {
         type: 'file',
         isLoaded: true,
+        filename: 'userfile.ext',
         id: '127',
         time: '01 : 00',
         sender: '2'
