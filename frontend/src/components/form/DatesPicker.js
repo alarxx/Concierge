@@ -6,7 +6,7 @@ export default function DatesPicker({
                                         date_start_key,
                                         date_end,
                                         date_end_key,
-                                        roundTrip,
+                                        one_way_ticket,
                                         placeholderOnStart,
                                         placeholderOnEnd,
 }){
@@ -26,7 +26,7 @@ export default function DatesPicker({
                     value={date_start}
                     onChange={e => setField(date_start_key, e.target.value)}
                 />
-                {roundTrip &&
+                {!one_way_ticket &&
                 <input
                     type="date" className="input-date" name="datepicker_end" placeholder="Выбрать"
                     value={date_end}

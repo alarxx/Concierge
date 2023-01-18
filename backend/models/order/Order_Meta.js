@@ -47,9 +47,8 @@ const MetaSchema = new Schema({
     date_end: {
         type: Date,
     },
-    roundTrip: {
+    one_way_ticket: {
         type: Boolean,
-        default: false,
     },
 
     housing: {

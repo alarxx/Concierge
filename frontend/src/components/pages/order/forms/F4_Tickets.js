@@ -10,7 +10,7 @@ export default function F4_Tickets({
                                        travel_transport,
                                        date_start,
                                        date_end,
-                                       roundTrip,
+                                       one_way_ticket,
                                        updateFields=f=>f }){
 
     return (
@@ -40,15 +40,15 @@ export default function F4_Tickets({
                     date_end={date_end}
                     date_end_key={"date_end"}
 
-                    roundTrip={roundTrip}
+                    one_way_ticket={one_way_ticket}
 
                     updateFields={updateFields}
                 />
 
                 <Checkbox
-                    label={"Билет в обе стороны"} for_id={"condition1"}
-                    checked={roundTrip}
-                    onChange={e => updateFields({roundTrip: e.target.checked})}
+                    label={"Билет в одну сторону"} for_id={"condition1"}
+                    checked={one_way_ticket}
+                    onChange={e => updateFields({one_way_ticket: e.target.checked})}
                 />
 
             </FormWrapper>

@@ -24,7 +24,7 @@ const INITIAL_DATA_DEFAULT = {
     travel_transport: '',
     date_start: '',
     date_end: '',
-    roundTrip: '',
+    one_way_ticket: false,
 
     housing: '',
     separateApartments: '',
@@ -62,8 +62,9 @@ export default function Order({ }) {
 
     const {initData, filledBefore} = useInitialData(INITIAL_DATA_DEFAULT);
 
-    const {authHandler} = useAppContext();
+    const {authHandler, orderHandler} = useAppContext();
     const {isAuthenticated} = authHandler;
+    const {create} = orderHandler;
 
     function onSubmit(data) {
         if (!isAuthenticated()) {
