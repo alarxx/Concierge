@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import WorkTypes from "./forms/WorkTypesForm";
 import UserForm from "./forms/UserForm";
 
-import MultistepForm from "../../form/MultistepForm";
+import MultistepForm from "../../components/form/MultistepForm";
 import {useLocation, useNavigate} from "react-router-dom";
 
 const INITIAL_DATA = {

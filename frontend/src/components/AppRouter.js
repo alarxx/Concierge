@@ -2,14 +2,14 @@ import React, {useEffect, useState} from 'react';
 
 import {Link, Routes, Route} from "react-router-dom";
 
-import Home from "./pages/Home";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import Logout from "./pages/auth/Logout";
-import ChatApp from "./pages/chat/ChatApp";
-import Order from './pages/order/Order'
-import Profile from './pages/profile/Profile'
-import Partners from './pages/partners/Partners'
+import Home from "../pages/Home";
+import Login from "../pages/auth/Login";
+import Register from "../pages/auth/Register";
+import Logout from "../pages/auth/Logout";
+import ChatApp from "../pages/chat/ChatApp";
+import Order from '../pages/order/Order'
+import Profile from '../pages/profile/Profile'
+import Partners from '../pages/partners/Partners'
 
 import {AppContextProvider} from "./context/AppContext";
 

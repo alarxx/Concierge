@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react'
  * */
 import Conversations from "./Conversations";
 import Messanger from "./Messanger";
-import {useAppContext} from "../../context/AppContext";
+import {useAppContext} from "../../components/context/AppContext";
 import {useParams} from "react-router-dom";
 
 /**

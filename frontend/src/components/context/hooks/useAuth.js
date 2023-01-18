@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-export default function useAuth(socket){
+export default function useAuth({ }){
     const [user, setUser] = useState();
     const [userLoading, setUserLoading] = useState(true);
     const [userError, setUserError] = useState();

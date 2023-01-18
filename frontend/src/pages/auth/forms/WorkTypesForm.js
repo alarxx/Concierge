@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 
-import FormWrapper from "../../../form/FormWrapper";
+import FormWrapper from "../../../components/form/FormWrapper";
 
-import People from '../../../../icons/people.svg';
-import Profile from '../../../../icons/profile.svg';
+import People from '../../../icons/people.svg';
+import Profile from '../../../icons/profile.svg';
 
 function WortTypes({children}){
     return (

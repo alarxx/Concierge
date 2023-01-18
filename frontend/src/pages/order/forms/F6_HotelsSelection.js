@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import FormWrapper from "../../../form/FormWrapper";
+import FormWrapper from "../../../components/form/FormWrapper";
 
-import Search from "../../../form/Search";
-import CardItem from "../../../cards/CardItem";
-import Cards from "../../../cards/Cards";
-import toggleArrayElement from "../../../../handlers/toggleArrayElement";
+import Search from "../../../components/form/Search";
+import CardItem from "../../../components/cards/CardItem";
+import Cards from "../../../components/cards/Cards";
+import toggleArrayElement from "../../../handlers/toggleArrayElement";
 
 const hotelsDefault = [
     {

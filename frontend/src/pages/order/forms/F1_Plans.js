@@ -1,8 +1,8 @@
 import React from 'react';
-import FormWrapper from "../../../form/FormWrapper";
-import ServiceItem from "../../../form/ServiceItem";
+import FormWrapper from "../../../components/form/FormWrapper";
+import ServiceItem from "../../../components/form/ServiceItem";
 
-import HouseSVG from "../../../../icons/house.svg";
+import HouseSVG from "../../../icons/house.svg";
 
 export default function F1_Plans({type, updateFields=f=>f }){
     return (

@@ -1,10 +1,10 @@
 import React from 'react';
-import FormWrapper from "../../../form/FormWrapper";
-import ServiceItem from "../../../form/ServiceItem";
+import FormWrapper from "../../../components/form/FormWrapper";
+import ServiceItem from "../../../components/form/ServiceItem";
 
-import HouseSVG from "../../../../icons/house.svg";
-import InputForm from "../../../form/InputForm";
-import SelectForm from "../../../form/SelectForm";
+import HouseSVG from "../../../icons/house.svg";
+import InputForm from "../../../components/form/InputForm";
+import SelectForm from "../../../components/form/SelectForm";
 
 export default function F3_General({num_of_people, departure_place, destination_place,
                                        updateFields=f=>f }){

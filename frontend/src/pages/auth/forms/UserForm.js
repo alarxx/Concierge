@@ -1,6 +1,6 @@
 import React from 'react';
-import InputForm from "../../../form/InputForm";
-import FormWrapper from "../../../form/FormWrapper";
+import InputForm from "../../../components/form/InputForm";
+import FormWrapper from "../../../components/form/FormWrapper";
 
 export default function UserForm({name, company, phone, email, updateFields=f=>f }){
         return (

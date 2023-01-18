@@ -122,7 +122,7 @@ const messagesDefault = [
  * Должен предоставлять Conversations, Messages, Notifications, возможно Participants
  * Должен предоставлять данные о том, какая комната сейчас открыта у пользователя
  * */
-export default function useChat(socket, order){
+export default function useChat({socket}){
     const navigate = useNavigate()
 
     const [conversations, setConversations] = useState(conversationsDefault)

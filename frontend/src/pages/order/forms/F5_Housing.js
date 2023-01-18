@@ -1,10 +1,10 @@
 import React from 'react';
-import FormWrapper from "../../../form/FormWrapper";
-import ServiceItem from "../../../form/ServiceItem";
+import FormWrapper from "../../../components/form/FormWrapper";
+import ServiceItem from "../../../components/form/ServiceItem";
 
-import HouseSVG from "../../../../icons/house.svg";
-import DatesPicker from "../../../form/DatesPicker";
-import Checkbox from "../../../form/Checkbox";
+import HouseSVG from "../../../icons/house.svg";
+import DatesPicker from "../../../components/form/DatesPicker";
+import Checkbox from "../../../components/form/Checkbox";
 //apartment
 export default function F5_Housing({ housing, separateApartments, updateFields= f=>f}){
     return (

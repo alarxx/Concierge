@@ -3,14 +3,14 @@ import {useNavigate} from "react-router-dom";
 
 import useMultistepForm from "../src/components/hooks/useMultistepForm";
 
-import F1_Plans from "../src/components/pages/order/forms/F1_Plans";
-import F2_Needs from "../src/components/pages/order/forms/F2_Needs";
-import F3 from "../src/components/pages/order/forms/F3_General";
-import F4_Tickets from "../src/components/pages/order/forms/F4_Tickets";
-import F5_Housing from "../src/components/pages/order/forms/F5_Housing";
-import HotelsSelection6 from "../src/components/pages/order/forms/F6_HotelsSelection";
-import F7_Transport from "../src/components/pages/order/forms/F7_Transport";
-import F8 from "../src/components/pages/order/forms/F8_Calculation";
+import F1_Plans from "../src/pages/order/forms/F1_Plans";
+import F2_Needs from "../src/pages/order/forms/F2_Needs";
+import F3 from "../src/pages/order/forms/F3_General";
+import F4_Tickets from "../src/pages/order/forms/F4_Tickets";
+import F5_Housing from "../src/pages/order/forms/F5_Housing";
+import HotelsSelection6 from "../src/pages/order/forms/F6_HotelsSelection";
+import F7_Transport from "../src/pages/order/forms/F7_Transport";
+import F8 from "../src/pages/order/forms/F8_Calculation";
 
 import ArrowRight from "../src/icons/arrow-right.svg";
 

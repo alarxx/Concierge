@@ -10,10 +10,11 @@ import F6_HotelsSelection from "./forms/F6_HotelsSelection";
 import F7_Transport from "./forms/F7_Transport";
 import F8_Calculation from "./forms/F8_Calculation";
 
-import MultistepForm from "../../form/MultistepForm";
+import MultistepForm from "../../components/form/MultistepForm";
 
-import {useAppContext} from "../../context/AppContext";
+import {useAppContext} from "../../components/context/AppContext";
 
+// Это order_meta, все что выбирает пользователь идет в order_meta, сам order может менять только manager
 const INITIAL_DATA_DEFAULT = {
     type: '',
     needs: [],
@@ -78,6 +79,7 @@ export default function Order({ }) {
         }
         else {
             // Убеждаемся, что пользователь авторизован и создаем заказ
+            create(data);
             console.log("order", data);
         }
     }

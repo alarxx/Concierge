@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react'
-import Navbar from "../../phone/Navbar";
-import Container from "../../phone/Container";
-import Message from "../../chat/Message";
-import ControlPanel from "../../../../arch/ControlPanel";
-import Workflow from "../../phone/Workflow";
-import Day from "../../chat/Day";
-import ChoiceForm from "../../chat/ChoiceForm";
-import Document from "../../chat/Document";
-import InputPanel from "../../chat/InputPanel";
-import ChoicePanel from "../../chat/ChoicePanel";
-import toggleArrayElement from "../../../handlers/toggleArrayElement";
-import AttachPanel from '../../chat/AttachPanel';
+import Navbar from "../../components/phone/Navbar";
+import Container from "../../components/phone/Container";
+import Message from "../../components/chat/Message";
+import ControlPanel from "../../../arch/ControlPanel";
+import Workflow from "../../components/phone/Workflow";
+import Day from "../../components/chat/Day";
+import ChoiceForm from "../../components/chat/ChoiceForm";
+import Document from "../../components/chat/Document";
+import InputPanel from "../../components/chat/InputPanel";
+import ChoicePanel from "../../components/chat/ChoicePanel";
+import toggleArrayElement from "../../handlers/toggleArrayElement";
+import AttachPanel from '../../components/chat/AttachPanel';
 
-import ActionButtons from "../../chat/ActionsButtons"
-import ServicesPanel from "../../partners/ServicesPanel"
+import ActionButtons from "../../components/chat/ActionsButtons"
+import ServicesPanel from "../../components/partners/ServicesPanel"
 
 //message: {type=form, id, items, selected, submitted}
 export default function Messanger({

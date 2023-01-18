@@ -1,10 +1,10 @@
 import React from 'react'
 
-import Workflow from "../../phone/Workflow";
-import Menu from "../../phone/Menu";
-import Container from "../../phone/Container";
-import CardOrder from "../../cards/CardOrder";
-import PushIcon from "../../../icons/clipboard-tick.svg";
+import Workflow from "../../components/phone/Workflow";
+import Menu from "../../components/phone/Menu";
+import Container from "../../components/phone/Container";
+import CardOrder from "../../components/cards/CardOrder";
+import PushIcon from "../../icons/clipboard-tick.svg";
 
 
 export default function Profile(){
