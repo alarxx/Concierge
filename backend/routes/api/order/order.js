@@ -7,15 +7,20 @@ const controller = require('../../../controllers/api/order/order');
 const {
     c, r, u, d,
     findOne, find,
-    filesValidation, roleAccess, changeAccess, readAccess,
+    roleAccess, populateMetas, setMeta,
     addToArray, removeFromArray, arrayField
 } = controller;
 
 Router.route('/')
-    .post(roleAccess, filesValidation, c)
-    .get(find, readAccess, r)
-    .put(roleAccess, filesValidation, findOne, changeAccess, u)
-    .delete(roleAccess, findOne, changeAccess, d);
+    .post((req, res, next)=>{
+        console.log({body: req.body})
+        next();
+    }, c)
+    .get(find, r)
+    // Нужна ли нам возможность изменять meta? Она ведь заполняется один раз во время flow.
+    // Если будет нужна, то лучше переходить по /order/meta и изменять конкретно meta или нет?
+    .put(findOne, roleAccess, u)
+    .delete(findOne, roleAccess, d);
 
 
 /** Работа с массивом bookings */

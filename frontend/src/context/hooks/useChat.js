@@ -143,7 +143,7 @@ export default function useChat({socket}){
         navigate(`/chat/${conversation.id}`)
     }
     function closeConversation(){
-        navigate(`/chat`)
+        navigate(-1)
     }
 
     const sendMessage = (message, conversation) => {

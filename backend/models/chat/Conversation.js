@@ -7,7 +7,6 @@ const handlers = require("../handlers");
 const ConversationSchema = new Schema({
     name: {
         type: String,
-        required: true,
     },
     type: {
         type: String,

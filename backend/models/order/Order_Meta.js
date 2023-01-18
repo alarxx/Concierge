@@ -17,17 +17,22 @@ const MetaSchema = new Schema({
         unique: true,
     },
 
-    needs: [{
-        type: String,
-        enum: ['housing', 'transport', 'travel', 'informal']
-    }],
-
     type: {
-      type: String,
-      enum: ['business_trip', 'event'],
+        type: String,
+        enum: ['business_trip', 'event', 'informal'],
+        default: 'informal',
     },
 
-    num_of_people: Number,
+    needs: [{
+        type: String,
+        enum: ['housing', 'transport', 'travel', 'informal'],
+        required: true,
+    }],
+
+    num_of_people: {
+        type: Number,
+        default: 1,
+    },
     // если в needs входит 'tickets'
     departure_place:{
         type: String,
@@ -39,7 +44,7 @@ const MetaSchema = new Schema({
     // если в needs входит 'tickets'
     travel_transport: {
         type: String,
-        enum: ['airplane', 'train']
+        enum: ['airplane', 'train', null]
     },
     date_start: {
       type: Date,
@@ -53,25 +58,22 @@ const MetaSchema = new Schema({
 
     housing: {
         type: String,
-        enum: ['hotel', 'apartment'],
+        enum: ['hotel', 'apartment', null],
     },
     separateApartments: {
         type: Boolean,
-        default: false,
     },
 
     transport: {
         type: String,
-        enum: ['car', 'limousine']
+        enum: ['car', 'limousine', null]
     },
     driverNeeded: {
         type: Boolean,
-        default: false,
     },
 
     description: String,
 
-    flow_passed: Boolean,
     preferred_services:[{
         type: Schema.Types.ObjectId,
         ref: 'Service'

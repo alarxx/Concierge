@@ -20,11 +20,11 @@ export default function F5_Housing({ housing, separateApartments, updateFields= 
                     active={housing === 'apartment'}
                     onClick={ e => updateFields({housing: 'apartment'}) }
                 />
-                <Checkbox
+                {housing === 'apartment' && <Checkbox
                     label={"Каждому сотруднику предоставить отдельную квартиру"} for_id={"condition1"}
                     checked={separateApartments}
                     onChange={e => updateFields({separateApartments: e.target.checked})}
-                />
+                />}
             </FormWrapper>
         </>
     );

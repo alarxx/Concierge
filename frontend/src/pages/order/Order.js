@@ -14,29 +14,6 @@ import MultistepForm from "../../components/form/MultistepForm";
 
 import {useAppContext} from "../../context/AppContext";
 
-// Это order_meta, все что выбирает пользователь идет в order_meta, сам order может менять только manager
-const INITIAL_DATA_DEFAULT = {
-    type: '',
-    needs: [],
-    num_of_people: 0,
-    departure_place: '',
-    destination_place: '',
-
-    travel_transport: '',
-    date_start: '',
-    date_end: '',
-    one_way_ticket: false,
-
-    housing: '',
-    separateApartments: '',
-
-    transport: '',
-    driverNeeded: false,
-
-    description: '',
-    preferred_services: []
-}
-
 const FORMS = [
     F1_Plans,
     F2_Needs,
@@ -48,49 +25,22 @@ const FORMS = [
     F8_Calculation
 ]
 
-const useInitialData = (DATA_DEFAULT) => {
-    const location = useLocation();
-    const [filledBefore, ] = useState(location.state?.order)
-    const [initData, ] = useState( filledBefore ? location.state.order : DATA_DEFAULT)
-    return {initData, filledBefore}
-}
-
 /**
  * Нам нужно как-то сохранять контекст между роутами
  * */
 export default function Order({ }) {
-    const navigate = useNavigate();
+    const {orderHandler} = useAppContext();
+    const {create, filledData, isFilledBefore} = orderHandler;
 
-    const {initData, filledBefore} = useInitialData(INITIAL_DATA_DEFAULT);
-
-    const {authHandler, orderHandler} = useAppContext();
-    const {isAuthenticated} = authHandler;
-    const {create} = orderHandler;
-
-    function onSubmit(data) {
-        if (!isAuthenticated()) {
-            navigate('/register', {
-                replace: true,
-                state: {
-                    redirect: '/order',
-                    order: data
-                }
-            });
-        }
-        else {
-            // Убеждаемся, что пользователь авторизован и создаем заказ
-            create(data);
-            console.log("order", data);
-        }
-    }
+    useEffect(()=>console.log(filledData), [filledData]);
 
     return (
         <>
             <MultistepForm
                 forms={FORMS}
-                INITIAL_DATA={initData}
-                INIT_STEP={filledBefore ? 'last' : 0}
-                onSubmit={onSubmit}
+                INITIAL_DATA={filledData}
+                INIT_STEP={isFilledBefore ? 'last' : 0}
+                onSubmit={create}
                 submitButtonName={"Оставить заявку"}
             />
         </>

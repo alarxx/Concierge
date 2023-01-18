@@ -1,6 +1,6 @@
 
 const MessageModel = require('../../../../models/chat/Message');
-const MessageController = require('../../../controller')(MessageModel);
+const MessageController = require('../../../controller')({Model: MessageModel});
 
 /**
  * Первичная проверка.

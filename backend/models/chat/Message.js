@@ -70,6 +70,7 @@ MessageSchema.statics.deepDeleteById = async function(id){
 
 
 MessageSchema.methods.deepDelete = async function(){
+    // Если message.type = form или файл, то мы не удаляем только саму модель
     await this.delete();
     return this;
 }

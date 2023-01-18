@@ -33,12 +33,12 @@ export default function Register() {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        console.log("register state", location.state);
+        // console.log("register state", location.state);
     }, [])
 
     function onSubmit(data){
             // что делать после того, как у нас готова форма?
-            console.log("register", data);
+            // console.log("register", data);
             if(location.state?.redirect){
                 const state = {...location.state};
                 delete state.redirect;

@@ -1,6 +1,9 @@
 /**
  * Контроллер не задумывался для изменения нескольких документов.
- * c - создаёт
+ * c, r, u, d ... c - создаёт ...
+ * Я не смог написать гибкий c,r,u,d,
+ * поэтому я начал пользоваться middleware-ами
+ * и перекидывать данные между ними с помощью res.locals. (model - object, models - array)
  * */
 
 const File = require("../models/binaries/File");
@@ -10,6 +13,7 @@ const setFiles = async (model, files, user, keys) => {
 
     await Promise.all(
         keys.map(async key => {
+            // Если в форме есть файл под таким ключом
             if(files[key]) {
                 // delete if already file exist
                 if(model[key])
@@ -25,7 +29,7 @@ const setFiles = async (model, files, user, keys) => {
 const matchedKeys = (obj, keys) => keys.filter(key => obj.hasOwnProperty(key));
 
 
-module.exports = (Model) => {
+module.exports = ({Model, nestedObjectKeys=[]}) => {
     const modelName = Model.collection.collectionName;
 
     const uniqueKeys = Object.values(Model.schema.paths)
@@ -46,6 +50,7 @@ module.exports = (Model) => {
 
     const controller = {};
 
+    controller.setFiles = setFiles;
     controller.fileFields = fileFields;
 
     /*
@@ -54,10 +59,11 @@ module.exports = (Model) => {
     */
     /**
      * Первичная проверка.
+     * Бывает что некоторые модели может создать только определенные пользователи
      * Можно ли изменять или имеет ли доступ к определенному методу,
      * к какому определяем в routes
      * */
-    controller.roleAccess = (req, res, next) => {
+    controller.roleAccess = (req, res, next) => { // большая проверка
         /*if(req.user.role !== 'manager')
             return res.status(403).json({message: 'Permission denied'});*/
         next();
@@ -76,6 +82,10 @@ module.exports = (Model) => {
      * */
     controller.changeAccess = (req,res, next) => {
         // у нас есть res.locals.model
+        // например, пользователю можно менять только те модели, которые он создал сам:
+        /*if(res.locals.model.customer != req.user.id)
+            return res.status(403).json({error: `Access denied. You are not the creator of this order`});*/
+
         next();
     }
 
@@ -97,18 +107,25 @@ module.exports = (Model) => {
         const contains = matchedKeys(req.body, uniqueKeys);
 
         if (contains.length === 0) {
-            return res.status(400).json({message: `${'\''.concat(uniqueKeys.join('\' or \'')).concat('\'')} field not provided`});
+            return res.status(400).json({error: `${'\''.concat(uniqueKeys.join('\' or \'')).concat('\'')} field not provided`});
         }
         else if(contains.length > 1){
-            return res.status(400).json({message: `More than one primary key (of ${'\''.concat(uniqueKeys.join('\', \'')).concat('\'')}) provided in req.body`});
+            return res.status(400).json({error: `More than one primary key (of ${'\''.concat(uniqueKeys.join('\', \'')).concat('\'')}) provided in req.body`});
         }
 
-        const pkey = contains[0];
-        const model = await Model.findOne({[pkey]: req.body[pkey]});
+        const pkey = contains[0]==='id'?'_id':contains[0];
+        const model = await Model.findOne({[pkey]: req.body[contains[0]]});
+
+        // console.log({[pkey]: req.body[contains[0]]});
+        // console.log({model});
 
         if (!model){
-            return res.status(404).json({message: `${modelName} not found`});
+            return res.status(404).json({error: `${modelName} not found`});
         }
+
+        await Promise.all(nestedObjectKeys.map(async key => {
+            await model.populate(key);
+        }));
 
         res.locals.model = model;
         next();
@@ -159,19 +176,33 @@ module.exports = (Model) => {
 
             if(err.errors){
                 const errors = Object.keys(err.errors).map(key => err.errors[key].message);
-                return res.status(400).json({message: errors});
+                return res.status(400).json({error: errors});
             }else{
-                return res.status(500).json({message: err.message});
+                return res.status(500).json({error: err.message});
             }
         }
 
         await model.save();
+
+        await Promise.all(nestedObjectKeys.map(async key => {
+            await model.populate(key);
+            await model[key].save()
+        }));
+
         return res.json(model);
     }
 
 
     /** Над этим надо будет поработать, мы не можем отдавать все что захочет пользователь */
-    controller.r = async (req, res) => res.json(res.locals.models);
+    controller.r = async (req, res) => {
+        const models = res.locals.models;
+        await Promise.all(models.map(async model => {
+            await Promise.all(nestedObjectKeys.map(async key => {
+                await model.populate(key);
+            }));
+        }))
+        res.json(models);
+    }
 
 
     controller.u = async (req, res) => {
@@ -184,8 +215,24 @@ module.exports = (Model) => {
             await model.set(req.body).validate();
         } catch (err) {
             const errors = Object.keys(err.errors).map(key => err.errors[key].message);
-            return res.status(400).json({message: errors});
+            return res.status(400).json({error: errors});
         }
+
+        await Promise.all(nestedObjectKeys.map(
+            async (key) => {
+                try {
+                    /** Назначаем примитивные поля и производим валидацию */
+                    await model[key].set(req.body[key]).validate();
+                } catch (err) {
+                    if(err.errors){
+                        const errors = Object.keys(err.errors).map(key => err.errors[key].message);
+                        return res.status(400).json({error: errors});
+                    }else{
+                        return res.status(500).json({error: err.message});
+                    }
+                }
+            })
+        )
 
         try {
             // Отсюда могут выйти системные ошибки
@@ -193,10 +240,11 @@ module.exports = (Model) => {
             await setFiles(model, req.files, req.user, fileFields);
         } catch (err) {
             // await removeFiles(model, req.files, req.user, fileFields); // Когда нибудь придется написать недотранзакцию
-            return res.status(500).json({message: err.message});
+            return res.status(500).json({error: err.message});
         }
 
         await model.save();
+        await Promise.all(nestedObjectKeys.map(async key => await model[key].save()))
         return res.json(model);
     }
 
@@ -213,16 +261,16 @@ module.exports = (Model) => {
             await model.deepDelete();
             // deep delete удаляет и может раскрывать некоторые нежелательные поля
             // При удалении в принципе хватает, того что мы вернем id удаленного документа
-            return res.json({id: model.id});
+            return res.json({id: model.id, message: 'successfully deleted'});
         } catch (err) {
-            return res.status(500).json({message: err.message});
+            return res.status(500).json({error: err.message});
         }
     }
 
 
     controller.arrayField = (key) => (req, res, next) => {
         if(!req.body[key])
-            return res.status(400).json({message: `\'${key}\' field not provided`});
+            return res.status(400).json({error: `\'${key}\' field not provided`});
 
         let array = req.body[key];
 
@@ -230,7 +278,7 @@ module.exports = (Model) => {
             try {
                 array = JSON.parse(array);
             } catch (e) {
-                return res.status(400).json({message: e.message});
+                return res.status(400).json({error: e.message});
             }
         }
 
@@ -253,7 +301,7 @@ module.exports = (Model) => {
             return res.json(await model.save());
         } catch (err) {
             const errors = Object.keys(err.errors).map(k => err.errors[k].message);
-            return res.status(400).json({message: errors});
+            return res.status(400).json({error: errors});
         }
     }
 
@@ -268,7 +316,7 @@ module.exports = (Model) => {
             return res.json(await model.save());
         } catch (err) {
             const errors = Object.keys(err.errors).map(k => err.errors[k].message);
-            return res.status(400).json({message: errors});
+            return res.status(400).json({error: errors});
         }
     }
 

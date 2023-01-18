@@ -11,6 +11,9 @@ const Booking = require('../services/Booking');
 // const Bill = require('../../public/arch/payment/Bill');
 const File = require("../binaries/File");
 
+const Conversation = require('../chat/Conversation');
+const Participant = require('../chat/Participant');
+
 const OrderSchema = new Schema({
     customer: {
         type: Schema.Types.ObjectId,
@@ -18,12 +21,19 @@ const OrderSchema = new Schema({
         immutable: true,
         required: true
     },
+    conversation: {
+        type: Schema.Types.ObjectId,
+        ref: 'Conversation',
+        immutable: true,
+        required: true,
+        unique: true,
+    },
     meta: {
         type: Schema.Types.ObjectId,
         ref: 'Order/Meta',
         required: true,
         immutable: true,
-        unique: true,
+        // unique: true,
     },
     bookings: [{
         type: Schema.Types.ObjectId,
@@ -46,6 +56,11 @@ const OrderSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'File',
     },
+    startTime: {
+        type: Date,
+        immutable: true,
+        default: new Date()
+    }
 });
 
 OrderSchema.plugin(require('mongoose-unique-validator'));
@@ -56,8 +71,18 @@ const handlers = require("../handlers");
 
 OrderSchema.methods.firstFilling = async function({body, user}){
     // Creating meta
-    const meta = await new Order_Meta({order: this.id}).save();
+    const meta = await new Order_Meta({order: this.id});
+    if(body.meta)
+        meta.set(body.meta);
+    await meta.save()
+
     this.meta = meta.id;
+
+    // Мы наверное должны здесь еще создавать Conversation, Participant и прикреплять везде user-a
+    const conversation = await new Conversation({}).save();
+    this.conversation = conversation.id;
+
+    const participant = await new Participant({user: user.id, conversation: conversation.id}).save();
 
     this.customer = user.id;
 
@@ -67,7 +92,7 @@ OrderSchema.methods.firstFilling = async function({body, user}){
 
 OrderSchema.methods.deepDelete = async function (){
     // if(this.logo) await File.deepDeleteById(this.logo);
-    await handlers.deleteModels(this, ['bill', 'meta']);
+    await handlers.deleteModels(this, ['bill', 'meta', 'conversation']);
 
     // await Promise.all(this.images.map(async id => await File.deepDeleteById(id)));
     await handlers.deleteArraysOfModels(this, ['bookings']);

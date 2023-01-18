@@ -1,10 +1,6 @@
 const express = require('express');
 const Router = express.Router();
 
-Router.use((req, res)=>{
-    res.json({api: 'API'});
-});
-
 Router.use('/file', require('./file/file'));
 
 Router.use(require('../../auth/checkAuthenticated'));
