@@ -59,10 +59,14 @@ body {
     margin-top: 40px;
 }
 .date_component label {
+    padding-left: 6px;
     font-weight: 600;
     font-size: 14px;
     line-height: 19px;
     color: #353535;
+}
+.datepicker {
+    margin-top: 4px;
 }
 
 .input-form label, .select-form label {
@@ -1600,4 +1604,48 @@ textarea::-webkit-scrollbar {
 }
 .reverse-column .form__body {
     margin-top: 36px;
+}
+
+
+.details .uslug-item {
+    display: flex;
+    justify-content: space-between;
+}
+.details .uslug-item__block {
+    display: flex;
+}
+.uslug-item__stats {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #353535;
+}
+.btn-report {
+    border: 1px solid rgba(30, 38, 47, 0.06);
+    /* карточка */
+    box-shadow: 2px 4px 4px rgba(30, 38, 47, 0.02);
+    border-radius: 16px;
+    padding: 16px 20px;
+}
+
+.create-service {
+    padding: 20px 0;
+}
+.makeprice__controls {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.makeprice__controls .btn-prev {
+    padding: 10px 20px 10px 0;
+}
+.create-service__from {
+    margin-top: 32px;
+}
+.success {
+    padding: 20px 0;
+}
+.success .title{
+    margin-bottom: 40px;
 }
