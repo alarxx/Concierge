@@ -27,4 +27,12 @@ orderController.roleAccess = (req,res, next) => {
     next();
 }
 
+orderController.deleteAll = async (req, res) => {
+    const orders = await OrderModel.find();
+    await Promise.all(orders.map(async order=>{
+        await order.deepDelete();
+    }))
+    res.json(orders);
+}
+
 module.exports = orderController;

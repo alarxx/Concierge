@@ -23,6 +23,9 @@ Router.route('/')
     .delete(findOne, roleAccess, d);
 
 
+Router.delete('/all', controller.deleteAll);
+
+
 /** Работа с массивом bookings */
 Router.post('/bookings', arrayField('bookings'), findOne, addToArray);
 Router.delete('/bookings', arrayField('bookings'), findOne, removeFromArray);
