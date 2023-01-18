@@ -33,7 +33,7 @@ export default function useAuth({ }){
                 const user = await res.json();
                 setUserLoading(false);
                 setUserError(null);
-                setUser({...user, id: 1}); // id в продакшене не меняем!
+                setUser(user); // id в продакшене не меняем!
             }catch (err){
                 setUserLoading(false);
                 setUserError(err.message);

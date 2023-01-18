@@ -17,8 +17,6 @@ orderController.find = async (req, res, next) => {
 
     res.locals.models = await OrderModel.find(params);
 
-
-
     next();
 }
 

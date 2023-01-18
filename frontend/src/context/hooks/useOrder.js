@@ -40,14 +40,45 @@ const _useFilled = () => {
 /**
  * Должен предоставлять все функции для загрузки всех ордеров, создания нового, удаления, изменения,
  * */
-export default function useOrder({ isAuthenticated }){
+export default function useOrder({ user, isAuthenticated }){
     const navigate = useNavigate();
 
     const {filledData, isFilledBefore} = _useFilled()
 
     const [orders, setOrders] = useState();
-    const [ordersLoading, setUserLoading] = useState(true);
-    const [ordersError, setUserError] = useState();
+    const [ordersLoading, setOrdersLoading] = useState(true);
+    const [ordersError, setOrdersError] = useState();
+
+    useEffect(()=>{
+        if(user)
+            reloadOrders()
+    }, [user])
+
+
+    /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать отели. Хз */
+    async function orderFetch(url, opt={}){
+        setOrdersLoading(true);
+        try{
+            if(opt.body && typeof opt.body !== 'string')
+                opt.body = JSON.stringify(opt.body);
+
+            const res = await fetch(url, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                ...opt
+            });
+            const json = await res.json();
+            setOrdersLoading(false);
+            setOrdersError(null);
+            setOrders(json);
+            console.log(json);
+        }
+        catch (err){
+            setOrdersLoading(false);
+            setOrdersError(err.error);
+        }
+    }
 
     async function create(form){
         // Убеждаемся, что пользователь авторизован и создаем заказ
@@ -62,31 +93,21 @@ export default function useOrder({ isAuthenticated }){
             });
         }
         else {
-            console.log('form', form);
-            const response = await fetch('/api/order', {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+            // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
+            await orderFetch('/api/order', {
                 method: 'POST',
-                body: JSON.stringify({meta: form})
-            });
-            const json = await response.json();
-            console.log(json);
-            // Что дальше делать? navigate(to)
+                body: form
+            })
         }
-
     }
 
-    /** функция должна вызываться в начале приложения, а дальше по просьбе user-а подгружать отели. Хз */
-    async function updateOrders(){
-        const response = await fetch('/api/order');
-        const json = await response.json();
-        console.log(json);
+    async function updateOrder(order){}
+    async function deleteOrder(order){}
+
+    async function reloadOrders (){
+        await orderFetch('/api/order');
     }
 
-    useEffect(()=>{
-        updateOrders();
-    },[])
 
-    return {orders, ordersLoading, ordersError, create, updateOrders, filledData, isFilledBefore};
+    return {orders, ordersLoading, ordersError, create, reloadOrders, filledData, isFilledBefore};
 }
