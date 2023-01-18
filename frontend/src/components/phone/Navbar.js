@@ -1,10 +1,10 @@
 import React from 'react'
 
-import ArrowLeft from '../../icons/arrow-left.svg'
-import InfoCirce from '../../icons/info-circle.svg'
+import ArrowLeft from '../../assets/icons/arrow-left.svg'
+import InfoCirce from '../../assets/icons/info-circle.svg'
 import {useNavigate} from "react-router-dom";
 
-import ArrowDownIcon from "../../icons/arrow-down.svg"
+import ArrowDownIcon from "../../assets/icons/arrow-down.svg"
 
 export default function Navbar({
                                    title,

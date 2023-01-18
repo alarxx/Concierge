@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react'
-import Navbar from "../../components/phone/Navbar";
-import Container from "../../components/phone/Container";
-import Message from "../../components/chat/Message";
+import Navbar from "../phone/Navbar";
+import Container from "../phone/Container";
+import Message from "./Message";
 import ControlPanel from "../../../arch/ControlPanel";
-import Workflow from "../../components/phone/Workflow";
-import Day from "../../components/chat/Day";
-import ChoiceForm from "../../components/chat/ChoiceForm";
-import Document from "../../components/chat/Document";
-import InputPanel from "../../components/chat/InputPanel";
-import ChoicePanel from "../../components/chat/ChoicePanel";
+import Workflow from "../phone/Workflow";
+import Day from "./Day";
+import ChoiceForm from "./ChoiceForm";
+import Document from "./Document";
+import InputPanel from "./InputPanel";
+import ChoicePanel from "./ChoicePanel";
 import toggleArrayElement from "../../handlers/toggleArrayElement";
-import AttachPanel from '../../components/chat/AttachPanel';
+import AttachPanel from './AttachPanel';
 
-import ActionButtons from "../../components/chat/ActionsButtons"
-import ServicesPanel from "../../components/partners/ServicesPanel"
+import ActionButtons from "./ActionsButtons"
+import ServicesPanel from "../partners/ServicesPanel"
 
 //message: {type=form, id, items, selected, submitted}
 export default function Messanger({

@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 
-import useMultistepForm from "../src/components/hooks/useMultistepForm";
+import useMultistepForm from "../src/hooks/useMultistepForm";
 
 import WorkTypes from "../src/pages/auth/forms/WorkTypesForm";
 import UserForm from "../src/pages/auth/forms/UserForm";
 
 // arrow-right, -
-import ArrowRight from '../src/icons/arrow-right.svg'
+import ArrowRight from '../src/assets/icons/arrow-right.svg'
 
 const INITIAL_DATA = {
 

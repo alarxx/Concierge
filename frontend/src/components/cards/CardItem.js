@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Star from '../../icons/star.svg'
-import Location from '../../icons/location.svg'
+import Star from '../../assets/icons/star.svg'
+import Location from '../../assets/icons/location.svg'
 
 function Rate({ rate }){
     return (

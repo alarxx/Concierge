@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import CloseIcon from "../../icons/close.svg";
+import CloseIcon from "../../assets/icons/close.svg";
 
 export default function AttachPanel({title, onClose=f=>f, children}){
 

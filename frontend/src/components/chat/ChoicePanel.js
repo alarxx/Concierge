@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import GalleryIcon from "../../icons/gallery.svg";
-import SendIcon from "../../icons/send.svg";
+import GalleryIcon from "../../assets/icons/gallery.svg";
+import SendIcon from "../../assets/icons/send.svg";
 
 export default function ControlPanel({
                                          onClick=f=>f

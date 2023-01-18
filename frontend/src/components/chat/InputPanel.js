@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import MenuIcon from "../../icons/menu.svg";
-import SendIcon from "../../icons/send.svg";
+import MenuIcon from "../../assets/icons/menu.svg";
+import SendIcon from "../../assets/icons/send.svg";
 
 export default function InputPanel({
                                        initInput="",

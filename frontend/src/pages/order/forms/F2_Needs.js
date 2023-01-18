@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import FormWrapper from "../../../components/form/FormWrapper";
 import ServiceItem from "../../../components/form/ServiceItem";
 
-import HouseSVG from "../../../icons/house.svg";
+import HouseSVG from "../../../assets/icons/house.svg";
 import toggleArrayElement from "../../../handlers/toggleArrayElement";
 
 export default function F2_Needs({needs, updateFields= f=>f}){

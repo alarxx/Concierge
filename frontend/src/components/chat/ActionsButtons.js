@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 
-import HouseIcon from "../../icons/house.svg";
-import PersonalCardIcon from "../../icons/personalcard.svg";
-import ArchiveIcon from "../../icons/direct-normal.svg";
-import GalleryIcon from "../../icons/gallery.svg"
+import HouseIcon from "../../assets/icons/house.svg";
+import PersonalCardIcon from "../../assets/icons/personalcard.svg";
+import ArchiveIcon from "../../assets/icons/direct-normal.svg";
+import GalleryIcon from "../../assets/icons/gallery.svg"
 
 export default function ActionButtons(){
 

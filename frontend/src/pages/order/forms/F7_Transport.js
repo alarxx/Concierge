@@ -5,7 +5,7 @@ import Search from "../../../components/form/Search";
 import CardItem from "../../../components/cards/CardItem";
 import Cards from "../../../components/cards/Cards";
 import ServiceItem from "../../../components/form/ServiceItem";
-import HouseSVG from "../../../icons/house.svg";
+import HouseSVG from "../../../assets/icons/house.svg";
 import Checkbox from "../../../components/form/Checkbox";
 
 export default function F7_Transport({transport, driverNeeded, updateFields= f=>f}){

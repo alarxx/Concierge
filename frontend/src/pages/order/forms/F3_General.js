@@ -2,7 +2,7 @@ import React from 'react';
 import FormWrapper from "../../../components/form/FormWrapper";
 import ServiceItem from "../../../components/form/ServiceItem";
 
-import HouseSVG from "../../../icons/house.svg";
+import HouseSVG from "../../../assets/icons/house.svg";
 import InputForm from "../../../components/form/InputForm";
 import SelectForm from "../../../components/form/SelectForm";
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SearchIcon from '../../icons/search-normal.svg'
+import SearchIcon from '../../assets/icons/search-normal.svg'
 
 export default function Search({ }){
     return (

@@ -2,7 +2,7 @@ import React from 'react';
 import FormWrapper from "../../../components/form/FormWrapper";
 import ServiceItem from "../../../components/form/ServiceItem";
 
-import HouseSVG from "../../../icons/house.svg";
+import HouseSVG from "../../../assets/icons/house.svg";
 import DatesPicker from "../../../components/form/DatesPicker";
 import Checkbox from "../../../components/form/Checkbox";
 

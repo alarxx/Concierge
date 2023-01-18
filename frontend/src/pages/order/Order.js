@@ -12,7 +12,7 @@ import F8_Calculation from "./forms/F8_Calculation";
 
 import MultistepForm from "../../components/form/MultistepForm";
 
-import {useAppContext} from "../../components/context/AppContext";
+import {useAppContext} from "../../context/AppContext";
 
 // Это order_meta, все что выбирает пользователь идет в order_meta, сам order может менять только manager
 const INITIAL_DATA_DEFAULT = {

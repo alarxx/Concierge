@@ -1,6 +1,6 @@
 import React from 'react';
 
-import InfoCircle from '../../icons/info-circle.svg'
+import InfoCircle from '../../assets/icons/info-circle.svg'
 
 const calculatedSumD = {min: "400 000", max: "480 000"};
 const discountedSumD = {min: "360 000", max: "420 000"};

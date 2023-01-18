@@ -4,7 +4,7 @@ import Workflow from "../../components/phone/Workflow";
 import Menu from "../../components/phone/Menu";
 import Container from "../../components/phone/Container";
 import CardOrder from "../../components/cards/CardOrder";
-import PushIcon from "../../icons/clipboard-tick.svg";
+import PushIcon from "../../assets/icons/clipboard-tick.svg";
 
 
 export default function Profile(){

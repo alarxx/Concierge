@@ -1,5 +1,5 @@
 import React from 'react';
-import HouseSVG from "../../icons/house.svg";
+import HouseSVG from "../../assets/icons/house.svg";
 
 export default function ServiceItem({caption, address, icon=<HouseSVG/>,
                                         active=false,

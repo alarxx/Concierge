@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 
-import useMultistepForm from "../src/components/hooks/useMultistepForm";
+import useMultistepForm from "../src/hooks/useMultistepForm";
 
 import F1_Plans from "../src/pages/order/forms/F1_Plans";
 import F2_Needs from "../src/pages/order/forms/F2_Needs";
@@ -12,7 +12,7 @@ import HotelsSelection6 from "../src/pages/order/forms/F6_HotelsSelection";
 import F7_Transport from "../src/pages/order/forms/F7_Transport";
 import F8 from "../src/pages/order/forms/F8_Calculation";
 
-import ArrowRight from "../src/icons/arrow-right.svg";
+import ArrowRight from "../src/assets/icons/arrow-right.svg";
 
 const INITIAL_DATA = {
 

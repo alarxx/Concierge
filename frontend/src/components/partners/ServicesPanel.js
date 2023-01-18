@@ -1,7 +1,7 @@
 import React from 'react'
 
-import LocationIcon from "../../icons/location.svg";
-import StarIcon from "../../icons/star.svg";
+import LocationIcon from "../../assets/icons/location.svg";
+import StarIcon from "../../assets/icons/star.svg";
 
 
 export default function ServicesFrame(){

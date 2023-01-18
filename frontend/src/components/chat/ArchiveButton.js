@@ -1,5 +1,5 @@
 import React from 'react'
-import ArchiveIcon from '../../icons/direct-normal.svg'
+import ArchiveIcon from '../../assets/icons/direct-normal.svg'
 
 export default function ArchiveButton({ name="Перейти в архив" }){
     return (

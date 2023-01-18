@@ -1,8 +1,8 @@
 import React from 'react'
 
-import Category from '../../icons/category.svg'
-import Math from '../../icons/math.svg'
-import Message from '../../icons/messages-3.svg'
+import Category from '../../assets/icons/category.svg'
+import Math from '../../assets/icons/math.svg'
+import Message from '../../assets/icons/messages-3.svg'
 
 export default function Menu(){
         return (

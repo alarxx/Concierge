@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ArrowSquareDown from '../../icons/arrow-square-down.svg';
+import ArrowSquareDown from '../../assets/icons/arrow-square-down.svg';
 
 export default function SelectForm({label}){
     return (

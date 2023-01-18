@@ -1,7 +1,7 @@
 import React from 'react'
 
-import DocumentTextIcon from '../../icons/document-text.svg'
-import DocumentDownload from '../../icons/document-download.svg'
+import DocumentTextIcon from '../../assets/icons/document-text.svg'
+import DocumentDownload from '../../assets/icons/document-download.svg'
 
 export default function Document({ message, onClick }){
     return (

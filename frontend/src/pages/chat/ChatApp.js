@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react'
 /**
  * Придется писать хук для отправки и получения сообщений
  * */
-import Conversations from "./Conversations";
-import Messanger from "./Messanger";
-import {useAppContext} from "../../components/context/AppContext";
+import Conversations from "../../components/chat/Conversations";
+import Messanger from "../../components/chat/Messanger";
+import {useAppContext} from "../../context/AppContext";
 import {useParams} from "react-router-dom";
 
 /**
