@@ -13,6 +13,7 @@ import toggleArrayElement from "../../../handlers/toggleArrayElement";
 import AttachPanel from '../../chat/AttachPanel';
 
 import ActionButtons from "../../chat/ActionsButtons"
+import ServicesPanel from "../../partners/ServicesPanel"
 
 //message: {type=form, id, items, selected, submitted}
 export default function Messanger({
@@ -111,7 +112,7 @@ export default function Messanger({
                                               onSend={onSend}/>}
             {control==='attach' &&
                 <AttachPanel title="Выберите паттерн" onClose={e=>setIsAttach(false)}>
-                    <ActionButtons/>
+                    <ServicesPanel/>
                 </AttachPanel>
             }
 

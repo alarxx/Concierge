@@ -1477,6 +1477,7 @@ textarea::-webkit-scrollbar {
 
 
 .partners {
+    width: 100%;
     padding-top: 26px;
 }
 .partners__category {
@@ -1533,11 +1534,27 @@ textarea::-webkit-scrollbar {
     font-size: 12px;
 }
 .partners-item__right {
+    display: flex;
+    align-items: center;
     font-weight: 400;
     font-size: 10px;
     line-height: 14px;
     /* identical to box height */
     color: #353535;
+}
+.partners-item__right svg {
+    width: 16px;
+}
+.partners-item__rate {
+    display: flex;
+    align-items: center;
+}
+.partners-item__rate svg {
+    width: 14px;
+    fill: #EBBC15;
+}
+.partners-item__rate svg path {
+    stroke: #EBBC15;
 }
 .partners-item__right span, .partners-item__rate span {
     margin-left: 5px;
@@ -1546,6 +1563,14 @@ textarea::-webkit-scrollbar {
     display: flex;
     flex-wrap: wrap;
 
+}
+
+.chat-controls-attach .partners__wrapper {
+    overflow: auto;
+    height: 550px;
+}
+.chat-controls-attach .partners__wrapper::-webkit-scrollbar {
+    display: none;
 }
 
 

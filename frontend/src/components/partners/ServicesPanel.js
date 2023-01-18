@@ -1,5 +1,7 @@
 import React from 'react'
 
+import LocationIcon from "../../icons/location.svg";
+import StarIcon from "../../icons/star.svg";
 
 
 export default function ServicesFrame(){
@@ -34,12 +36,11 @@ export default function ServicesFrame(){
                                 Названи отеля
                             </div>
                             <div class="partners-item__rate">
-
-                                <span>4,5</span>
+                                <StarIcon viewBox="0 0 24 24" />                                <span>4,5</span>
                             </div>
                         </div>
                         <div class="partners-item__right">
-
+                            <LocationIcon viewBox="0 0 24 24" />
                             <span>Адрес отеля</span>
                         </div>
                     </div>
