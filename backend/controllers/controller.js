@@ -85,6 +85,8 @@ module.exports = ({Model}) => {
 
     const controller = {};
 
+    controller.handleError = handleError;
+
     const nestedObjectKeys = Model.nestedObjectKeys ? Model.nestedObjectKeys() : [];
     controller.nestedObjectKeys = nestedObjectKeys;
 

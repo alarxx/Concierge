@@ -8,7 +8,8 @@ const {
     c, r, u, d,
     access,
     findOne, find,
-    addToArray, removeFromArray, arrayField
+    addToArray, removeFromArray, arrayField,
+    deleteAll
 } = controller;
 
 Router.route('/')
@@ -20,7 +21,7 @@ Router.route('/')
     .delete(access, findOne, d);
 
 
-Router.delete('/all', controller.deleteAll);
+Router.delete('/all', access, deleteAll);
 
 /** Работа с массивом bookings */
 Router.post('/bookings', arrayField('bookings'), findOne, addToArray);
