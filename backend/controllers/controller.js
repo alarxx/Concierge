@@ -196,16 +196,17 @@ module.exports = ({Model}) => {
         }
 
         const pkey = contains[0]==='id'?'_id':contains[0];
-        const model = await Model.findOne({[pkey]: req.body[contains[0]]});
-
         // console.log({[pkey]: req.body[contains[0]]});
-        // console.log({model});
 
+        /*
+        перенес этот кусок в update и delete, isModelFound теперь должен проверять
         if (!model){
             return res.status(404).json({error: `${modelName} not found`});
-        }
+        }*/
 
-        res.locals.model = model;
+        res.locals.model = await Model.findOne({[pkey]: req.body[contains[0]]});
+        res.locals.tried = true;
+
         next();
     }
 
@@ -292,8 +293,10 @@ module.exports = ({Model}) => {
      * */
     controller.r = async (req, res) => {
         const models = res.locals.models;
-        if(!models)
+        if(!models){
+            console.log(colors.red('Incorrectly written code. Missing model search'));
             return res.status(500).json({error: 'Incorrectly written code. Missing model search'});
+        }
 
         await Promise.all(models.map(async model => {
             await Promise.all(nestedObjectKeys.map(async key => {
@@ -305,15 +308,30 @@ module.exports = ({Model}) => {
     }
 
 
+    function isModelFound(req, res){
+        if (!res.locals.model){
+            if(res.locals.tried){
+                log(colors.red(`${modelName} not found`));
+                res.status(404).json({error: `${modelName} not found`});
+            }
+            else {
+                console.log(colors.red('Incorrectly written code. Missing model search'));
+                res.status(500).json({error: 'Incorrectly written code. Missing model search'});
+            }
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Метод create и update сильно похожи, но create имеет функцию автоматического добавления некоторой информации (firstFilling).
      * В create мы можем все записать в один try-catch, потому что мы можем сделать model.deepDelete в случае ошибки.
      * В update мы не можем так делать и в случае чего, нам нужно удалять специфичные изменения
      * */
     controller.u = async (req, res) => {
+        if(!isModelFound(req, res)) return;
+
         const model = res.locals.model;
-        if(!model)
-            return res.status(500).json({error: 'Incorrectly written code. Missing model search'});
 
         log(colors.cyan(`### UPDATE (${modelName}) ###`));
 
@@ -367,10 +385,10 @@ module.exports = ({Model}) => {
      * Самый простой и понятный метод
      * */
     controller.d = async (req, res) => {
+        if(!isModelFound(req, res)) return;
+
         // const model = await controller.findModel(req, res);
         const model = res.locals.model;
-        if(!model)
-            return res.status(500).json({error: 'Incorrectly written code. Missing model search'});
 
         log(colors.cyan(`### DELETE (${modelName}) ###`));
 

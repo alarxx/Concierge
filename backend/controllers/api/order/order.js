@@ -1,6 +1,7 @@
 
 const OrderModel = require('../../../models/order/Order');
 const colors = require("../../../colors");
+const log = require("../../../log");
 
 const orderController = require('../../controller')({Model: OrderModel});
 
@@ -22,7 +23,7 @@ orderController.find = async (req, res, next) => {
 }
 
 orderController.access = (req, res, next) => {
-    if(req.user.role!=='manager'){
+    if(req.user.role !== 'manager'){
         console.log(colors.red('Request denied. User role is not manager'));
         return res.status(403).json({error: `Access denied. You are not the manager.`});
     }
@@ -33,9 +34,12 @@ orderController.deleteAll = async (req, res) => {
     const orders = await OrderModel.find();
 
     try {
+        log(colors.cyan(`### DELETE ALL (${orderController.modelName}) ###`));
         await Promise.all(orders.map(async order=>{
             await order.deepDelete();
         }))
+        log(colors.cyan('###########################################'));
+
         return res.json({orders, message: 'successfully deleted'});
     } catch (err) {
         return orderController.handleError(req, res, err)

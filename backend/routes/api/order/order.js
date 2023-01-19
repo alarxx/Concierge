@@ -28,7 +28,7 @@ Router.post('/bookings', arrayField('bookings'), findOne, addToArray);
 Router.delete('/bookings', arrayField('bookings'), findOne, removeFromArray);
 
 
-Router.use('/meta', require('./meta/meta'));
+// Router.use('/meta', require('./meta/meta'));
 
 
 module.exports = Router;
