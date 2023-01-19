@@ -9,13 +9,13 @@ export default function Home(){
 
     const {createHotel, updateHotel, deleteHotel} = hotelsHandler;
     useEffect(()=>{
-        deleteHotel({
+        /*deleteHotel({
             id: '63c7eaa6e856885c8ee791a5',
             name: "React Hotel",
             company: '63c7e7b9e856885c8ee7915a',
             address: 'Almata',
             stars: 3,
-        });
+        });*/
     }, [])
 
     return (
