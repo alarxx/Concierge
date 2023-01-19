@@ -4,12 +4,15 @@ import useAuth from "./hooks/useAuth";
 import useOrder from "./hooks/useOrder";
 import useChat from "./hooks/useChat";
 import useSocket from "./hooks/useSocket";
+import useHotel from "./hooks/useHotel";
 
 const Context = createContext();
 
 const useAppContext = () => useContext(Context);
 
 function AppContextProvider({ children }){
+
+    const hotelsHandler = useHotel();
 
     const socketHandler = useSocket()
     const authHandler = useAuth({...socketHandler});
@@ -22,6 +25,7 @@ function AppContextProvider({ children }){
             authHandler,
             orderHandler,
             chatHandler,
+            hotelsHandler
         }}>
             {children}
         </Context.Provider>

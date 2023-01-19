@@ -55,19 +55,78 @@ export default function useOrder({ user, isAuthenticated }){
     }, [user])
 
 
-    /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать отели. Хз */
-    async function orderFetch(url, opt={}){
-        setOrdersLoading(true);
-        try{
-            if(opt.body && typeof opt.body !== 'string')
-                opt.body = JSON.stringify(opt.body);
+    async function createOrder(order){
+        // Убеждаемся, что пользователь авторизован и создаем заказ
 
-            const res = await fetch(url, {
+        if (!isAuthenticated()) {
+            navigate('/register', {
+                replace: true,
+                state: {
+                    redirect: '/order',
+                    order: order
+                }
+            });
+        }
+        else {
+            // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
+            try{
+                const res = await fetch('/api/order', {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify(order)
+                });
+                const json = await res.json();
+                console.log(json);
+            }catch(e){
+                console.log(e);
+            }
+            reloadOrders();
+        }
+    }
+
+    async function updateOrder(order){
+        try{
+            const res = await fetch('/api/order', {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                ...opt
+                method: 'PUT',
+                body: JSON.stringify(order)
             });
+            const json = await res.json();
+            console.log(json);
+
+            reloadOrders();
+        }catch(e){
+            console.log(e);
+        }
+    }
+
+    async function deleteOrder(order){
+        try{
+            const res = await fetch('/api/order', {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'DELETE',
+                body: JSON.stringify(order)
+            });
+            const json = await res.json();
+            console.log(json);
+
+            reloadOrders();
+        }catch(e){
+            console.log(e);
+        }
+    }
+
+    /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать отели. Хз */
+    async function reloadOrders (){
+        setOrdersLoading(true);
+        try{
+            const res = await fetch('/api/order');
             const json = await res.json();
             setOrdersLoading(false);
             setOrdersError(null);
@@ -80,34 +139,6 @@ export default function useOrder({ user, isAuthenticated }){
         }
     }
 
-    async function create(form){
-        // Убеждаемся, что пользователь авторизован и создаем заказ
 
-        if (!isAuthenticated()) {
-            navigate('/register', {
-                replace: true,
-                state: {
-                    redirect: '/order',
-                    order: form
-                }
-            });
-        }
-        else {
-            // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
-            await orderFetch('/api/order', {
-                method: 'POST',
-                body: form
-            })
-        }
-    }
-
-    async function updateOrder(order){}
-    async function deleteOrder(order){}
-
-    async function reloadOrders (){
-        await orderFetch('/api/order');
-    }
-
-
-    return {orders, ordersLoading, ordersError, create, reloadOrders, filledData, isFilledBefore};
+    return {orders, ordersLoading, ordersError, createOrder, updateOrder, deleteOrder, reloadOrders, filledData, isFilledBefore};
 }

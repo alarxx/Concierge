@@ -1,6 +1,6 @@
 /**
  * Контроллер не задумывался для изменения нескольких документов.
- * c, r, u, d ... c - создаёт ...
+ * c, r, u, d ... c - создаёт и т.д. ...
  * Я не смог написать гибкий c,r,u,d,
  * поэтому я начал пользоваться middleware-ами
  * и перекидывать данные между ними с помощью res.locals. (model - object, models - array)
@@ -8,7 +8,16 @@
 
 const File = require("../models/binaries/File");
 
-const setFiles = async (model, files, user, keys) => {
+/**
+ * Если файл в модель уже был загружен до этого, то он удаляет старый файл и загружает новый,
+ * поэтому функция называется setFiles, а не addFiles
+ *
+ * @model - документ к которому мы хоти добавить файлы.
+ * @files - объект, под ключами которого находятся файлы express-fileupload.
+ * @keys - ключи
+ * @user нужен для того, чтобы знать кто загрузил файл.
+ * */
+async function setFiles (model, files, user, keys) {
     if(!files) return;
 
     await Promise.all(
@@ -25,17 +34,33 @@ const setFiles = async (model, files, user, keys) => {
 }
 
 
-// Функция проверяющая наличие ключей объекта совпадающих со значениями массива
-const matchedKeys = (obj, keys) => keys.filter(key => obj.hasOwnProperty(key));
+/** Возвращает отфильтрованный массив ключей, которые содержатся в объекте.
+ *  Можно узнать наличие определенных ключей в объекте. */
+function hasKeys (obj, keys){
+    return keys.filter(key => obj.hasOwnProperty(key));
+}
 
 
+/**
+ * @Model - mongoose model, к которой мы хотим добавить controller в стиле REST.
+ * @nestedObjectKeys - это поля модели, которые всегда должны вести себя как обычные вложенные объекты.
+ *                     Когда мы обновляем, в body мы можем положить объекты под этими ключами и у нас автоматом обновится и та модель.
+ * */
 module.exports = ({Model, nestedObjectKeys=[]}) => {
-    const modelName = Model.collection.collectionName;
+    const controller = {};
 
-    const uniqueKeys = Object.values(Model.schema.paths)
+    /** В множественном числе дает */
+    const modelName = Model.collection.collectionName;
+    controller.modelName = modelName;
+
+    /**
+     * fields that are unique in the collection
+     * */
+    const uniqueFields = Object.values(Model.schema.paths)
         .filter(field => field.options.unique)
         .map(field => field.path);
-    uniqueKeys.unshift('id');
+    uniqueFields.unshift('id');
+    controller.uniqueFields = uniqueFields;
 
     /**
      * fields of Mongoose Schema that refer to File
@@ -46,14 +71,10 @@ module.exports = ({Model, nestedObjectKeys=[]}) => {
             Model.schema.paths[field.path].options.ref === 'File'
         )
         .map(field => field.path);
-
-
-    const controller = {};
-
-    controller.setFiles = setFiles;
     controller.fileFields = fileFields;
 
-    /*
+
+    /* -----------------------------------------------------------------------------------------
     Следующие 4 функции нужно будет override-ить в специфичном контроллере.
     Можно не переназначать, но для этого придется какие-то хэндлеры придумать, пока не думал как
     */
@@ -90,12 +111,15 @@ module.exports = ({Model, nestedObjectKeys=[]}) => {
     }
 
     /**
-     * Доступ на чтение. Filter res.locals.models
+     * Доступ на чтение. Filter res.locals.models.
+     * Задумывалось как models.filter после find.
+     * Но кажется лучше сразу find переназначать
      * */
     controller.readAccess = (req, res, next)=>{
         // у нас есть res.locals.models
         next();
     }
+    /* ----------------------------------------------------------------------------------------- */
 
 
     /**
@@ -104,13 +128,13 @@ module.exports = ({Model, nestedObjectKeys=[]}) => {
      * На самом деле, в таблице должен быть только 1 primary key
      * */
     controller.findOne = async (req, res, next) => {
-        const contains = matchedKeys(req.body, uniqueKeys);
+        const contains = hasKeys(req.body, uniqueFields);
 
         if (contains.length === 0) {
-            return res.status(400).json({error: `${'\''.concat(uniqueKeys.join('\' or \'')).concat('\'')} field not provided`});
+            return res.status(400).json({error: `${'\''.concat(uniqueFields.join('\' or \'')).concat('\'')} field not provided`});
         }
         else if(contains.length > 1){
-            return res.status(400).json({error: `More than one primary key (of ${'\''.concat(uniqueKeys.join('\', \'')).concat('\'')}) provided in req.body`});
+            return res.status(400).json({error: `More than one primary key (of ${'\''.concat(uniqueFields.join('\', \'')).concat('\'')}) provided in req.body`});
         }
 
         const pkey = contains[0]==='id'?'_id':contains[0];
@@ -143,7 +167,7 @@ module.exports = ({Model, nestedObjectKeys=[]}) => {
 
     /**
      * Здесь нужна только первичная проверка кажется
-     * Метод create и update сильно похожи, но create имеет функцию автоматического добавления некоторой информации.
+     * Метод create и update сильно похожи, но create имеет функцию автоматического добавления некоторой информации (firstFilling).
      * */
     controller.c = async (req, res) => {
         const model = new Model({});
@@ -241,6 +265,7 @@ module.exports = ({Model, nestedObjectKeys=[]}) => {
         } catch (err) {
             // await removeFiles(model, req.files, req.user, fileFields); // Когда нибудь придется написать недотранзакцию
             return res.status(500).json({error: err.message});
+            
         }
 
         await model.save();

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react'
 import {useNavigate} from "react-router-dom";
 
 
-
 const conversationsDefault = [
     {
         id: 1,
@@ -14,7 +13,7 @@ const conversationsDefault = [
         id: 2,
         name:"Командировка2",
         last_message:"Сообщение сообщение",
-        unread_num:3
+        unread_num:2
     },
     {
         id: 3,
@@ -125,11 +124,25 @@ const messagesDefault = [
 export default function useChat({socket}){
     const navigate = useNavigate()
 
+    /**
+     * Мы сразу все в куче загружаем, а фильтровать их уже потом будем
+     * */
     const [conversations, setConversations] = useState(conversationsDefault)
     const [messages, setMessages] = useState(messagesDefault);
+    const [participants, setParticipants] = useState(messagesDefault);
+    const [notifications, setNotifications] = useState(messagesDefault);
 
+    function _addСonverstion(conversation){
+        setConversations(prev => [...prev, conversation]);
+    }
     function _addMessage(message){
-        setMessages(prevMessages => [...prevMessages, message]);
+        setMessages(prev => [...prev, message]);
+    }
+    function _addParticipant(participant){
+        setParticipants(prev => [...prev, participant]);
+    }
+    function _addNotification(notification){
+        setNotifications(prev => [...prev, notification]);
     }
 
     useEffect(() => {
@@ -146,12 +159,12 @@ export default function useChat({socket}){
         navigate(-1)
     }
 
-    const sendMessage = (message, conversation) => {
-        socket.emit('send-message', message, conversation);
+    function sendMessage(message){
+        socket.emit('send-message', message);
         _addMessage(message);
     };
 
-    const joinConversation = conversation => {
+    function joinConversation(conversation){
         socket.emit('join-conversation', conversation);
     };
 
