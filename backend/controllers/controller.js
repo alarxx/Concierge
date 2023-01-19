@@ -42,7 +42,7 @@ async function setFiles (model, files, user, keys) {
 
 /** Возвращает отфильтрованный массив ключей, которые содержатся в объекте.
  *  Можно узнать наличие определенных ключей в объекте. */
-function hasKeys (obj, keys){
+function hasKeys(obj, keys){
     return keys.filter(key => obj.hasOwnProperty(key));
 }
 
@@ -308,7 +308,7 @@ module.exports = ({Model}) => {
     }
 
 
-    function isModelFound(req, res){
+    function _isModelFound(req, res){
         if (!res.locals.model){
             if(res.locals.tried){
                 log(colors.red(`${modelName} not found`));
@@ -329,7 +329,7 @@ module.exports = ({Model}) => {
      * В update мы не можем так делать и в случае чего, нам нужно удалять специфичные изменения
      * */
     controller.u = async (req, res) => {
-        if(!isModelFound(req, res)) return;
+        if(!_isModelFound(req, res)) return;
 
         const model = res.locals.model;
 
@@ -385,7 +385,7 @@ module.exports = ({Model}) => {
      * Самый простой и понятный метод
      * */
     controller.d = async (req, res) => {
-        if(!isModelFound(req, res)) return;
+        if(!_isModelFound(req, res)) return;
 
         // const model = await controller.findModel(req, res);
         const model = res.locals.model;
