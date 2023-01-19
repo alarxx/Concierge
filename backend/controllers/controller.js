@@ -1,5 +1,7 @@
 
 const colors = require('../colors');
+const log = require('../log');
+
 
 /**
  * Контроллер не задумывался для изменения нескольких документов.
@@ -63,8 +65,7 @@ function initialize_log(Model){
 }
 
 function handleError(req, res, err){
-    if(process.env.REST_LOG === 'needed')
-        console.log(colors.red(`###########################################`));
+    log(colors.red(`###########################################`));
 
     if(err.errors){
         const errors = Object.keys(err.errors).map(key => err.errors[key].message);
@@ -74,13 +75,30 @@ function handleError(req, res, err){
     }
 }
 
+function getFileFields(Model){
+    return Object.values(Model.schema.paths)
+        .filter(field =>
+            Model.schema.paths[field.path].instance === 'ObjectID' &&
+            Model.schema.paths[field.path].options.ref === 'File'
+        )
+        .map(field => field.path);
+}
+
+function getUniqueFields(Model){
+    const uniqueFields = Object.values(Model.schema.paths)
+        .filter(field => field.options.unique)
+        .map(field => field.path);
+    uniqueFields.unshift('id');
+    return uniqueFields;
+}
+
 /**
  * @Model - mongoose model, к которой мы хотим добавить controller в стиле REST.
  * @nestedObjectKeys - это поля модели, которые всегда должны вести себя как обычные вложенные объекты.
  *                     Когда мы обновляем, в body мы можем положить объекты под этими ключами и у нас автоматом обновится и та модель.
  * */
 module.exports = ({Model}) => {
-    if(process.env.REST_LOG === 'needed')
+    // if(process.env.REST_LOG === 'needed')
         initialize_log(Model)
 
     const controller = {};
@@ -98,21 +116,13 @@ module.exports = ({Model}) => {
     /**
      * fields that are unique in the collection
      * */
-    const uniqueFields = Object.values(Model.schema.paths)
-        .filter(field => field.options.unique)
-        .map(field => field.path);
-    uniqueFields.unshift('id');
+    const uniqueFields = getUniqueFields(Model);
     controller.uniqueFields = uniqueFields;
 
     /**
      * fields of Mongoose Schema that refer to File
      * */
-    const fileFields = Object.values(Model.schema.paths)
-        .filter(field =>
-            Model.schema.paths[field.path].instance === 'ObjectID' &&
-            Model.schema.paths[field.path].options.ref === 'File'
-        )
-        .map(field => field.path);
+    const fileFields = getFileFields(Model);
     controller.fileFields = fileFields;
 
 
@@ -215,8 +225,7 @@ module.exports = ({Model}) => {
      * В update мы не можем так делать и в случае чего, нам нужно удалять специфичные изменения.
      * */
     controller.c = async (req, res) => {
-        if(process.env.REST_LOG === 'needed')
-            console.log(colors.cyan(`### CREATE (${modelName}) ###`));
+        log(colors.cyan(`### CREATE (${modelName}) ###`));
 
         const model = new Model({});
 
@@ -234,8 +243,7 @@ module.exports = ({Model}) => {
              */
 
             if(model.firstFilling) {
-                if(process.env.REST_LOG === 'needed')
-                    console.log(colors.gray('--- firstFilling function on ---'));
+                log(colors.gray('--- firstFilling function on ---'));
                 await model.firstFilling({
                     body: req.body,
                     user: req.user
@@ -263,20 +271,17 @@ module.exports = ({Model}) => {
             await setFiles(model, req.files, req.user, fileFields);
 
         } catch (err) {
-            if(process.env.REST_LOG === 'needed')
-                console.log(colors.red('Cancel changes. Something went wrong.'));
+            log(colors.red('Cancel changes. Something went wrong.'));
             await model.deepDelete();
             return handleError(req, res, err);
         }
 
-        if(process.env.REST_LOG === 'needed')
-            console.log(colors.gray(`--- Final Saves (${modelName}) ---`));
+        log(colors.gray(`--- Final Saves (${modelName}) ---`));
 
         await Promise.all(nestedObjectKeys.map(async key => await model[key].save()));
         await model.save();
 
-        if(process.env.REST_LOG === 'needed')
-            console.log(colors.cyan('###########################################'));
+        log(colors.cyan('###########################################'));
 
         return res.json(model);
     }
@@ -310,8 +315,7 @@ module.exports = ({Model}) => {
         if(!model)
             return res.status(500).json({error: 'Incorrectly written code. Missing model search'});
 
-        if(process.env.REST_LOG === 'needed')
-            console.log(colors.cyan(`### UPDATE (${modelName}) ###`));
+        log(colors.cyan(`### UPDATE (${modelName}) ###`));
 
         try {
             /** Назначаем примитивные поля и производим валидацию */
@@ -353,8 +357,7 @@ module.exports = ({Model}) => {
         await Promise.all(nestedObjectKeys.map(async key => await model[key].save()))
         await model.save();
 
-        if(process.env.REST_LOG === 'needed')
-            console.log(colors.cyan('###########################################'));
+        log(colors.cyan('###########################################'));
 
         return res.json(model);
     }
@@ -369,14 +372,12 @@ module.exports = ({Model}) => {
         if(!model)
             return res.status(500).json({error: 'Incorrectly written code. Missing model search'});
 
-        if(process.env.REST_LOG === 'needed')
-            console.log(colors.cyan(`### DELETE (${modelName}) ###`));
+        log(colors.cyan(`### DELETE (${modelName}) ###`));
 
         try {
             await model.deepDelete();
 
-            if(process.env.REST_LOG === 'needed')
-                console.log(colors.cyan('###########################################'));
+            log(colors.cyan('###########################################'));
 
             // deep delete удаляет и может раскрывать некоторые нежелательные поля
             // При удалении в принципе хватает, того что мы вернем id удаленного документа

@@ -1,4 +1,5 @@
 const {Schema, model} = require("mongoose");
+const log = require('../../log');
 
 const User = require('../User');
 const File = require('../binaries/File');
@@ -51,13 +52,11 @@ const MessageSchema = new Schema({
 
 MessageSchema.plugin(require('mongoose-unique-validator'));
 MessageSchema.post('save', function(document, next){
-    if(process.env.REST_LOG === 'needed')
-        console.log(colors.green('saved:'), {Message: document});
+    log(colors.green('saved:'), {Message: document});
     next();
 });
 MessageSchema.post('remove', function(document, next){
-    if(process.env.REST_LOG === 'needed')
-        console.log(colors.green('removed:'), {Message: document});
+    log(colors.green('removed:'), {Message: document});
     next();
 });
 

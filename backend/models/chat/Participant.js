@@ -1,4 +1,5 @@
 const {Schema, model} = require("mongoose");
+const log = require('../../log');
 
 const Conversation = require('./Conversation');
 const User = require('../User');
@@ -33,13 +34,11 @@ const ParticipantSchema = new Schema({
 ParticipantSchema.plugin(require('mongoose-unique-validator'));
 
 ParticipantSchema.post('save', function(document, next){
-    if(process.env.REST_LOG === 'needed')
-        console.log(colors.green('saved:'), {Participant: document});
+    log(colors.green('saved:'), {Participant: document});
     next();
 });
 ParticipantSchema.post('remove', function(document, next){
-    if(process.env.REST_LOG === 'needed')
-        console.log(colors.green('removed:'), {Participant: document});
+    log(colors.green('removed:'), {Participant: document});
     next();
 });
 

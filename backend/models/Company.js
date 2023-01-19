@@ -1,4 +1,5 @@
 const {Schema, model} = require('mongoose');
+const log = require('../log');
 
 const File = require('./binaries/File');
 
@@ -22,13 +23,11 @@ const CompanySchema = new Schema({
 CompanySchema.plugin(require('mongoose-unique-validator'));
 
 CompanySchema.post('save', function(document, next){
-    if(process.env.REST_LOG === 'needed')
-        console.log(colors.green('saved:'), {Company: document});
+    log(colors.green('saved:'), {Company: document});
     next();
 });
 CompanySchema.post('remove', function(document, next){
-    if(process.env.REST_LOG === 'needed')
-        console.log(colors.green('removed:'), {Company: document});
+    log(colors.green('removed:'), {Company: document});
     next();
 });
 

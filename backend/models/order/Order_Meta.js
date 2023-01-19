@@ -3,6 +3,7 @@
  * */
 
 const {Schema, model} = require('mongoose');
+const log = require('../../log');
 
 const Order = require('./Order');
 const Service = require('../services/Service');
@@ -84,13 +85,11 @@ const MetaSchema = new Schema({
 MetaSchema.plugin(require('mongoose-unique-validator'));
 
 MetaSchema.post('save', function(document, next){
-    if(process.env.REST_LOG === 'needed')
-        console.log(colors.green('saved:'), {Order_Meta: document});
+    log(colors.green('saved:'), {Order_Meta: document});
     next();
 });
 MetaSchema.post('remove', function(document, next){
-    if(process.env.REST_LOG === 'needed')
-        console.log(colors.green('removed:'), {Order_Meta: document});
+    log(colors.green('removed:'), {Order_Meta: document});
     next();
 });
 
