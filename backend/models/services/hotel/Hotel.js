@@ -35,7 +35,19 @@ const HotelSchema = new Schema({
 
 HotelSchema.plugin(require('mongoose-unique-validator'));
 
+HotelSchema.post('save', function(document, next){
+    if(process.env.REST_LOG === 'needed')
+        console.log(colors.green('saved:'), {Hotel: document});
+    next();
+});
+HotelSchema.post('remove', function(document, next){
+    if(process.env.REST_LOG === 'needed')
+        console.log(colors.green('removed:'), {Hotel: document});
+    next();
+});
+
 const handlers = require('../../handlers');
+const colors = require("../../../colors");
 
 HotelSchema.methods.firstFilling = async function({body, user}){
     return this;

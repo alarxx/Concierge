@@ -1,7 +1,7 @@
 
 const OrderModel = require('../../../models/order/Order');
 
-const orderController = require('../../controller')({Model: OrderModel, nestedObjectKeys:['meta']});
+const orderController = require('../../controller')({Model: OrderModel});
 
 orderController.find = async (req, res, next) => {
     const params = {...req.query}
@@ -20,19 +20,28 @@ orderController.find = async (req, res, next) => {
     next();
 }
 
-orderController.roleAccess = (req,res, next) => {
-    // console.log(res.locals.model.customer, req.user.id);
-    if(req.user.role!=='manager'/*|| res.locals.model.customer != req.user.id*/)
-        return res.status(403).json({error: `You are not the manager${''/* or creator of this order*/}. Access denied`});
+orderController.access = (req, res, next) => {
+    if(req.user.role!=='manager')
+        return res.status(403).json({error: `Access denied. You are not the manager.`});
     next();
 }
 
 orderController.deleteAll = async (req, res) => {
+    if(!req.isAuthenticated())
+        return res.status(401).json({error: 'Unauthorized'});
+    if(req.user.role !== 'manager')
+        return res.status(403).json({error: `Access denied. You are not the manager.`});
+
     const orders = await OrderModel.find();
-    await Promise.all(orders.map(async order=>{
-        await order.deepDelete();
-    }))
-    res.json(orders);
+
+    try {
+        await Promise.all(orders.map(async order=>{
+            await order.deepDelete();
+        }))
+        return res.json({orders, message: 'successfully deleted'});
+    } catch (err) {
+        return res.status(500).json({error: err.message});
+    }
 }
 
 module.exports = orderController;

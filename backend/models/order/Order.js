@@ -64,23 +64,34 @@ const OrderSchema = new Schema({
 });
 
 OrderSchema.plugin(require('mongoose-unique-validator'));
-
+OrderSchema.post('save', function(document, next){
+    if(process.env.REST_LOG === 'needed')
+        console.log(colors.green('saved:'), {Order: document});
+    next();
+});
+OrderSchema.post('remove', function(document, next){
+    if(process.env.REST_LOG === 'needed')
+        console.log(colors.green('removed:'), {Order: document});
+    next();
+});
 
 const handlers = require("../handlers");
+const colors = require("../../colors");
 
+OrderSchema.statics.nestedObjectKeys = function(){
+    return ['meta']
+}
 
 OrderSchema.methods.firstFilling = async function({body, user}){
     // Creating meta
     const meta = await new Order_Meta({order: this.id});
-    if(body.meta)
-        meta.set(body.meta);
-    await meta.save()
-
     this.meta = meta.id;
+    await meta.save();
 
     // Мы наверное должны здесь еще создавать Conversation, Participant и прикреплять везде user-a
-    const conversation = await new Conversation({}).save();
+    const conversation = await new Conversation({});
     this.conversation = conversation.id;
+    await conversation.save();
 
     const participant = await new Participant({user: user.id, conversation: conversation.id}).save();
 
@@ -88,7 +99,6 @@ OrderSchema.methods.firstFilling = async function({body, user}){
 
     return this;
 }
-
 
 OrderSchema.methods.deepDelete = async function (){
     // if(this.logo) await File.deepDeleteById(this.logo);

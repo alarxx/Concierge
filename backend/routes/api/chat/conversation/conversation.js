@@ -11,14 +11,14 @@ const controller = require('../../../../controllers/api/chat/conversation/conver
 const {
     c, r, u, d,
     findOne, find,
-    filesValidation, roleAccess, changeAccess, readAccess,
+    filesValidation,
     addToArray, removeFromArray, arrayField
 } = controller;
 
 Router.route('/')
-    .post(roleAccess, filesValidation, c)
-    .get(find, readAccess, r)
-    .put(roleAccess, filesValidation, findOne, changeAccess, u)
-    .delete(roleAccess, findOne, changeAccess, d);
+    .post(filesValidation, c)
+    .get(find, r)
+    .put(filesValidation, findOne, u)
+    .delete(findOne, d);
 
 module.exports = Router;

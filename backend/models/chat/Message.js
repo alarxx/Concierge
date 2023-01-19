@@ -2,6 +2,7 @@ const {Schema, model} = require("mongoose");
 
 const User = require('../User');
 const File = require('../binaries/File');
+const colors = require("../../colors");
 
 const MessageSchema = new Schema({
     conversation: {
@@ -49,7 +50,16 @@ const MessageSchema = new Schema({
 
 
 MessageSchema.plugin(require('mongoose-unique-validator'));
-
+MessageSchema.post('save', function(document, next){
+    if(process.env.REST_LOG === 'needed')
+        console.log(colors.green('saved:'), {Message: document});
+    next();
+});
+MessageSchema.post('remove', function(document, next){
+    if(process.env.REST_LOG === 'needed')
+        console.log(colors.green('removed:'), {Message: document});
+    next();
+});
 
 MessageSchema.methods.firstFilling = async function({body, user}){
     if(body.type ? !body[body.type] : false)
@@ -70,7 +80,7 @@ MessageSchema.statics.deepDeleteById = async function(id){
 
 
 MessageSchema.methods.deepDelete = async function(){
-    // Если message.type = form или файл, то мы не удаляем только саму модель
+    // Если message.type = form или файл, то мы не только саму модель удаляем
     await this.delete();
     return this;
 }

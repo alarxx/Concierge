@@ -3,6 +3,7 @@ const {Schema, model} = require('mongoose');
 const Message = require('./Message');
 const Participant = require('./Participant');
 const handlers = require("../handlers");
+const colors = require("../../colors");
 
 const ConversationSchema = new Schema({
     name: {
@@ -27,6 +28,17 @@ const ConversationSchema = new Schema({
 });
 
 ConversationSchema.plugin(require('mongoose-unique-validator'));
+ConversationSchema.post('save', function(document, next){
+    if(process.env.REST_LOG === 'needed')
+        console.log(colors.green('saved:'), {Conversation: document});
+    next();
+});
+ConversationSchema.post('remove', function(document, next){
+    if(process.env.REST_LOG === 'needed')
+        console.log(colors.green('removed:'), {Conversation: document});
+    next();
+});
+
 
 
 ConversationSchema.methods.firstFilling = async function({body, user}){
@@ -37,11 +49,15 @@ ConversationSchema.methods.firstFilling = async function({body, user}){
 ConversationSchema.methods.deepDelete = async function(){
     // Delete all messages that belong to conversation
     const messages = await Message.find({conversation: this.id});
-    await Promise.all(messages.map(async id => await Message.findByIdAndDelete(id)));
+    await Promise.all(messages.map(
+        async message => await message.deepDelete()
+    ));
 
     //Delete all participant that belong to conversation
     const participants = await Participant.find({conversation: this.id});
-    await Promise.all(participants.map(async id => await Participant.findByIdAndDelete(id)));
+    await Promise.all(participants.map(
+        async participant => await participant.deepDelete()
+    ));
 
     await this.delete();
     return this;
