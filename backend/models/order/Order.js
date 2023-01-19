@@ -4,7 +4,6 @@
  * */
 
 const {Schema, model} = require('mongoose');
-const log = require('../../log');
 
 const User = require('../User');
 const Order_Meta = require('./Order_Meta');
@@ -65,14 +64,7 @@ const OrderSchema = new Schema({
 });
 
 OrderSchema.plugin(require('mongoose-unique-validator'));
-OrderSchema.post('save', function(document, next){
-    log(colors.green('saved:'), {Order: document});
-    next();
-});
-OrderSchema.post('remove', function(document, next){
-    log(colors.green('removed:'), {Order: document});
-    next();
-});
+OrderSchema.plugin(require('../logPlugin'))
 
 const handlers = require("../handlers");
 const colors = require("../../colors");

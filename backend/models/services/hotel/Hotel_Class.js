@@ -18,7 +18,7 @@ const ClassSchema = new Schema({
         required: true,
         immutable: true,
     },
-    class: {
+    class: { // рандомная строка (A1, B1, VIP)
         type: String,
         required: true,
     },
@@ -46,6 +46,7 @@ const ClassSchema = new Schema({
 });
 
 ClassSchema.plugin(require('mongoose-unique-validator'));
+ClassSchema.plugin(require('../../logPlugin'))
 
 
 const handlers = require('../../handlers');
@@ -62,6 +63,8 @@ ClassSchema.methods.firstFilling = async function({body, user}){
 }
 
 ClassSchema.methods.deepDelete = async function(){
+    //Должен удалять все services, прикрепленные к нему и все букинги
+
     await handlers.deleteModels(this, ['logo', 'service']);
 
     await handlers.deleteArraysOfModels(this, ['images']);

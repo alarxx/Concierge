@@ -7,14 +7,6 @@ const InformalSchema = new Schema({
 });
 
 InformalSchema.plugin(require('mongoose-unique-validator'));
-
-InformalSchema.post('save', function(document, next){
-    log(colors.green('saved:'), {Informal: document});
-    next();
-});
-InformalSchema.post('remove', function(document, next){
-    log(colors.green('removed:'), {Informal: document});
-    next();
-});
+InformalSchema.plugin(require('../../logPlugin'));
 
 module.exports = model('Informal', InformalSchema);

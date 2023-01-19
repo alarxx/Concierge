@@ -32,6 +32,7 @@ const ServiceSchema = new Schema({
 });
 
 ServiceSchema.plugin(require('mongoose-unique-validator'));
+ServiceSchema.plugin(require('../logPlugin'));
 
 ServiceSchema.methods.deepDelete = async function(){
     await this.delete();

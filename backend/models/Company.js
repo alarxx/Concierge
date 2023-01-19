@@ -21,18 +21,9 @@ const CompanySchema = new Schema({
 
 
 CompanySchema.plugin(require('mongoose-unique-validator'));
-
-CompanySchema.post('save', function(document, next){
-    log(colors.green('saved:'), {Company: document});
-    next();
-});
-CompanySchema.post('remove', function(document, next){
-    log(colors.green('removed:'), {Company: document});
-    next();
-});
+CompanySchema.plugin(require('./logPlugin'))
 
 const handlers = require('./handlers');
-const colors = require("../colors");
 
 CompanySchema.methods.firstFilling = async function({body, user}){
     return this;

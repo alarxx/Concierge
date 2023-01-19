@@ -1,9 +1,7 @@
 const {Schema, model} = require("mongoose");
-const log = require('../../log');
 
 const Conversation = require('./Conversation');
 const User = require('../User');
-const colors = require("../../colors");
 
 /**
  * participant указывает в каких беседах состоит user
@@ -32,15 +30,8 @@ const ParticipantSchema = new Schema({
 
 
 ParticipantSchema.plugin(require('mongoose-unique-validator'));
+ParticipantSchema.plugin(require('../logPlugin'))
 
-ParticipantSchema.post('save', function(document, next){
-    log(colors.green('saved:'), {Participant: document});
-    next();
-});
-ParticipantSchema.post('remove', function(document, next){
-    log(colors.green('removed:'), {Participant: document});
-    next();
-});
 
 ParticipantSchema.methods.firstFilling = async function({body, user}){
     this.user = user.id;

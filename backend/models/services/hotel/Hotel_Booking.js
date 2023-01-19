@@ -64,6 +64,7 @@ const BookingSchema = new Schema({
 });
 
 BookingSchema.plugin(require('mongoose-unique-validator'));
+BookingSchema.plugin(require('../../logPlugin'));
 
 
 BookingSchema.methods.firstFilling = async function({body, user}){

@@ -47,7 +47,7 @@ function hasKeys(obj, keys){
 }
 
 function initialize_log(Model){
-    const modelName = Model.collection.collectionName;
+    const modelName = Model.collection.modelName;
     console.log(colors.gray(`Init`), modelName, colors.gray('controller.'));
     const model = new Model({});
     if(!Model.nestedObjectKeys){
@@ -109,7 +109,7 @@ module.exports = ({Model}) => {
     controller.nestedObjectKeys = nestedObjectKeys;
 
     /** В множественном числе дает */
-    const modelName = Model.collection.collectionName;
+    const modelName = Model.collection.modelName;
     controller.modelName = modelName;
 
 

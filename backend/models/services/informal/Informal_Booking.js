@@ -30,5 +30,7 @@ const BookingSchema = new Schema({
 });
 
 BookingSchema.plugin(require('mongoose-unique-validator'));
+BookingSchema.plugin(require('../../logPlugin'));
+
 
 module.exports = model('Informal_Booking', BookingSchema);

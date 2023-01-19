@@ -3,12 +3,10 @@
  * */
 
 const {Schema, model} = require('mongoose');
-const log = require('../../log');
 
 const Order = require('./Order');
 const Service = require('../services/Service');
 const handlers = require("../handlers");
-const colors = require("../../colors");
 
 const MetaSchema = new Schema({
     order: {
@@ -83,15 +81,8 @@ const MetaSchema = new Schema({
 });
 
 MetaSchema.plugin(require('mongoose-unique-validator'));
+MetaSchema.plugin(require('../logPlugin'))
 
-MetaSchema.post('save', function(document, next){
-    log(colors.green('saved:'), {Order_Meta: document});
-    next();
-});
-MetaSchema.post('remove', function(document, next){
-    log(colors.green('removed:'), {Order_Meta: document});
-    next();
-});
 
 MetaSchema.methods.firstFilling = async function(){
     return this;

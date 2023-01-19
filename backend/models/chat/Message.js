@@ -51,14 +51,8 @@ const MessageSchema = new Schema({
 
 
 MessageSchema.plugin(require('mongoose-unique-validator'));
-MessageSchema.post('save', function(document, next){
-    log(colors.green('saved:'), {Message: document});
-    next();
-});
-MessageSchema.post('remove', function(document, next){
-    log(colors.green('removed:'), {Message: document});
-    next();
-});
+MessageSchema.plugin(require('../logPlugin'))
+
 
 MessageSchema.methods.firstFilling = async function({body, user}){
     if(body.type ? !body[body.type] : false)

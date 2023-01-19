@@ -1,5 +1,4 @@
 const {Schema, model} = require('mongoose');
-const log = require('../../../log');
 
 const Company = require('../../Company');
 const File = require('../../binaries/File');
@@ -14,6 +13,9 @@ const HotelSchema = new Schema({
     name: {
         type: String,
         required: true,
+    },
+    description: {
+        type: String,
     },
     address: {
         type: String,
@@ -35,24 +37,17 @@ const HotelSchema = new Schema({
 });
 
 HotelSchema.plugin(require('mongoose-unique-validator'));
-
-HotelSchema.post('save', function(document, next){
-    log(colors.green('saved:'), {Hotel: document});
-    next();
-});
-HotelSchema.post('remove', function(document, next){
-    log(colors.green('removed:'), {Hotel: document});
-    next();
-});
+HotelSchema.plugin(require('../../logPlugin'));
 
 const handlers = require('../../handlers');
-const colors = require("../../../colors");
 
 HotelSchema.methods.firstFilling = async function({body, user}){
     return this;
 }
 
 HotelSchema.methods.deepDelete = async function(){
+    //Еще надо удалить все Hotel/Classes, которые принадлежат этому отелю
+
     // if(this.logo) await File.deepDeleteById(this.logo);
     await handlers.deleteModels(this, ['logo']);
 
