@@ -46,4 +46,36 @@ orderController.deleteAll = async (req, res) => {
     }
 }
 
+/**
+ * Скопировал из controller, нет времени обдумывать findById.
+ * Дополнительно проверяет, имеет ли запросивший доступ к order.
+ * Работает только с параметрами (динамическими route-ами /:id)
+ * */
+/*orderController.findById = async (req, res) => {
+    log(colors.cyan(`### FIND BY ID (${orderController.modelName}) ###`));
+    const { id } = req.params;
+    if(!id){
+        log(colors.red("In what case can there be no id?"));
+        log(colors.red('###########################################'));
+        return res.status(500).json({error: "Path `id` is required. Something went wrong"});
+    }
+    const model = await orderController.Model.findById(id);
+
+    if (!model){
+        log(colors.red("Model not found"));
+        log(colors.red('###########################################'));
+        return res.status(404).json({error: `${orderController.modelName} not found`});
+    }
+
+    if(req.user.role !== 'manager' || model.customer != req.user.id){
+        log(colors.red("Permission denied. Forbidden"));
+        log(colors.red('###########################################'));
+        return res.status(403).json({error: `Permission denied. Forbidden`});
+    }
+
+    log(model);
+    res.json(model);
+    log(colors.cyan('###########################################'));
+}*/
+
 module.exports = orderController;

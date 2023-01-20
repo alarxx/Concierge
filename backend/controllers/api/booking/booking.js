@@ -1,59 +1,58 @@
 const BookingModel = require('../../../models/services/Booking');
 
-/** Создать может любой */
-/*{
-    type: 'service*_booking',
-    service*_booking: id
-}*/
-module.exports.c = async (req, res) => {
-    const exist = await BookingModel.findOne(req.body)
-    if(exist)
-        return res.status(409).json(exist);
+const Model = BookingModel;
+
+/**
+ * В некоторых местах bookings и services controller.searchAndPopulate схожи, но они все таки достаточно разные.
+ * Booking-и могут читать только менеджера и люди прикрепленные к брони
+ * */
+module.exports.searchAndPopulate = async (req, res) => {
+    // Вытаскиваем id из query и переименовываем на ids
+    let ids = {...req.query}.id;
+
+    // Если ids null или []
+    if(!ids || !ids.length)
+        return res.status(403).json({error: 'Required search parameter/parameters `id` not found'});
+
+    // ids обязательно должен быть массивом
+    if(!Array.isArray(ids))
+        ids = [ids];
+
+    /* Найти, Раскрыть, проверить, отдать */
+
+    let models = await Model.find({ '_id': { $in: ids } });
+
+    // Если количество найденных элементов не совпадает с количеством требуемых, то сообщаем какие id не найдены
+    if(models.length != ids.length){
+        let filteredIds = ids.reduce((filtered, id) => {
+            if(models.some(model => model.id === id))
+                return filtered;
+            filtered.push(id);
+            return filtered
+        }, []);
+        return res.status(404).json({error: `[${filteredIds}] ids not found`});
+    }
 
     try{
-        // Здесь можно обойтись без setFields,
-        // думаю поможет не забывать о нужности этого метода при update
-        const booking = await new BookingModel({}).setFields(req.body).save();
+        await Promise.all(models.map(async model => {
+            await model.populate(model.type);
+            // Если не удалось populate-нуть основной */booking, значит */booking документа больше нет и, наверное, нужно удалить и booking тоже
+            if(!model[model.type])
+                throw new Error(`Does not exist ${model.type}(${model[model.type]})`);
 
-        return res.json(booking);
+            if (req.user.role !== 'manager' && model[model.type].customer != req.user.id)
+                throw new Error(`Forbidden for Booking(${model.id})`);
+        }))
     }
-    catch(err){
-        const errors = Object.keys(err.errors).map(key => err.errors[key].message);
-        return res.status(500).json({message: errors});
+    catch(e){
+        // По идее, извиняюсь за такую обработку ошибок, просто хз как еще выходить из асинхронщины
+        if(e.message.startsWith('D'))
+            return res.status(404).json({error: e.message});
+        else if(e.message.startsWith('F'))
+            return res.status(403).json({error: e.message});
+        else
+            return res.status(400).json({error: e.message});
     }
-}
 
-module.exports.r = async (req, res) => {
-    const bookings = await BookingModel.find(req.query);
-
-    if(req.user.role === 'manager')
-        return res.json(bookings);
-
-    await Promise.all(bookings.map(async b => await b.populate(b.type)));
-
-    const accessIsAllowed = bookings.filter(booking => booking[booking.type].customer == req.user.id)
-
-    res.json(accessIsAllowed);
-}
-
-
-module.exports.d = async (req, res) => {
-    try{
-        const booking = await BookingModel.findOne(req.body);
-
-        if(!booking)
-            return res.status(404).json({message: 'Booking not found'});
-
-        // Проверка доступа
-        await booking.populate(booking.type)
-        if(booking[booking.type].customer == req.user.id)
-            return res.status(403).json({message: 'Permission denied'});
-
-        await booking.deepDelete();
-
-        return res.json(booking);
-    }
-    catch(err){
-        return res.status(500).json({message: err.message});
-    }
+    return res.json(models);
 }

@@ -5,7 +5,7 @@
 const {Schema, model} = require('mongoose');
 
 // const Hotel_Class = require('');
-// const Flight_Class = require('');
+// const Flight_Class 1 require('');
 
 const ServiceSchema = new Schema({
     type: {

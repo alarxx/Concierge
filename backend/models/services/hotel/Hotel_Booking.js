@@ -64,6 +64,8 @@ const BookingSchema = new Schema({
 BookingSchema.plugin(require('mongoose-unique-validator'));
 BookingSchema.plugin(require('../../logPlugin'));
 
+// const log = require("../../../logging/log");
+// const colors = require("../../../logging/colors");
 
 BookingSchema.methods.firstFilling = async function({req, res, body, user}){
     /*### Автоматическое установление цены booking-а такой же, как и у service. Не уверен, что это хорошое решение ### */
@@ -92,8 +94,6 @@ BookingSchema.methods.firstFilling = async function({req, res, body, user}){
 }
 
 const handlers = require("../../handlers");
-const log = require("../../../logging/log");
-const colors = require("../../../logging/colors");
 
 BookingSchema.methods.deepDelete = async function(){
     // Должны удалить Bill, File

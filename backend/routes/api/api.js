@@ -1,8 +1,6 @@
 const express = require('express');
 const Router = express.Router();
 
-Router.use('/file', require('./file/file'));
-
 Router.use(require('../../auth/checkAuthenticated'));
 
 Router.use('/order', require('./order/order'));

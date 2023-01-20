@@ -43,7 +43,7 @@ const handlers = require('../../handlers');
 const Hotel_Service = require('./Hotel_Service');
 const colors = require("../../../logging/colors");
 
-HotelSchema.methods.firstFilling = async function({body, user}){
+HotelSchema.methods.firstFilling = async function({}){
     // Возможно нужна проверка существования отеля
 }
 

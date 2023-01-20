@@ -106,6 +106,8 @@ module.exports = ({Model}) => {
 
     const controller = {};
 
+    controller.Model = Model;
+
     controller.handleError = handleError;
 
     const nestedObjectKeys = Model.nestedObjectKeys ? Model.nestedObjectKeys() : [];
@@ -184,6 +186,7 @@ module.exports = ({Model}) => {
 
 
     /**
+     * Работает только с body, на методах put, delete,
      * Проверяем наличие и возвращаем модель по primary key.
      * Primary key за раз можно передать всего 1.
      * На самом деле, в таблице должен быть только 1 primary key
@@ -211,6 +214,31 @@ module.exports = ({Model}) => {
         res.locals.tried = true;
 
         next();
+    }
+
+    /**
+     * Работает только с параметрами (динамическими route-ами /:id)
+     * Не хочу его использовать, лучше пусть все get будут через search queryParams проходить
+     * */
+    controller.findById = async (req, res) => {
+        log(colors.cyan(`### FIND BY ID (${modelName}) ###`));
+        const { id } = req.params;
+        if(!id){
+            log(colors.red("In what case can there be no id?"));
+            log(colors.red('###########################################'));
+            return res.status(500).json({error: "Path `id` is required. Something went wrong"});
+        }
+        const model = await Model.findById(id);
+
+        if (!model){
+            log(colors.red("Model not found"));
+            log(colors.red('###########################################'));
+            return res.status(404).json({error: `${modelName} not found`});
+        }
+
+        log(model);
+        res.json(model);
+        log(colors.cyan('###########################################'));
     }
 
     /**
@@ -242,11 +270,6 @@ module.exports = ({Model}) => {
 
         try {
             /**
-             * Назначаем примитивные поля и производим валидацию.
-             * Не знаю асинхронная ли функция set */
-            await model.set(req.body);
-
-            /**
              * Может выдать серверную ошибку. Может выдать любую ошибку, так как этот метод отдаем на заполнение пользователя кодом(программиста)....
              * Например, строим one-to-one connections, создаем модели и назначаем их id под определенное поле.
              * Еще можно указывать owner-a, например.
@@ -266,6 +289,11 @@ module.exports = ({Model}) => {
                     return;
                 }
             }
+
+            /**
+             * Назначаем примитивные поля и производим валидацию.
+             * Не знаю асинхронная ли функция set */
+            await model.set(req.body);
 
             await model.validate();
 
@@ -306,7 +334,8 @@ module.exports = ({Model}) => {
 
     /** Над этим надо будет поработать, мы не можем отдавать все что захочет пользователь
      *  Эту функцию лучше не трогать, лучше менять функцию find
-     * */
+     *  Этот контроллер обрабатывает только множество, если нужно только одну модель, то есть findOneById
+     */
     controller.r = async (req, res) => {
         const models = res.locals.models;
         if(!models){

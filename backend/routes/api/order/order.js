@@ -8,7 +8,7 @@ const {
     c, r, u, d,
     access,
     findOne, find,
-    addToArray, removeFromArray, arrayField,
+    addToArray, removeFromArray, arrayField, findById,
     deleteAll
 } = controller;
 
@@ -20,13 +20,13 @@ Router.route('/')
     .put(access, findOne, u)
     .delete(access, findOne, d);
 
+// Router.get('/:id', findById);
 
 Router.delete('/all', access, deleteAll);
 
 /** Работа с массивом bookings */
-Router.post('/bookings', arrayField('bookings'), findOne, addToArray);
-Router.delete('/bookings', arrayField('bookings'), findOne, removeFromArray);
-
+// Router.post('/bookings', arrayField('bookings'), findOne, addToArray);
+// Router.delete('/bookings', arrayField('bookings'), findOne, removeFromArray);
 
 // Router.use('/meta', require('./meta/meta'));
 

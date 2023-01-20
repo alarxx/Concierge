@@ -7,6 +7,7 @@ Router.get('/', (req, res)=>{
 
 Router.use('/auth', require('./auth/auth'));
 Router.use('/api', require('./api/api'));
+Router.use('/file', require('./file/file'));
 
 if(Router.get('env') === 'production') { // В development мы используем proxy
 	Router.use((req, res) => {
