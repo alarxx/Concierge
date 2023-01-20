@@ -1,6 +1,6 @@
 
-const colors = require('../colors');
-const log = require('../log');
+const colors = require('../logging/colors');
+const log = require('../logging/log');
 
 
 /**
@@ -65,14 +65,17 @@ function initialize_log(Model){
 }
 
 function handleError(req, res, err){
-    log(colors.red(`###########################################`));
-
     if(err.errors){
-        const errors = Object.keys(err.errors).map(key => err.errors[key].message);
-        return res.status(400).json({error: errors});
+        const errors = Object.keys(err.errors).map(key => {
+            log(colors.red(err.errors[key].message));
+            return err.errors[key].message
+        });
+        res.status(400).json({error: errors});
     }else{
-        return res.status(500).json({error: err.message});
+        log(colors.red(err.message));
+        res.status(500).json({error: err.message});
     }
+    log(colors.red(`###########################################`));
 }
 
 function getFileFields(Model){
@@ -214,7 +217,14 @@ module.exports = ({Model}) => {
      * Только с методом GET пользуемся, после чего переходим на r
      * */
     controller.find = async (req, res, next) => {
-        res.locals.models = await Model.find(req.query);
+        const query = {...req.query};
+        if(query.id){
+            query._id = query.id;
+            delete query.id;
+        }
+
+        res.locals.models = await Model.find(query);
+
         next();
     }
 
@@ -241,14 +251,20 @@ module.exports = ({Model}) => {
              * Например, строим one-to-one connections, создаем модели и назначаем их id под определенное поле.
              * Еще можно указывать owner-a, например.
              * Не знаю как назвать: autoFilling, autocomplete(занято),
+             * Если вернуть false, то это будет означать, что мы обработали запрос в функции.
+             * Возможно логичнее было бы сделать наоборот, если выход не пустой, то означает, что обработали response,
+             * Чтобы пользователю не пришлось постоянно делать return true
              */
-
             if(model.firstFilling) {
                 log(colors.gray('--- firstFilling function on ---'));
-                await model.firstFilling({
+                if(await model.firstFilling({
+                    req,
+                    res,
                     body: req.body,
                     user: req.user
-                });
+                })){
+                    return;
+                }
             }
 
             await model.validate();
@@ -303,6 +319,11 @@ module.exports = ({Model}) => {
                 await model.populate(key);
             }));
         }))
+
+        log(colors.cyan(`### FOUND (${modelName}) ###`));
+        log(models);
+        log(colors.cyan('###########################################'));
+
 
         res.json(models);
     }

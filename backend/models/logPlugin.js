@@ -1,5 +1,5 @@
-const log = require("../log");
-const colors = require("../colors");
+const log = require("../logging/log");
+const colors = require("../logging/colors");
 module.exports = function(schema) {
     schema.post('save', function(document, next){
         log(colors.green('saved:'), {[this.constructor.modelName]: document});

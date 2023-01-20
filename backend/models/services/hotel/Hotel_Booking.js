@@ -1,11 +1,9 @@
 const {Schema, model} = require('mongoose');
 
 const User = require('../../User');
-const Hotel_Class = require('./Hotel_Class');
 const Bill = require('../../../public/arch/payment/Bill');
 const File = require('../../binaries/File');
 const Booking = require('../Booking');
-const handlers = require("../../handlers");
 
 const BookingSchema = new Schema({
     booking:{
@@ -21,9 +19,9 @@ const BookingSchema = new Schema({
         required: true,
         immutable: true,
     },
-    'hotel/class': {
+    'hotel/service': {
         type: Schema.Types.ObjectId,
-        ref: 'Hotel/Class',
+        ref: 'Hotel/Service',
         required: true,
         immutable: true,
     },
@@ -67,7 +65,22 @@ BookingSchema.plugin(require('mongoose-unique-validator'));
 BookingSchema.plugin(require('../../logPlugin'));
 
 
-BookingSchema.methods.firstFilling = async function({body, user}){
+BookingSchema.methods.firstFilling = async function({req, res, body, user}){
+    /*### Автоматическое установление цены booking-а такой же, как и у service. Не уверен, что это хорошое решение ### */
+    /*if(!body['hotel/service']) {
+        const err = 'Path `hotel/service` is required.';
+        log(colors.red(err));
+        return res.status(400).json({error: err});
+    }
+    const hotel_service = await require('./Hotel_Service').findOne({'hotel/service': body['hotel/service']})
+    if(!hotel_service){
+        const err = 'Provided `hotel/service` not found ';
+        log(colors.red(err));
+        return res.status(400).json({error: err});
+    }
+    this.price = hotel_service.price;*/
+    /*######*/
+
     // Creating booking
     const booking = await new Booking({
         type: 'hotel/booking',
@@ -76,10 +89,11 @@ BookingSchema.methods.firstFilling = async function({body, user}){
     this.booking = booking.id;
 
     this.customer = user.id;
-
-    return this;
 }
 
+const handlers = require("../../handlers");
+const log = require("../../../logging/log");
+const colors = require("../../../logging/colors");
 
 BookingSchema.methods.deepDelete = async function(){
     // Должны удалить Bill, File
@@ -87,6 +101,7 @@ BookingSchema.methods.deepDelete = async function(){
 
     await handlers.deleteArraysOfModels(this, []);
     await this.delete();
+
     return this;
 }
 

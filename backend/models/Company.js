@@ -1,5 +1,5 @@
 const {Schema, model} = require('mongoose');
-const log = require('../log');
+const log = require('../logging/log');
 
 const File = require('./binaries/File');
 
@@ -26,10 +26,11 @@ CompanySchema.plugin(require('./logPlugin'))
 const handlers = require('./handlers');
 
 CompanySchema.methods.firstFilling = async function({body, user}){
-    return this;
 }
 
 CompanySchema.methods.deepDelete = async function (){
+    // Должен по идее удалять все что прикреплено к компании, но это overkill кажется, слишком...
+
     // if(this.logo) await File.deepDeleteById(this.logo);
     await handlers.deleteModels(this, ['logo']);
 

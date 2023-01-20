@@ -40,13 +40,19 @@ HotelSchema.plugin(require('mongoose-unique-validator'));
 HotelSchema.plugin(require('../../logPlugin'));
 
 const handlers = require('../../handlers');
+const Hotel_Service = require('./Hotel_Service');
+const colors = require("../../../logging/colors");
 
 HotelSchema.methods.firstFilling = async function({body, user}){
-    return this;
+    // Возможно нужна проверка существования отеля
 }
 
 HotelSchema.methods.deepDelete = async function(){
-    //Еще надо удалить все Hotel/Classes, которые принадлежат этому отелю
+    //Еще надо удалить все Hotel/Service, которые принадлежат этому отелю
+    const hotels = await Hotel_Service.find({hotel: this.id});
+    console.log(colors.red('services[]='), hotels);
+    await Promise.all(hotels.map(async hotel => hotel.deepDelete()));
+
 
     // if(this.logo) await File.deepDeleteById(this.logo);
     await handlers.deleteModels(this, ['logo']);

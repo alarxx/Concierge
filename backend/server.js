@@ -1,6 +1,6 @@
 const dotenv = require('dotenv').config()
 
-const colors = require('./colors');
+const colors = require('./logging/colors');
 
 const {credentials} = require(`./config`);
 
@@ -75,11 +75,11 @@ LocalStrategy();
 const morgan = require('morgan');
 const fs = require('fs');
 const stream = fs.createWriteStream(
-	__dirname + '/access.log',
+	__dirname + '/logging/access.log',
 	{flags: 'a'}
 )
 app.use(morgan('combined', { stream }))
-const util = require('util');
+const object2string = require('./logging/object2string')
 app.use((req, res, next)=>{
 	const request = {
 		user: req.user?.email,
@@ -91,7 +91,7 @@ app.use((req, res, next)=>{
 		request.query = req.query;
 	else
 		request.body = req.body;
-	console.log(colors.bright_cyan('REQUEST'), util.inspect(request, {showHidden: false, depth: null, colors: true}));
+	console.log(colors.bright_cyan('REQUEST'), object2string(request));
 	next()
 });
 

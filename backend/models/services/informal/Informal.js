@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose');
-const log = require('../../../log')
-const colors = require("../../../colors");
+const log = require('../../../logging/log')
+const colors = require("../../../logging/colors");
 
 const InformalSchema = new Schema({
     description: String,

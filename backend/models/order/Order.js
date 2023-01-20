@@ -67,13 +67,13 @@ OrderSchema.plugin(require('mongoose-unique-validator'));
 OrderSchema.plugin(require('../logPlugin'))
 
 const handlers = require("../handlers");
-const colors = require("../../colors");
+const colors = require("../../logging/colors");
 
 OrderSchema.statics.nestedObjectKeys = function(){
     return ['meta']
 }
 
-OrderSchema.methods.firstFilling = async function({body, user}){
+OrderSchema.methods.firstFilling = async function({user}){
     // Creating meta
     const meta = await new Order_Meta({order: this.id});
     this.meta = meta.id;
@@ -87,8 +87,6 @@ OrderSchema.methods.firstFilling = async function({body, user}){
     const participant = await new Participant({user: user.id, conversation: conversation.id}).save();
 
     this.customer = user.id;
-
-    return this;
 }
 
 OrderSchema.methods.deepDelete = async function (){

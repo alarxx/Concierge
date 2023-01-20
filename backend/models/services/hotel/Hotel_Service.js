@@ -4,8 +4,8 @@ const Hotel = require('./Hotel');
 const File = require('../../binaries/File');
 const Service = require('../Service');
 
-const ClassSchema = new Schema({
-    service: { // primary key
+const ServiceSchema = new Schema({
+    service: { // foreign/primary key как-будто
         type: Schema.Types.ObjectId,
         ref: 'Service',
         required: true,
@@ -45,25 +45,28 @@ const ClassSchema = new Schema({
     }],
 });
 
-ClassSchema.plugin(require('mongoose-unique-validator'));
-ClassSchema.plugin(require('../../logPlugin'))
+ServiceSchema.plugin(require('mongoose-unique-validator'));
+ServiceSchema.plugin(require('../../logPlugin'))
 
 
+const Hotel_Booking = require('./Hotel_Booking');
 const handlers = require('../../handlers');
+const colors = require("../../../logging/colors");
 
-ClassSchema.methods.firstFilling = async function({body, user}){
+ServiceSchema.methods.firstFilling = async function({body, user}){
     // Creating service
     const service = await new Service({
-        type: 'hotel/class',
-        'hotel/class': this.id
+        type: 'hotel/service',
+        'hotel/service': this.id
     }).save();
     this.service = service.id;
-
-    return this;
 }
 
-ClassSchema.methods.deepDelete = async function(){
-    //Должен удалять все services, прикрепленные к нему и все букинги
+ServiceSchema.methods.deepDelete = async function(){
+    //Должен удалить service, прикрепленный к нему, и все букинги, которые отсылаются на него
+    const bookings = await Hotel_Booking.find({'hotel/service': this.id});
+    console.log(colors.red('bookings[]='), bookings);
+    await Promise.all(bookings.map(async booking => booking.deepDelete()));
 
     await handlers.deleteModels(this, ['logo', 'service']);
 
@@ -75,4 +78,4 @@ ClassSchema.methods.deepDelete = async function(){
 }
 
 
-module.exports = model('Hotel/Class', ClassSchema);
+module.exports = model('Hotel/Service', ServiceSchema);

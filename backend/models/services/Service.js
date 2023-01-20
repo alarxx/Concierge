@@ -10,19 +10,19 @@ const {Schema, model} = require('mongoose');
 const ServiceSchema = new Schema({
     type: {
         type: String,
-        enum: ['hotel/class', 'flight/class', 'informal'],
+        enum: ['hotel/service', 'flight/service', 'informal'],
         immutable: true,
         required: true
     },
-    'hotel/class': {
+    'hotel/service': {
         type: Schema.Types.ObjectId,
         immutable: true,
-        ref: 'Hotel/Class',
+        ref: 'Hotel/Service',
     },
-    'flight/class': {
+    'flight/service': {
         type: Schema.Types.ObjectId,
         immutable: true,
-        ref: 'Flight/Class',
+        ref: 'Flight/Service',
     },
     'informal': {
         type: Schema.Types.ObjectId,

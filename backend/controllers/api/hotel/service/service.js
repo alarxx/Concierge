@@ -1,5 +1,5 @@
 
-const HotelClassModel = require('../../../../models/services/hotel/Hotel_Class');
+const HotelClassModel = require('../../../../models/services/hotel/Hotel_Service');
 
 const hotelClassController = require('../../../controller')({Model:HotelClassModel});
 

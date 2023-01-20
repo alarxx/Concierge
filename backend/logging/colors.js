@@ -16,6 +16,9 @@
  * \x1b[96m: Bright cyan
  * \x1b[97m: Bright white
  * */
+/**
+ * Кажется они не выводят объекты
+ * */
 module.exports = {
     green: t => `\x1b[32m${t}\x1b[0m`,
     red: t => `\x1b[31m${t}\x1b[0m`,

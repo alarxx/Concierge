@@ -1,9 +1,9 @@
 const {Schema, model} = require("mongoose");
-const log = require('../../log');
+const log = require('../../logging/log');
 
 const User = require('../User');
 const File = require('../binaries/File');
-const colors = require("../../colors");
+const colors = require("../../logging/colors");
 
 const MessageSchema = new Schema({
     conversation: {

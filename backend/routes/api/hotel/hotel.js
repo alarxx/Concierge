@@ -22,7 +22,7 @@ Router.route('/')
     .put(filesValidation, findOne, u)
     .delete(findOne, d);
 
-Router.use('/class', require('./class/class'));
+Router.use('/service', require('./service/service'));
 Router.use('/booking', require('./booking/booking'));
 
 module.exports = Router;

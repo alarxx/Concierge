@@ -1,7 +1,7 @@
 
 const OrderModel = require('../../../models/order/Order');
-const colors = require("../../../colors");
-const log = require("../../../log");
+const colors = require("../../../logging/colors");
+const log = require("../../../logging/log");
 
 const orderController = require('../../controller')({Model: OrderModel});
 
