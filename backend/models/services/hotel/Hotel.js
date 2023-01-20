@@ -32,7 +32,7 @@ const HotelSchema = new Schema({
     },
     images: [{ // Как работать с массивами изображений?
         type: Schema.Types.ObjectId,
-        ref: 'File'
+        ref: 'File',
     }],
 });
 
@@ -44,6 +44,7 @@ const Hotel_Service = require('./Hotel_Service');
 const colors = require("../../../logging/colors");
 
 HotelSchema.statics.publicFiles = function(){
+    // Наверное можно как-то прямо в схему это вписывать {type: Schema.Types.ObjectId, ref: 'File', private: false} типа так
     return ['logo'];
 }
 
