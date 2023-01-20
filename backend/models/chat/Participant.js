@@ -33,7 +33,7 @@ ParticipantSchema.plugin(require('mongoose-unique-validator'));
 ParticipantSchema.plugin(require('../logPlugin'))
 
 
-ParticipantSchema.methods.firstFilling = async function({body, user}){
+ParticipantSchema.methods.onCreate = async function({body, user}){
     this.user = user.id;
     return this;
 }

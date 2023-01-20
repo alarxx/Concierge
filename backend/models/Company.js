@@ -29,7 +29,7 @@ CompanySchema.statics.publicFiles = function(){
 
 const handlers = require('./handlers');
 
-CompanySchema.methods.firstFilling = async function({body, user}){
+CompanySchema.methods.onCreate = async function({body, user}){
 }
 
 CompanySchema.methods.deepDelete = async function (){

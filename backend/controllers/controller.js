@@ -31,8 +31,8 @@ function initialize_log(Model){
     if(!Model.publicFiles){
         console.log(`${colors.gray(`Not detected statics.`)}${colors.yellow('publicFiles')}${colors.gray(', default = [].')}`);
     }
-    if(!model.firstFilling) {
-        console.log(`${colors.gray(`Not detected methods.`)}${colors.yellow('firstFilling')}${colors.gray(', just not be executed at model creation.')}`);
+    if(!model.onCreate) {
+        console.log(`${colors.gray(`Not detected methods.`)}${colors.yellow('onCreate')}${colors.gray(', just not be executed at model creation.')}`);
     }
     if(!model.deepDelete) {
         // const msg = `Add methods.deepDelete to model ${modelName}, please!`
@@ -273,7 +273,7 @@ module.exports = ({Model}) => {
 
     /**
      * Здесь нужна только первичная проверка кажется (??)
-     * Метод create и update сильно похожи, но create имеет функцию автоматического добавления некоторой информации (firstFilling).
+     * Метод create и update сильно похожи, но create имеет функцию автоматического добавления некоторой информации (onCreate).
      * В create мы можем все записать в один try-catch, потому что мы можем сделать model.deepDelete(полностью снести модель) в случае ошибки.
      * В update же мы не можем так делать и в случае чего, нам нужно удалять специфичные изменения.
      * */
@@ -292,9 +292,9 @@ module.exports = ({Model}) => {
              * Возможно логичнее было бы сделать наоборот, если выход не пустой, то означает, что обработали response,
              * Чтобы пользователю не пришлось постоянно делать return true
              */
-            if(model.firstFilling) {
-                log(colors.gray('--- firstFilling function on ---'));
-                if(await model.firstFilling({
+            if(model.onCreate) {
+                log(colors.gray('--- onCreate function on ---'));
+                if(await model.onCreate({
                     req,
                     res,
                     body: req.body,
@@ -388,7 +388,7 @@ module.exports = ({Model}) => {
     }
 
     /**
-     * Метод create и update сильно похожи, но create имеет функцию автоматического добавления некоторой информации (firstFilling).
+     * Метод create и update сильно похожи, но create имеет функцию автоматического добавления некоторой информации (onCreate).
      * В create мы можем все записать в один try-catch, потому что мы можем сделать model.deepDelete в случае ошибки.
      * В update мы не можем так делать и в случае чего, нам нужно удалять специфичные изменения
      * */

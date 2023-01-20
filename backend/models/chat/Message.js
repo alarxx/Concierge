@@ -54,7 +54,7 @@ MessageSchema.plugin(require('mongoose-unique-validator'));
 MessageSchema.plugin(require('../logPlugin'))
 
 
-MessageSchema.methods.firstFilling = async function({body, user}){
+MessageSchema.methods.onCreate = async function({body, user}){
     if(body.type ? !body[body.type] : false)
         throw new Error(`field '${body.type}' is not provided`);
 

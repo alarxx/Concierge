@@ -77,7 +77,7 @@ OrderSchema.statics.nestedObjectKeys = function(){
     return ['meta']
 }
 
-OrderSchema.methods.firstFilling = async function({user}){
+OrderSchema.methods.onCreate = async function({user}){
     // Creating meta
     const meta = await new Order_Meta({order: this.id});
     this.meta = meta.id;

@@ -71,7 +71,7 @@ BookingSchema.statics.publicFiles = function(){
 // const log = require("../../../logging/log");
 // const colors = require("../../../logging/colors");
 
-BookingSchema.methods.firstFilling = async function({req, res, body, user}){
+BookingSchema.methods.onCreate = async function({req, res, body, user}){
     /*### Автоматическое установление цены booking-а такой же, как и у service. Не уверен, что это хорошое решение ### */
     /*if(!body['hotel/service']) {
         const err = 'Path `hotel/service` is required.';

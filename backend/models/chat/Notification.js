@@ -19,7 +19,7 @@ const NotificationSchema = new Schema({
 NotificationSchema.plugin(require('mongoose-unique-validator'));
 NotificationSchema.plugin(require('../logPlugin'))
 
-NotificationSchema.methods.firstFilling = async function({body, user}){
+NotificationSchema.methods.onCreate = async function({body, user}){
     this.user = user.id;
     return this;
 }

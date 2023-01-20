@@ -84,7 +84,7 @@ MetaSchema.plugin(require('mongoose-unique-validator'));
 MetaSchema.plugin(require('../logPlugin'))
 
 
-MetaSchema.methods.firstFilling = async function({}){
+MetaSchema.methods.onCreate = async function({}){
 }
 
 MetaSchema.methods.deepDelete = async function(){

@@ -47,7 +47,7 @@ HotelSchema.statics.publicFiles = function(){
     return ['logo'];
 }
 
-HotelSchema.methods.firstFilling = async function({}){
+HotelSchema.methods.onCreate = async function({}){
     // Возможно нужна проверка существования отеля
 }
 

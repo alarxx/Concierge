@@ -56,7 +56,7 @@ const Hotel_Booking = require('./Hotel_Booking');
 const handlers = require('../../handlers');
 const colors = require("../../../logging/colors");
 
-ServiceSchema.methods.firstFilling = async function({body, user}){
+ServiceSchema.methods.onCreate = async function({body, user}){
     // Creating service
     const service = await new Service({
         type: 'hotel/service',
