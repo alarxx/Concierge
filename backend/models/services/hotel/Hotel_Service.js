@@ -48,6 +48,9 @@ const ServiceSchema = new Schema({
 ServiceSchema.plugin(require('mongoose-unique-validator'));
 ServiceSchema.plugin(require('../../logPlugin'))
 
+ServiceSchema.statics.publicFiles = function(){
+    return ['logo'];
+}
 
 const Hotel_Booking = require('./Hotel_Booking');
 const handlers = require('../../handlers');

@@ -64,6 +64,10 @@ const BookingSchema = new Schema({
 BookingSchema.plugin(require('mongoose-unique-validator'));
 BookingSchema.plugin(require('../../logPlugin'));
 
+BookingSchema.statics.publicFiles = function(){
+    return [];
+}
+
 // const log = require("../../../logging/log");
 // const colors = require("../../../logging/colors");
 

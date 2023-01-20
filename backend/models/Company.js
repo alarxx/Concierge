@@ -23,6 +23,10 @@ const CompanySchema = new Schema({
 CompanySchema.plugin(require('mongoose-unique-validator'));
 CompanySchema.plugin(require('./logPlugin'))
 
+CompanySchema.statics.publicFiles = function(){
+    return ['logo'];
+}
+
 const handlers = require('./handlers');
 
 CompanySchema.methods.firstFilling = async function({body, user}){

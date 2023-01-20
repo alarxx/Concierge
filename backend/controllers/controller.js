@@ -14,31 +14,6 @@ const log = require('../logging/log');
 
 const File = require("../models/binaries/File");
 
-/**
- * Если файл в модель уже был загружен до этого, то он удаляет старый файл и загружает новый,
- * поэтому функция называется setFiles, а не addFiles
- *
- * @model - документ к которому мы хоти добавить файлы.
- * @files - объект, под ключами которого находятся файлы express-fileupload.
- * @keys - ключи
- * @user нужен для того, чтобы знать кто загрузил файл.
- * */
-async function setFiles (model, files, user, keys) {
-    if(!files) return;
-
-    await Promise.all(
-        keys.map(async key => {
-            // Если в форме есть файл под таким ключом
-            if(files[key]) {
-                // delete if already file exist
-                if(model[key])
-                    await File.deepDeleteById(model[key]);
-                model[key] = (await File.createFile(files[key], user)).id;
-            }
-        })
-    );
-}
-
 
 /** Возвращает отфильтрованный массив ключей, которые содержатся в объекте.
  *  Можно узнать наличие определенных ключей в объекте. */
@@ -52,6 +27,9 @@ function initialize_log(Model){
     const model = new Model({});
     if(!Model.nestedObjectKeys){
         console.log(`${colors.gray(`Not detected statics.`)}${colors.yellow('nestedObjectKeys')}${colors.gray(', default = [].')}`);
+    }
+    if(!Model.publicFiles){
+        console.log(`${colors.gray(`Not detected statics.`)}${colors.yellow('publicFiles')}${colors.gray(', default = [].')}`);
     }
     if(!model.firstFilling) {
         console.log(`${colors.gray(`Not detected methods.`)}${colors.yellow('firstFilling')}${colors.gray(', just not be executed at model creation.')}`);
@@ -129,6 +107,42 @@ module.exports = ({Model}) => {
      * */
     const fileFields = getFileFields(Model);
     controller.fileFields = fileFields;
+
+    const publicFiles = Model.publicFiles ? Model.publicFiles() : [];
+    controller.publicFiles = publicFiles;
+
+    /**
+     * Если файл в модель уже был загружен до этого, то он удаляет старый файл и загружает новый,
+     * поэтому функция называется setFiles, а не addFiles
+     *
+     * Нужно как-нибудь из схемы указывать должен ли файл быть открытым или нет...
+     *
+     * @model - документ к которому мы хоти добавить файлы.
+     * @files - объект, под ключами которого находятся файлы express-fileupload.
+     * @user нужен для того, чтобы знать кто загрузил файл.
+     * */
+    async function setFiles (model, files, user) {
+        if(!files) return;
+
+        await Promise.all(
+            fileFields.map(async key => {
+                // Если в форме есть файл под таким ключом
+                if(files[key]) {
+                    // delete if file already exist
+                    if(model[key]){
+                        await File.deepDeleteById(model[key]);
+                    }
+                    const newFile = await File.createFile(files[key], user);
+                    if(publicFiles.includes(key)){
+                        newFile.private = false;
+                        await newFile.save();
+                    }
+                    model[key] = (newFile).id;
+                }
+            })
+        );
+    }
+    controller.setFiles = setFiles;
 
 
     /* -----------------------------------------------------------------------------------------
@@ -313,7 +327,7 @@ module.exports = ({Model}) => {
             ))
 
             // Отсюда могут выйти системные ошибки
-            await setFiles(model, req.files, req.user, fileFields);
+            await setFiles(model, req.files, req.user);
 
         } catch (err) {
             log(colors.red('Cancel changes. Something went wrong.'));

@@ -30,7 +30,7 @@ const HotelSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'File'
     },
-    images: [{
+    images: [{ // Как работать с массивами изображений?
         type: Schema.Types.ObjectId,
         ref: 'File'
     }],
@@ -42,6 +42,10 @@ HotelSchema.plugin(require('../../logPlugin'));
 const handlers = require('../../handlers');
 const Hotel_Service = require('./Hotel_Service');
 const colors = require("../../../logging/colors");
+
+HotelSchema.statics.publicFiles = function(){
+    return ['logo'];
+}
 
 HotelSchema.methods.firstFilling = async function({}){
     // Возможно нужна проверка существования отеля
