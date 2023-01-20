@@ -23,8 +23,11 @@ React будет общаться с API через proxy.
 Для прода SPA React собирается в 2 файла(html, js)   
 и будет выдаваться сервером.
 
-Инструкции, которые помогут вам запустить [backend](https://github.com/Alar-q/Concierge/tree/main/backend#readme) и [frontend](https://github.com/Alar-q/Concierge/tree/main/frontend#readme) проекта на  
-вашем локальном компьютере для целей разработки и тестирования  
+Инструкции, которые помогут вам запустить 
+[backend](https://github.com/Alar-q/Concierge/tree/main/backend#readme) 
+и [frontend](https://github.com/Alar-q/Concierge/tree/main/frontend#readme)  
+проекта на вашем локальном компьютере для целей разработки  
+и тестирования 
 смотреть в соответствующих README.
 
 
