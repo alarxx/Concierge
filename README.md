@@ -40,6 +40,6 @@ React будет общаться с API через proxy.
 * **Ayan** - [Ualiyevvv](https://github.com/ualiyevvv)
 * **Dina** - [Dina](https://github.com/DanDina777)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/alar-q/concierge/contributors) who participated in this project.
 
 ## License
