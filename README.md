@@ -4,6 +4,8 @@
 
 ![Concierge Cat](https://github.com/Alar-q/Concierge/blob/main/meme/cat.jpg)
 
+## General
+
 * Локальная авторизация по требованию   
 * Работа с сессиями, сохранение сессий в базе
 * Локальное хранение файлов и их защита
