@@ -73,6 +73,11 @@ OrderSchema.plugin(require('../logPlugin'))
 const handlers = require("../handlers");
 const colors = require("../../logging/colors");
 
+/**
+ * Что означает nestedObjectKeys?
+ * По умолчанию мы не можем set-ить глубокий объект в модель, обычно это просто id,
+ * а если мы добавим ключ, то это поле будет populate-титься и set-ить объект
+ * */
 OrderSchema.statics.nestedObjectKeys = function(){
     return ['meta']
 }

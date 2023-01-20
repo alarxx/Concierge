@@ -1,10 +1,12 @@
-const dotenv = require('dotenv').config()
+// const dotenv = require('dotenv').config()
 
 const colors = require('./logging/colors');
 
 const {credentials} = require(`./config`);
 
 const mongoose = require('mongoose');
+// localhost
+credentials.dbUri = 'mongodb://127.0.0.1:27017/test';
 mongoose.connect(credentials.dbUri, {useNewUrlParser: true})
 	.then(() => {
 		console.log(colors.green(`MongoDB connected`), colors.gray(`${credentials.dbUri}`));
@@ -20,7 +22,7 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 
-/** Используем CORS во время разработки */
+/** Используем CORS в окружении разработки */
 if(app.get('env') === 'development')
 	app.use(require('cors')());
 
@@ -98,7 +100,7 @@ app.use((req, res, next)=>{
 /** WebSocket */
 const io = require('./socket.io')(server, sessionMiddleware, app.get('env'));
 
-/** REST */
+/** All Routes */
 app.use('/', require('./routes/root'));
 
 const port = process.env.PORT || 3000;
