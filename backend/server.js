@@ -5,8 +5,9 @@ const colors = require('./logging/colors');
 const {credentials} = require(`./config`);
 
 const mongoose = require('mongoose');
-// localhost
-credentials.dbUri = 'mongodb://127.0.0.1:27017/test';
+// if(!credentials.dbUri)
+	// localhost
+	credentials.dbUri = 'mongodb://127.0.0.1:27017/test';
 mongoose.connect(credentials.dbUri, {useNewUrlParser: true})
 	.then(() => {
 		console.log(colors.green(`MongoDB connected`), colors.gray(`${credentials.dbUri}`));
@@ -23,8 +24,11 @@ const http = require('http');
 const server = http.createServer(app);
 
 /** Используем CORS в окружении разработки */
+const cors = require('cors')
 if(app.get('env') === 'development')
-	app.use(require('cors')());
+	app.use(cors({
+		origin: ['http://localhost:9000']
+	}));
 
 /** Доступ к статическим файлам */
 app.use(express.static(__dirname + '/public'));
@@ -43,12 +47,12 @@ app.use(fileUpload());
 const session = require('express-session');
 
 /* Сохраняем сессии в базе данных, для их сохранения после перезагрузки сервера */
-const MongoDBSession = require('express-mongodb-session')(session);
+const MongoDBSession = require('connect-mongodb-session')(session);
 const expiresIn = 1000 * 60 * 60 * 24 * 7; // 7 days in milliseconds
 const sessionStore = new MongoDBSession({
-  uri:  credentials.dbUri,
-  collection: 'sessions',
-	expires: expiresIn, 
+  	uri:  credentials.dbUri,
+  	collection: 'sessions',
+	expires: expiresIn,
 });
 sessionStore.on('error', function(error) {
   console.log(error);
@@ -63,6 +67,7 @@ const sessionMiddleware = session({
 	resave: false,
 	saveUninitialized: false,
 });
+
 
 app.use(sessionMiddleware);
 
@@ -98,7 +103,12 @@ app.use((req, res, next)=>{
 });
 
 /** WebSocket */
-const io = require('./socket.io')(server, sessionMiddleware, app.get('env'));
+const io = require('./websocket/socket.io')({
+	server: server,
+	sessionMiddleware: sessionMiddleware,
+	env: app.get('env'),
+	sessionStore: sessionStore
+});
 
 /** All Routes */
 app.use('/', require('./routes/root'));

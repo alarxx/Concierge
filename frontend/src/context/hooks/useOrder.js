@@ -49,10 +49,10 @@ export default function useOrder({ user, isAuthenticated }){
     const [ordersLoading, setOrdersLoading] = useState(true);
     const [ordersError, setOrdersError] = useState();
 
-    useEffect(()=>{
+    /*useEffect(()=>{
         if(user)
             reloadOrders()
-    }, [user])
+    }, [user])*/
 
 
     async function createOrder(order){

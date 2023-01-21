@@ -33,6 +33,7 @@ export default function Home(){
 
                 <li><Link to="/login">Sign in</Link></li>
                 <li><Link to="/register">Sign up</Link></li>
+                <li><Link to="/register/simple">Sign up simple</Link></li>
                 <li><Link to="/logout">Log Out</Link></li>
                 <li><Link to="/chat">Chat</Link></li>
                 <li><Link to="/order">Order</Link></li>

@@ -1,60 +1,71 @@
 import React, {useEffect, useState} from 'react';
+import useFetch from "../../hooks/useFetch";
 
-export default function useAuth({ }){
-    const [user, setUser] = useState();
+export default function useAuth({ socket, isConnected }){
+    const [user, setUserState] = useState();
     const [userLoading, setUserLoading] = useState(true);
-    const [userError, setUserError] = useState();
+
 
     useEffect(()=>{
-        // Нужно как-нибудь добавить listener на socket, потому что пользователь может удалиться во время сеанса с другого сеанса
-        check()
-        setInterval(()=>check(), 1000*60*60); // раз в 5 минут перепроверять пользователя
+        socket.on("connect_error", setUser);
     }, [])
 
     useEffect(()=>{
-        if(user)
-            console.log(user)
+        if(isConnected)
+            whoami();
+    }, [isConnected])
+
+    useEffect(()=>{
+        console.log('User', `\nisAuthenticated: ${isAuthenticated()}`, '\nuser:', user);
     }, [user])
 
-    const userFetch = (url, opt={}) => {
-        (async ()=>{
-            setUserLoading(true);
-            try{
-                if(opt.body && typeof opt.body !== 'string')
-                    opt.body = JSON.stringify(opt.body);
 
-                const res = await fetch(url, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    ...opt
-                });
-                const user = await res.json();
-                setUserLoading(false);
-                setUserError(null);
-                setUser(user); // id в продакшене не меняем!
-            }catch (err){
-                setUserLoading(false);
-                setUserError(err.message);
-            }
-        })();
+    function setUser(obj){
+        setUserLoading(false)
+        setUserState(obj)
     }
+
+    function userFetch(url, opt={}){
+        setUserLoading(true);
+
+        if(opt.body && typeof opt.body !== 'string') {
+            opt.body = JSON.stringify(opt.body);
+        }
+
+        fetch(url, {
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            ...opt
+        })
+            .then(res=>res.json())
+            .then(setUser)
+            .catch(setUser);
+    }
+
 
     const login = (body) => userFetch('/auth/login', {method: 'POST', body})
 
     const register = (body) => userFetch('/auth/register', {method: 'POST', body})
 
-    const check = () => userFetch('/auth')
-
     const logout = () => userFetch('/auth/logout', {method: 'DELETE'})
 
+    const whoami = () => {
+        setUserLoading(true)
+        // Метод дожидается пока socket подключится, поэтому не нужна проверка isConnected
+        socket.emit('whoami', setUser)
+    }
+
+    const isAuthenticated = () => Boolean(user?.email)
+
+
     return {
-        user, userLoading, userError,
+        user, userLoading,
         login,
         register,
-        check,
+        whoami,
         logout,
-        isAuthenticated: () => Boolean(user?.email),
+        isAuthenticated,
     };
 }

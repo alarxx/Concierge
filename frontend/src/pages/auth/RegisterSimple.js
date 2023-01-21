@@ -1,21 +1,28 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
+import {useAppContext} from "../../context/AppContext";
 
 export default function RegisterSimple({auth}){
     const navigate = useNavigate();
-    const onSubmit = (e) => {
+
+    const {authHandler} = useAppContext();
+    const {register} = authHandler;
+
+    const onSubmit = e => {
         e.preventDefault();
-        auth.register({
-            name: e.target.name.value,
+        register({
             email: e.target.email.value,
+            name: e.target.name.value,
             password: e.target.password.value,
         });
         navigate('/', {replace: true});
     }
+
+
     return (
         <>
             <h1>RegisterSimple Page</h1>
-            <form onSubmit={onSubmit} action="/frontend/arch/RegisterSimple.js" method="POST">
+            <form onSubmit={onSubmit}>
                 <div>
                     <label htmlFor="InputName">Name</label>
                     <input type="text" id="InputName" name="name"/>
@@ -33,10 +40,6 @@ export default function RegisterSimple({auth}){
 
                 <br/>
                 <button type="submit" className="btn btn-primary">Submit</button>
-
-                <br/>
-                <button><a href="/frontend/src/pages/auth/Login">Sign in</a></button>
-
             </form>
 
         </>

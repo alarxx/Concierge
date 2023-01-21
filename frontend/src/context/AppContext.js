@@ -4,7 +4,7 @@ import useAuth from "./hooks/useAuth";
 import useOrder from "./hooks/useOrder";
 import useChat from "./hooks/useChat";
 import useSocket from "./hooks/useSocket";
-import useHotel from "./hooks/useHotel";
+import useHotel from "../hooks/api/useHotel";
 
 const Context = createContext();
 
