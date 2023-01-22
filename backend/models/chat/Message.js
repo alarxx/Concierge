@@ -56,13 +56,22 @@ MessageSchema.plugin(require('../logPlugin'))
 MessageSchema.plugin(require('../../websocket/observer/chat/message'))
 
 
-MessageSchema.methods.onCreate = async function({body, user}){
-    if(body.type ? !body[body.type] : false)
-        throw new Error(`field '${body.type}' is not provided`);
+MessageSchema.methods.onCreate = async function({req, res, body, user}){
+    if(body.type ? !body[body.type] : true){
+        throw new Error(`Fields 'type' or with 'String(type)' are not provided`);
+    }
+    const Notifications = require('../modelsManager').models.Notification;
+
+    const notification = new Notifications({
+        type: 'message',
+        message: this.id,
+        user: user.id
+    });
+
+    await notification.save()
 
     this.sender = user.id;
 
-    return this;
 }
 
 
@@ -75,6 +84,14 @@ MessageSchema.statics.deepDeleteById = async function(id){
 
 
 MessageSchema.methods.deepDelete = async function(){
+    // Нужно удалить notification, если он есть
+    const Notifications = require('../modelsManager').models.Notification;
+    const notification = await Notifications.findOne({message: this.id});
+    console.log(notification);
+    if(notification){
+        await notification.deepDelete();
+    }
+
     // Если message.type = form или файл, то мы не только саму модель удаляем
     await this.delete();
     return this;

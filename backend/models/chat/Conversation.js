@@ -31,7 +31,6 @@ ConversationSchema.plugin(require('../../websocket/observer/chat/conversation'))
 
 
 ConversationSchema.methods.onCreate = async function({body, user}){
-    return this;
 }
 
 

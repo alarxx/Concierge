@@ -25,7 +25,6 @@ NotificationSchema.plugin(require('../../websocket/observer/chat/notification'))
 
 NotificationSchema.methods.onCreate = async function({body, user}){
     this.user = user.id;
-    return this;
 }
 
 NotificationSchema.statics.deepDeleteById = async function(id){

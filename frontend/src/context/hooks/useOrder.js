@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useNavigate} from "react-router-dom";
 
-function findIndexById (array, id) {
-    return array.findIndex(obj => obj.id == id);
-}
+import findIndexById from "../../handlers/findIndexById";
 
 /**
  * Должен предоставлять все функции для загрузки всех ордеров, создания нового, удаления, изменения,
@@ -68,6 +66,7 @@ export default function useOrder({ socketHandler, authHandler }){
             // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
             try{
                 console.log("POST /api/order", order);
+                // Код делее рабочий, просто, чтобы не насоздавать ордеров закоментил
                 /*const res = await fetch('/api/order', {
                     headers: {
                         'Content-Type': 'application/json'
@@ -128,6 +127,7 @@ export default function useOrder({ socketHandler, authHandler }){
                 setOrders(json);
         }
         catch (err){
+            console.log(err);
             setOrdersLoading(false);
             setOrdersError(err.error);
         }

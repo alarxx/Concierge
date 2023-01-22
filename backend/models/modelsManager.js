@@ -1,3 +1,7 @@
+/**
+ * Решает circular dependency problem
+ * */
+
 const models = {}
 
 function initialize(){

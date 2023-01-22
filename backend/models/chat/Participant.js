@@ -35,7 +35,6 @@ ParticipantSchema.plugin(require('../../websocket/observer/chat/participant'))
 
 ParticipantSchema.methods.onCreate = async function({body, user}){
     this.user = user.id;
-    return this;
 }
 
 ParticipantSchema.statics.deepDeleteById = async function(id){
