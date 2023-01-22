@@ -4,8 +4,6 @@ const modelName = 'Company';
 
 const log = require('../logging/log');
 
-const File = require('./binaries/File');
-
 const CompanySchema = new Schema({
     name: {
         type: String,

@@ -1,7 +1,5 @@
 const {Schema, model} = require('mongoose');
 
-const Company = require('./Company');
-
 const modelName = 'User';
 
 const UserSchema = new Schema({
@@ -22,7 +20,7 @@ const UserSchema = new Schema({
 	},
 	entity: {
 		type: String,
-		enum: ['individual', 'juridical'], // Может ли он делать какие то действия от лица компании или только пользоваться
+		enum: ['individual', 'juridical'], // Может ли он делать какие-то действия от лица компании или только пользоваться
 		default: 'individual'
 	},
 	company: {

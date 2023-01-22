@@ -5,8 +5,7 @@
 const {Schema, model} = require('mongoose');
 
 const modelName = 'Order/Meta';
-const Order = require('./Order');
-const Service = require('../services/Service');
+
 const handlers = require("../handlers");
 
 const MetaSchema = new Schema({

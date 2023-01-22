@@ -2,9 +2,6 @@ const {Schema, model} = require('mongoose');
 
 const modelName = 'Notification';
 
-const User = require('../User');
-const Message = require('./Message');
-
 const NotificationSchema = new Schema({
     type: {
         type: String,

@@ -11,15 +11,6 @@ const {Schema, model} = require('mongoose');
 
 const modelName = 'Order';
 
-const User = require('../User');
-const Order_Meta = require('./Order_Meta');
-const Booking = require('../services/Booking');
-// const Bill = require('../../public/arch/payment/Bill');
-const File = require("../binaries/File");
-
-const Conversation = require('../chat/Conversation');
-const Participant = require('../chat/Participant');
-
 const OrderSchema = new Schema({
     customer: {
         type: Schema.Types.ObjectId,
@@ -86,6 +77,10 @@ OrderSchema.statics.nestedObjectKeys = function(){
 }
 
 OrderSchema.methods.onCreate = async function({user}){
+    const Order_Meta = require('./Order_Meta');
+    const Conversation = require('../chat/Conversation');
+    const Participant = require('../chat/Participant');
+
     // Creating meta
     const meta = await new Order_Meta({order: this.id});
     this.meta = meta.id;

@@ -16,6 +16,8 @@ mongoose.connect(credentials.dbUri, {useNewUrlParser: true})
 		console.log(colors.yellow('Failed to connect to MongoDB'), err);
 	});
 
+require('./models/modelsManager').initialize();
+
 const express = require('express');
 
 const app = express();

@@ -2,9 +2,6 @@ const {Schema, model} = require("mongoose");
 
 const modelName = 'Participant';
 
-const Conversation = require('./Conversation');
-const User = require('../User');
-
 /**
  * participant указывает в каких беседах состоит user
  * На самом деле, можно было бы хранить массив user-ов в conversation

@@ -4,8 +4,6 @@ const modelName = 'Message';
 
 const log = require('../../logging/log');
 
-const User = require('../User');
-const File = require('../binaries/File');
 const colors = require("../../logging/colors");
 
 const MessageSchema = new Schema({
