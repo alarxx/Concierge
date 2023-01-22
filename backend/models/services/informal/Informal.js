@@ -1,6 +1,9 @@
 const {Schema, model} = require('mongoose');
+
 const log = require('../../../logging/log')
 const colors = require("../../../logging/colors");
+
+const modelName = 'Informal';
 
 const InformalSchema = new Schema({
     description: String,
@@ -8,5 +11,6 @@ const InformalSchema = new Schema({
 
 InformalSchema.plugin(require('mongoose-unique-validator'));
 InformalSchema.plugin(require('../../logPlugin'));
+InformalSchema.plugin(require('../../../websocket/observer')(modelName));
 
-module.exports = model('Informal', InformalSchema);
+module.exports = model(modelName, InformalSchema);

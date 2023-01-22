@@ -9,6 +9,8 @@
 
 const {Schema, model} = require('mongoose');
 
+const modelName = 'Order';
+
 const User = require('../User');
 const Order_Meta = require('./Order_Meta');
 const Booking = require('../services/Booking');
@@ -69,6 +71,7 @@ const OrderSchema = new Schema({
 
 OrderSchema.plugin(require('mongoose-unique-validator'));
 OrderSchema.plugin(require('../logPlugin'))
+OrderSchema.plugin(require('../../websocket/observer')(modelName))
 
 const handlers = require("../handlers");
 const colors = require("../../logging/colors");
@@ -111,4 +114,4 @@ OrderSchema.methods.deepDelete = async function (){
 }
 
 
-module.exports = model('Order', OrderSchema);
+module.exports = model(modelName, OrderSchema);

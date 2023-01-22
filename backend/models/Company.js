@@ -1,4 +1,7 @@
 const {Schema, model} = require('mongoose');
+
+const modelName = 'Company';
+
 const log = require('../logging/log');
 
 const File = require('./binaries/File');
@@ -22,6 +25,7 @@ const CompanySchema = new Schema({
 
 CompanySchema.plugin(require('mongoose-unique-validator'));
 CompanySchema.plugin(require('./logPlugin'))
+CompanySchema.plugin(require('../websocket/observer')(modelName))
 
 CompanySchema.statics.publicFiles = function(){
     return ['logo'];
@@ -46,4 +50,4 @@ CompanySchema.methods.deepDelete = async function (){
     return this;
 }
 
-module.exports = model('Company', CompanySchema);
+module.exports = model(modelName, CompanySchema);

@@ -2,6 +2,8 @@ const {Schema, model} = require('mongoose');
 
 const Company = require('./Company');
 
+const modelName = 'User';
+
 const UserSchema = new Schema({
 	name: {
 		type: String,
@@ -39,5 +41,6 @@ const UserSchema = new Schema({
 
 UserSchema.plugin(require('mongoose-unique-validator'));
 UserSchema.plugin(require('./logPlugin'));
+UserSchema.plugin(require('../websocket/observer')(modelName));
 
-module.exports = model('User', UserSchema);
+module.exports = model(modelName, UserSchema);

@@ -4,6 +4,7 @@
 
 const {Schema, model} = require('mongoose');
 
+const modelName = 'Order/Meta';
 const Order = require('./Order');
 const Service = require('../services/Service');
 const handlers = require("../handlers");
@@ -82,6 +83,7 @@ const MetaSchema = new Schema({
 
 MetaSchema.plugin(require('mongoose-unique-validator'));
 MetaSchema.plugin(require('../logPlugin'))
+MetaSchema.plugin(require('../../websocket/observer')(modelName))
 
 
 MetaSchema.methods.onCreate = async function({}){
@@ -98,4 +100,4 @@ MetaSchema.methods.deepDelete = async function(){
 }
 
 
-module.exports = model('Order/Meta', MetaSchema);
+module.exports = model(modelName, MetaSchema);

@@ -1,5 +1,7 @@
 const {Schema, model} = require('mongoose');
 
+const modelName = 'Notification';
+
 const User = require('../User');
 const Message = require('./Message');
 
@@ -18,6 +20,7 @@ const NotificationSchema = new Schema({
 
 NotificationSchema.plugin(require('mongoose-unique-validator'));
 NotificationSchema.plugin(require('../logPlugin'))
+NotificationSchema.plugin(require('../../websocket/observer')(modelName))
 
 NotificationSchema.methods.onCreate = async function({body, user}){
     this.user = user.id;
@@ -36,4 +39,4 @@ NotificationSchema.methods.deepDelete = async function(){
     return this;
 }
 
-module.exports = model('Notification', NotificationSchema);
+module.exports = model(modelName, NotificationSchema);

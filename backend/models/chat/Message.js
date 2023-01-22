@@ -1,4 +1,7 @@
 const {Schema, model} = require("mongoose");
+
+const modelName = 'Message';
+
 const log = require('../../logging/log');
 
 const User = require('../User');
@@ -52,6 +55,7 @@ const MessageSchema = new Schema({
 
 MessageSchema.plugin(require('mongoose-unique-validator'));
 MessageSchema.plugin(require('../logPlugin'))
+MessageSchema.plugin(require('../../websocket/observer')(modelName))
 
 
 MessageSchema.methods.onCreate = async function({body, user}){
@@ -79,4 +83,4 @@ MessageSchema.methods.deepDelete = async function(){
 }
 
 
-module.exports = model('Message', MessageSchema);
+module.exports = model(modelName, MessageSchema);

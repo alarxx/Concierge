@@ -1,5 +1,7 @@
 const {Schema, model} = require('mongoose');
 
+const modelName = 'Hotel/Service';
+
 const Hotel = require('./Hotel');
 const File = require('../../binaries/File');
 const Service = require('../Service');
@@ -47,6 +49,7 @@ const ServiceSchema = new Schema({
 
 ServiceSchema.plugin(require('mongoose-unique-validator'));
 ServiceSchema.plugin(require('../../logPlugin'))
+ServiceSchema.plugin(require('../../../websocket/observer')(modelName))
 
 ServiceSchema.statics.publicFiles = function(){
     return ['logo'];
@@ -81,4 +84,4 @@ ServiceSchema.methods.deepDelete = async function(){
 }
 
 
-module.exports = model('Hotel/Service', ServiceSchema);
+module.exports = model(modelName, ServiceSchema);

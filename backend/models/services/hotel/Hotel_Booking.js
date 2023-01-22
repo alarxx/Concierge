@@ -1,5 +1,7 @@
 const {Schema, model} = require('mongoose');
 
+const modelName = 'Hotel/Booking';
+
 const User = require('../../User');
 const Bill = require('../../../public/arch/payment/Bill');
 const File = require('../../binaries/File');
@@ -63,6 +65,7 @@ const BookingSchema = new Schema({
 
 BookingSchema.plugin(require('mongoose-unique-validator'));
 BookingSchema.plugin(require('../../logPlugin'));
+BookingSchema.plugin(require('../../../websocket/observer')(modelName));
 
 BookingSchema.statics.publicFiles = function(){
     return [];
@@ -114,4 +117,4 @@ BookingSchema.virtual('current_price').get(function(){
 });
 
 
-module.exports = model('Hotel/Booking', BookingSchema);
+module.exports = model(modelName, BookingSchema);

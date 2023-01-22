@@ -2,7 +2,6 @@
 const colors = require('../logging/colors');
 const log = require('../logging/log');
 
-
 /**
  * Контроллер не задумывался для изменения нескольких документов.
  * c, r, u, d ... c - создаёт и т.д. ...

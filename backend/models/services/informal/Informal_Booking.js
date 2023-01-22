@@ -6,6 +6,8 @@ const Bill = require('../../../public/arch/payment/Bill');
 const File = require('../../binaries/File');
 const BookingModel = require('../Booking');
 
+const modelName = 'Informal/Booking';
+
 const BookingSchema = new Schema({
     customer: {
         type: Schema.Types.ObjectId,
@@ -31,6 +33,7 @@ const BookingSchema = new Schema({
 
 BookingSchema.plugin(require('mongoose-unique-validator'));
 BookingSchema.plugin(require('../../logPlugin'));
+BookingSchema.plugin(require('../../../websocket/observer')(modelName));
 
 
-module.exports = model('Informal_Booking', BookingSchema);
+module.exports = model(modelName, BookingSchema);

@@ -1,5 +1,7 @@
 const {Schema, model} = require("mongoose");
 
+const modelName = 'Participant';
+
 const Conversation = require('./Conversation');
 const User = require('../User');
 
@@ -31,6 +33,7 @@ const ParticipantSchema = new Schema({
 
 ParticipantSchema.plugin(require('mongoose-unique-validator'));
 ParticipantSchema.plugin(require('../logPlugin'))
+ParticipantSchema.plugin(require('../../websocket/observer')(modelName))
 
 
 ParticipantSchema.methods.onCreate = async function({body, user}){
@@ -51,4 +54,4 @@ ParticipantSchema.methods.deepDelete = async function(){
 }
 
 
-module.exports = model('Participant', ParticipantSchema);
+module.exports = model(modelName, ParticipantSchema);

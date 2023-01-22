@@ -1,5 +1,7 @@
 const {Schema, model} = require('mongoose');
 
+const modelName = 'Hotel';
+
 const Company = require('../../Company');
 const File = require('../../binaries/File');
 
@@ -38,6 +40,7 @@ const HotelSchema = new Schema({
 
 HotelSchema.plugin(require('mongoose-unique-validator'));
 HotelSchema.plugin(require('../../logPlugin'));
+HotelSchema.plugin(require('../../../websocket/observer')(modelName));
 
 const handlers = require('../../handlers');
 const Hotel_Service = require('./Hotel_Service');
@@ -69,4 +72,4 @@ HotelSchema.methods.deepDelete = async function(){
     return this;
 }
 
-module.exports = model('Hotel', HotelSchema);
+module.exports = model(modelName, HotelSchema);

@@ -31,6 +31,7 @@ ConversationSchema.plugin(require('mongoose-unique-validator'));
 ConversationSchema.plugin(require('../logPlugin'))
 
 
+
 ConversationSchema.methods.onCreate = async function({body, user}){
     return this;
 }

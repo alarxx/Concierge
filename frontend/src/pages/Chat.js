@@ -20,8 +20,6 @@ export default function Chat(){
     useEffect(()=>{
         if(isConnected) // можно просто добавить volatile, но так понятнее
             socket.emit("join-room", "123")
-            socket.emit("join-room", "123")
-            socket.emit("join-room", "123")
     }, [isConnected])
 
     return <button onClick={e => send_message(0, 0)}>Send Message</button>

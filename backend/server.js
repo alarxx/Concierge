@@ -109,6 +109,7 @@ const io = require('./websocket/socket.io')({
 	env: app.get('env'),
 	sessionStore: sessionStore
 });
+module.exports.io = io;
 
 /** All Routes */
 app.use('/', require('./routes/root'));
