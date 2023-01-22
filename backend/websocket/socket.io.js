@@ -1,9 +1,13 @@
 const passport = require('passport');
 const auth_listener = require('./listener/auth');
+const {model} = require("mongoose");
 
-let io;
+const socket_io = {
+    io: null,
+    initialize: null
+};
 
-function initialize({server, sessionMiddleware, env}) {
+socket_io.initialize = function({server, sessionMiddleware, env}) {
     const { Server } = require('socket.io');
 
     const io_opt={}
@@ -14,7 +18,9 @@ function initialize({server, sessionMiddleware, env}) {
         };
     }
 
-    io = new Server(server, io_opt);
+    const io = new Server(server, io_opt);
+
+    socket_io.io = io;
 
     const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
     io.use(wrap(sessionMiddleware));
@@ -49,10 +55,7 @@ function initialize({server, sessionMiddleware, env}) {
     return io;
 }
 
-module.exports = {
-    initialize,
-    io
-};
+module.exports = socket_io;
 
 /*
 ▄───▄

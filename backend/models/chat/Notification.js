@@ -3,9 +3,13 @@ const {Schema, model} = require('mongoose');
 const modelName = 'Notification';
 
 const User = require('../User');
-const Message = require('../chat/Message');
+const Message = require('./Message');
 
 const NotificationSchema = new Schema({
+    type: {
+        type: String,
+        enum: ['message']
+    },
     message: {
         type: Schema.Types.ObjectId,
         ref: 'Message',
@@ -20,7 +24,7 @@ const NotificationSchema = new Schema({
 
 NotificationSchema.plugin(require('mongoose-unique-validator'));
 NotificationSchema.plugin(require('../logPlugin'))
-NotificationSchema.plugin(require('../../websocket/observer/notification/notification'))
+NotificationSchema.plugin(require('../../websocket/observer/chat/notification'))
 
 NotificationSchema.methods.onCreate = async function({body, user}){
     this.user = user.id;

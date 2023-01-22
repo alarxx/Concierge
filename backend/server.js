@@ -78,6 +78,15 @@ app.use(passport.session());
 const LocalStrategy = require('./auth/passport');
 LocalStrategy();
 
+
+/** WebSocket */
+require('./websocket/socket.io').initialize({
+	server: server,
+	sessionMiddleware: sessionMiddleware,
+	env: app.get('env'),
+});
+
+
 /** Logging with Morgan JS */
 const morgan = require('morgan');
 const fs = require('fs');
@@ -102,15 +111,10 @@ app.use((req, res, next)=>{
 	next()
 });
 
-/** WebSocket */
-require('./websocket/socket.io').initialize({
-	server: server,
-	sessionMiddleware: sessionMiddleware,
-	env: app.get('env'),
-});
 
 /** All Routes */
 app.use('/', require('./routes/root'));
+
 
 const port = process.env.PORT || 3000;
 server.listen(port, ()=>{
