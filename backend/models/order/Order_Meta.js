@@ -83,8 +83,6 @@ const MetaSchema = new Schema({
 
 MetaSchema.plugin(require('mongoose-unique-validator'));
 MetaSchema.plugin(require('../logPlugin'))
-MetaSchema.plugin(require('../../websocket/observer')(modelName))
-
 
 MetaSchema.methods.onCreate = async function({}){
 }

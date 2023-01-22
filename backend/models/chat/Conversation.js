@@ -29,7 +29,7 @@ const ConversationSchema = new Schema({
 
 ConversationSchema.plugin(require('mongoose-unique-validator'));
 ConversationSchema.plugin(require('../logPlugin'))
-
+ConversationSchema.plugin(require('../../websocket/observer/chat/conversation'))
 
 
 ConversationSchema.methods.onCreate = async function({body, user}){

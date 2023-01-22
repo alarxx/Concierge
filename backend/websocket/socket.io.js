@@ -1,7 +1,9 @@
 const passport = require('passport');
 const auth_listener = require('./listener/auth');
 
-module.exports = ({server, sessionMiddleware, env, sessionStore}) => {
+let io;
+
+function initialize({server, sessionMiddleware, env}) {
     const { Server } = require('socket.io');
 
     const io_opt={}
@@ -11,7 +13,8 @@ module.exports = ({server, sessionMiddleware, env, sessionStore}) => {
             credentials: true
         };
     }
-    const io = new Server(server, io_opt);
+
+    io = new Server(server, io_opt);
 
     const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
     io.use(wrap(sessionMiddleware));
@@ -44,6 +47,11 @@ module.exports = ({server, sessionMiddleware, env, sessionStore}) => {
     });
 
     return io;
+}
+
+module.exports = {
+    initialize,
+    io
 };
 
 /*

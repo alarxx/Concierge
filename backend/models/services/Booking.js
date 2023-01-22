@@ -34,6 +34,7 @@ const BookingSchema = new Schema({
 });
 
 BookingSchema.plugin(require('mongoose-unique-validator'));
+BookingSchema.plugin(require('../logPlugin'));
 
 BookingSchema.methods.deepDelete = async function(){
     await this.delete();

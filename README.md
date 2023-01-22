@@ -48,3 +48,10 @@ React будет общаться с API через proxy.
 See also the list of [contributors](https://github.com/alar-q/concierge/contributors) who participated in this project.
 
 ## License
+▄───▄  
+█▀█▀█  
+█▄█▄█  
+─███──▄▄  
+─████▐█─█  
+─████───█  
+─▀▀▀▀▀▀▀  

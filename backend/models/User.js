@@ -41,6 +41,6 @@ const UserSchema = new Schema({
 
 UserSchema.plugin(require('mongoose-unique-validator'));
 UserSchema.plugin(require('./logPlugin'));
-UserSchema.plugin(require('../websocket/observer')(modelName));
+UserSchema.plugin(require('../websocket/observer/user'));
 
 module.exports = model(modelName, UserSchema);

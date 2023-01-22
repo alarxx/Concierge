@@ -33,7 +33,5 @@ const BookingSchema = new Schema({
 
 BookingSchema.plugin(require('mongoose-unique-validator'));
 BookingSchema.plugin(require('../../logPlugin'));
-BookingSchema.plugin(require('../../../websocket/observer')(modelName));
-
 
 module.exports = model(modelName, BookingSchema);

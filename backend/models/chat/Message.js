@@ -55,7 +55,7 @@ const MessageSchema = new Schema({
 
 MessageSchema.plugin(require('mongoose-unique-validator'));
 MessageSchema.plugin(require('../logPlugin'))
-MessageSchema.plugin(require('../../websocket/observer')(modelName))
+MessageSchema.plugin(require('../../websocket/observer/chat/message'))
 
 
 MessageSchema.methods.onCreate = async function({body, user}){

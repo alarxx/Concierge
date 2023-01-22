@@ -40,7 +40,6 @@ const HotelSchema = new Schema({
 
 HotelSchema.plugin(require('mongoose-unique-validator'));
 HotelSchema.plugin(require('../../logPlugin'));
-HotelSchema.plugin(require('../../../websocket/observer')(modelName));
 
 const handlers = require('../../handlers');
 const Hotel_Service = require('./Hotel_Service');

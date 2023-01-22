@@ -25,7 +25,6 @@ const CompanySchema = new Schema({
 
 CompanySchema.plugin(require('mongoose-unique-validator'));
 CompanySchema.plugin(require('./logPlugin'))
-CompanySchema.plugin(require('../websocket/observer')(modelName))
 
 CompanySchema.statics.publicFiles = function(){
     return ['logo'];

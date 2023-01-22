@@ -11,6 +11,5 @@ const InformalSchema = new Schema({
 
 InformalSchema.plugin(require('mongoose-unique-validator'));
 InformalSchema.plugin(require('../../logPlugin'));
-InformalSchema.plugin(require('../../../websocket/observer')(modelName));
 
 module.exports = model(modelName, InformalSchema);

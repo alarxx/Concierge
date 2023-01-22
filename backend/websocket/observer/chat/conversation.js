@@ -2,9 +2,9 @@
  * Идея в том, чтобы уведомлять пользователя о каких-то изменениях в базе данных
  * */
 
-const { io } = require('../server');
+const { io } = require('../../../websocket/socket.io');
 
-module.exports = modelName => function(schema) {
+module.exports = function(schema) {
     schema.post('save', function(document, next){
         next();
     });

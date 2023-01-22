@@ -49,7 +49,6 @@ const ServiceSchema = new Schema({
 
 ServiceSchema.plugin(require('mongoose-unique-validator'));
 ServiceSchema.plugin(require('../../logPlugin'))
-ServiceSchema.plugin(require('../../../websocket/observer')(modelName))
 
 ServiceSchema.statics.publicFiles = function(){
     return ['logo'];

@@ -103,13 +103,11 @@ app.use((req, res, next)=>{
 });
 
 /** WebSocket */
-const io = require('./websocket/socket.io')({
+require('./websocket/socket.io').initialize({
 	server: server,
 	sessionMiddleware: sessionMiddleware,
 	env: app.get('env'),
-	sessionStore: sessionStore
 });
-module.exports.io = io;
 
 /** All Routes */
 app.use('/', require('./routes/root'));

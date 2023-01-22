@@ -71,7 +71,7 @@ const OrderSchema = new Schema({
 
 OrderSchema.plugin(require('mongoose-unique-validator'));
 OrderSchema.plugin(require('../logPlugin'))
-OrderSchema.plugin(require('../../websocket/observer')(modelName))
+OrderSchema.plugin(require('../../websocket/observer/order/order'))
 
 const handlers = require("../handlers");
 const colors = require("../../logging/colors");
