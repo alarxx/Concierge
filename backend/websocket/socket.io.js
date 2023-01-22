@@ -22,7 +22,9 @@ module.exports = ({server, sessionMiddleware, env, sessionStore}) => {
         if(!socket.request.isAuthenticated()){
             return next(new Error('Unauthorized'))
         }
-        console.log(`connected socket(${socket.id}):`, socket.request.user.email)
+        const user = socket.request.user;
+        socket.join(user.id);
+        console.log(`connected socket(${socket.id}):`, user.email)
         next();
     });
 
