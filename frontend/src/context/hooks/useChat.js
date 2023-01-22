@@ -121,7 +121,9 @@ const messagesDefault = [
  * Должен предоставлять Conversations, Messages, Notifications, возможно Participants
  * Должен предоставлять данные о том, какая комната сейчас открыта у пользователя
  * */
-export default function useChat({socket}){
+export default function useChat({socketHandler}){
+    const {socket} = socketHandler
+
     const navigate = useNavigate()
 
     /**
@@ -178,3 +180,13 @@ export default function useChat({socket}){
         joinConversation,
     }
 }
+
+/*
+▄───▄
+█▀█▀█
+█▄█▄█
+─███──▄▄
+─████▐█─█
+─████───█
+─▀▀▀▀▀▀▀
+*/

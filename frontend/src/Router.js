@@ -10,20 +10,20 @@ import ChatApp from "./pages/chat/ChatApp";
 import Order from './pages/order/Order'
 import Profile from './pages/profile/Profile'
 import Partners from './pages/partners/Partners'
-import TestSocket from './pages/TestSocket'
 
 import {AppContextProvider} from "./context/AppContext";
 
 import './assets/css/style.css'
 import './assets/css/adaptive.css'
 import RegisterSimple from "./pages/auth/RegisterSimple";
+import Chat from "./pages/Chat";
 
 export default function Router(){
 	// return (<TestSocket />)
 	return (
 		<AppContextProvider>
 			<Routes>
-				<Route path="/" element={<Home />} />
+				<Route path="/" element={<Chat />} />
 
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
@@ -43,3 +43,13 @@ export default function Router(){
 		</AppContextProvider>
 	);
 }
+
+/*
+▄───▄
+█▀█▀█
+█▄█▄█
+─███──▄▄
+─████▐█─█
+─████───█
+─▀▀▀▀▀▀▀
+*/

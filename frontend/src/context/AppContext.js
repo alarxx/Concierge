@@ -12,20 +12,20 @@ const useAppContext = () => useContext(Context);
 
 function AppContextProvider({ children }){
 
-    const hotelsHandler = useHotel();
+    // const hotelsHandler = useHotel();
 
     const socketHandler = useSocket()
-    const authHandler = useAuth({...socketHandler});
-    const orderHandler = useOrder({...socketHandler, ...authHandler});
-    const chatHandler = useChat({...socketHandler, ...authHandler, ...orderHandler});
+    const authHandler = useAuth({socketHandler});
+    // const orderHandler = useOrder({...socketHandler, ...authHandler});
+    // const chatHandler = useChat({...socketHandler, ...authHandler, ...orderHandler});
 
     return (
         <Context.Provider value={{
             socketHandler,
             authHandler,
-            orderHandler,
-            chatHandler,
-            hotelsHandler
+            // orderHandler,
+            // chatHandler,
+            // hotelsHandler
         }}>
             {children}
         </Context.Provider>
@@ -33,3 +33,13 @@ function AppContextProvider({ children }){
 };
 
 export {AppContextProvider, useAppContext};
+
+/*
+▄───▄
+█▀█▀█
+█▄█▄█
+─███──▄▄
+─████▐█─█
+─████───█
+─▀▀▀▀▀▀▀
+*/

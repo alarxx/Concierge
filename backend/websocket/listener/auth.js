@@ -8,7 +8,16 @@ module.exports = socket => {
             entity: user.entity,
             role: user.role,
         }
-        console.log('setting');
         setUser(response);
     })
 }
+
+/*
+▄───▄
+█▀█▀█
+█▄█▄█
+─███──▄▄
+─████▐█─█
+─████───█
+─▀▀▀▀▀▀▀
+*/

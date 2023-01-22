@@ -23,3 +23,12 @@ module.exports.r_id = async (req, res) => {
     res.sendFile(path.resolve(require.main.path, file.path));
 }
 
+/*
+▄───▄
+█▀█▀█
+█▄█▄█
+─███──▄▄
+─████▐█─█
+─████───█
+─▀▀▀▀▀▀▀
+*/

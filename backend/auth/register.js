@@ -49,3 +49,13 @@ function register(strategy){
 
 
 module.exports = register;
+
+/*
+▄───▄
+█▀█▀█
+█▄█▄█
+─███──▄▄
+─████▐█─█
+─████───█
+─▀▀▀▀▀▀▀
+*/

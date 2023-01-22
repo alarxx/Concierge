@@ -49,17 +49,11 @@ export default function useOrder({ user, isAuthenticated }){
     const [ordersLoading, setOrdersLoading] = useState(true);
     const [ordersError, setOrdersError] = useState();
 
-    /*useEffect(()=>{
-        if(user)
-            reloadOrders()
-    }, [user])*/
-
-
     async function createOrder(order){
         // Убеждаемся, что пользователь авторизован и создаем заказ
 
         if (!isAuthenticated()) {
-            navigate('/register', {
+            navigate('/register/simple', {
                 replace: true,
                 state: {
                     redirect: '/order',
@@ -142,3 +136,13 @@ export default function useOrder({ user, isAuthenticated }){
 
     return {orders, ordersLoading, ordersError, createOrder, updateOrder, deleteOrder, reloadOrders, filledData, isFilledBefore};
 }
+
+/*
+▄───▄
+█▀█▀█
+█▄█▄█
+─███──▄▄
+─████▐█─█
+─████───█
+─▀▀▀▀▀▀▀
+*/

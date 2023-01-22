@@ -30,9 +30,26 @@ module.exports = ({server, sessionMiddleware, env, sessionStore}) => {
     io.on('connection', socket => {
         auth_listener(socket);
 
-    });
+        socket.on("join-room", room => {
+            console.log(`join socket(${socket.id}) to room ${room}`)
+            socket.join(room);
+        })
+        socket.on("send-message", (message, room) => {
+            console.log(`socket(${socket.id}) send message(${message}) to room(${room})`);
+            io.to(room).emit("receive-message", message);
+        })
 
+    });
 
     return io;
 };
 
+/*
+▄───▄
+█▀█▀█
+█▄█▄█
+─███──▄▄
+─████▐█─█
+─████───█
+─▀▀▀▀▀▀▀
+*/

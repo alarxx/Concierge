@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import useFetch from "../../hooks/useFetch";
 
-export default function useAuth({ socket, isConnected }){
+export default function useAuth({socketHandler}){
+    const socket = socketHandler.socket;
+    const isConnected = socketHandler.isConnected;
+
     const [user, setUserState] = useState();
     const [userLoading, setUserLoading] = useState(true);
 
@@ -69,3 +72,13 @@ export default function useAuth({ socket, isConnected }){
         isAuthenticated,
     };
 }
+
+/*
+▄───▄
+█▀█▀█
+█▄█▄█
+─███──▄▄
+─████▐█─█
+─████───█
+─▀▀▀▀▀▀▀
+*/

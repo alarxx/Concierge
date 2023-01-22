@@ -20,7 +20,7 @@ const FORMS = [
     F3_General,
     F4_Tickets,
     F5_Housing,
-    F6_HotelsSelection,
+    // F6_HotelsSelection,
     F7_Transport,
     F8_Calculation
 ]
@@ -30,7 +30,7 @@ const FORMS = [
  * */
 export default function Order({ }) {
     const {orderHandler} = useAppContext();
-    const {create, filledData, isFilledBefore} = orderHandler;
+    const {createOrder, filledData, isFilledBefore} = orderHandler;
 
     useEffect(()=>console.log(filledData), [filledData]);
 
@@ -40,7 +40,7 @@ export default function Order({ }) {
                 forms={FORMS}
                 INITIAL_DATA={filledData}
                 INIT_STEP={isFilledBefore ? 'last' : 0}
-                onSubmit={create}
+                onSubmit={createOrder}
                 submitButtonName={"Оставить заявку"}
             />
         </>
