@@ -10,7 +10,7 @@ export default function useAuth({socketHandler}){
 
 
     useEffect(()=>{
-        socket.on("connect_error", setUser);
+        socket.on("connect_error", (err)=>setUser(err));
     }, [])
 
     useEffect(()=>{

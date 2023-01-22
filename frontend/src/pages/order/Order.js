@@ -25,14 +25,55 @@ const FORMS = [
     F8_Calculation
 ]
 
+/* На самом деле лучше не писать это так, а устанавливать default значения в каждой форме */
+// Это order_meta, все что выбирает пользователь идет в order_meta, сам order может менять только manager
+const _INITIAL_DATA_DEFAULT = {
+    type: 'informal', // ['business_trip', 'event', 'informal']
+    needs: [], //['housing', 'transport', 'travel', 'informal']
+    num_of_people: 1,
+    departure_place: '',
+    destination_place: '',
+
+    travel_transport: null, //['airplane', 'train', null]
+    date_start: '',
+    date_end: '',
+    one_way_ticket: false,
+
+    housing: null, //['hotel', 'apartment', null]
+    separateApartments: false,
+
+    transport: null, //['car', 'limousine']
+    driverNeeded: false,
+
+    description: '',
+    preferred_services: [] //ObjectIds
+}
+const _useFilled = () => {
+    const location = useLocation()
+    const [isFilledBefore, setFilledBefore] = useState(false)
+    const [filledData, setInitData] = useState({})
+
+    useEffect(()=>{
+        if(location.state?.order){
+            setFilledBefore(true)
+            setInitData(location.state.order)
+        }
+    }, [location])
+
+    return {filledData, isFilledBefore}
+}
+
 /**
  * Нам нужно как-то сохранять контекст между роутами
  * */
 export default function Order({ }) {
     const {orderHandler} = useAppContext();
-    const {createOrder, filledData, isFilledBefore} = orderHandler;
 
-    useEffect(()=>console.log(filledData), [filledData]);
+    const {filledData, isFilledBefore} = _useFilled()
+
+    const {createOrder} = orderHandler;
+
+    useEffect(()=>console.log({filledData}), [filledData]);
 
     return (
         <>

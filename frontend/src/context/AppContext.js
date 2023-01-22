@@ -16,16 +16,15 @@ function AppContextProvider({ children }){
 
     const socketHandler = useSocket()
     const authHandler = useAuth({socketHandler});
-    // const orderHandler = useOrder({...socketHandler, ...authHandler});
-    // const chatHandler = useChat({...socketHandler, ...authHandler, ...orderHandler});
+    const orderHandler = useOrder({socketHandler, authHandler});
+    const chatHandler = useChat({socketHandler, authHandler, orderHandler});
 
     return (
         <Context.Provider value={{
             socketHandler,
             authHandler,
-            // orderHandler,
-            // chatHandler,
-            // hotelsHandler
+            orderHandler,
+            chatHandler,
         }}>
             {children}
         </Context.Provider>

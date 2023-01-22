@@ -5,7 +5,7 @@ import ServiceItem from "../../../components/form/ServiceItem";
 import HouseSVG from "../../../assets/icons/house.svg";
 import toggleArrayElement from "../../../handlers/toggleArrayElement";
 
-export default function F2_Needs({needs, updateFields= f=>f}){
+export default function F2_Needs({needs=[], updateFields= f=>f}){
 
     function toggleNeeds(element){
         updateFields({ needs: toggleArrayElement(needs, element) })

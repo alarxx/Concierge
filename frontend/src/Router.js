@@ -23,7 +23,8 @@ export default function Router(){
 	return (
 		<AppContextProvider>
 			<Routes>
-				<Route path="/" element={<Chat />} />
+				<Route path="/" element={<Home />} />
+				<Route path="/test" element={<Chat />} />
 
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />

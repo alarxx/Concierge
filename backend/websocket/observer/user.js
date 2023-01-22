@@ -10,4 +10,3 @@ module.exports = function(schema) {
         next();
     });
 };
-
