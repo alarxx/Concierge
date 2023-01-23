@@ -8,23 +8,27 @@ const OPTS = {
 
 const socket = io(URL, OPTS);
 
+function log(...str){
+    // console.log("useSocket\n", ...str);
+}
+
 export default function useSocket(){
     const [isConnected, setIsConnected] = useState(socket.connected);
 
     useEffect(()=>{
         socket.on('connect', ()=>{
             setIsConnected(true);
-            console.log(`socket.io: you connected with id: ${socket.id}`);
+            log(`socket.io: you connected with id: ${socket.id}`);
         });
 
         socket.on('disconnect', () => {
             setIsConnected(false);
-            console.log(`socket.io: you disconnected`);
+            log(`socket.io: you disconnected`);
         });
 
         socket.on("connect_error", (err) => {
             setIsConnected(false)
-            console.log("socket.io: connect_error", err.message); // prints the message associated with the error
+            log("socket.io: connect_error", err.message); // prints the message associated with the error
         });
 
         return () => {

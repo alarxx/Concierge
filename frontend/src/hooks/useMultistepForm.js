@@ -22,17 +22,7 @@ export default function useMultistepForm(steps){
     }
 
     function goTo(index){
-        if(typeof index === 'number'){
-            if(index < 0 || index >= lastStep)
-                setCurrentStepIndex(0);
-            else setCurrentStepIndex(index);
-        }
-        else if(index === 'last'){
-            setCurrentStepIndex(lastStep);
-        }
-        else{
-            setCurrentStepIndex(0)
-        }
+        setCurrentStepIndex(index)
     }
 
     return {

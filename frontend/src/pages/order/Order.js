@@ -51,16 +51,16 @@ const _INITIAL_DATA_DEFAULT = {
 const _useFilled = () => {
     const location = useLocation()
     const [isFilledBefore, setFilledBefore] = useState(false)
-    const [filledData, setInitData] = useState({})
+    const [data, setData] = useState(_INITIAL_DATA_DEFAULT)
 
     useEffect(()=>{
         if(location.state?.order){
             setFilledBefore(true)
-            setInitData(location.state.order)
+            setData(location.state.order)
         }
     }, [location])
 
-    return {filledData, isFilledBefore}
+    return {data, setData, isFilledBefore}
 }
 
 /**
@@ -69,18 +69,17 @@ const _useFilled = () => {
 export default function Order({ }) {
     const {orderHandler} = useAppContext();
 
-    const {filledData, isFilledBefore} = _useFilled()
+    const {data, setData, isFilledBefore} = _useFilled()
 
     const {createOrder} = orderHandler;
-
-    useEffect(()=>console.log({filledData}), [filledData]);
 
     return (
         <>
             <MultistepForm
                 forms={FORMS}
-                INITIAL_DATA={filledData}
-                INIT_STEP={isFilledBefore ? 'last' : 0}
+                data={data}
+                setData={setData}
+                init_step={isFilledBefore ? -1 : 0}
                 onSubmit={createOrder}
                 submitButtonName={"Оставить заявку"}
             />

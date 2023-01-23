@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose');
 
-const Company = require('../../Company');
+const Company = require('../../company/Company');
 
 const FlightSchema = new Schema({
     company: {

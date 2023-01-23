@@ -5,6 +5,8 @@ const handlers = require("../handlers");
 const ConversationSchema = new Schema({
     name: {
         type: String,
+        required: true,
+        default: `Service ${Date.now()}`
     },
     type: {
         type: String,
@@ -31,10 +33,15 @@ ConversationSchema.plugin(require('../../websocket/observer/chat/conversation'))
 
 
 ConversationSchema.methods.onCreate = async function({body, user}){
+    const Participant = require('./Participant');
+    const participant = new Participant({conversation: this, user: user.id});
+    await participant.save();
 }
 
 
 ConversationSchema.methods.deepDelete = async function(){
+    await this.delete();
+
     // Delete all messages that belong to conversation
     const Message = require('./Message');
     const Participant = require('./Participant');
@@ -50,7 +57,6 @@ ConversationSchema.methods.deepDelete = async function(){
         async participant => await participant.deepDelete()
     ));
 
-    await this.delete();
     return this;
 }
 

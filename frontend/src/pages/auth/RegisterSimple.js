@@ -1,23 +1,35 @@
-import React from 'react';
-import {useNavigate} from "react-router-dom";
+import React, {useEffect} from 'react';
+import {useLocation, useNavigate} from "react-router-dom";
 import {useAppContext} from "../../context/AppContext";
 
-export default function RegisterSimple({auth}){
+function log(...str){
+    // console.log(...str);
+}
+
+export default function RegisterSimple({}){
     const navigate = useNavigate();
+    const location = useLocation();
 
     const {authHandler} = useAppContext();
     const {register} = authHandler;
 
-    const onSubmit = e => {
+    useEffect(()=>{
+        log("Register location: ", location);
+    }, [])
+
+    function onSubmit(e){
         e.preventDefault();
+
         register({
             email: e.target.email.value,
             name: e.target.name.value,
             password: e.target.password.value,
         });
-        navigate('/', {replace: true});
-    }
 
+        const state = {...location.state}
+        log(`Registered. Navigate to /login with state`, state);
+        navigate('/login', {state, replace: true});
+    }
 
     return (
         <>
@@ -41,7 +53,13 @@ export default function RegisterSimple({auth}){
                 <br/>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
-
+            <button onClick={
+                e => {
+                    const state = {...location.state}
+                    log(`Navigate to /login with state`, state);
+                    navigate('/login', {state, replace: true});
+                }
+            }> Login </button>
         </>
     );
 }

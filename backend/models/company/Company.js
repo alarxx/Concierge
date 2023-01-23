@@ -2,7 +2,7 @@ const {Schema, model} = require('mongoose');
 
 const modelName = 'Company';
 
-const log = require('../logging/log');
+const log = require('../../logging/log');
 
 const CompanySchema = new Schema({
     name: {
@@ -22,13 +22,13 @@ const CompanySchema = new Schema({
 
 
 CompanySchema.plugin(require('mongoose-unique-validator'));
-CompanySchema.plugin(require('./logPlugin'))
+CompanySchema.plugin(require('../logPlugin'))
 
 CompanySchema.statics.publicFiles = function(){
     return ['logo'];
 }
 
-const handlers = require('./handlers');
+const handlers = require('../handlers');
 
 CompanySchema.methods.onCreate = async function({body, user}){
 }

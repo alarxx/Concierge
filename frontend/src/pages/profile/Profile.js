@@ -5,9 +5,15 @@ import Menu from "../../components/phone/Menu";
 import Container from "../../components/phone/Container";
 import CardOrder from "../../components/cards/CardOrder";
 import PushIcon from "../../assets/icons/clipboard-tick.svg";
+import {useAppContext} from "../../context/AppContext";
 
 
 export default function Profile(){
+
+    const { orderHandler, chatHandler } = useAppContext();
+    const { orders } = orderHandler;
+    const { joinConversation } = chatHandler;
+
     return (
         <Workflow>
 
@@ -24,18 +30,18 @@ export default function Profile(){
                         </div>
                     </div>
 
-                    <div class="profile__stats stats">
-                        <div class="stats__block">
-                            <div class="stats__num">12</div>
-                            <div class="stats__category">Заявок</div>
+                    <div className="profile__stats stats">
+                        <div className="stats__block">
+                            <div className="stats__num">12</div>
+                            <div className="stats__category">Заявок</div>
                         </div>
-                        <div class="stats__block">
-                            <div class="stats__num">4</div>
-                            <div class="stats__category">Договоров</div>
+                        <div className="stats__block">
+                            <div className="stats__num">4</div>
+                            <div className="stats__category">Договоров</div>
                         </div>
-                        <div class="stats__block">
-                            <div class="stats__num">24 M</div>
-                            <div class="stats__category">Заработано</div>
+                        <div className="stats__block">
+                            <div className="stats__num">24 M</div>
+                            <div className="stats__category">Заработано</div>
                         </div>
                     </div>
 
@@ -66,9 +72,18 @@ export default function Profile(){
                         <div className="cards__title">
                             Мои заявки
                         </div>
-                        <CardOrder />
-                        <CardOrder />
-                        <CardOrder />
+
+                        {orders.map(order => {
+                            return (
+                                <CardOrder
+                                   order={order}
+                                   onClick={ e => {
+                                       joinConversation();
+                                       console.log(order)
+                                   }}
+                                />
+                            )
+                        })}
                     </div>
                 </div>
 

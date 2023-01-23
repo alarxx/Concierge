@@ -5,8 +5,8 @@
 const models = {}
 
 function initialize(){
-    models.User = require('./User')
-    models.Company = require('./Company')
+    models.User = require('./user/User')
+    models.Company = require('./company/Company')
 
     models.File = require('./binaries/File');
 

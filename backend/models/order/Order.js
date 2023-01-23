@@ -57,6 +57,10 @@ const OrderSchema = new Schema({
         type: Date,
         immutable: true,
         default: new Date()
+    },
+    status: {
+        type: String,
+        enum: ['new', 'handling', 'completed']
     }
 });
 
@@ -76,7 +80,7 @@ OrderSchema.statics.nestedObjectKeys = function(){
     return ['meta']
 }
 
-OrderSchema.methods.onCreate = async function({user}){
+OrderSchema.methods.onCreate = async function({req, res, body, user}){
     const Order_Meta = require('./Order_Meta');
     const Conversation = require('../chat/Conversation');
     const Participant = require('../chat/Participant');
@@ -86,12 +90,19 @@ OrderSchema.methods.onCreate = async function({user}){
     this.meta = meta.id;
     await meta.save();
 
+    // if(!body.conversation_name) return res.status(400).json({error: 'please provide name for conversation'});
+
     // Мы наверное должны здесь еще создавать Conversation, Participant и прикреплять везде user-a
     const conversation = await new Conversation({});
+    if(body.conversation_name)
+        conversation.name = body.conversation_name;
     this.conversation = conversation.id;
-    await conversation.save();
 
-    const participant = await new Participant({user: user.id, conversation: conversation.id}).save();
+    const participant = new Participant({user: user.id, conversation: conversation.id})
+
+    await participant.save();
+
+    await conversation.save();
 
     this.customer = user.id;
 }

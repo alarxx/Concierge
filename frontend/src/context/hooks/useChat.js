@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useNavigate} from "react-router-dom";
 
 import findIndexById from "../../handlers/findIndexById";
+import setIds from '../../handlers/setIds'
 
 /*const conversationsDefault = [
     {
@@ -117,195 +118,116 @@ const messagesDefault = [
     },
 ]*/
 
-function useMessages({ socket, user, isAuthenticated }){
+function log(...str){
+    console.log("useChat\n", ...str);
+}
 
-    const [messages, setMessages] = useState([]);
-    const [messagesLoading, setMessagesLoading] = useState(true);
-    const [messagesError, setMessagesError] = useState();
+function useFreshData({ socket, modelName }){
+    const name = modelName.toLowerCase();
 
+    const [data, setData] = useState([]);
 
-    /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать. Хз */
-    async function preloadMessages (){
-        setMessagesLoading(true);
-        try{
-            const res = await fetch('/api/chat/message');
-            const json = await res.json();
-            setMessagesLoading(false);
-            if(res.status === 200)
-                setMessages(json);
-        }
-        catch (err){
-            console.log(err);
-            setMessagesLoading(false);
-            setMessagesError(err.error);
-        }
+    function _addDoc(doc){
+        doc.id = doc._id;
+        delete doc._id;
+
+        console.log(`/save/${name}`, doc);
+
+        setData(prev => [...prev, doc]);
     }
+    function _removeDoc(doc){
+        doc.id = doc._id;
+        delete doc._id;
 
+        console.log(`/delete/${name}`, doc);
 
-    function _addMessage(message){
-        setMessages(prev => [...prev, message]);
-    }
-    function _removeMessage(message){
-        setMessages(prev => {
-            const i = findIndexById(prev, message.id)
-            const newMessages = [...prev]
-            newMessages.splice(i, 1);
-            return newMessages;
+        setData(prev => {
+            const i = findIndexById(prev, doc.id)
+            const clone = [...prev]
+            clone.splice(i, 1);
+            return clone;
         })
     }
 
-    useEffect(()=>{
-        if(isAuthenticated()){
-            preloadMessages();
-        }
-        else {
-            if(messages.length)
-                setMessages([])
-        }
-    }, [user])
-
     useEffect(() => {
-        socket.on('/save/message', (message) => {
-            _addMessage(message);
+        socket.on(`/save/${name}`, (doc) => {
+            _addDoc(doc);
         });
-        socket.on('/delete/message', (message) => {
-            _removeMessage(message);
+        socket.on(`/delete/${name}`, (doc) => {
+            _removeDoc(doc);
         });
     }, []);
 
-    function sendMessage(message, conversation){
-        socket.emit("send-message", message, conversation);
+    function addData(data){
+        // здесь должна быть проверка(comparing) каждого документа из массива по времени и сетить только в случае если document моложе,
+        // Если такого вообще нет, то мы добавляем
+        setData(data);
     }
 
-    return { messages, sendMessage };
+    return [data, setData, addData];
 }
-function useConversations({ socket, user, isAuthenticated }){
-
-    const [conversations, setConversations] = useState([]);
-    const [conversationsLoading, setConversationsLoading] = useState(true);
-    const [conversationsError, setConversationsError] = useState();
-
-
-    /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать. Хз */
-    async function preloadConversations (){
-        setConversationsLoading(true);
-        try{
-            const res = await fetch('/api/order');
-            const json = await res.json();
-            setConversationsLoading(false);
-            if(res.status === 200)
-                setConversations(json);
-        }
-        catch (err){
-            console.log(err);
-            setConversationsLoading(false);
-            setConversationsError(err.error);
-        }
-    }
-
-
-    function _addMessage(message){
-        setConversations(prev => [...prev, message]);
-    }
-    function _removeMessage(message){
-        setConversations(prev => {
-            const i = findIndexById(prev, message.id)
-            const newMessages = [...prev]
-            newMessages.splice(i, 1);
-            return newMessages;
-        })
-    }
-
-    useEffect(()=>{
-        if(isAuthenticated()){
-            preloadConversations();
-        }
-        else {
-            if(conversations.length)
-                setConversations([])
-        }
-    }, [user])
-
-    useEffect(() => {
-        socket.on('/save/message', (message) => {
-            _addMessage(message);
-        });
-        socket.on('/delete/message', (message) => {
-            _removeMessage(message);
-        });
-    }, []);
-
-    function sendMessage(message, conversation){
-        socket.emit("send-message", message, conversation);
-    }
-
-    return { messages: conversations, sendMessage };
-}
-
-
 
 /**
+ * Мы сразу все в куче загружаем, а фильтровать их уже потом будем.
  * Мы сразу загружаем всю нужную информацию (Все беседы, сообщения, где состоит пользователь, мы с бэка это делаем. Когда мы присоединяемся к беседе, мы должны дополнить наши данные)
  * Должен предоставлять Conversations, Messages, Notifications, возможно Participants
  * Должен предоставлять данные о том, какая комната сейчас открыта у пользователя
  * */
 export default function useChat({socketHandler, authHandler}){
-    const {socket} = socketHandler
-    const {user, isAuthenticated} = authHandler
 
-    const navigate = useNavigate()
+    const { socket } = socketHandler
+    const { user, isAuthenticated } = authHandler
 
-    const { messages, sendMessage } = useMessages({socket, user, isAuthenticated});
+    const [ messages, setMessages, addMessages ] = useFreshData({socket, modelName: 'message'});
+    const [ conversations, setConversations, addConversations ] = useFreshData({socket, modelName: "conversation"})
+    const [ participants, setParticipants, addParticipants ] = useFreshData({socket, modelName: "participant"});
+    const [ notifications, setNotifications, addNotifications ] = useFreshData({socket, modelName: "notification"});
 
-    /**
-     * Мы сразу все в куче загружаем, а фильтровать их уже потом будем
-     * */
-    const [conversations, setConversations] = useState(conversationsDefault)
-    const [participants, setParticipants] = useState(messagesDefault);
-    const [notifications, setNotifications] = useState(messagesDefault);
-
-    function _addConversation(conversation){
-        setConversations(prev => [...prev, conversation]);
+    /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать. Хз */
+    async function preload (){
+        try{
+            const res = await fetch('/api/chat');
+            const json = await res.json();
+            if(res.status === 200){
+                log("chat:", json);
+                addMessages(setIds(json.messages));
+                addConversations(setIds(json.conversations));
+                addParticipants(setIds(json.participants));
+                addNotifications(setIds(json.notifications));
+            }
+        }
+        catch (err){
+            log(err);
+        }
     }
-    function _removeConversation(conversation){
-        setConversations(prev => {
-            const i = findIndexById(prev, conversation.id)
-            const newMessages = [...prev]
-            newMessages.splice(i, 1);
-            return newMessages;
-        })
-    }
+    useEffect(()=>{
+        if(isAuthenticated()){
+            preload();
+        }
+        else {
+            if(messages.length || conversations.length || participants.length || notifications.length){
+                log("chat:", null);
+                setConversations([])
+                setMessages([])
+                setNotifications([])
+                setParticipants([])
+            }
+        }
+    }, [user])
 
-    function _addParticipant(participant){
-        setParticipants(prev => [...prev, participant]);
+    function sendMessage(message){
+        socket.emit("send-message", message);
     }
-    function _addNotification(notification){
-        setNotifications(prev => [...prev, notification]);
-    }
-
-
-
-    // Нужны ли эти методы здесь? Вроде нет
-    function openConversation(conversation){
-        // Мы должны проверить состоит ли пользователь в этом conversation
-        navigate(`/chat/${conversation.id}`)
-    }
-    function closeConversation(){
-        navigate(-1)
-    }
-
 
     function joinConversation(conversation){
         socket.emit('join-conversation', conversation);
-    };
+    }
 
     return {
         conversations,
         messages,
         participants,
         notifications,
-        openConversation,
-        closeConversation,
         sendMessage,
         joinConversation,
     }

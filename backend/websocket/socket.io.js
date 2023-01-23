@@ -1,5 +1,6 @@
 const passport = require('passport');
 const auth_listener = require('./listener/auth');
+const chat_listener = require('./listener/chat');
 const {model} = require("mongoose");
 
 const socket_io = {
@@ -40,16 +41,7 @@ socket_io.initialize = function({server, sessionMiddleware, env}) {
     /* запускается только если пользователь авторизован */
     io.on('connection', socket => {
         auth_listener(socket);
-
-        socket.on("join-room", room => {
-            console.log(`join socket(${socket.id}) to room ${room}`)
-            socket.join(room);
-        })
-        socket.on("send-message", (message, room) => {
-            console.log(`socket(${socket.id}) send message(${message}) to room(${room})`);
-            io.to(room).emit("receive-message", message);
-        })
-
+        chat_listener(socket);
     });
 
     return io;

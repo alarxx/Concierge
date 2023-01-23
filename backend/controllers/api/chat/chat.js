@@ -14,6 +14,21 @@ const controller = {};
  * Notifications,
  * */
 controller.preload = async (req, res) => {
+    /*if(req.user.role === 'manager'){
+
+        const participants = await ParticipantModel.find()
+        const conversations = await ConversationModel.find()
+        const messages = await MessageModel.find()
+        const notifications = await NotificationModel.find()
+
+        return res.status(200).json({
+            conversations,
+            participants,
+            messages,
+            notifications
+        });
+    }*/
+
     const user = req.user.id;
 
     // Каждый Participant означает принадлежность в одну беседу того, кто запрашивает

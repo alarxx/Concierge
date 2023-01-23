@@ -1,7 +1,7 @@
 const {Schema, model} = require('mongoose');
 
 const PriceModel = require('./Price');
-const UserModel = require('../../../models/User');
+const UserModel = require('../../../models/user/User');
 const FileModel = require("../../../models/binaries/File");
 
 const BillSchema = new Schema({

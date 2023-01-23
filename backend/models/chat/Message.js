@@ -43,10 +43,10 @@ const MessageSchema = new Schema({
         type: Date,
         default: new Date(),
     },
-    readBy: [{
+    /*readBy: [{
         type: Schema.Types.ObjectId,
         ref: 'User',
-    }],
+    }],*/
 });
 
 

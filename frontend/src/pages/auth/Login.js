@@ -1,21 +1,40 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {useAppContext} from "../../context/AppContext";
 
-export default function Login(){
+function log(...str){
+    // console.log(...str);
+}
+
+export default function Login({}){
     const navigate = useNavigate();
+    const location = useLocation();
 
     const {authHandler} = useAppContext();
     const {login} = authHandler;
 
-    const onSubmit = e => {
+    useEffect(()=>{
+        log("Login location: ", location);
+    }, [])
+
+    function onSubmit(e){
         e.preventDefault();
+
         login({
             email: e.target.email.value,
             password: e.target.password.value,
         });
-        navigate('/', {replace: true});
+
+        if(location.state?.redirect){
+            const state = {...location.state};
+            log(`Redirect back to ${location.state.redirect} with state`, state);
+            delete state.redirect;
+            navigate(location.state.redirect, {replace: true, state});
+        }
+        else {
+            navigate('/', {replace: true});
+        }
     }
 
     return (
@@ -35,9 +54,14 @@ export default function Login(){
                 <br/>
                 <button type="submit" className="btn btn-primary">Sign In</button>
 
-                <br/>
-                <button><a href="/frontend/src/pages/auth/RegisterSimple.js">Sign Up</a></button>
             </form>
+            <button onClick={
+                e => {
+                    const state = {...location.state}
+                    log(`Navigate to /register/simple with state`, state);
+                    navigate('/register/simple', {state, replace: true});
+                }
+            }>Sign up</button>
         </>
     );
 }

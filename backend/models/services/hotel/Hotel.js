@@ -2,7 +2,7 @@ const {Schema, model} = require('mongoose');
 
 const modelName = 'Hotel';
 
-const Company = require('../../Company');
+const Company = require('../../company/Company');
 const File = require('../../binaries/File');
 
 const HotelSchema = new Schema({

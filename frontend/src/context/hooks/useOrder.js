@@ -3,6 +3,10 @@ import {useNavigate} from "react-router-dom";
 
 import findIndexById from "../../handlers/findIndexById";
 
+function log(...str){
+    console.log("useOrder\n", ...str);
+}
+
 /**
  * Должен предоставлять все функции для загрузки всех ордеров, создания нового, удаления, изменения,
  * */
@@ -16,20 +20,34 @@ export default function useOrder({ socketHandler, authHandler }){
     const { user, isAuthenticated } = authHandler;
     const { socket, isConnected } = socketHandler;
 
+    function _addOrder(order){
+        order.id = order._id;
+        delete order._id;
+
+        log("/save/order", order);
+        setOrders(prev => [...prev, order])
+    }
+
+    function _removeOrder(order){
+        order.id = order._id;
+        delete order._id;
+
+        log("/delete/order", order);
+        setOrders(prev => {
+            const i = findIndexById(prev, order.id)
+            const newOrders = [...prev]
+            newOrders.splice(i, 1);
+            return newOrders;
+        })
+    }
 
     useEffect(()=>{
         socket.on("/save/order", (order)=>{
-            console.log("/save/order", order);
-            setOrders(prev => [...prev, order])
+            _addOrder(order);
         });
+
         socket.on("/delete/order", (order)=>{
-            console.log("/delete/order", order);
-            setOrders(prev => {
-                const i = findIndexById(prev, order.id)
-                const newOrders = [...prev]
-                newOrders.splice(i, 1);
-                return newOrders;
-            })
+            _removeOrder(order);
         });
     }, [])
 
@@ -39,14 +57,14 @@ export default function useOrder({ socketHandler, authHandler }){
             preloadOrders();
         }
         else {
-            if(orders.length)
+            if(orders.length) // Так мы узнаем, что это не первый рендер типа, но нужно будет потом поменять это, у нас же будут буферизированные данные
                 setOrders([])
         }
     }, [user])
 
 
     useEffect(()=>{
-        console.log("orders:", orders);
+        log("orders:", orders);
     }, [orders])
 
 
@@ -65,9 +83,8 @@ export default function useOrder({ socketHandler, authHandler }){
         else {
             // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
             try{
-                console.log("POST /api/order", order);
                 // Код делее рабочий, просто, чтобы не насоздавать ордеров закоментил
-                /*const res = await fetch('/api/order', {
+                const res = await fetch('/api/order', {
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -75,9 +92,10 @@ export default function useOrder({ socketHandler, authHandler }){
                     body: JSON.stringify(order)
                 });
                 const json = await res.json();
-                console.log(json);*/
+                log("create", json);
+                navigate(-1)
             }catch(e){
-                console.log(e);
+                log(e);
             }
         }
     }
@@ -93,9 +111,10 @@ export default function useOrder({ socketHandler, authHandler }){
                 body: JSON.stringify(order)
             });
             const json = await res.json();
-            console.log(json);
+            log("update", json);
+            navigate(-1)
         }catch(e){
-            console.log(e);
+            log(e);
         }
     }
 
@@ -109,9 +128,10 @@ export default function useOrder({ socketHandler, authHandler }){
                 body: JSON.stringify(order)
             });
             const json = await res.json();
-            console.log(json);
+            log(json);
+            navigate(-1)
         }catch(e){
-            console.log(e);
+            log(e);
         }
     }
 
@@ -123,11 +143,20 @@ export default function useOrder({ socketHandler, authHandler }){
             const json = await res.json();
             setOrdersLoading(false);
             setOrdersError(null);
-            if(res.status === 200)
-                setOrders(json);
+            if(res.status === 200){
+                setOrders(json.map(order => {
+                    order.id = order._id;
+                    delete order._id;
+
+                    order.meta.id = order.meta._id;
+                    delete order.meta._id;
+
+                    return order;
+                }))
+            }
         }
         catch (err){
-            console.log(err);
+            log(err);
             setOrdersLoading(false);
             setOrdersError(err.error);
         }

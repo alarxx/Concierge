@@ -9,15 +9,14 @@ const forms = [F1_Plans, F2_Needs, F3, F4_Tickets, F5_Housing, HotelsSelection6,
 
 export default function MultistepForm({
                                           forms=[],
-                                          INITIAL_DATA={},
-                                          INIT_STEP=0,
+                                          data={},
+                                          setData=f=>f,
+                                          init_step=0,
                                           onSubmit=f=>f,
                                           nextButtonName="Далее",
                                           backButtonName="Назад",
                                           submitButtonName="Отправить"
 }) {
-
-    const [data, setData] = useState(INITIAL_DATA);
 
     function updateFields(fields){
         setData(prev => {
@@ -36,12 +35,10 @@ export default function MultistepForm({
     }));
 
     useEffect(()=>{
-
-    }, [])
-
-    useEffect(()=>{
-        goTo(INIT_STEP)
-    }, [])
+        if(init_step===-1)
+            goTo(steps.length - 1)
+        else goTo(init_step)
+    }, [init_step])
 
     function onSubmitInside(data){
         if(!isLastStep){

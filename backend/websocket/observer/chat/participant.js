@@ -14,17 +14,8 @@ async function notify(method, participant){
     log(colors.cyan(`--- NOTIFY Participant.${method}() ---`), participant);
 
 
-    /* Скидываем самому юзеру, о том, что он теперь участник */
     const conversation = await Conversations.findById(participant.conversation);
-    try{
-        log(colors.cyan(`send myself ${participant.user}`));
-        io.to(String(participant.user)).emit(`/${method}/participant`, participant, conversation);
-    }catch(e){
-        console.log(e)
-        log(colors.red(`failed to emit /${method}/participant to user(${participant.user}) with participant:`), participant);
-    }
 
-    /* Скидываем остальным уведомление о прибавлении нового юзера */
     const participants = await Participants.find({conversation: participant.conversation});
     log(colors.cyan(`subscribers(${participants.length}):`), participants);
 
@@ -32,7 +23,7 @@ async function notify(method, participant){
         p => {
             try{
                 // Скидываем conversation как null, он не нужен клиенту, который уже сидит в беседе
-                io.to(String(p.user)).emit(`/${method}/participant`, p, null);
+                io.to(String(p.user)).emit(`/${method}/participant`, p, p.user === participant.user  ?conversation : null);
             }catch(e){
                 log(colors.red(`failed to emit /${method}/participant to user(${p.user}) with participant:`), p);
             }

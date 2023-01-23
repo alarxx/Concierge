@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose');
 
-const User = require('../../User');
+const User = require('../../user/User');
 const Informal = require('./Informal');
 const Bill = require('../../../public/arch/payment/Bill');
 const File = require('../../binaries/File');

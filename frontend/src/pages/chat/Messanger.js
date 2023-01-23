@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react'
-import Navbar from "../phone/Navbar";
-import Container from "../phone/Container";
-import Message from "./Message";
+import Navbar from "../../components/phone/Navbar";
+import Container from "../../components/phone/Container";
+import Message from "../../components/chat/Message";
 import ControlPanel from "../../../arch/ControlPanel";
-import Workflow from "../phone/Workflow";
-import Day from "./Day";
-import ChoiceForm from "./ChoiceForm";
-import Document from "./Document";
-import InputPanel from "./InputPanel";
-import ChoicePanel from "./ChoicePanel";
+import Workflow from "../../components/phone/Workflow";
+import Day from "../../components/chat/Day";
+import ChoiceForm from "../../components/chat/ChoiceForm";
+import Document from "../../components/chat/Document";
+import InputPanel from "../../components/chat/InputPanel";
+import ChoicePanel from "../../components/chat/ChoicePanel";
 import toggleArrayElement from "../../handlers/toggleArrayElement";
-import AttachPanel from './AttachPanel';
+import AttachPanel from '../../components/chat/AttachPanel';
 
-import ActionButtons from "./ActionsButtons"
-import ServicesPanel from "../partners/ServicesPanel"
+import ActionButtons from "../../components/chat/ActionsButtons"
+import ServicesPanel from "../../components/partners/ServicesPanel"
 
 //message: {type=form, id, items, selected, submitted}
 export default function Messanger({
@@ -22,12 +22,12 @@ export default function Messanger({
                                       messages,
                                       setMessages=f=>f,
                                       closeConversation=f=>f,
-                                      onSend=console.log,
-                                      onChoice= f=>f,
+                                      sendMessage=f=>f,
+                                      onChoice=f=>f,
                                   }){
 
-    const [formsSelected, setFormsSelected] = useState([])
-    useEffect(()=>{
+
+    /*useEffect(()=>{
         const indexes = messages.reduce((acc, item, index) => {
             if(item.type!=='form') return acc;
             if (item.selected.length > 0 && !item.submitted) {
@@ -36,9 +36,10 @@ export default function Messanger({
             return acc;
         }, []);
         setFormsSelected(indexes)
-    },[messages])
+    }, [messages])*/
 
     const [control, setControl] = useState();
+    const [formsSelected, setFormsSelected] = useState([])
     const [isAttach, setIsAttach] = useState(false);
 
     useEffect(()=>{
@@ -51,6 +52,14 @@ export default function Messanger({
             setControl('input')
         }
     })
+
+    function onSend(text){
+        sendMessage({
+            conversation: conversation.id,
+            type: 'text',
+            text: text,
+        })
+    }
 
     return (
         <Workflow>
@@ -97,19 +106,29 @@ export default function Messanger({
 
             </Container>
 
-            {control==='choice' && <ChoicePanel onClick={e => {
-                const messagesClone = [...messages]
-                setFormsSelected(formsSelected.filter(i => {
-                    console.log(`chose ${i}`, messagesClone[i])
-                    messagesClone[i].submitted = true;
-                    return false
-                }))
-                setMessages(messagesClone)
-                // Отправка на сервер наверное с помощью onSend хз
-            }}/>}
+            {control==='choice' &&
+                <ChoicePanel
+                    onClick={
+                        e => {
+                            const messagesClone = [...messages]
+                            setFormsSelected(formsSelected.filter(i => {
+                                console.log(`chose ${i}`, messagesClone[i])
+                                messagesClone[i].submitted = true;
+                                return false
+                            }))
+                            setMessages(messagesClone)
+                            // Отправка на сервер наверное с помощью onSend хз
+                        }
+                    }
+                />
+            }
 
-            {control==='input' && <InputPanel onLeftClick={e=>setIsAttach(true)}
-                                              onSend={onSend}/>}
+            {control==='input' &&
+                <InputPanel
+                    onLeftClick={e => setIsAttach(true)}
+                    onSend={onSend}
+                />
+            }
             {control==='attach' &&
                 <AttachPanel title="Выберите паттерн" onClose={e=>setIsAttach(false)}>
                     <ServicesPanel/>

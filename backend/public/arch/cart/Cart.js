@@ -4,7 +4,7 @@
 
 const {Schema, model} = require('mongoose');
 
-const User = require('../../../models/User');
+const User = require('../../../models/user/User');
 const Service = require('../../../models/services/Service');
 
 const CartSchema = new Schema({

@@ -1,7 +1,7 @@
 /**
  * Говно какое-то
  * */
-const CompanyModel = require('../../models/Company');
+const CompanyModel = require('../../models/company/Company');
 
 module.exports = class CompanyController {
 

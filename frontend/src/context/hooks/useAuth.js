@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import useFetch from "../../hooks/useFetch";
+
+function log(...str){
+    console.log("useAuth\n", ...str);
+}
 
 export default function useAuth({socketHandler}){
     const socket = socketHandler.socket;
@@ -19,7 +22,7 @@ export default function useAuth({socketHandler}){
     }, [isConnected])
 
     useEffect(()=>{
-        console.log('User', `\nisAuthenticated: ${isAuthenticated()}`, '\nuser:', user);
+        log('User', `\nisAuthenticated: ${isAuthenticated()}`, '\nuser:', user);
     }, [user])
 
 

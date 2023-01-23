@@ -3,7 +3,7 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 
-const UserModel = require('../models/User');
+const UserModel = require('../models/user/User');
 
 
 async function local(userData){
