@@ -25,10 +25,20 @@ const ParticipantSchema = new Schema({
         enum: ['participant', 'admin'],
         default: 'participant'
     },
+    createdDate: {
+        type: Date,
+        immutable: true,
+        default: () => new Date(),
+    },
+    updatedDate: {
+        type: Date,
+        default: () => new Date(),
+    }
 });
 
 
 ParticipantSchema.plugin(require('mongoose-unique-validator'));
+ParticipantSchema.plugin(require('../updatedDate'))
 ParticipantSchema.plugin(require('../logPlugin'))
 ParticipantSchema.plugin(require('../../websocket/observer/chat/participant'))
 

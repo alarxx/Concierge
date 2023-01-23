@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {useNavigate} from "react-router-dom";
 
@@ -12,8 +12,24 @@ import YummyButton from "../../components/chat/YummyButton";
 import ChatItem from "../../components/chat/ChatItem";
 import CreateIcon from "../../assets/icons/arrow-right.svg"
 
-export default function Conversations({ conversations=[], openConversation=f=>f }){
+export default function Conversations({
+                                          conversations=[],
+                                          notifications=[],
+                                          messages=[],
+                                          openConversation=f=>f
+}){
     const navigate = useNavigate();
+
+    /** Не думаю что этот поиск последнего сообщения должен быть здесь */
+    const [lastMessages, setLastMessages] = useState([])
+    useEffect(()=>{
+        // Оптимизировать!
+        setLastMessages(conversations.map(c => {
+            const ms = messages.filter(m => m.conversation == c.id)
+            if(ms.length)
+                return ms[ms.length-1].text ? ms[ms.length-1].text : ms[ms.length-1].type
+        }))
+    }, [messages])
 
     return (
         <Workflow>
@@ -25,9 +41,12 @@ export default function Conversations({ conversations=[], openConversation=f=>f 
 
                 <Chats>
                     {conversations.map((conversation, i) => {
+
                         return <ChatItem
                             key={i}
-                            {...conversation}
+                            name={conversation.name}
+                            unread_num={notifications.length}
+                            last_message={lastMessages[i]}
                             onClick={e => openConversation(conversation)}
                         />
                     })}

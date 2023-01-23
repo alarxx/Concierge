@@ -45,9 +45,19 @@ const ServiceSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'File'
     }],
+    createdDate: {
+        type: Date,
+        immutable: true,
+        default: () => new Date(),
+    },
+    updatedDate: {
+        type: Date,
+        default: () => new Date(),
+    }
 });
 
 ServiceSchema.plugin(require('mongoose-unique-validator'));
+ServiceSchema.plugin(require('../../updatedDate'))
 ServiceSchema.plugin(require('../../logPlugin'))
 
 ServiceSchema.statics.publicFiles = function(){

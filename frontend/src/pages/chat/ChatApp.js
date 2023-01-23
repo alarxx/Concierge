@@ -65,6 +65,8 @@ export default function ChatApp(){
             {!conversation &&
                 <Conversations
                     conversations={conversations}
+                    notifications={notifications}
+                    messages={messages}
                     openConversation={openConversation}
                 />
             }

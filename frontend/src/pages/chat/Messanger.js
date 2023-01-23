@@ -20,10 +20,8 @@ export default function Messanger({
                                       conversation,
                                       user,
                                       messages=[],
-                                      setMessages=f=>f,
                                       closeConversation=f=>f,
                                       sendMessage=f=>f,
-                                      onChoice=f=>f,
                                   }){
 
 
@@ -38,18 +36,18 @@ export default function Messanger({
         setFormsSelected(indexes)
     }, [messages])*/
 
-    const [control, setControl] = useState();
+    const [control, setControl] = useState('text');
     const [formsSelected, setFormsSelected] = useState([])
     const [isAttach, setIsAttach] = useState(false);
 
     useEffect(()=>{
         if(formsSelected.length !== 0)
-            setControl('choice')
+            setControl('form')
         else if(isAttach){
             setControl('attach')
         }
         else{
-            setControl('input')
+            setControl('text')
         }
     })
 
@@ -84,11 +82,11 @@ export default function Messanger({
                     else if(message.type==='form'){
                         // В messageForm должно отличаться только selected,
                         // Как еще можно решить проблему куда именно вставлять selected? Чувствую что можно подругому
-                        return (
-                            <ChoiceForm key={messageIndex}
+                        return (<h1></h1>
+                            /*<ChoiceForm key={messageIndex}
                                         message={message}
                                         onItem={(item) => {
-                                            if(!message.submitted) {
+                                            /!*if(!message.submitted) {
                                                 const msg = message.multiple_choice ?
                                                     {...message, selected: toggleArrayElement(message.selected, item.service)} :
                                                     {...message, selected: message.selected.includes(item.service)?[]:[item.service]}
@@ -96,10 +94,10 @@ export default function Messanger({
                                                 const messagesCopy = [...messages];
                                                 messagesCopy[messageIndex] = msg
                                                 setMessages(messagesCopy);
-                                            }
+                                            }*!/
                                         }}
                                         onAnother={message => console.log("another", message)}
-                            />
+                            />*/
                         );
                     }
                 })}
@@ -108,24 +106,24 @@ export default function Messanger({
 
             </Container>
 
-            {control==='choice' &&
+            {control==='form' &&
                 <ChoicePanel
                     onClick={
                         e => {
-                            const messagesClone = [...messages]
+                            /*const messagesClone = [...messages]
                             setFormsSelected(formsSelected.filter(i => {
                                 console.log(`chose ${i}`, messagesClone[i])
                                 messagesClone[i].submitted = true;
                                 return false
                             }))
-                            setMessages(messagesClone)
+                            setMessages(messagesClone)*/
                             // Отправка на сервер наверное с помощью onSend хз
                         }
                     }
                 />
             }
 
-            {control==='input' &&
+            {control==='text' &&
                 <InputPanel
                     onLeftClick={e => setIsAttach(true)}
                     onSend={onTextSend}

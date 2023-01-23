@@ -14,20 +14,25 @@ const ConversationSchema = new Schema({
         required: true,
         default: 'private_group'
     },
-    startTime: {
-        type: Date,
-        immutable: true,
-        default: new Date(),
-    },
     // endTime: {},
     isArchived: {
         type: Boolean,
         default: false
     },
+    createdDate: {
+        type: Date,
+        immutable: true,
+        default: () => new Date(),
+    },
+    updatedDate: {
+        type: Date,
+        default: () => new Date(),
+    }
 });
 
 
 ConversationSchema.plugin(require('mongoose-unique-validator'));
+ConversationSchema.plugin(require('../updatedDate'))
 ConversationSchema.plugin(require('../logPlugin'))
 ConversationSchema.plugin(require('../../websocket/observer/chat/conversation'))
 

@@ -17,9 +17,11 @@ const NotificationSchema = new Schema({
         ref: 'User',
         required: true,
     },
+
 });
 
 NotificationSchema.plugin(require('mongoose-unique-validator'));
+NotificationSchema.plugin(require('../updatedDate'))
 NotificationSchema.plugin(require('../logPlugin'))
 NotificationSchema.plugin(require('../../websocket/observer/chat/notification'))
 

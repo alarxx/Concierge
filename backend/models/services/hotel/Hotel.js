@@ -36,9 +36,19 @@ const HotelSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'File',
     }],
+    createdDate: {
+        type: Date,
+        immutable: true,
+        default: () => new Date(),
+    },
+    updatedDate: {
+        type: Date,
+        default: () => new Date(),
+    }
 });
 
 HotelSchema.plugin(require('mongoose-unique-validator'));
+HotelSchema.plugin(require('../../updatedDate'));
 HotelSchema.plugin(require('../../logPlugin'));
 
 const handlers = require('../../handlers');

@@ -35,10 +35,22 @@ const UserSchema = new Schema({
 		enum: ['client', 'manager', 'moderator', 'partner', 'admin'],
 		default: 'client',
 	},
+
+	createdDate: {
+		type: Date,
+		immutable: true,
+		default: () => new Date(),
+	},
+	updatedDate: {
+		type: Date,
+		default: () => new Date(),
+	}
 });
 
 UserSchema.plugin(require('mongoose-unique-validator'));
+UserSchema.plugin(require('../updatedDate'))
 UserSchema.plugin(require('../logPlugin'));
+
 UserSchema.plugin(require('../../websocket/observer/user'));
 
 module.exports = model(modelName, UserSchema);

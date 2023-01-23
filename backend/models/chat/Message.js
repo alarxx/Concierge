@@ -37,21 +37,30 @@ const MessageSchema = new Schema({
       type: String,
     },
     form: {
-        type: Object,
+        items: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Service'
+        }],
+        selected: [{
+            type: Number,
+            default: []
+        }],
+        submitted: Boolean,
+        multiple_choice: Boolean,
     },
-    timeSent: {
+    createdDate: {
         type: Date,
-        default: new Date(),
+        immutable: true,
+        default: () => new Date(),
     },
-    /*readBy: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-    }],*/
+    updatedDate: {
+        type: Date,
+        default: () => new Date(),
+    }
 });
 
-
-
 MessageSchema.plugin(require('mongoose-unique-validator'));
+MessageSchema.plugin(require('../updatedDate'))
 MessageSchema.plugin(require('../logPlugin'))
 MessageSchema.plugin(require('../../websocket/observer/chat/message'))
 
@@ -63,14 +72,6 @@ MessageSchema.methods.onCreate = async function({req, res, body, user}){
 
     const Notifications = require('../modelsManager').models.Notification;
     const Participants = require('../modelsManager').models.Participant;
-
-    /*const notification = new Notifications({
-        type: 'message',
-        message: this.id,
-        user: user.id
-    });
-    await notification.save()
-    */
 
     const ps = await Participants.find({conversation: body.conversation});
 
@@ -95,12 +96,13 @@ MessageSchema.statics.deepDeleteById = async function(id){
 
 
 MessageSchema.methods.deepDelete = async function(){
-    // Нужно удалить notification, если он есть
+    // Нужно удалить notifications, если они есть
     const Notifications = require('../modelsManager').models.Notification;
-    const notification = await Notifications.findOne({message: this.id});
-    console.log(notification);
-    if(notification){
-        await notification.deepDelete();
+    const notifications = await Notifications.find({message: this.id});
+    if(notifications.length){
+        await Promise.all(notifications.map(
+            async n => await n.deepDelete()
+        ));
     }
 
     // Если message.type = form или файл, то мы не только саму модель удаляем
