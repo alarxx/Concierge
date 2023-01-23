@@ -131,6 +131,21 @@ function useFreshData({ socket, modelName }){
         doc.id = doc._id;
         delete doc._id;
 
+        // Надо сделать отдельный хук для месседжей!!!! Пока так
+        if(modelName === 'message'){
+            if(doc.type === 'choice'){
+                doc.choice.services = doc.choice.services.map(service => {
+                    service.id = service._id;
+                    delete service._id;
+
+                    service[service.type].id = service[service.type]._id;
+                    delete service[service.type]._id;
+
+                    return service;
+                });
+            }
+        }
+
         console.log(`/save/${name}`, doc);
 
         setData(prev => {
@@ -149,6 +164,7 @@ function useFreshData({ socket, modelName }){
         });
     }
     function _removeDoc(doc){
+        // Зачем это делать, если мы все равно удаляем этот док
         doc.id = doc._id;
         delete doc._id;
 
@@ -180,6 +196,28 @@ function useFreshData({ socket, modelName }){
     return [data, setData, addData];
 }
 
+/** _id -> id */
+function setIdsMessages(messages){
+    return messages.map(message => {
+        message.id = message._id;
+        delete message._id;
+
+        if(message.type === 'choice'){
+            message.choice.services = message.choice.services.map(service => {
+                service.id = service._id;
+                delete service._id;
+
+                service[service.type].id = service[service.type]._id;
+                delete service[service.type]._id;
+
+                return service;
+            });
+        }
+
+        return message;
+    });
+}
+
 /**
  * Мы сразу все в куче загружаем, а фильтровать их уже потом будем.
  * Мы сразу загружаем всю нужную информацию (Все беседы, сообщения, где состоит пользователь, мы с бэка это делаем. Когда мы присоединяемся к беседе, мы должны дополнить наши данные)
@@ -196,6 +234,7 @@ export default function useChat({socketHandler, authHandler}){
     const [ participants, setParticipants, addParticipants ] = useFreshData({socket, modelName: "participant"});
     const [ notifications, setNotifications, addNotifications ] = useFreshData({socket, modelName: "notification"});
 
+
     /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать. Хз */
     async function preload (){
         try{
@@ -203,7 +242,7 @@ export default function useChat({socketHandler, authHandler}){
             const json = await res.json();
             if(res.status === 200){
                 log("chat:", json);
-                addMessages(setIds(json.messages));
+                addMessages(setIdsMessages(json.messages));
                 addConversations(setIds(json.conversations));
                 addParticipants(setIds(json.participants));
                 addNotifications(setIds(json.notifications));

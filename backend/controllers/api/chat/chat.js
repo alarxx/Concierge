@@ -47,6 +47,15 @@ controller.preload = async (req, res) => {
 
     const messages = await MessageModel.find({ 'conversation': { $in: conversations_ids } })
 
+    await Promise.all(messages.map(async message => {
+        if(message.type === 'choice'){
+            await message.choice.populate('services');
+            await Promise.all(message.choice.services.map(async (service, i) => {
+                await service.populate(service.type);
+            }))
+        }
+    }))
+
     const notifications = await NotificationModel.find({ user })
 
     res.status(200).json({

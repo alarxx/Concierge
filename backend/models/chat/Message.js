@@ -21,7 +21,7 @@ const MessageSchema = new Schema({
     },
     type: {
         type: String,
-        enum: ['service', 'text', 'file', 'form'],
+        enum: ['service?', 'text', 'file', 'choice'],
         immutable: true,
         required: true,
     },
@@ -36,12 +36,12 @@ const MessageSchema = new Schema({
     description: {
       type: String,
     },
-    form: {
-        items: [{
+    choice: {
+        services: [{
             type: Schema.Types.ObjectId,
             ref: 'Service'
         }],
-        selected: [{
+        selectedIndexes: [{
             type: Number,
             default: []
         }],
@@ -105,7 +105,7 @@ MessageSchema.methods.deepDelete = async function(){
         ));
     }
 
-    // Если message.type = form или файл, то мы не только саму модель удаляем
+    // Если message.type = choice или файл, то мы не только саму модель удаляем
     await this.delete();
     return this;
 }

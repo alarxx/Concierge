@@ -1,6 +1,9 @@
 const passport = require('passport');
+
 const auth_listener = require('./listener/auth');
 const chat_listener = require('./listener/chat');
+const service_listener = require('./listener/service');
+
 const {model} = require("mongoose");
 
 const socket_io = {
@@ -42,6 +45,7 @@ socket_io.initialize = function({server, sessionMiddleware, env}) {
     io.on('connection', socket => {
         auth_listener(socket);
         chat_listener(socket);
+        // service_listener(socket);
     });
 
     return io;

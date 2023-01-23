@@ -15,7 +15,7 @@ import AttachPanel from '../../components/chat/AttachPanel';
 import ActionButtons from "../../components/chat/ActionsButtons"
 import ServicesPanel from "../../components/partners/ServicesPanel"
 
-//message: {type=form, id, items, selected, submitted}
+//message: {type=choice, id, items, selected, submitted}
 export default function Messanger({
                                       conversation,
                                       user,
@@ -27,7 +27,7 @@ export default function Messanger({
 
     /*useEffect(()=>{
         const indexes = messages.reduce((acc, item, index) => {
-            if(item.type!=='form') return acc;
+            if(item.type!=='choice') return acc;
             if (item.selected.length > 0 && !item.submitted) {
                 acc.push(index);
             }
@@ -42,7 +42,7 @@ export default function Messanger({
 
     useEffect(()=>{
         if(formsSelected.length !== 0)
-            setControl('form')
+            setControl('choice')
         else if(isAttach){
             setControl('attach')
         }
@@ -58,7 +58,7 @@ export default function Messanger({
             text: text,
         })
     }
-    function onFormSend(form){}
+    function onChoiceSend(choice){}
     function onFileSend(file){}
 
     return (
@@ -79,25 +79,25 @@ export default function Messanger({
                     else if(message.type==='file') {
                         return (<Document key={messageIndex} message={message} />);
                     }
-                    else if(message.type==='form'){
+                    else if(message.type==='choice'){
                         // В messageForm должно отличаться только selected,
                         // Как еще можно решить проблему куда именно вставлять selected? Чувствую что можно подругому
-                        return (<h1></h1>
-                            /*<ChoiceForm key={messageIndex}
-                                        message={message}
-                                        onItem={(item) => {
-                                            /!*if(!message.submitted) {
-                                                const msg = message.multiple_choice ?
-                                                    {...message, selected: toggleArrayElement(message.selected, item.service)} :
-                                                    {...message, selected: message.selected.includes(item.service)?[]:[item.service]}
+                        /*onItem={(item) => {
+                            if(!message.submitted) {
+                                const msg = message.multiple_choice ?
+                                    {...message, selected: toggleArrayElement(message.selected, item.service)} :
+                                    {...message, selected: message.selected.includes(item.service)?[]:[item.service]}
 
-                                                const messagesCopy = [...messages];
-                                                messagesCopy[messageIndex] = msg
-                                                setMessages(messagesCopy);
-                                            }*!/
-                                        }}
-                                        onAnother={message => console.log("another", message)}
-                            />*/
+                                const messagesCopy = [...messages];
+                                messagesCopy[messageIndex] = msg
+                                setMessages(messagesCopy);
+                            }
+                        }}
+                        onAnother={message => console.log("another", message)}*/
+                        return (
+                            <ChoiceForm key={messageIndex}
+                                        message={message}
+                            />
                         );
                     }
                 })}
@@ -106,7 +106,7 @@ export default function Messanger({
 
             </Container>
 
-            {control==='form' &&
+            {control==='choice' &&
                 <ChoicePanel
                     onClick={
                         e => {

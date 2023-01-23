@@ -62,7 +62,8 @@ function Price({price, measuring}){
 export default function CardItem({
                                      name,
                                      img_url,
-                                     rate, address,
+                                     rate,
+                                     address,
                                      description,
                                      price,
                                      rooms_num,

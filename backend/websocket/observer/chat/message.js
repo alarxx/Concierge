@@ -4,6 +4,7 @@
 
 const log = require("../../../logging/log");
 const colors = require("../../../logging/colors");
+const object2string = require("../../../logging/object2string");
 
 async function notify(method, message){
     const io = require('../../../websocket/socket.io').io;
@@ -13,6 +14,16 @@ async function notify(method, message){
 
     const participants = await Participants.find({conversation: message.conversation})
     log(colors.cyan(`subscribers(${participants.length}):`), participants);
+
+    if(method === 'save'){
+        if(message.type === 'choice'){
+            await message.choice.populate('services');
+            await Promise.all(message.choice.services.map(async service => {
+                await service.populate(service.type);
+            }))
+        }
+        console.log(colors.red('save'), object2string(message));
+    }
 
     participants.map(
         participant => {
