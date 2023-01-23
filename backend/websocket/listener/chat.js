@@ -1,6 +1,24 @@
 module.exports = socket => {
-    socket.on("join-conversation", conversation => {
-        console.log(`join socket(${socket.id}) to room ${conversation}`)
+    socket.on("join-conversation", async conversation => {
+        const { user } = socket.request;
+
+        const Conversations = require('../../models/modelsManager').models.Conversation;
+        const Participants = require('../../models/modelsManager').models.Participant;
+
+        // const c = await Conversations.findById(conversation.id);
+
+        const p = new Participants({
+            conversation: conversation.id,
+            user: user.id,
+        });
+
+        try{
+            await p.save();
+        }catch(e){
+            console.log(e)
+        }
+
+        console.log(`join socket(${socket.id}) to room`, conversation)
     })
 
     socket.on("send-message", async (message) => {

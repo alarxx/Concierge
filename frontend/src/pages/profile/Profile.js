@@ -78,7 +78,7 @@ export default function Profile(){
                                 <CardOrder
                                    order={order}
                                    onClick={ e => {
-                                       joinConversation();
+                                       joinConversation({id: order.conversation});
                                        console.log(order)
                                    }}
                                 />

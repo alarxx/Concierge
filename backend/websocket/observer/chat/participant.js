@@ -4,6 +4,7 @@
 
 const log = require("../../../logging/log");
 const colors = require("../../../logging/colors");
+const {io} = require("../../socket.io");
 
 async function notify(method, participant){
     const io = require('../../../websocket/socket.io').io;
@@ -13,8 +14,9 @@ async function notify(method, participant){
 
     log(colors.cyan(`--- NOTIFY Participant.${method}() ---`), participant);
 
-
     const conversation = await Conversations.findById(participant.conversation);
+
+    io.to(String(participant.user)).emit(`/${method}/conversation`, conversation);
 
     const participants = await Participants.find({conversation: participant.conversation});
     log(colors.cyan(`subscribers(${participants.length}):`), participants);
