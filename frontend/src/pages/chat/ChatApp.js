@@ -24,7 +24,7 @@ export default function ChatApp(){
     const [conversation, setConversation] = useState()
     const [conversationMessages, setConversationMessages] = useState([])
 
-    const {messages, conversations, notifications, sendMessage, deleteNotifications} = chatHandler;
+    const {messages, conversations, notifications, sendMessage, deleteNotifications, _upsertMessage} = chatHandler;
     const {user} = authHandler;
 
     function openConversation(conversation){
@@ -78,6 +78,7 @@ export default function ChatApp(){
                     messages={conversationMessages}
                     sendMessage={sendMessage}
                     closeConversation={closeConversation}
+                    _upsertMessage={_upsertMessage}
                 />
             }
         </>

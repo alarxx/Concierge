@@ -20,9 +20,15 @@ const ServiceSchema = new Schema({
         required: true,
         immutable: true,
     },
-    class: { // рандомная строка (A1, B1, VIP)
+    name: {
         type: String,
         required: true,
+    },
+    class: { // рандомная строка (A1, B1, VIP)
+        type: String,
+    },
+    rate: {
+        type: Number,
     },
     price: {
         type: Number, // or String?
@@ -36,7 +42,9 @@ const ServiceSchema = new Schema({
     },
     description: String,
     isActive: Boolean, // Например, поменяли цену, мы можем заменить напрямую цену?
-
+    rooms_num: {
+        type: Number,
+    },
     logo: {
         type: Schema.Types.ObjectId,
         ref: 'File'

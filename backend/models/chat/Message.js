@@ -41,12 +41,18 @@ const MessageSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Service'
         }],
-        selectedIndexes: [{
+        selectedServices: [{
             type: Number,
             default: []
         }],
-        submitted: Boolean,
-        multiple_choice: Boolean,
+        submitted: {
+            type: Boolean,
+            default: false
+        },
+        multiple_choice: {
+            type: Boolean,
+            default: false,
+        },
     },
     createdDate: {
         type: Date,
@@ -109,6 +115,7 @@ MessageSchema.methods.deepDelete = async function(){
     await this.delete();
     return this;
 }
+
 
 
 module.exports = model(modelName, MessageSchema);

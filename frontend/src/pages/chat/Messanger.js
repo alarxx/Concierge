@@ -1,3 +1,6 @@
+/**
+ * Messenger отображает все сообщения и еще должен отвечать за контроль панель
+ * */
 import React, {useEffect, useState} from 'react'
 import Navbar from "../../components/phone/Navbar";
 import Container from "../../components/phone/Container";
@@ -15,15 +18,16 @@ import AttachPanel from '../../components/chat/AttachPanel';
 import ActionButtons from "../../components/chat/ActionsButtons"
 import ServicesPanel from "../../components/partners/ServicesPanel"
 
+
 //message: {type=choice, id, items, selected, submitted}
 export default function Messanger({
-                                      conversation,
-                                      user,
-                                      messages=[],
-                                      closeConversation=f=>f,
-                                      sendMessage=f=>f,
-                                  }){
-
+    conversation,
+    user,
+    messages=[],
+    _upsertMessage=f=>f,
+    closeConversation=f=>f,
+    sendMessage=f=>f,
+}){
 
     /*useEffect(()=>{
         const indexes = messages.reduce((acc, item, index) => {
@@ -43,12 +47,10 @@ export default function Messanger({
     useEffect(()=>{
         if(formsSelected.length !== 0)
             setControl('choice')
-        else if(isAttach){
+        else if(isAttach)
             setControl('attach')
-        }
-        else{
+        else
             setControl('text')
-        }
     })
 
     function onTextSend(text){
@@ -58,8 +60,11 @@ export default function Messanger({
             text: text,
         })
     }
-    function onChoiceSend(choice){}
+    function onChoiceSend(choice){
+        console.log(choice);
+    }
     function onFileSend(file){}
+
 
     return (
         <Workflow>
@@ -82,21 +87,31 @@ export default function Messanger({
                     else if(message.type==='choice'){
                         // В messageForm должно отличаться только selected,
                         // Как еще можно решить проблему куда именно вставлять selected? Чувствую что можно подругому
-                        /*onItem={(item) => {
-                            if(!message.submitted) {
-                                const msg = message.multiple_choice ?
-                                    {...message, selected: toggleArrayElement(message.selected, item.service)} :
-                                    {...message, selected: message.selected.includes(item.service)?[]:[item.service]}
-
-                                const messagesCopy = [...messages];
-                                messagesCopy[messageIndex] = msg
-                                setMessages(messagesCopy);
-                            }
-                        }}
-                        onAnother={message => console.log("another", message)}*/
+                        /**/
                         return (
                             <ChoiceForm key={messageIndex}
                                         message={message}
+                                        onItem={
+                                            service => {
+                                                if(!message.choice.submitted) {
+
+                                                    console.log("Messenger select", message, service);
+
+                                                    /*const services = message.choice.multiple_choice ?
+                                                        toggleArrayElement(message.choice.selectedServices, service.id):
+                                                        message.choice.selectedServices.includes(service.id)?[]:[service.id]
+
+                                                    console.log(services);
+
+                                                    const messageClone = [...message]
+                                                    messageClone.choice.selectedServices.push(services)
+
+                                                    _upsertMessage(messageClone)*/
+
+                                                }
+                                            }
+                                        }
+                                        onAnother={message => console.log("another", message)}
                             />
                         );
                     }
@@ -106,30 +121,29 @@ export default function Messanger({
 
             </Container>
 
-            {control==='choice' &&
-                <ChoicePanel
-                    onClick={
-                        e => {
-                            /*const messagesClone = [...messages]
-                            setFormsSelected(formsSelected.filter(i => {
-                                console.log(`chose ${i}`, messagesClone[i])
-                                messagesClone[i].submitted = true;
-                                return false
-                            }))
-                            setMessages(messagesClone)*/
-                            // Отправка на сервер наверное с помощью onSend хз
-                        }
-                    }
-                />
-            }
-
-            {control==='text' &&
+            {control ==='text' &&
                 <InputPanel
                     onLeftClick={e => setIsAttach(true)}
                     onSend={onTextSend}
                 />
             }
-            {control==='attach' &&
+            {control === 'choice' &&
+                <ChoicePanel
+                    onClick={
+                        e => {
+                            const messagesClone = [...messages]
+                            setFormsSelected(formsSelected.filter(i => {
+                                console.log(`chose ${i}`, messagesClone[i])
+                                messagesClone[i].submitted = true;
+                                return false
+                            }))
+                            setMessages(messagesClone)
+                            // Отправка на сервер наверное с помощью onSend хз
+                        }
+                    }
+                />
+            }
+            {control === 'attach' &&
                 <AttachPanel title="Выберите паттерн" onClose={e=>setIsAttach(false)}>
                     <ServicesPanel/>
                 </AttachPanel>

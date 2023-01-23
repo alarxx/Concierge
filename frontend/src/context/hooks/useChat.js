@@ -127,7 +127,7 @@ function useFreshData({ socket, modelName }){
 
     const [data, setData] = useState([]);
 
-    function _addDoc(doc){
+    function _upsertDoc(doc){
         doc.id = doc._id;
         delete doc._id;
 
@@ -180,20 +180,20 @@ function useFreshData({ socket, modelName }){
 
     useEffect(() => {
         socket.on(`/save/${name}`, (doc) => {
-            _addDoc(doc);
+            _upsertDoc(doc);
         });
         socket.on(`/delete/${name}`, (doc) => {
             _removeDoc(doc);
         });
     }, []);
 
-    function addData(data){
+    function updateData(data){
         // здесь должна быть проверка(comparing) каждого документа из массива по времени и сетить только в случае если document моложе,
         // Если такого вообще нет, то мы добавляем
         setData(data);
     }
 
-    return [data, setData, addData];
+    return [data, setData, updateData, _upsertDoc, _removeDoc];
 }
 
 /** _id -> id */
@@ -229,10 +229,10 @@ export default function useChat({socketHandler, authHandler}){
     const { socket } = socketHandler
     const { user, isAuthenticated } = authHandler
 
-    const [ messages, setMessages, addMessages ] = useFreshData({socket, modelName: 'message'});
-    const [ conversations, setConversations, addConversations ] = useFreshData({socket, modelName: "conversation"})
-    const [ participants, setParticipants, addParticipants ] = useFreshData({socket, modelName: "participant"});
-    const [ notifications, setNotifications, addNotifications ] = useFreshData({socket, modelName: "notification"});
+    const [ messages, setMessages, updateMessages, _upsertMessage ] = useFreshData({socket, modelName: 'message'});
+    const [ conversations, setConversations, updateConversations ] = useFreshData({socket, modelName: "conversation"})
+    const [ participants, setParticipants, updateParticipants ] = useFreshData({socket, modelName: "participant"});
+    const [ notifications, setNotifications, updateNotifications ] = useFreshData({socket, modelName: "notification"});
 
 
     /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать. Хз */
@@ -242,10 +242,10 @@ export default function useChat({socketHandler, authHandler}){
             const json = await res.json();
             if(res.status === 200){
                 log("chat:", json);
-                addMessages(setIdsMessages(json.messages));
-                addConversations(setIds(json.conversations));
-                addParticipants(setIds(json.participants));
-                addNotifications(setIds(json.notifications));
+                updateMessages(setIdsMessages(json.messages));
+                updateConversations(setIds(json.conversations));
+                updateParticipants(setIds(json.participants));
+                updateNotifications(setIds(json.notifications));
             }
         }
         catch (err){
@@ -257,6 +257,7 @@ export default function useChat({socketHandler, authHandler}){
             preload();
         }
         else {
+            // Как понять, что до этого мы были авторизованы
             if(messages.length || conversations.length || participants.length || notifications.length){
                 log("chat:", null);
                 setConversations([])
@@ -290,6 +291,7 @@ export default function useChat({socketHandler, authHandler}){
         notifications,
         sendMessage,
         joinConversation,
+        _upsertMessage,
         deleteNotifications,
     }
 }

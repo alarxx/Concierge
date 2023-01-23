@@ -61,7 +61,7 @@ function Price({price, measuring}){
 
 export default function CardItem({
                                      name,
-                                     img_url,
+                                     img_url='/img/hotelimg.png',
                                      rate,
                                      address,
                                      description,

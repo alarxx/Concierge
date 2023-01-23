@@ -21,18 +21,22 @@ export default function ChoiceForm({
     }
     */
 
-    useEffect(()=>{
+    /*useEffect(()=>{
         console.log("Choice", message);
-    }, [])
+    }, [])*/
 
     return (
         <div className="chat-choice">
 
             <Cards>
                 {message.choice.services.map((service, i) => {
+                    // console.log("Choice service", service);
+                    const s = service[service.type];
+                    const img_url = s.logo ? `/file/${s.logo}` : null; // Это работает
                     return (
-                            <CardItem key={i} {...service}
-                                      active={message.choice.selectedIndexes.includes(service._id)}
+                            <CardItem key={i}
+                                      {...s}
+                                      active={message.choice.selectedServices.includes(service.id)}
                                       onClick={e => onItem(service)}
                             />
                         )
@@ -40,11 +44,13 @@ export default function ChoiceForm({
                 )}
             </Cards>
 
-            {!message.choice.submitted && <div className="chat-choice__link link" onClick={e => onAnother(message)}>
-                <div className="link__text">
-                    Подобрать другой вариант
+            {!message.choice.submitted &&
+                <div className="chat-choice__link link" onClick={e => onAnother(message)}>
+                    <div className="link__text">
+                        Подобрать другой вариант
+                    </div>
                 </div>
-            </div>}
+            }
         </div>
     );
 }
