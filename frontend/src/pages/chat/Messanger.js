@@ -19,7 +19,7 @@ import ServicesPanel from "../../components/partners/ServicesPanel"
 export default function Messanger({
                                       conversation,
                                       user,
-                                      messages,
+                                      messages=[],
                                       setMessages=f=>f,
                                       closeConversation=f=>f,
                                       sendMessage=f=>f,

@@ -6,7 +6,7 @@ const ConversationSchema = new Schema({
     name: {
         type: String,
         required: true,
-        default: `Service ${Date.now()}`
+        default: ()=>`Service ${Date.now()}`
     },
     type: {
         type: String,

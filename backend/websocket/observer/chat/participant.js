@@ -22,7 +22,6 @@ async function notify(method, participant){
         io.to(String(participant.user)).emit(`/${method}/conversation`, conversation);
     }
 
-
     participants.map(
         p => {
             try{

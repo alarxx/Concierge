@@ -133,7 +133,20 @@ function useFreshData({ socket, modelName }){
 
         console.log(`/save/${name}`, doc);
 
-        setData(prev => [...prev, doc]);
+        setData(prev => {
+            const clone = [...prev]
+
+            const i = findIndexById(clone, doc.id)
+
+            if(i === -1) {
+                clone.push(doc)
+                return clone;
+            } else {
+                clone[i] = doc;
+            }
+
+            return clone;
+        });
     }
     function _removeDoc(doc){
         doc.id = doc._id;
@@ -223,6 +236,14 @@ export default function useChat({socketHandler, authHandler}){
         socket.emit('join-conversation', conversation);
     }
 
+    function deleteNotifications(messages){
+        // const ms = messages.filter(m => m.conversation == conversation.id);
+        const ns = notifications.filter(n => messages.some(m => m.id == n.message));
+        log("deleteNotification", ns);
+        if(ns.length !== 0)
+            socket.emit('delete-notifications', ns)
+    }
+
     return {
         conversations,
         messages,
@@ -230,6 +251,7 @@ export default function useChat({socketHandler, authHandler}){
         notifications,
         sendMessage,
         joinConversation,
+        deleteNotifications,
     }
 }
 

@@ -60,18 +60,29 @@ MessageSchema.methods.onCreate = async function({req, res, body, user}){
     if(body.type ? !body[body.type] : true){
         throw new Error(`Fields 'type' or with 'String(type)' are not provided`);
     }
-    const Notifications = require('../modelsManager').models.Notification;
 
-    const notification = new Notifications({
+    const Notifications = require('../modelsManager').models.Notification;
+    const Participants = require('../modelsManager').models.Participant;
+
+    /*const notification = new Notifications({
         type: 'message',
         message: this.id,
         user: user.id
     });
-
     await notification.save()
+    */
+
+    const ps = await Participants.find({conversation: body.conversation});
+
+    await Promise.all(ps.map(async p => {
+        return await new Notifications({
+            type: 'message',
+            message: this.id,
+            user: p.user,
+        }).save();
+    }))
 
     this.sender = user.id;
-
 }
 
 
