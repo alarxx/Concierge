@@ -53,13 +53,15 @@ export default function Messanger({
         }
     })
 
-    function onSend(text){
+    function onTextSend(text){
         sendMessage({
             conversation: conversation.id,
             type: 'text',
             text: text,
         })
     }
+    function onFormSend(form){}
+    function onFileSend(file){}
 
     return (
         <Workflow>
@@ -126,7 +128,7 @@ export default function Messanger({
             {control==='input' &&
                 <InputPanel
                     onLeftClick={e => setIsAttach(true)}
-                    onSend={onSend}
+                    onSend={onTextSend}
                 />
             }
             {control==='attach' &&

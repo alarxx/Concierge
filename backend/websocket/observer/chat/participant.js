@@ -4,7 +4,7 @@
 
 const log = require("../../../logging/log");
 const colors = require("../../../logging/colors");
-const {io} = require("../../socket.io");
+const { io } = require("../../socket.io");
 
 async function notify(method, participant){
     const io = require('../../../websocket/socket.io').io;
@@ -14,18 +14,20 @@ async function notify(method, participant){
 
     log(colors.cyan(`--- NOTIFY Participant.${method}() ---`), participant);
 
-    const conversation = await Conversations.findById(participant.conversation);
-
-    io.to(String(participant.user)).emit(`/${method}/conversation`, conversation);
-
     const participants = await Participants.find({conversation: participant.conversation});
     log(colors.cyan(`subscribers(${participants.length}):`), participants);
+
+    const conversation = await Conversations.findById(participant.conversation);
+    if(conversation){
+        io.to(String(participant.user)).emit(`/${method}/conversation`, conversation);
+    }
+
 
     participants.map(
         p => {
             try{
                 // Скидываем conversation как null, он не нужен клиенту, который уже сидит в беседе
-                io.to(String(p.user)).emit(`/${method}/participant`, p, p.user === participant.user  ?conversation : null);
+                io.to(String(p.user)).emit(`/${method}/participant`, p);
             }catch(e){
                 log(colors.red(`failed to emit /${method}/participant to user(${p.user}) with participant:`), p);
             }
@@ -34,7 +36,6 @@ async function notify(method, participant){
 }
 
 module.exports = function(schema) {
-
 
     schema.post('save', async function(participant, next){
         await notify('save', participant)

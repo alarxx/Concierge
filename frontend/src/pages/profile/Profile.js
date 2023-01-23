@@ -73,14 +73,15 @@ export default function Profile(){
                             Мои заявки
                         </div>
 
-                        {orders.map(order => {
+                        {orders.map((order, i) => {
                             return (
                                 <CardOrder
-                                   order={order}
-                                   onClick={ e => {
-                                       joinConversation({id: order.conversation});
-                                       console.log(order)
-                                   }}
+                                    key={i}
+                                    order={order}
+                                    onClick={ e => {
+                                        joinConversation({id: order.conversation});
+                                        console.log(order)
+                                    }}
                                 />
                             )
                         })}
