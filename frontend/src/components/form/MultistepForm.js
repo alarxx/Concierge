@@ -30,10 +30,6 @@ export default function MultistepForm({
         forms.map(form => form({...data, updateFields, next, back, goTo}) )
     );
 
-    useEffect(()=>{
-        console.log("currentStepIndex", currentStepIndex);
-    }, [currentStepIndex])
-
     function onSubmitInside(e){
         e.preventDefault();
 
