@@ -73,7 +73,7 @@ export default function useOrder({ socketHandler, authHandler }){
         // Убеждаемся, что пользователь авторизован и создаем заказ
 
         if (!isAuthenticated()) {
-            navigate('/register/simple', {
+            navigate('/auth', {
                 replace: true,
                 state: {
                     redirect: '/order',

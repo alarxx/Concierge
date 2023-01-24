@@ -51,11 +51,17 @@ export default function useAuth({socketHandler}){
     }
 
 
-    const login = (body) => userFetch('/auth/login', {method: 'POST', body})
+    const login = (body) => {
+        userFetch('/auth/login', {method: 'POST', body})
+    }
 
-    const register = (body) => userFetch('/auth/register', {method: 'POST', body})
+    const register = (body) => {
+        userFetch('/auth/register', {method: 'POST', body})
+    }
 
-    const logout = () => userFetch('/auth/logout', {method: 'DELETE'})
+    const logout = () => {
+        userFetch('/auth/logout', {method: 'DELETE'})
+    }
 
     const whoami = () => {
         setUserLoading(true)

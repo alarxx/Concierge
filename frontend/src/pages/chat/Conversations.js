@@ -22,7 +22,10 @@ export default function Conversations({
 
     /** Не думаю что этот поиск последнего сообщения должен быть здесь */
     const [lastMessages, setLastMessages] = useState([])
+    const [conversationNotifications, setConversationNotifications] = useState([])
+
     useEffect(()=>{
+        // Нужно расфильтровать сообщения по коверсешнам и нотификейшны тоже
         // Оптимизировать!
         setLastMessages(conversations.map(c => {
             const ms = messages.filter(m => m.conversation == c.id)
@@ -45,7 +48,7 @@ export default function Conversations({
                         return <ChatItem
                             key={i}
                             name={conversation.name}
-                            unread_num={notifications.length}
+                            unread_num={conversationNotifications[i].length}
                             last_message={lastMessages[i]}
                             onClick={e => openConversation(conversation)}
                         />

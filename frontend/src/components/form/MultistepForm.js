@@ -34,19 +34,21 @@ export default function MultistepForm({
         console.log("currentStepIndex", currentStepIndex);
     }, [currentStepIndex])
 
-    function onSubmitInside(){
+    function onSubmitInside(e){
+        e.preventDefault();
+
         if(!isLastStep){
             return next();
         }
         else {
             // что делать после того, как у нас готова форма?
-            onSubmit(data);
+            onSubmit(e);
         }
     }
 
     function handleKeyDown(e){
         if (e.keyCode === 13) { //'ENTER'
-            onSubmitInside();
+            onSubmitInside(e);
         }
         else if(e.keyCode === 27){ //'ESC'
             back()
@@ -96,7 +98,7 @@ export default function MultistepForm({
                             <span>{backButtonName}</span>
                         </div>}
 
-                    <div className="btn btn-main btn-next" onClick={ e => onSubmitInside() }>
+                    <div className="btn btn-main btn-next" onClick={ e => onSubmitInside(e) }>
                         <span>{isLastStep ? submitButtonName : nextButtonName}</span>
                         <ArrowRight viewBox="0 0 24 24"/>
                     </div>

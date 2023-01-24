@@ -1,6 +1,12 @@
 import React, {useEffect, useRef} from 'react'
 
-
+function zero(time){
+    return `${time<10?'0':''}`
+}
+function messageTime(message){
+    const date = new Date(message.createdDate);
+    return `${zero(date.getHours())}${date.getHours()} : ${zero(date.getMinutes())}${date.getMinutes()}`
+}
 
 export default function Message({
                                     message,
@@ -8,17 +14,15 @@ export default function Message({
 }){
 
     const mymssg = message.sender == user.id;
-    const text = message.text;
-    const date = new Date(message.createdDate);
 
     return (
         <div className={`${mymssg?'chat-message__wrapper':''}  ${mymssg?'mymssg':''}`}>
             <div className={`chat-message`}>
                 <div className="chat-message__text">
-                    {text}
+                    {message.text}
                 </div>
                 <div className="chat-message__time">
-                    {`${date.getHours()} : ${date.getMinutes()}`}
+                    {messageTime(message)}
                 </div>
             </div>
 

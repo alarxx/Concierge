@@ -23,8 +23,7 @@ export default function Auth() {
     const [data, setData] = useState({})
     const [type, setType] = useState('login')
 
-    function onSubmit(data){
-
+    function onSubmit(e){
         if(type==='login'){
             console.log("login", data);
             login(data);

@@ -69,11 +69,32 @@ const _useFilled = () => {
  * Нам нужно как-то сохранять контекст между роутами
  * */
 export default function Order({ }) {
-    const {orderHandler} = useAppContext();
+    const navigate = useNavigate();
+    const {orderHandler, authHandler} = useAppContext();
 
     const {data, setData, isFilledBefore} = _useFilled()
 
     const {createOrder} = orderHandler;
+    const {isAuthenticated} = authHandler;
+
+    function onSubmit(e){
+        // Убеждаемся, что пользователь авторизован и создаем заказ
+        if (!isAuthenticated()) {
+            navigate('/auth', {
+                replace: true,
+                state: {
+                    redirect: '/order',
+                    order: data
+                }
+            });
+        }
+        else {
+            const order = {meta: data, conversation_name: data.conversation_name}
+            // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
+            createOrder(order)
+            navigate(-1)
+        }
+    }
 
     return (
         <>
@@ -82,7 +103,7 @@ export default function Order({ }) {
                 data={data}
                 setData={setData}
                 init_step={isFilledBefore ? -1 : 0}
-                onSubmit={createOrder}
+                onSubmit={onSubmit}
                 submitButtonName={"Оставить заявку"}
             />
         </>
