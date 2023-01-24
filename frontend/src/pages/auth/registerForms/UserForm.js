@@ -11,7 +11,7 @@ export default function UserForm({entity, name, company_name, phone, email, upda
 
                 <InputForm
                     label={"ФИО *"}
-                    placeHolder={"Введите ваше полное имя aaaaaaa"}
+                    placeHolder={"Введите ваше полное имя"}
                     updateFields={updateFields}
                     field_key={"name"} value={name}
                 />
