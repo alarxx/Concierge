@@ -36,7 +36,6 @@ module.exports = function(schema) {
 
 
     schema.post('remove', async function(conversation, next){
-        console.log('remove conversation');
         await notify('delete', conversation)
         next();
     });

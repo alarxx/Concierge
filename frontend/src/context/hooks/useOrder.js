@@ -68,7 +68,8 @@ export default function useOrder({ socketHandler, authHandler }){
     }, [orders])
 
 
-    async function createOrder(order){
+    async function createOrder(meta){
+        const order = {meta, conversation_name: meta.conversation_name}
         // Убеждаемся, что пользователь авторизован и создаем заказ
 
         if (!isAuthenticated()) {

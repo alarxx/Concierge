@@ -6,7 +6,7 @@ import HouseSVG from "../../../assets/icons/house.svg";
 import DatesPicker from "../../../components/form/DatesPicker";
 import Checkbox from "../../../components/form/Checkbox";
 //apartment
-export default function F5_Housing({ housing, separateApartments, updateFields= f=>f}){
+export default function F5_Housing({ housing, separate_apartments, updateFields= f=>f}){
     return (
         <>
             <FormWrapper title={"Где вы хотите оставновиться?"}>
@@ -22,8 +22,8 @@ export default function F5_Housing({ housing, separateApartments, updateFields= 
                 />
                 {housing === 'apartment' && <Checkbox
                     label={"Каждому сотруднику предоставить отдельную квартиру"} for_id={"condition1"}
-                    checked={separateApartments}
-                    onChange={e => updateFields({separateApartments: e.target.checked})}
+                    checked={separate_apartments}
+                    onChange={e => updateFields({separate_apartments: e.target.checked})}
                 />}
             </FormWrapper>
         </>

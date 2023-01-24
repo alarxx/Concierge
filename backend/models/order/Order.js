@@ -12,6 +12,8 @@ const {Schema, model} = require('mongoose');
 const modelName = 'Order';
 
 const OrderSchema = new Schema({
+    name: String,
+
     customer: {
         type: Schema.Types.ObjectId,
         ref: 'User',
@@ -80,7 +82,7 @@ OrderSchema.statics.nestedObjectKeys = function(){
     return ['meta']
 }
 
-OrderSchema.methods.onCreate = async function({req, res, body, user}){
+OrderSchema.methods.onCreate = async function({body, user}){
     const Order_Meta = require('./Order_Meta');
     const Conversation = require('../chat/Conversation');
     const Participant = require('../chat/Participant');
@@ -88,6 +90,9 @@ OrderSchema.methods.onCreate = async function({req, res, body, user}){
     // Creating meta
     const meta = await new Order_Meta({order: this.id});
     this.meta = meta.id;
+    if(body.meta){
+        meta.set(body.meta);
+    }
     await meta.save();
 
     // if(!body.conversation_name) return res.status(400).json({error: 'please provide name for conversation'});
@@ -96,6 +101,7 @@ OrderSchema.methods.onCreate = async function({req, res, body, user}){
     const conversation = await new Conversation({});
     if(body.conversation_name)
         conversation.name = body.conversation_name;
+
     this.conversation = conversation.id;
 
     const participant = new Participant({user: user.id, conversation: conversation.id})

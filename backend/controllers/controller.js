@@ -289,9 +289,6 @@ module.exports = ({Model}) => {
              * Например, строим one-to-one connections, создаем модели и назначаем их id под определенное поле.
              * Еще можно указывать owner-a, например.
              * Не знаю как назвать: autoFilling, autocomplete(занято),
-             * Если вернуть false, то это будет означать, что мы обработали запрос в функции.
-             * Возможно логичнее было бы сделать наоборот, если выход не пустой, то означает, что обработали response,
-             * Чтобы пользователю не пришлось постоянно делать return true
              *
              * Можем throw new Error выкинуть, можем ответить с return res
              */
@@ -307,19 +304,20 @@ module.exports = ({Model}) => {
                 }
             }
 
+            nestedObjectKeys.map(key => delete req.body[key])
             /**
              * Назначаем примитивные поля и производим валидацию.
              * Не знаю асинхронная ли функция set */
             await model.set(req.body);
-
             await model.validate();
 
             /* Назначаем nestedObjects
             * !!! Нужно еще добавить файлы наверное? !!! */
-            await Promise.all(nestedObjectKeys.map(
+            // Просто в onCreate прописывайте логику пока
+            /*await Promise.all(nestedObjectKeys.map(
                 async (key) => {
                     await model.populate(key);
-                    /** Назначаем примитивные поля и производим валидацию */
+                    /!** Назначаем примитивные поля и производим валидацию *!/
                     if(req.body[key]){
                         if(typeof req.body[key] !== 'object'){
                             throw new Error('bullshit nested object');
@@ -327,10 +325,19 @@ module.exports = ({Model}) => {
                         await model[key].set(req.body[key]).validate();
                     }
                 }
-            ))
+            ))*/
 
             // Отсюда могут выйти системные ошибки
             await setFiles(model, req.files, req.user);
+
+            log(colors.gray(`--- Final Saves (${modelName}) ---`));
+
+            // await Promise.all(nestedObjectKeys.map(async key => await model[key].save()));
+            await model.save();
+
+            log(colors.cyan('###########################################'));
+
+            return res.json(model);
 
         } catch (err) {
             log(colors.red('Cancel changes. Something went wrong.'));
@@ -338,14 +345,7 @@ module.exports = ({Model}) => {
             return handleError(req, res, err);
         }
 
-        log(colors.gray(`--- Final Saves (${modelName}) ---`));
 
-        await Promise.all(nestedObjectKeys.map(async key => await model[key].save()));
-        await model.save();
-
-        log(colors.cyan('###########################################'));
-
-        return res.json(model);
     }
 
 

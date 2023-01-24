@@ -60,7 +60,7 @@ const MetaSchema = new Schema({
         type: String,
         enum: ['hotel', 'apartment', null],
     },
-    separateApartments: {
+    separate_apartments: {
         type: Boolean,
     },
 
