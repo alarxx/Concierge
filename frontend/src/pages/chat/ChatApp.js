@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
  * Придется писать хук для отправки и получения сообщений
  * */
 import Conversations from "./Conversations";
-import Messanger from "./Messanger";
+import Messenger from "./Messenger";
 import {useAppContext} from "../../context/AppContext";
 import {useNavigate, useParams} from "react-router-dom";
 
@@ -16,16 +16,15 @@ function log(...str){
  * */
 export default function ChatApp(){
     const navigate = useNavigate();
+    const { id } = useParams()
 
     const {chatHandler, authHandler} = useAppContext()
 
-    const { id } = useParams()
+    const {messages, conversations, notifications, sendMessage, deleteNotifications, _upsertMessage} = chatHandler;
+    const {user} = authHandler;
 
     const [conversation, setConversation] = useState()
     const [conversationMessages, setConversationMessages] = useState([])
-
-    const {messages, conversations, notifications, sendMessage, deleteNotifications, _upsertMessage} = chatHandler;
-    const {user} = authHandler;
 
     function openConversation(conversation){
         // Мы должны проверить состоит ли пользователь в этом conversation
@@ -72,7 +71,7 @@ export default function ChatApp(){
             }
 
             {conversation &&
-                <Messanger
+                <Messenger
                     conversation={conversation}
                     user={user}
                     messages={conversationMessages}

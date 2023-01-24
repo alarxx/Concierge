@@ -39,19 +39,22 @@ const MessageSchema = new Schema({
     choice: {
         services: [{
             type: Schema.Types.ObjectId,
-            ref: 'Service'
+            ref: 'Service',
+            immutable: true,
         }],
         selectedServices: [{
-            type: Number,
+            type: Schema.Types.ObjectId,
             default: []
         }],
         submitted: {
             type: Boolean,
-            default: false
+            default: false,
+            immutable: true,
         },
         multiple_choice: {
             type: Boolean,
             default: false,
+            immutable: true,
         },
     },
     createdDate: {

@@ -8,7 +8,7 @@ import toggleArrayElement from '../../handlers/toggleArrayElement'
 export default function ChoiceForm({
                                        message={},
                                        onAnother=f=>f,
-                                       onItem=f=>f
+                                       onServiceSelect=f=>f
 }){
 
     /*
@@ -37,7 +37,7 @@ export default function ChoiceForm({
                             <CardItem key={i}
                                       {...s}
                                       active={message.choice.selectedServices.includes(service.id)}
-                                      onClick={e => onItem(service)}
+                                      onClick={e => onServiceSelect(service)}
                             />
                         )
                     }

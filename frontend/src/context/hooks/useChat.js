@@ -128,9 +128,13 @@ function useFreshData({ socket, modelName }){
     const [data, setData] = useState([]);
 
     function _upsertDoc(doc){
-        doc.id = doc._id;
-        delete doc._id;
-
+        setIds(doc);
+        /*
+        // как я делал до setIds
+        if(doc._id){
+            doc.id = doc._id;
+            delete doc._id;
+        }
         // Надо сделать отдельный хук для месседжей!!!! Пока так
         if(modelName === 'message'){
             if(doc.type === 'choice'){
@@ -144,7 +148,7 @@ function useFreshData({ socket, modelName }){
                     return service;
                 });
             }
-        }
+        }*/
 
         console.log(`/save/${name}`, doc);
 

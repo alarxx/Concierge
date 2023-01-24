@@ -28,27 +28,49 @@ module.exports = socket => {
         const Notifications = require('../../models/modelsManager').models.Notification;
         const Participants = require('../../models/modelsManager').models.Participant;
 
-        const m = new Messages({
-            sender: user.id,
-            ...message,
-        });
+        /**
+         * Нужно не только тупое сохранение сделать, но и изменение
+         * */
+
+        console.log(`socket(${socket.id}) send message(${message})`);
+
+        const m = message.id ?
+            await Messages.findById(message.id) :
+            new Messages({
+                sender: user.id,
+                ...message
+            });
+
+        if(!m) return;
+
+        try {
+            if(m.type === 'text'){
+                m.text = message.text;
+            }
+            else if(m.type === 'choice'){
+                m.choice.selectedServices = message.choice.selectedServices;
+                m.choice.submitted = true;
+            }
+            // А когда файл?
+            await m.save();
+        }catch(e){
+            console.log(e);
+        }
 
         const ps = await Participants.find({conversation: message.conversation});
 
-        try{
-            await Promise.all(ps.map( async p => {
+        try {
+            await Promise.all(ps.map(async p => {
                 return await new Notifications({
                     type: 'message',
                     message: m.id,
                     user: p.user,
                 }).save();
             }))
-            await m.save();
-        }catch(e){
+        } catch (e) {
             console.log(e);
         }
 
-        console.log(`socket(${socket.id}) send message(${message})`);
     })
 
     socket.on('delete-notifications', async (notifications) => {
