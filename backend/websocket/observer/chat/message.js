@@ -22,7 +22,7 @@ async function notify(method, message){
                 await service.populate(service.type);
             }))
         }
-        console.log(colors.red('save'), object2string(message));
+        // console.log(colors.red('save'), object2string(message));
     }
 
     participants.map(
