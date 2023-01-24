@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 
 import {useLocation, useNavigate} from 'react-router-dom';
-import {useAppContext} from "../../context/AppContext";
+import {useAppContext} from "../../src/context/AppContext";
 
 function log(...str){
     // console.log(...str);

@@ -3,17 +3,17 @@ import React, {useEffect, useState} from 'react';
 import {Link, Routes, Route} from "react-router-dom";
 
 import Home from "./pages/Home";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
+import Login from "../arch/authArchive/Login";
+import Register from "../arch/authArchive/Register";
 import Auth from './pages/auth/Auth'
 
-import Logout from "./pages/auth/Logout";
+import Logout from "../arch/authArchive/Logout";
 import ChatApp from "./pages/chat/ChatApp";
 import Order from './pages/order/Order'
 import Profile from './pages/profile/Profile'
 import Partners from './pages/partners/Partners'
 
-import RegisterSimple from "./pages/auth/RegisterSimple";
+import RegisterSimple from "../arch/authArchive/RegisterSimple";
 import Chat from "./pages/Chat";
 
 
@@ -28,12 +28,10 @@ export default function Router(){
 		<AppContextProvider>
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/test" element={<Chat />} />
 
-				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<Register />} />
-				<Route path="/register/simple" element={<RegisterSimple />} />
+				<Route path='/auth' element={<Auth />} />
 				<Route path="/logout" element={<Logout />} />
+
 				<Route path={'/chat'}>
 					<Route index element={<ChatApp />}/>
 					<Route path=':id' element={<ChatApp />} />
@@ -44,7 +42,6 @@ export default function Router(){
 				<Route path='/profile' element={<Profile />} />
 
 				<Route path='/partners' element={<Partners />} />
-				<Route path='/auth' element={<Auth />} />
 			</Routes>
 		</AppContextProvider>
 	);

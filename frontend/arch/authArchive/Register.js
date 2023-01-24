@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 
-import WorkTypes from "./registerForms/WorkTypesForm";
-import UserForm from "./registerForms/UserForm";
+import WorkTypes from "../../src/pages/auth/registerForms/WorkTypesForm";
+import UserForm from "../../src/pages/auth/registerForms/UserForm";
 
-import MultistepForm from "../../components/form/MultistepForm";
+import MultistepForm from "../../src/components/form/MultistepForm";
 import {useLocation, useNavigate} from "react-router-dom";
 
 const INITIAL_DATA = {

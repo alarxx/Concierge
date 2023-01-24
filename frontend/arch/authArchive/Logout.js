@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
-import useAuth from "../../context/hooks/useAuth";
-import {useAppContext} from "../../context/AppContext";
+import useAuth from "../../src/context/hooks/useAuth";
+import {useAppContext} from "../../src/context/AppContext";
 
 export default function Logout(){
     const navigate = useNavigate();
