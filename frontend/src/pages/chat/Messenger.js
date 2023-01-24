@@ -51,12 +51,14 @@ export default function Messenger({
     const [control, setControl] = useState('text');
     const [messagesSelected, setMessagesSelected] = useState([])
     const [isAttach, setIsAttach] = useState(false);
+    const [action, setAction] = useState('actions');
 
     useEffect(()=>{
         if(messagesSelected.length !== 0)
             setControl('choice')
-        else if(isAttach)
+        else if(isAttach){
             setControl('attach')
+        }
         else
             setControl('text')
     })
@@ -81,6 +83,8 @@ export default function Messenger({
     function onFileSend(file){
 
     }
+
+
 
     /**
      * Upsert selected service to messages selectedServices if message type is choice, and it wasn't submitted.
@@ -143,7 +147,10 @@ export default function Messenger({
 
             {control ==='text' &&
                 <InputPanel
-                    onLeftClick={e => setIsAttach(true)}
+                    onLeftClick={e => {
+                        setIsAttach(true)
+                        setAction('actions')
+                    }}
                     onSend={text => onTextSend(text)}
                 />
             }
@@ -153,8 +160,19 @@ export default function Messenger({
                 />
             }
             {control === 'attach' &&
-                <AttachPanel title="Выберите паттерн" onClose={e => setIsAttach(false)}>
-                    <ServicesPanel/>
+                <AttachPanel
+                    title="Выберите паттерн"
+                    onClose={ e => {
+                        setIsAttach(false)
+                        setAction('actions')
+                    }}
+                >
+                    {action === 'actions' &&
+                        <ActionButtons setAction={action => setAction(action)}/>
+                    }
+                    {action === 'offer services' &&
+                        <ServicesPanel />
+                    }
                 </AttachPanel>
             }
 

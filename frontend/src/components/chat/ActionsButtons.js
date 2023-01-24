@@ -5,30 +5,46 @@ import PersonalCardIcon from "../../assets/icons/personalcard.svg";
 import ArchiveIcon from "../../assets/icons/direct-normal.svg";
 import GalleryIcon from "../../assets/icons/gallery.svg"
 
-export default function ActionButtons(){
+function ActionButton({name, icon, archive, onClick}){
+    return (
+        <div className={`btn btn-main btn-icon ${archive?'btn-toarchive':'btn-attchinchat'}`} onClick={onClick}>
+            <span>{name}</span>
+            {icon}
+        </div>
+    )
+}
+
+export default function ActionButtons({ setAction=f=>f }){
 
     return (
         <div className="chat-controls-attach__actions">
-            <div className="btn btn-main btn-icon btn-attchinchat">
-                <span>Предложить услугу</span>  
-                <HouseIcon viewBox="0 0 24 24"/>
-            </div>
-            <div className="btn btn-main btn-icon btn-attchinchat">
-                <span>Получить файлы</span>  
-                <PersonalCardIcon viewBox="0 0 24 24"/>
-            </div>
-            <div className="btn btn-main btn-icon btn-attchinchat">
-                <span>Отправить файл</span>  
-                <GalleryIcon viewBox="0 0 24 24"/>
-            </div>
-            <div className="btn btn-main btn-icon btn-attchinchat">
-                <span>Изменить данные</span>  
-                <HouseIcon viewBox="0 0 24 24"/>
-            </div>
-            <div className="btn btn-main btn-icon btn-toarchive">
-                <span>Отправить в архив</span>  
-                <ArchiveIcon viewBox="0 0 24 24"/>
-            </div>
+
+            <ActionButton
+                name={"Предложить услуги"}
+                icon={<HouseIcon viewBox="0 0 24 24"/>}
+                onClick={e => setAction('offer services')}
+            />
+            <ActionButton
+                name={"Получить файлы"}
+                icon={<PersonalCardIcon viewBox="0 0 24 24"/>}
+                onClick={e => setAction('request files')}
+            />
+            <ActionButton
+                name={"Отправить файлы"}
+                icon={<GalleryIcon viewBox="0 0 24 24"/>}
+                onClick={e => setAction('send file')}
+            />
+            <ActionButton
+                name={"Изменить данные"}
+                icon={<HouseIcon viewBox="0 0 24 24"/>}
+                onClick={e => setAction('change data')}
+            />
+            <ActionButton
+                archive
+                name={"Отправить в архив"}
+                icon={<ArchiveIcon viewBox="0 0 24 24"/>}
+                onClick={e => setAction('archive')}
+            />
         </div>
     );
 }
