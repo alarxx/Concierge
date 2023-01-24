@@ -5,7 +5,7 @@ import useMultistepForm from "../../hooks/useMultistepForm";
 import ArrowRight from "../../assets/icons/arrow-right.svg";
 
 /*const INITIAL_DATA = {}
-const forms = [F1_Plans, F2_Needs, F3, F4_Tickets, F5_Housing, HotelsSelection6, F7_Transport, F8]*/
+const registerForms = [F1_Plans, F2_Needs, F3, F4_Tickets, F5_Housing, HotelsSelection6, F7_Transport, F8]*/
 
 
 export default function MultistepForm({

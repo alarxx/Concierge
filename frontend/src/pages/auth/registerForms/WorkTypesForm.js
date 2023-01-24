@@ -34,12 +34,13 @@ export default function WorkTypesForm({entity, updateFields=f=>f }){
         <FormWrapper title={"Выберите подходящий вариант"}>
             <WortTypes>
                 <WorkCard caption={"Физ. лицо"} description={"Командировка за счет своих средств"} icon={<Profile/>}
-                          active={entity === "juridical"}
-                          onClick={e => updateFields({entity: "juridical"})}
-                />
-                <WorkCard caption={"Юр. лицо"} description={"Командировка за счет средств компании"} icon={<People/>}
                           active={entity === "individual"}
                           onClick={e => updateFields({entity: "individual"})}
+
+                />
+                <WorkCard caption={"Юр. лицо"} description={"Командировка за счет средств компании"} icon={<People/>}
+                          active={entity === "juridical"}
+                          onClick={e => updateFields({entity: "juridical"})}
                 />
             </WortTypes>
         </FormWrapper>

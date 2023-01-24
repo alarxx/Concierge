@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 
 import useMultistepForm from "../src/hooks/useMultistepForm";
 
-import WorkTypes from "../src/pages/auth/forms/WorkTypesForm";
-import UserForm from "../src/pages/auth/forms/UserForm";
+import WorkTypes from "../src/pages/auth/registerForms/WorkTypesForm";
+import UserForm from "../src/pages/auth/registerForms/UserForm";
 
 // arrow-right, -
 import ArrowRight from '../src/assets/icons/arrow-right.svg'

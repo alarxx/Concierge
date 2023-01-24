@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
-import WorkTypes from "./forms/WorkTypesForm";
-import UserForm from "./forms/UserForm";
+import WorkTypes from "./registerForms/WorkTypesForm";
+import UserForm from "./registerForms/UserForm";
 
 import MultistepForm from "../../components/form/MultistepForm";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -14,7 +14,7 @@ const INITIAL_DATA = {
     email: '',
 }
 
-// forms.map(form => form({...data, updateFields}) )
+// registerForms.map(form => form({...data, updateFields}) )
 const forms = [WorkTypes, UserForm]
 
 /**

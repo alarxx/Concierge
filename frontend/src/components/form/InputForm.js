@@ -29,7 +29,7 @@ export default function InputForm({
 
     return (
         <div className="input-form">
-            <label>{label}</label>
+            {label && <label>{label}</label>}
             <input
                 type="text"
                 required
