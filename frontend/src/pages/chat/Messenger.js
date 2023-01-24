@@ -56,11 +56,16 @@ export default function Messenger({
     // const [lastDate, setLastDate] = useState();
 
     useEffect(()=>{
-        if(messagesSelected.length !== 0)
-            setControl('choice')
-        else if(isAttach){
-            setControl('attach')
+        if(action === 'request files'){
+            onFileRequest();
+            setControl('text')
+            setAction('actions')
+            setIsAttach(false);
         }
+        else if(messagesSelected.length !== 0)
+            setControl('choice')
+        else if(isAttach)
+            setControl('attach')
         else
             setControl('text')
     })
@@ -81,9 +86,17 @@ export default function Messenger({
         })
         setMessagesSelected([]);
     }
+    function onChoiceRequest(services){
+    }
 
     function onFileSend(file){
+    }
 
+    function onFileRequest(){
+        sendMessage({
+            conversation: conversation.id,
+            type: 'file',
+        })
     }
 
     /**
@@ -187,6 +200,7 @@ export default function Messenger({
                         setAction('actions')
                     }}
                 >
+
                     {action === 'actions' &&
                         <ActionButtons setAction={action => setAction(action)}/>
                     }

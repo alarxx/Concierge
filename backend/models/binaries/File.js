@@ -28,18 +28,28 @@ const FileSchema = new Schema({
         immutable: true,
         required: true
     },
+    name: {
+        type: String,
+        immutable: true,
+        required: true,
+    },
     mimetype: {
         type: String,
         immutable: true,
         required: true
     },
-
+    createdDate: {
+        type: Date,
+        immutable: true,
+        default: () => new Date(),
+    },
     accessHolders: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     private: { type: Boolean, default: true },
 });
 
 
 FileSchema.plugin(require('mongoose-unique-validator'));
+FileSchema.plugin(require('../logPlugin'))
 
 
 /**
@@ -62,6 +72,7 @@ FileSchema.statics.createFile = async function(multifile, user){
     const file = new this({
         path: path,
         owner: user.id,
+        name: multifile.name,
         mimetype: multifile.mimetype,
     });
 
