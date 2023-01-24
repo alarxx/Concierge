@@ -11,6 +11,7 @@ import Chats from "../../components/chat/Chats";
 import YummyButton from "../../components/chat/YummyButton";
 import ChatItem from "../../components/chat/ChatItem";
 import CreateIcon from "../../assets/icons/arrow-right.svg"
+import findIndexByKey from "../../handlers/findIndexByKey";
 
 export default function Conversations({
                                           conversations=[],
@@ -27,12 +28,29 @@ export default function Conversations({
     useEffect(()=>{
         // Нужно расфильтровать сообщения по коверсешнам и нотификейшны тоже
         // Оптимизировать!
-        setLastMessages(conversations.map(c => {
+        const lastMessages1 = []
+        const conversationNotifications1 = []
+
+        conversations.map((c, i) => {
+            conversationNotifications1.push(0);
+
             const ms = messages.filter(m => m.conversation == c.id)
-            if(ms.length)
-                return ms[ms.length-1].text ? ms[ms.length-1].text : ms[ms.length-1].type
-        }))
-    }, [messages])
+
+            if(ms.length){
+                const lastMessage = ms[ms.length-1]
+                lastMessages1.push(lastMessage.text ? lastMessage.text : lastMessage.type);
+            }
+
+            ms.map(m => {
+                const index = findIndexByKey({array: notifications, id: m.id, key:'message'})
+                if(index !== -1)
+                    conversationNotifications1[i]++;
+            });
+        })
+
+        setLastMessages(lastMessages1)
+        setConversationNotifications(conversationNotifications1)
+    }, [notifications]) // нужно ли нам перерисовывать conversation, без изменения уведомлений? У нас всегда новое сообщение сопровождается уведомлением
 
     return (
         <Workflow>
@@ -48,7 +66,7 @@ export default function Conversations({
                         return <ChatItem
                             key={i}
                             name={conversation.name}
-                            unread_num={conversationNotifications[i].length}
+                            unread_num={i < conversationNotifications.length ? conversationNotifications[i] : 0}
                             last_message={lastMessages[i]}
                             onClick={e => openConversation(conversation)}
                         />
