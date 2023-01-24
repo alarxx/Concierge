@@ -49,7 +49,6 @@ const MessageSchema = new Schema({
         submitted: {
             type: Boolean,
             default: false,
-            immutable: true,
         },
         multiple_choice: {
             type: Boolean,

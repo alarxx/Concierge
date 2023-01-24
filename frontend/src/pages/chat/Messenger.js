@@ -39,8 +39,8 @@ export default function Messenger({
      * */
     useEffect(()=>{
         const ids = messages.reduce((acc, message, index) => {
-            if(message.type !== 'choice') return acc;
-            if (message.choice.selectedServices.length > 0 && !message.choice.submitted) {
+            if(message.type !== 'choice' || message.choice.submitted) return acc;
+            if (message.choice.selectedServices.length > 0) {
                 acc.push(message.id);
             }
             return acc;
@@ -89,6 +89,7 @@ export default function Messenger({
      * */
     function selectService(message, service){
         if(!message.choice.submitted) {
+            if(message.sender == user.id) return;
             // console.log("Messenger select", message, "\nSelected service", service);
             const services = message.choice.multiple_choice ?
                 toggleArrayElement(message.choice.selectedServices, service.id):
@@ -126,6 +127,7 @@ export default function Messenger({
                             /**/
                             return (
                                 <ChoiceForm key={messageIndex}
+                                            user={user}
                                             message={message}
                                             onServiceSelect={service => selectService(message, service)}
                                             onAnother={message => console.log("another", message)}

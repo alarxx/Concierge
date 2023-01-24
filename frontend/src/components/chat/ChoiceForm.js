@@ -6,6 +6,7 @@ import toggleArrayElement from '../../handlers/toggleArrayElement'
 
 //message={type=choice, id, items, selected, multiple_choice}
 export default function ChoiceForm({
+                                       user,
                                        message={},
                                        onAnother=f=>f,
                                        onServiceSelect=f=>f
@@ -44,7 +45,7 @@ export default function ChoiceForm({
                 )}
             </Cards>
 
-            {!message.choice.submitted &&
+            {!message.choice.submitted && message.sender != user.id &&
                 <div className="chat-choice__link link" onClick={e => onAnother(message)}>
                     <div className="link__text">
                         Подобрать другой вариант

@@ -32,7 +32,7 @@ module.exports = socket => {
          * Нужно не только тупое сохранение сделать, но и изменение
          * */
 
-        console.log(`socket(${socket.id}) send message(${message})`);
+        console.log(`socket(${socket.id}) send message(${message}) of type ${message.type}`);
 
         const m = message.id ?
             await Messages.findById(message.id) :
@@ -50,6 +50,7 @@ module.exports = socket => {
             else if(m.type === 'choice'){
                 m.choice.selectedServices = message.choice.selectedServices;
                 m.choice.submitted = true;
+
             }
             // А когда файл?
             await m.save();
