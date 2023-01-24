@@ -84,8 +84,6 @@ export default function Messenger({
 
     }
 
-
-
     /**
      * Upsert selected service to messages selectedServices if message type is choice, and it wasn't submitted.
      * Мы не отправляем это изменение, выборы видны только у клиента.
@@ -108,7 +106,6 @@ export default function Messenger({
 
     const [lastDate, setLastDate] = useState();
 
-    //<Day day={"Сегодня"}/>
     return (
         <Workflow>
             <Navbar title={conversation.name} back info onBackClick={closeConversation}/>
