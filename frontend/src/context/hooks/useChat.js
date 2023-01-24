@@ -129,26 +129,6 @@ function useFreshData({ socket, modelName }){
 
     function _upsertDoc(doc){
         setIds(doc);
-        /*
-        // как я делал до setIds
-        if(doc._id){
-            doc.id = doc._id;
-            delete doc._id;
-        }
-        // Надо сделать отдельный хук для месседжей!!!! Пока так
-        if(modelName === 'message'){
-            if(doc.type === 'choice'){
-                doc.choice.services = doc.choice.services.map(service => {
-                    service.id = service._id;
-                    delete service._id;
-
-                    service[service.type].id = service[service.type]._id;
-                    delete service[service.type]._id;
-
-                    return service;
-                });
-            }
-        }*/
 
         console.log(`/save/${name}`, doc);
 
@@ -200,28 +180,6 @@ function useFreshData({ socket, modelName }){
     return [data, setData, updateData, _upsertDoc, _removeDoc];
 }
 
-/** _id -> id */
-function setIdsMessages(messages){
-    return messages.map(message => {
-        message.id = message._id;
-        delete message._id;
-
-        if(message.type === 'choice'){
-            message.choice.services = message.choice.services.map(service => {
-                service.id = service._id;
-                delete service._id;
-
-                service[service.type].id = service[service.type]._id;
-                delete service[service.type]._id;
-
-                return service;
-            });
-        }
-
-        return message;
-    });
-}
-
 /**
  * Мы сразу все в куче загружаем, а фильтровать их уже потом будем.
  * Мы сразу загружаем всю нужную информацию (Все беседы, сообщения, где состоит пользователь, мы с бэка это делаем. Когда мы присоединяемся к беседе, мы должны дополнить наши данные)
@@ -246,7 +204,7 @@ export default function useChat({socketHandler, authHandler}){
             const json = await res.json();
             if(res.status === 200){
                 log("chat:", json);
-                updateMessages(setIdsMessages(json.messages));
+                updateMessages(setIds(json.messages));
                 updateConversations(setIds(json.conversations));
                 updateParticipants(setIds(json.participants));
                 updateNotifications(setIds(json.notifications));
@@ -283,9 +241,10 @@ export default function useChat({socketHandler, authHandler}){
     function deleteNotifications(messages){
         // const ms = messages.filter(m => m.conversation == conversation.id);
         const ns = notifications.filter(n => messages.some(m => m.id == n.message));
-        log("deleteNotification", ns);
-        if(ns.length !== 0)
+        if(ns.length !== 0){
+            log("deleteNotification", ns);
             socket.emit('delete-notifications', ns)
+        }
     }
 
     return {

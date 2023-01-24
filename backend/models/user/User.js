@@ -23,6 +23,9 @@ const UserSchema = new Schema({
 		enum: ['individual', 'juridical'], // Может ли он делать какие-то действия от лица компании или только пользоваться
 		default: 'individual'
 	},
+	company_name: {
+		type: String,
+	},
 	company: {
 		type: Schema.Types.ObjectId,
 		ref: 'Company'

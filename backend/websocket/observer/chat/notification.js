@@ -4,7 +4,7 @@
 const log = require("../../../logging/log");
 const colors = require("../../../logging/colors");
 
-async function notify(method, notification){
+async function notify(method, notification){1
     const io = require('../../../websocket/socket.io').io;
 
     log(colors.cyan(`--- NOTIFY Notification.${method}() ---`), notification);

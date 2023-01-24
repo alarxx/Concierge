@@ -61,6 +61,7 @@ module.exports = socket => {
                 "Сука, не пиши сюда больше! Понял??",
                 "Сукин блядь! Иди нахуй!"
             ]
+            // Что будет если сокет выйдет в эти 9 секунд, я хз
             for(let i=0; i<script_messages.length; i++){
                 setTimeout(()=>{
                     createMessage({
@@ -69,7 +70,7 @@ module.exports = socket => {
                         conversation: conversation.id
                     }, socket);
                     return;
-                }, 3000*(i+1))
+                }, 4000*(i+1))
             }
         }
 
