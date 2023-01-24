@@ -3,8 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {Link, Routes, Route} from "react-router-dom";
 
 import Home from "./pages/Home";
-import Login from "../arch/authArchive/Login";
-import Register from "../arch/authArchive/Register";
 import Auth from './pages/auth/Auth'
 
 import Logout from "../arch/authArchive/Logout";
@@ -12,10 +10,6 @@ import ChatApp from "./pages/chat/ChatApp";
 import Order from './pages/order/Order'
 import Profile from './pages/profile/Profile'
 import Partners from './pages/partners/Partners'
-
-import RegisterSimple from "../arch/authArchive/RegisterSimple";
-import Chat from "./pages/Chat";
-
 
 import {AppContextProvider} from "./context/AppContext";
 

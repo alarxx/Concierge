@@ -5,8 +5,7 @@ const colors = require('./logging/colors');
 const {credentials} = require(`./config`);
 
 const mongoose = require('mongoose');
-// if(!credentials.dbUri)
-	// localhost
+
 // credentials.dbUri = 'mongodb://127.0.0.1:27017/test';
 mongoose.connect(credentials.dbUri, {useNewUrlParser: true})
 	.then(() => {
