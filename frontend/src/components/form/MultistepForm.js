@@ -7,6 +7,7 @@ import ArrowRight from "../../assets/icons/arrow-right.svg";
 /*const INITIAL_DATA = {}
 const forms = [F1_Plans, F2_Needs, F3, F4_Tickets, F5_Housing, HotelsSelection6, F7_Transport, F8]*/
 
+
 export default function MultistepForm({
                                           forms=[],
                                           data={},
@@ -26,8 +27,41 @@ export default function MultistepForm({
     }
 
     const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo} = useMultistepForm(
-        forms.map((form) => form({...data, updateFields}) )
+        forms.map(form => form({...data, updateFields, next, back, goTo}) )
     );
+
+    useEffect(()=>{
+        console.log("currentStepIndex", currentStepIndex);
+    }, [currentStepIndex])
+
+    function onSubmitInside(){
+        if(!isLastStep){
+            return next();
+        }
+        else {
+            // что делать после того, как у нас готова форма?
+            onSubmit(data);
+        }
+    }
+
+    function handleKeyDown(e){
+        if (e.keyCode === 13) { //'ENTER'
+            onSubmitInside();
+        }
+        else if(e.keyCode === 27){ //'ESC'
+            back()
+        }
+    }
+
+    useEffect(() => {
+        // Не совсем понятно как работать с домом напрямую
+        // Можно указать только на начальный рендер, но там как-то странно работают состояния,
+        document.addEventListener("keydown", handleKeyDown);
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    });
+
 
     const [inverted,] = useState(forms.map((form, i) => {
         if(form.isControlPanelOnTop)
@@ -40,15 +74,6 @@ export default function MultistepForm({
         else goTo(init_step)
     }, [init_step])
 
-    function onSubmitInside(data){
-        if(!isLastStep){
-            return next();
-        }
-        else {
-            // что делать после того, как у нас готова форма?
-            onSubmit(data);
-        }
-    }
 
     return (
         <div className='container'>
@@ -71,7 +96,7 @@ export default function MultistepForm({
                             <span>{backButtonName}</span>
                         </div>}
 
-                    <div className="btn btn-main btn-next" onClick={()=>onSubmitInside(data)}>
+                    <div className="btn btn-main btn-next" onClick={ e => onSubmitInside() }>
                         <span>{isLastStep ? submitButtonName : nextButtonName}</span>
                         <ArrowRight viewBox="0 0 24 24"/>
                     </div>
