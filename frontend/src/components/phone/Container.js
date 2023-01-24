@@ -3,12 +3,31 @@ import React, {useEffect, useLayoutEffect, useRef} from 'react'
 export default function Container({chat=false, children }){
     const chatList = useRef(null);
 
-    /*useLayoutEffect(() => {
+    useEffect(() => {
+        if(chat) {
+            // chatList.current.scrollIntoView({
+            //     top: document.body.scrollHeight,
+            //     behavior: 'smooth'
+            // });
+            // console.log("Container TOP HEIGHT", chatList.current.scrollTop, chatList.current.scrollHeight);
+            // chatList.current.scrollTop = 7000//chatList.current.scrollHeight;
+            // chatList.current.scrollToBottom()
+
+            // window.scrollTo({
+            //     top: document.body.scrollHeight,
+            //     behavior: "smooth"
+            // });
+
+            // chatList.current.scrollToEnd({ animated: true });
+        }
+    });
+
+    useLayoutEffect(() => {
         if(chat) {
             if(chatList.current)
                 chatList.current.scrollTop = chatList.current.scrollHeight;
         }
-    });*/
+    });
 
     /*useEffect(() => {
         // 👇️ scroll to bottom every time messages change

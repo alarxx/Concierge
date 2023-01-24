@@ -84,15 +84,17 @@ export default function useOrder({ socketHandler, authHandler }){
             // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
             try{
                 // Код делее рабочий, просто, чтобы не насоздавать ордеров закоментил
-                const res = await fetch('/api/order', {
+                fetch('/api/order', {
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     method: 'POST',
                     body: JSON.stringify(order)
-                });
-                const json = await res.json();
-                log("create", json);
+                })
+                    .then(res=>res.json())
+                    .then(json => log("Create", json))
+                    .catch(e => log("Error on create", e))
+
                 navigate(-1)
             }catch(e){
                 log(e);

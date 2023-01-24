@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 function month(m){
     switch(m){
@@ -17,28 +17,35 @@ function month(m){
         case 6:
             return "Июль"
         case 7:
-            return "Январь"
+            return "Август"
         case 8:
-            return "Январь"
+            return "Сентябрь"
         case 9:
-            return "Январь"
+            return "Октябрь"
         case 10:
-            return "Январь"
+            return "Ноябрь"
         case 11:
-            return "Январь"
-        case 12:
-            return "Январь"
+            return "Февраль"
     }
 }
 
-export default function Day({ date, lastDate, setLastDate }){
+export default function Day({ date }){
 
-    const d = Date.parse(date);
+    const [str, setStr] = useState('')
+
+    useEffect(()=>{
+        if(date.getDate() == new Date().getDate())
+            setStr(`Сегодня`)
+        else setStr(`${month(date.getMonth())} ${date.getDate()}`)
+    }, [date])
 
     return (
-        <div className="chat-day__wrapper">
-            <div className="chat-day tac">
+        <>
+            <div className="chat-day__wrapper">
+                <div className="chat-day tac">
+                    {str}
+                </div>
             </div>
-        </div>
+        </>
     );
 }

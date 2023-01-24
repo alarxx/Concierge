@@ -53,6 +53,8 @@ export default function Messenger({
     const [isAttach, setIsAttach] = useState(false);
     const [action, setAction] = useState('actions');
 
+    // const [lastDate, setLastDate] = useState();
+
     useEffect(()=>{
         if(messagesSelected.length !== 0)
             setControl('choice')
@@ -104,7 +106,20 @@ export default function Messenger({
         }
     }
 
-    const [lastDate, setLastDate] = useState();
+    /** Индекс сообщения, перед которым нужно отобразить новый день */
+    const [newDates, setNewDates] = useState([]);
+    useEffect(()=>{
+        const indexes = [];
+        let lastDate = null;
+        messages.map((message, i)=>{
+            const date = new Date(message.createdDate);
+            if(!lastDate || date.getDate() != lastDate.getDate()){
+                lastDate = date
+                indexes.push(i)
+            }
+        })
+        setNewDates(indexes)
+    }, [messages])
 
     return (
         <Workflow>
@@ -115,7 +130,7 @@ export default function Messenger({
                     if(message.type==='text'){
                         return (
                             <div key={messageIndex}>
-                                <Day date={message.createdDate} lastDate={lastDate} setLastDate={setLastDate}/>
+                                {newDates.includes(messageIndex) && <Day date={new Date(message.createdDate)}/>}
                                 <Message message={message}
                                          user={user}
                                 />
@@ -125,7 +140,7 @@ export default function Messenger({
                     else if(message.type==='file') {
                         return (
                             <div key={messageIndex}>
-                                <Day date={message.createdDate} lastDate={lastDate} setLastDate={setLastDate}/>
+                                {newDates.includes(messageIndex) && <Day date={new Date(message.createdDate)}/>}
                                 <Document message={message} />
                             </div>
                         );
@@ -136,7 +151,7 @@ export default function Messenger({
                         /**/
                         return (
                             <div key={messageIndex}>
-                                <Day date={message.createdDate} lastDate={lastDate} setLastDate={setLastDate}/>
+                                {newDates.includes(messageIndex) && <Day date={new Date(message.createdDate)}/>}
                                 <ChoiceForm user={user}
                                             message={message}
                                             onServiceSelect={service => selectService(message, service)}
