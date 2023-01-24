@@ -1,10 +1,20 @@
 import React, {useEffect} from 'react'
 
+
+
 export default function Message({
-                                        text="Для подтверждения вашей заявки отправьте электронную копию вашего удостоверения",
-                                        time="12 : 00",
-                                        mymssg=false
+                                    message,
+                                    user,
 }){
+
+    const mymssg = message.sender == user.id;
+    const text = message.text;
+    const time = message.createdDate;
+
+    useEffect(()=>{
+        console.log("", message.createdDate)
+
+    }, []);
 
     return (
         <div className={`${mymssg?'chat-message__wrapper':''}  ${mymssg?'mymssg':''}`}>

@@ -106,42 +106,49 @@ export default function Messenger({
         }
     }
 
+    const [lastDate, setLastDate] = useState()
+    //<Day day={"Сегодня"}/>
     return (
         <Workflow>
             <Navbar title={conversation.name} back info onBackClick={closeConversation}/>
 
             <Container chat>
-                {
-                    messages.map((message, messageIndex) => {
-                        if(message.type==='text'){
-                            return (
-                                <Message key={messageIndex}
-                                         text={message.text}
-                                         time={message.time}
-                                         mymssg={message.sender === user.id}
+                {messages.map((message, messageIndex) => {
+                    if(message.type==='text'){
+                        return (
+                            <div key={messageIndex}>
+                                <Day date={message.createdDate} lastDate={lastDate} setLastDate={setLastDate}/>
+                                <Message message={message}
+                                         user={user}
                                 />
-                            );
-                        }
-                        else if(message.type==='file') {
-                            return (<Document key={messageIndex} message={message} />);
-                        }
-                        else if(message.type==='choice'){
-                            // В messageForm должно отличаться только selected,
-                            // Как еще можно решить проблему куда именно вставлять selected? Чувствую что можно подругому
-                            /**/
-                            return (
-                                <ChoiceForm key={messageIndex}
-                                            user={user}
+                            </div>
+                        );
+                    }
+                    else if(message.type==='file') {
+                        return (
+                            <div key={messageIndex}>
+                                <Day date={message.createdDate} lastDate={lastDate} setLastDate={setLastDate}/>
+                                <Document message={message} />
+                            </div>
+                        );
+                    }
+                    else if(message.type==='choice'){
+                        // В messageForm должно отличаться только selected,
+                        // Как еще можно решить проблему куда именно вставлять selected? Чувствую что можно подругому
+                        /**/
+                        return (
+                            <div key={messageIndex}>
+                                <Day date={message.createdDate} lastDate={lastDate} setLastDate={setLastDate}/>
+                                <ChoiceForm user={user}
                                             message={message}
                                             onServiceSelect={service => selectService(message, service)}
                                             onAnother={message => console.log("another", message)}
                                 />
-                            );
-                        }
-                    })
-                }
+                            </div>
+                        );
+                    }
+                })}
 
-                {/*<Day day={"Сегодня"}/>*/}
 
             </Container>
 
