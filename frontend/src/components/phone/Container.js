@@ -1,18 +1,24 @@
 import React, {useEffect, useLayoutEffect, useRef} from 'react'
 
 export default function Container({chat=false, children }){
-    /*const chatList = useRef(null);
+    const chatList = useRef(null);
 
-    useLayoutEffect(() => {
+    /*useLayoutEffect(() => {
         if(chat) {
-            chatList.current.scrollTop = chatList.current.scrollHeight;
+            if(chatList.current)
+                chatList.current.scrollTop = chatList.current.scrollHeight;
         }
     });*/
 
+    /*useEffect(() => {
+        // 👇️ scroll to bottom every time messages change
+        bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+    }, [messages]);*/
+
     return (
         <div className={`phone_workspace ${chat?'chat_workflow':''}`}>
-            {/*ref={chat?chatList:null}*/}
-            <div className="container" >
+            {/**/}
+            <div className="container" ref={chat?chatList:null}>
                 {children}
             </div>
 

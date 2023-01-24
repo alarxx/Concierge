@@ -1,7 +1,7 @@
 /**
  * Messenger отображает все сообщения и еще должен отвечать за контроль панель
  * */
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import Navbar from "../../components/phone/Navbar";
 import Container from "../../components/phone/Container";
 import Message from "../../components/chat/Message";
@@ -106,7 +106,8 @@ export default function Messenger({
         }
     }
 
-    const [lastDate, setLastDate] = useState()
+    const [lastDate, setLastDate] = useState();
+
     //<Day day={"Сегодня"}/>
     return (
         <Workflow>

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useRef} from 'react'
 
 
 
@@ -9,12 +9,7 @@ export default function Message({
 
     const mymssg = message.sender == user.id;
     const text = message.text;
-    const time = message.createdDate;
-
-    useEffect(()=>{
-        console.log("", message.createdDate)
-
-    }, []);
+    const date = new Date(message.createdDate);
 
     return (
         <div className={`${mymssg?'chat-message__wrapper':''}  ${mymssg?'mymssg':''}`}>
@@ -23,7 +18,7 @@ export default function Message({
                     {text}
                 </div>
                 <div className="chat-message__time">
-                    {time}
+                    {`${date.getHours()} : ${date.getMinutes()}`}
                 </div>
             </div>
 
