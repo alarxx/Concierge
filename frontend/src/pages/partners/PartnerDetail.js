@@ -1,9 +1,9 @@
 import React from 'react'
 
-import Workflow from "../../phone/Workflow";
-import Menu from "../../phone/Menu";
-import Container from "../../phone/Container";
-import Navbar from "../../phone/Navbar";
+import Workflow from "../../components/phone/Workflow";
+import Menu from "../../components/phone/Menu";
+import Container from "../../components/phone/Container";
+import Navbar from "../../components/phone/Navbar";
 
 
 
