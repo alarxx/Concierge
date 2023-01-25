@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 
 import findIndexById from "../../handlers/findIndexById";
 import setIds from "../../handlers/setIds";
+import useFreshData from "../../hooks/useFreshData";
 
 function log(...str){
     console.log("useOrder\n", ...str);
@@ -14,42 +15,13 @@ function log(...str){
 export default function useOrder({ socketHandler, authHandler }){
     const navigate = useNavigate();
 
-    const [orders, setOrders] = useState([]);
-    const [ordersLoading, setOrdersLoading] = useState(true);
-    const [ordersError, setOrdersError] = useState();
-
     const { user, isAuthenticated } = authHandler;
     const { socket, isConnected } = socketHandler;
 
-    function _addOrder(order){
-        setIds(order)
+    const [orders, setOrders, updateOrders] = useFreshData({socket, modelName:'Order'});
 
-        log("/save/order", order);
-        setOrders(prev => [...prev, order])
-    }
-
-    function _removeOrder(order){
-        order.id = order._id;
-        delete order._id;
-
-        log("/delete/order", order);
-        setOrders(prev => {
-            const i = findIndexById(prev, order.id)
-            const newOrders = [...prev]
-            newOrders.splice(i, 1);
-            return newOrders;
-        })
-    }
-
-    useEffect(()=>{
-        socket.on("/save/order", (order)=>{
-            _addOrder(order);
-        });
-
-        socket.on("/delete/order", (order)=>{
-            _removeOrder(order);
-        });
-    }, [])
+    const [ordersLoading, setOrdersLoading] = useState(true);
+    const [ordersError, setOrdersError] = useState();
 
 
     useEffect(()=>{
@@ -57,8 +29,10 @@ export default function useOrder({ socketHandler, authHandler }){
             preloadOrders();
         }
         else {
-            if(orders.length) // Так мы узнаем, что это не первый рендер типа, но нужно будет потом поменять это, у нас же будут буферизированные данные
+            if(orders.length){ // Так мы узнаем, что это не первый рендер типа, но нужно будет потом поменять это, у нас же будут буферизированные данные
+                log([])
                 setOrders([])
+            }
         }
     }, [user])
 
@@ -124,7 +98,7 @@ export default function useOrder({ socketHandler, authHandler }){
             setOrdersError(null);
             if(res.status === 200){
                 log("success", json)
-                setOrders(json.map(order => setIds(order)))
+                updateOrders(json.map(order => setIds(order)))
             }
             else {
                 log("error", json);

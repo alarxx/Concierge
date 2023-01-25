@@ -15,7 +15,7 @@ export default function useAuth({socketHandler}){
     useEffect(()=>{
         socket.on("connect_error", err => {
             setUserLoading(false)
-            setUserError(err)
+            setUserError({error: "Unauthorized"})
         });
     }, [])
 
@@ -37,6 +37,7 @@ export default function useAuth({socketHandler}){
 
     function setUser(obj){
         setUserLoading(false)
+        setUserError(null)
         setUserState(obj)
     }
 
@@ -74,7 +75,7 @@ export default function useAuth({socketHandler}){
         }
         catch(err){
             setUserLoading(false)
-            setUserError(err);
+            setUserError({error: err.message});
             return err;
         }
     }

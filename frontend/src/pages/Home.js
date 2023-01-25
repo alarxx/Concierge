@@ -4,19 +4,17 @@ import {Link, useLocation} from "react-router-dom";
 import {useAppContext} from "../context/AppContext";
 
 export default function Home(){
-    const {authHandler, hotelsHandler} = useAppContext();
-    const {user, userLoading, isAuthenticated} = authHandler;
-
-    useEffect(()=>{
-
-    }, [])
+    const {authHandler, socketHandler} = useAppContext();
+    const {user, userLoading, userError, isAuthenticated} = authHandler;
+    const {isConnected} = socketHandler;
 
     return (
         <>
             <h1>[Home page]</h1>
 
             {!userLoading && isAuthenticated() && <h2>{user.email}</h2>}
-            {!userLoading && !isAuthenticated() && <h2>{user?.message}</h2>}
+            {!userLoading && !isAuthenticated() && !isConnected && <h2>Disconnected</h2>}
+            {userError?.error && <h2>{userError.error}</h2>}
             {userLoading && <p>loading...</p>}
 
             <nav>
