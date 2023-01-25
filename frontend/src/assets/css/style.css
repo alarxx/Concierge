@@ -1571,7 +1571,7 @@ textarea::-webkit-scrollbar {
 
 .chat-controls-attach .partners__wrapper {
     overflow: auto;
-    height: 550px;
+    height: 335px;
 }
 .chat-controls-attach .partners__wrapper::-webkit-scrollbar {
     display: none;
