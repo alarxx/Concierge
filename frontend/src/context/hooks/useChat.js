@@ -144,8 +144,9 @@ export default function useChat({socketHandler, authHandler}){
 
     /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать. Хз */
     async function preload (){
+        setChatLoading(true);
+
         try{
-            setChatLoading(true);
             const res = await fetch('/api/chat');
             const json = await res.json();
             if(res.status === 200){

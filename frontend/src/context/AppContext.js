@@ -5,6 +5,8 @@ import useOrder from "./hooks/useOrder";
 import useChat from "./hooks/useChat";
 import useSocket from "./hooks/useSocket";
 import useHotel from "../hooks/api/useHotel";
+import useOffice from "./hooks/data/useOffice";
+import useService from "./hooks/data/useService";
 
 const Context = createContext();
 
@@ -12,19 +14,14 @@ const useAppContext = () => useContext(Context);
 
 function AppContextProvider({ children }){
 
-    // const hotelsHandler = useHotel();
 
     const socketHandler = useSocket()
     const authHandler = useAuth({socketHandler});
     const orderHandler = useOrder({socketHandler, authHandler});
     const chatHandler = useChat({socketHandler, authHandler, orderHandler});
 
-    useEffect(()=>{
-        (async ()=>{
-            // console.log(new Query)
-            // const response = await fetch('/api/office');
-        })();
-    }, []);
+    const officesHandler = useOffice({authHandler, socketHandler})
+    const servicesHandler = useService({authHandler, socketHandler})
 
     return (
         <Context.Provider value={{
@@ -32,6 +29,8 @@ function AppContextProvider({ children }){
             authHandler,
             orderHandler,
             chatHandler,
+            officesHandler,
+            servicesHandler
         }}>
             {children}
         </Context.Provider>

@@ -276,6 +276,11 @@ module.exports = ({Model}) => {
         // Вытаскиваем id из query и переименовываем на ids
         let {id: ids} = req.query;
 
+        if(!ids && req.user.role === 'manager'){
+            res.locals.models = await Model.find({});
+            return next();
+        }
+
         // Если ids null или []
         if(!ids || ids.length===0)
             return res.status(403).json({error: 'Required search parameter/parameters `id` not found'});
@@ -284,23 +289,28 @@ module.exports = ({Model}) => {
         if(!Array.isArray(ids))
             ids = [ids];
 
-        /* Найти, проверить, отдать */
+        try{
+            /* Найти, проверить, отдать */
+            const models = await Model.find({ '_id': { $in: ids } });//.select('-price -discount');
 
-        let models = await Model.find({ '_id': { $in: ids } });//.select('-price -discount');
+            // Если количество найденных элементов не совпадает с количеством требуемых, то сообщаем какие id не найдены
+            if(models.length !== ids.length){
+                let filteredIds = ids.reduce((filtered, id) => {
+                    if(models.some(model => model.id === id))
+                        return filtered;
+                    filtered.push(id);
+                    return filtered
+                }, []);
+                return res.status(404).json({error: `[${filteredIds}] ids not found`});
+            }
 
-        // Если количество найденных элементов не совпадает с количеством требуемых, то сообщаем какие id не найдены
-        if(models.length !== ids.length){
-            let filteredIds = ids.reduce((filtered, id) => {
-                if(models.some(model => model.id === id))
-                    return filtered;
-                filtered.push(id);
-                return filtered
-            }, []);
-            return res.status(404).json({error: `[${filteredIds}] ids not found`});
+            res.locals.models = models;
+
         }
-
-
-        res.locals.models = models;
+        catch(e){
+            console.log(e);
+            return res.status(400).json({error: e.message});
+        }
 
         next();
     }

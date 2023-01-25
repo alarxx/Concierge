@@ -11,14 +11,14 @@ const controller = require('../../../controllers/api/company/company');
 
 const {
     c, r, u, d,
-    findOne, find,
+    findOne, find, findByQueryIds,
     filesValidation,
     addToArray, removeFromArray, arrayField
 } = controller;
 
 Router.route('/')
     .post(filesValidation, c)
-    .get(find, r)
+    .get(findByQueryIds, r)
     .put(filesValidation, findOne, u)
     .delete(findOne, d);
 

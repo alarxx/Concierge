@@ -5,7 +5,7 @@ import findIndexById from "../../handlers/findIndexById";
 import setIds from "../../handlers/setIds";
 
 function log(...str){
-    // console.log("useOrder\n", ...str);
+    console.log("useOrder\n", ...str);
 }
 
 /**
@@ -61,11 +61,6 @@ export default function useOrder({ socketHandler, authHandler }){
                 setOrders([])
         }
     }, [user])
-
-
-    useEffect(()=>{
-        log("orders:", orders);
-    }, [orders])
 
 
     async function createOrder(order){
@@ -128,14 +123,20 @@ export default function useOrder({ socketHandler, authHandler }){
             setOrdersLoading(false);
             setOrdersError(null);
             if(res.status === 200){
+                log("success", json)
                 setOrders(json.map(order => setIds(order)))
+            }
+            else {
+                log("error", json);
+                setOrdersError(json)
             }
         }
         catch (err){
             log(err);
-            setOrdersLoading(false);
             setOrdersError(err.error);
         }
+
+        setOrdersLoading(false);
     }
 
 

@@ -5,7 +5,7 @@ import useFreshData from "../../../hooks/useFreshData";
 
 
 function log(...str){
-    console.log("useEffect:", ...str);
+    console.log("useOffice:", ...str);
 }
 
 /**
@@ -15,40 +15,48 @@ export default function useOffice({authHandler, socketHandler}){
     const { user, isAuthenticated } = authHandler;
     const { socket, isConnected } = socketHandler;
 
-    const [officeLoading, setOfficeLoading] = useState(true);
+    const [officesLoading, setOfficesLoading] = useState(true);
+    const [officesError, setOfficesError] = useState(null);
 
-    const [offices, setOffices, updateOffices, _upsertOffice, _removeOffice] = useFreshData({socket, modelName:'Office'});
+    const [offices, setOffices, updateOffices] = useFreshData({socket, modelName:'Office'});
 
+    /* Думаю что и preload можно вынести в userFreshData, тогда вообще легко будет создавать авто-обновляемые данные */
     async function preload(){
+        setOfficesLoading(true);
+
         try{
-            setChatLoading(true);
-            const res = await fetch('/api/chat');
+            const res = await fetch('/api/office');
             const json = await res.json();
             if(res.status === 200){
-                log(json);
-                updateOffices(setIds(json.messages));
+                log("success", json);
+                updateOffices(setIds(json));
+            }
+            else{
+                log("error", json);
+                setOfficesError(json);
             }
         }
         catch (err){
-            log(err);
+            log("error", err);
+            setOfficesError(err);
         }
-        setChatLoading(false)
+
+        setOfficesLoading(false)
     }
 
     useEffect(()=>{
         if(isAuthenticated()){
+            if(user.role!=='manager') return; // Чтобы не нагружать клиент пользователя. Ему все равно бэкенд вернет ошибку
+
             preload();
         }
         else {
             // Как понять, что до этого мы были авторизованы
-            if(messages.length || conversations.length || participants.length || notifications.length){
-                // log("chat:", null);
-                setConversations([])
-                setMessages([])
-                setNotifications([])
-                setParticipants([])
+            if(offices.length){
+                log([]);
+                setOffices([])
             }
-            setChatLoading(false)
+            // setOfficesLoading(false)
         }
     }, [user])
 
