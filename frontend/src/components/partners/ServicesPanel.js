@@ -11,6 +11,7 @@ import Rooms from "../cards/atoms/Rooms";
 import Address from "../cards/atoms/Address";
 import Description from "../cards/atoms/Description";
 import Price from "../cards/atoms/Price";
+import Contacts from "../cards/atoms/Contacts";
 
 function PartnerInfo({
                          name='Название отеля',
@@ -52,6 +53,8 @@ function PartnerService({
                             address="Адрес отеля",
                             price="",
                             description='Описание комнаты. Описание комнаты Описание комнаты',
+                            contact_name="Зарина",
+                            contact_phone="+7 730 376 1222"
                         }){
     return (
         <div className="card-item">
@@ -67,12 +70,7 @@ function PartnerService({
 
                 {address && <Address address={address} />}
                 {description && <Description description={description}/>}
-                {/*{price && <Price price={price}/>}*/}
-
-                <div className="card-item__price">
-                    Зарина <br/>
-                    +7 730 376 1222
-                </div>
+                <Contacts name={contact_name} phone={contact_phone}/>
             </div>
         </div>
     );
