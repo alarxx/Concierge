@@ -7,7 +7,7 @@ export default function UserForm({entity, name, company_name, phone, email, upda
                 console.log("entity", entity);
         })
         return (
-            <FormWrapper title={"Последняя деталь"}>
+            <FormWrapper title={"Введите ваши данные"}>
 
                 <InputForm
                     label={"ФИО *"}
