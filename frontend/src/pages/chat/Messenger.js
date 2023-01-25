@@ -135,7 +135,7 @@ export default function Messenger({
     }, [messages])
 
     return (
-        <Workflow>
+        <Workflow isOverflowBg={control === 'attach'}>
             <Navbar title={conversation.name} back info onBackClick={closeConversation}/>
 
             <Container chat>
