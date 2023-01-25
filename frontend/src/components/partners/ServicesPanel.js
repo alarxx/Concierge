@@ -3,6 +3,7 @@ import React from 'react'
 import LocationIcon from "../../assets/icons/location.svg";
 import StarIcon from "../../assets/icons/star.svg";
 import Star from "../../assets/icons/star.svg";
+import Search from "../form/Search";
 
 function PartnerInfo({
                          name='Названи отеля',
@@ -90,30 +91,27 @@ function PartnerItem({}){
     );
 }
 
+function Tag({name="Квартиры", number=34, active}){
+    return (
+        <div className={`tag ${active?'tag-active':''}`}>
+            <div className="tag__name">{name}</div>
+            <span> ({number})</span>
+        </div>
+    );
+}
+
 export default function ServicesFrame(){
     return (
         <div className="partners">
             <div className="partners__search">
-                <div className="search">
-                    <input type="text" className="search-input" placeholder="Найти по названию"/>
-                    <span>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M22 22L20 20" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>                            
-                    </span>
-                </div>
+                <Search placeholder={"Найти по названию"}/>
             </div>
+
             <div className="partners__category tags">
-                <div className="tag tag-active">
-                    <div className="tag__name">Квартиры</div>
-                    <span> (34)</span>
-                </div>
-                <div className="tag">
-                    <div className="tag__name">Отели</div>
-                    <span> (123)</span>
-                </div>
+                <Tag name={"Квартиры"} number={34} active={true}/>
+                <Tag name={"Отели"} number={123} active={false}/>
             </div>
+
             <div className="partners__wrapper">
 
                 <PartnerItem />
