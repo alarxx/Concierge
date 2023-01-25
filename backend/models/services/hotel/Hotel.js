@@ -12,6 +12,12 @@ const HotelSchema = new Schema({
         required: true,
         immutable: true,
     },
+    office: {
+      type: Schema.Types.ObjectId,
+      ref: 'Office',
+      required: true,
+      immutable: true,
+    },
     name: {
         type: String,
         required: true,
@@ -61,6 +67,13 @@ HotelSchema.statics.publicFiles = function(){
 }
 
 HotelSchema.methods.onCreate = async function({}){
+    const Offices = require('../../modelsManager').models.Office;
+    const office = new Offices({
+        type: 'hotel',
+        hotel: this.id
+    });
+    this.office = office.id;
+    await office.save();
     // Возможно нужна проверка существования отеля
 }
 

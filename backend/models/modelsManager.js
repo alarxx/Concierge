@@ -18,6 +18,7 @@ function initialize(){
     models.Order = require('./order/Order')
     models.Order_Meta = require('./order/Order_Meta')
 
+    models.Office = require('./services/Office');
     models.Service = require('./services/Service');
     models.Booking = require('./services/Booking');
 

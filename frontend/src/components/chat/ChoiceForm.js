@@ -12,20 +12,6 @@ export default function ChoiceForm({
                                        onServiceSelect=f=>f
 }){
 
-    /*
-    function addSelected(item){
-        if(message.multiple_choice){
-            setMessage({...message, selected: toggleArrayElement(message.selected, item.service)})
-        } else {
-            setMessage({...message, selected: message.selected.includes(item.service)?[]:[item.service]})
-        }
-    }
-    */
-
-    /*useEffect(()=>{
-        console.log("Choice", message);
-    }, [])*/
-
     return (
         <div className="chat-choice">
 
