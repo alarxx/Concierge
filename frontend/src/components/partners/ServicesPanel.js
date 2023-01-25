@@ -4,9 +4,16 @@ import LocationIcon from "../../assets/icons/location.svg";
 import StarIcon from "../../assets/icons/star.svg";
 import Star from "../../assets/icons/star.svg";
 import Search from "../form/Search";
+import Image from "../cards/atoms/Image";
+import Name from "../cards/atoms/Name";
+import Rate from "../cards/atoms/Rate";
+import Rooms from "../cards/atoms/Rooms";
+import Address from "../cards/atoms/Address";
+import Description from "../cards/atoms/Description";
+import Price from "../cards/atoms/Price";
 
 function PartnerInfo({
-                         name='Названи отеля',
+                         name='Название отеля',
                          address='Адрес отеля',
                          rate='4,5'}){
     return (
@@ -37,35 +44,31 @@ function PartnerServices({ children }){
     );
 }
 
-function PartnerService({description='Описание комнаты. Описание комнаты Описание комнаты',}){
+function PartnerService({
+                            img_url="/img/hotelimg.png",
+                            name="Название номера",
+                            rate="4.2",
+                            rooms_num=1,
+                            address="Адрес отеля",
+                            price="",
+                            description='Описание комнаты. Описание комнаты Описание комнаты',
+                        }){
     return (
         <div className="card-item">
-            <div className="card-item__img">
-                <img src="/img/hotelimg.png" alt="room image"/>
-            </div>
-            <div className="card-item__info">
-                <div className="card-item__name">
-                    Название отеля
-                </div>
-                <div className="card-item__dopinfo">
-                    <div className="card-item__rate">
+            {img_url && <Image img_url={img_url} />}
 
-                                <span>
-                                    <Star width="15" height="24" viewBox="0 0 24 24"/>
-                                </span>
-                        4.2
-                    </div>
-                    <div className="card-item__rooms">Комнат: <span className="roomsnum">1</span></div>
+            <div className="card-item__info">
+                {name && <Name name={name}/>}
+
+                <div className="card-item__dopinfo">
+                    {rate && <Rate rate={rate}/>}
+                    {rooms_num && <Rooms rooms_num={rooms_num}/>}
                 </div>
-                <div className="card-item__address">
-                                    <span>
-                                        <LocationIcon width="15" height="24" viewBox="0 0 24 24"/>
-                                    </span>
-                    Адрес отеля
-                </div>
-                <div className="card-item__descr">
-                    {description}
-                </div>
+
+                {address && <Address address={address} />}
+                {description && <Description description={description}/>}
+                {/*{price && <Price price={price}/>}*/}
+
                 <div className="card-item__price">
                     Зарина <br/>
                     +7 730 376 1222
@@ -91,7 +94,10 @@ function PartnerItem({}){
     );
 }
 
-function Tag({name="Квартиры", number=34, active}){
+function Tag({
+                 name="Квартиры",
+                 number=34,
+                 active=false}){
     return (
         <div className={`tag ${active?'tag-active':''}`}>
             <div className="tag__name">{name}</div>
