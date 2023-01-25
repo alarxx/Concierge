@@ -4,7 +4,7 @@ import FormWrapper from "../../../components/form/FormWrapper";
 
 export default function LoginForm({email, password, updateFields=f=>f }){
         return (
-            <FormWrapper title={"Последняя деталь"}>
+            <FormWrapper title={"Войти в аккаунт"}>
 
                 <InputForm label={"Электронная почта *"}
                            placeHolder={"Введите вашу эл. почту"}
