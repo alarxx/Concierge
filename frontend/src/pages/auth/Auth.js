@@ -12,39 +12,100 @@ import {useAppContext} from "../../context/AppContext";
 const registerForms = [WorkTypes, UserForm, PasswordsForm]
 const loginForms = [LoginForm]
 
+function log(...str){
+    console.log(...str)
+}
+
 export default function Auth() {
     const location = useLocation();
     const navigate = useNavigate();
 
     const {authHandler} = useAppContext();
-    const {login, register} = authHandler;
+    const {login, register, userLoading } = authHandler;
 
 
     const [data, setData] = useState({})
     const [type, setType] = useState('login')
 
+    /*function onSubmit(e){
+        (async ()=>{
+            if(type === 'login'){
+                await login(data);
+            }
+            else{
+                await register(data);
+            }
+
+            if(location.state?.redirect){
+                const state = {...location.state};
+
+                if(type === 'login'){
+                    // console.log("navigate to", location.state.redirect, "\nstate", state);
+                    delete state.redirect;
+                    navigate(location.state.redirect, {replace: true, state});
+                }
+                else{
+                    setType('login')
+                    // console.log("navigate to /authenticate", "\nstate", state);
+                    navigate('/authenticate', {replace: true, state});
+                }
+            }
+            else {
+                if(type === 'login'){
+                    // console.log("navigate to / with no state");
+                    navigate('/', {replace: true});
+                }
+                else{
+                    setType('login')
+                    // console.log("navigate to /authenticate with no state");
+                    navigate('/authenticate', {replace: true});
+                }
+            }
+        })()
+    }*/
+
     function onSubmit(e){
-        if(type==='login'){
-            console.log("login", data);
-            login(data);
-        }else{
-            console.log("register", data);
-            register(data);
-        }
+        (async ()=>{
 
-        if(location.state?.redirect){
             const state = {...location.state};
-            delete state.redirect;
-            navigate(location.state.redirect, {replace: true, state});
-        }
-        else {
-            navigate('/', {replace: true});
-        }
 
+            if(type === 'login'){
+                const err = await login(data);
+                if(err){
+                    log("Login error", err);
+                    navigate('/authenticate', {replace: true, state});
+                }
+                else{
+                    log("Successful login redirect to", location.state?.redirect ? location.state.redirect : '/');
+
+                    delete state.redirect;
+                    // console.log("navigate to", location.state.redirect, "\nstate", state);
+                    navigate(location.state?.redirect ? location.state.redirect : '/', {replace: true, state});
+                }
+            }
+            else{
+                const err = await register(data);
+                if(err){
+                    log("Registration error", err);
+                    navigate('/authenticate', {replace: true, state});
+                }
+                else{
+                    log("Successful registration redirect to login");
+                    setType('login')
+                    // console.log("navigate to /authenticate", "\nstate", state);
+                    // navigate(location.state?.redirect ? location.state.redirect : '/', {replace: true, state});
+
+                    navigate('/authenticate', {replace: true, state});
+                }
+            }
+
+        })()
     }
 
     return (
         <>
+            {userLoading && <p>loading...</p>}
+
             <div>
                 <button onClick={e=>setType('login')}>Login</button>
                 <button onClick={e=>setType('register')}>Register</button>

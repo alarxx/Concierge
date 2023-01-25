@@ -12,9 +12,8 @@ import InputForm from "../../../components/form/InputForm";
 export default function F7_Transport({conversation_name, updateFields=f=>f}){
     return (
         <>
-            <FormWrapper title={"Транспорт для командировки"}>
+            <FormWrapper title={"Название для услуги"}>
                 <InputForm
-                    label={"Название услуги"}
                     placeHolder={"Как вы хотите назвать услугу?"}
                     updateFields={updateFields}
                     field_key={"conversation_name"}

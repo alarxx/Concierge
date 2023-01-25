@@ -119,7 +119,7 @@ const messagesDefault = [
 ]*/
 
 function log(...str){
-    console.log("useChat\n", ...str);
+    // console.log("useChat\n", ...str);
 }
 
 function useFreshData({ socket, modelName }){
@@ -191,6 +191,8 @@ export default function useChat({socketHandler, authHandler}){
     const { socket } = socketHandler
     const { user, isAuthenticated } = authHandler
 
+    const [chatLoading, setChatLoading] = useState(true);
+
     const [ messages, setMessages, updateMessages, _upsertMessage ] = useFreshData({socket, modelName: 'message'});
     const [ conversations, setConversations, updateConversations ] = useFreshData({socket, modelName: "conversation"})
     const [ participants, setParticipants, updateParticipants ] = useFreshData({socket, modelName: "participant"});
@@ -200,6 +202,7 @@ export default function useChat({socketHandler, authHandler}){
     /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать. Хз */
     async function preload (){
         try{
+            setChatLoading(true);
             const res = await fetch('/api/chat');
             const json = await res.json();
             if(res.status === 200){
@@ -213,6 +216,7 @@ export default function useChat({socketHandler, authHandler}){
         catch (err){
             log(err);
         }
+        setChatLoading(false)
     }
     useEffect(()=>{
         if(isAuthenticated()){
@@ -221,12 +225,13 @@ export default function useChat({socketHandler, authHandler}){
         else {
             // Как понять, что до этого мы были авторизованы
             if(messages.length || conversations.length || participants.length || notifications.length){
-                log("chat:", null);
+                // log("chat:", null);
                 setConversations([])
                 setMessages([])
                 setNotifications([])
                 setParticipants([])
             }
+            setChatLoading(false)
         }
     }, [user])
 
@@ -256,6 +261,7 @@ export default function useChat({socketHandler, authHandler}){
         joinConversation,
         _upsertMessage,
         deleteNotifications,
+        chatLoading
     }
 }
 

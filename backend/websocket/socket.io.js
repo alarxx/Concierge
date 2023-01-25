@@ -2,9 +2,7 @@ const passport = require('passport');
 
 const auth_listener = require('./listener/auth');
 const chat_listener = require('./listener/chat');
-const service_listener = require('./listener/service');
-
-const {model} = require("mongoose");
+// const service_listener = require('./listener/service');
 
 const socket_io = {
     io: null,

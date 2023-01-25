@@ -23,7 +23,7 @@ export default function Router(){
 			<Routes>
 				<Route path="/" element={<Home />} />
 
-				<Route path='/auth' element={<Auth />} />
+				<Route path='/authenticate' element={<Auth />} />
 				<Route path="/logout" element={<Logout />} />
 
 				<Route path={'/chat'}>

@@ -11,6 +11,7 @@ Router.get('/', (req, res)=>{
 
 Router.post('/', register('local'));
 
+/* Автоматически логинит нас после регистрации */
 /*Router.post('/', passport.authenticate('local'), (req, res)=>{
 	    res.json({
 			name: req.user.name,

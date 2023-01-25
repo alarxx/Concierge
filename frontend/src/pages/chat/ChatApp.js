@@ -20,7 +20,7 @@ export default function ChatApp(){
 
     const {chatHandler, authHandler} = useAppContext()
 
-    const {messages, conversations, notifications, sendMessage, deleteNotifications, _upsertMessage} = chatHandler;
+    const {messages, conversations, notifications, sendMessage, deleteNotifications, _upsertMessage, chatLoading} = chatHandler;
     const {user} = authHandler;
 
     const [conversation, setConversation] = useState()
@@ -63,6 +63,7 @@ export default function ChatApp(){
         <>
             {!conversation &&
                 <Conversations
+                    chatLoading={chatLoading}
                     conversations={conversations}
                     notifications={notifications}
                     messages={messages}

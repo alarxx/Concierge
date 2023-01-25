@@ -75,12 +75,12 @@ export default function Order({ }) {
     const {data, setData, isFilledBefore} = _useFilled()
 
     const {createOrder} = orderHandler;
-    const {isAuthenticated} = authHandler;
+    const {isAuthenticated, userLoading} = authHandler;
 
     function onSubmit(e){
         // Убеждаемся, что пользователь авторизован и создаем заказ
         if (!isAuthenticated()) {
-            navigate('/auth', {
+            navigate('/authenticate', {
                 replace: true,
                 state: {
                     redirect: '/order',
@@ -98,14 +98,17 @@ export default function Order({ }) {
 
     return (
         <>
-            <MultistepForm
-                forms={FORMS}
-                data={data}
-                setData={setData}
-                init_step={isFilledBefore ? -1 : 0}
-                onSubmit={onSubmit}
-                submitButtonName={"Оставить заявку"}
-            />
+            {userLoading && <p>loading...</p>}
+            {!userLoading &&
+                <MultistepForm
+                    forms={FORMS}
+                    data={data}
+                    setData={setData}
+                    init_step={isFilledBefore ? -1 : 0}
+                    onSubmit={onSubmit}
+                    submitButtonName={"Оставить заявку"}
+                />
+            }
         </>
     );
 }

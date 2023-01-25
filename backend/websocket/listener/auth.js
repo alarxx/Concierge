@@ -1,6 +1,7 @@
 module.exports = socket => {
     socket.on('whoami', setUser => {
         const { user } = socket.request;
+
         const response = {
             id: user.id,
             name: user.name,
@@ -8,6 +9,7 @@ module.exports = socket => {
             entity: user.entity,
             role: user.role,
         }
+
         setUser(response);
     })
 }

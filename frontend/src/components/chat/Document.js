@@ -6,9 +6,13 @@ import DocumentDownload from '../../assets/icons/document-download.svg'
 /**
  * Как загружать и скачивать файлы без input??
  * */
-export default function Document({ message, onClick }){
+export default function Document({ message, user, onClick }){
+
+    const mymssg = user.id == message.sender;
+
     return (
-        <>
+        <div className={`${mymssg?'chat-message__wrapper':''}  ${mymssg?'mymssg':''}`}>
+
             {message.file &&
                 <div className="chat-download">
                     <div className="chat-download__block"></div>
@@ -30,9 +34,7 @@ export default function Document({ message, onClick }){
                     </div>
                 </div>
             }
-        </>
-
-
+        </div>
 
     );
 }

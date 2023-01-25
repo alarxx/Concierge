@@ -17,6 +17,7 @@ export default function Conversations({
                                           conversations=[],
                                           notifications=[],
                                           messages=[],
+                                          chatLoading=true,
                                           openConversation=f=>f
 }){
     const navigate = useNavigate();
@@ -58,6 +59,9 @@ export default function Conversations({
 
             <Container>
                 <ArchiveButton />
+
+                {chatLoading && <p style={{textAlign:"center", margin: "3rem"}}>loading...</p>}
+
                 <YummyButton name={"Заказать услугу"} icon={<CreateIcon/>} onClick={ e => navigate('/order')}/>
 
                 <Chats>

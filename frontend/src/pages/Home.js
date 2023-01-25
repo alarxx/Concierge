@@ -17,14 +17,14 @@ export default function Home(){
 
             {!userLoading && isAuthenticated() && <h2>{user.email}</h2>}
             {!userLoading && !isAuthenticated() && <h2>{user?.message}</h2>}
-            {userLoading && <h2>Loading...</h2>}
+            {userLoading && <p>loading...</p>}
 
             <nav>
                 <li><Link to="/">Home page</Link></li>
 
                 <li><Link to="/profile">Profile</Link></li>
 
-                <li><Link to="/auth">Auth</Link></li>
+                <li><Link to="/authenticate">Auth</Link></li>
                 <li><Link to="/logout">Log Out</Link></li>
 
                 <li><Link to="/chat">Chat</Link></li>

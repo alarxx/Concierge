@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import findIndexById from "../../handlers/findIndexById";
 
 function log(...str){
-    console.log("useOrder\n", ...str);
+    // console.log("useOrder\n", ...str);
 }
 
 /**

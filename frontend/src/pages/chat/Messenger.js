@@ -154,7 +154,7 @@ export default function Messenger({
                         return (
                             <div key={messageIndex}>
                                 {newDates.includes(messageIndex) && <Day date={new Date(message.createdDate)}/>}
-                                <Document message={message} />
+                                <Document message={message} user={user}/>
                             </div>
                         );
                     }
