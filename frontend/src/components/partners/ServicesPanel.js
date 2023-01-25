@@ -2,14 +2,100 @@ import React from 'react'
 
 import LocationIcon from "../../assets/icons/location.svg";
 import StarIcon from "../../assets/icons/star.svg";
+import Star from "../../assets/icons/star.svg";
 
+function PartnerInfo({
+                         name='Названи отеля',
+                         address='Адрес отеля',
+                         rate='4,5'}){
+    return (
+        <div className="partners-item__info">
+            <div className="partners-item__block">
+                <div className="partners-item__name">
+                    {name}
+                </div>
+                <div className="partners-item__rate">
+                    <StarIcon viewBox="0 0 24 24"/>
+                    <span>{rate}</span>
+                </div>
+            </div>
+            <div className="partners-item__right">
+                <LocationIcon viewBox="0 0 24 24"/>
+                <span>{address}</span>
+            </div>
+
+        </div>
+    );
+}
+
+function PartnerServices({ children }){
+    return (
+        <div className="partners-services">
+            {children}
+        </div>
+    );
+}
+
+function PartnerService({description='Описание комнаты. Описание комнаты Описание комнаты',}){
+    return (
+        <div className="card-item">
+            <div className="card-item__img">
+                <img src="/img/hotelimg.png" alt="room image"/>
+            </div>
+            <div className="card-item__info">
+                <div className="card-item__name">
+                    Название отеля
+                </div>
+                <div className="card-item__dopinfo">
+                    <div className="card-item__rate">
+
+                                <span>
+                                    <Star width="15" height="24" viewBox="0 0 24 24"/>
+                                </span>
+                        4.2
+                    </div>
+                    <div className="card-item__rooms">Комнат: <span className="roomsnum">1</span></div>
+                </div>
+                <div className="card-item__address">
+                                    <span>
+                                        <LocationIcon width="15" height="24" viewBox="0 0 24 24"/>
+                                    </span>
+                    Адрес отеля
+                </div>
+                <div className="card-item__descr">
+                    {description}
+                </div>
+                <div className="card-item__price">
+                    Зарина <br/>
+                    +7 730 376 1222
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function PartnerItem({}){
+    return (
+        <div className="partners-item">
+
+            <PartnerInfo />
+
+            <PartnerServices>
+
+                <PartnerService />
+
+            </PartnerServices>
+
+        </div>
+    );
+}
 
 export default function ServicesFrame(){
     return (
-        <div class="partners">
-            <div class="partners__search">
-                <div class="search">
-                    <input type="text" class="search-input" placeholder="Найти по названию"/>
+        <div className="partners">
+            <div className="partners__search">
+                <div className="search">
+                    <input type="text" className="search-input" placeholder="Найти по названию"/>
                     <span>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -18,18 +104,20 @@ export default function ServicesFrame(){
                     </span>
                 </div>
             </div>
-            <div class="partners__category tags">
-                <div class="tag tag-active">
-                    <div class="tag__name">Квартиры</div>
+            <div className="partners__category tags">
+                <div className="tag tag-active">
+                    <div className="tag__name">Квартиры</div>
                     <span> (34)</span>
                 </div>
-                <div class="tag">
-                    <div class="tag__name">Отели</div>
+                <div className="tag">
+                    <div className="tag__name">Отели</div>
                     <span> (123)</span>
                 </div>
             </div>
-            <div class="partners__wrapper">
-                <div class="partners-item">
+            <div className="partners__wrapper">
+
+                <PartnerItem />
+                {/*<div class="partners-item">
                     <div class="partners-item__info">
                         <div class="partners-item__block">
                             <div class="partners-item__name">
@@ -81,7 +169,7 @@ export default function ServicesFrame(){
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*/}
             </div>
 
         </div>

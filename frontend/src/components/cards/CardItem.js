@@ -1,63 +1,12 @@
 import React from 'react';
 
-import Star from '../../assets/icons/star.svg'
-import Location from '../../assets/icons/location.svg'
-
-function Rate({ rate }){
-    return (
-        <div className="card-item__rate">
-            <span>
-                <Star width="15" height="24" viewBox="0 0 24 24"/>
-            </span>
-            {rate}
-        </div>
-    );
-}
-function Image({ img_url }){
-    return (
-        <div className="card-item__img">
-            <img src={img_url} alt="image"/>
-        </div>
-    );
-}
-function Name({name}){
-    return (
-        <div className="card-item__name">
-            {name}
-        </div>
-    );
-}
-function Rooms({rooms_num}){
-    return (
-        <div className="card-item__rooms">
-            Комнат: <span className="roomsnum">{rooms_num}</span>
-        </div>
-    );
-}
-function Address({address}){
-    return (
-        <div className="card-item__address">
-            <span>
-                <Location width="15" height="24" viewBox="0 0 24 24"/>
-            </span>
-            {address}
-        </div>
-    );
-}
-function Description({ description }){
-    return (
-        <div className="card-item__descr">
-            {description}
-        </div>
-    );
-}
-function Price({price, measuring}){
-    return (
-        <div className="card-item__price">
-            {price} {measuring}
-        </div>
-    );
-}
+import Image from './atoms/Image'
+import Name from "./atoms/Name";
+import Rate from "./atoms/Rate";
+import Rooms from "./atoms/Rooms";
+import Address from "./atoms/Address";
+import Description from "./atoms/Description";
+import Price from "./atoms/Price";
 
 export default function CardItem({
                                      name,
