@@ -13,7 +13,10 @@ export default function useAuth({socketHandler}){
     const [userError, setUserError] = useState(null);
 
     useEffect(()=>{
-        socket.on("connect_error", err => setUserError(err));
+        socket.on("connect_error", err => {
+            setUserLoading(false)
+            setUserError(err)
+        });
     }, [])
 
     /** Так мы понимаем, что произошел reconnect */
