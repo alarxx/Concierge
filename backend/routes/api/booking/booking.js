@@ -7,8 +7,10 @@ const express = require('express');
 const Router = express.Router();
 
 
-const {searchAndPopulate} = require('../../../controllers/api/booking/booking');
+const {searchAndPopulate, findByQueryIds, r} = require('../../../controllers/api/booking/booking');
 
-Router.get('/', searchAndPopulate);
+// Router.get('/', searchAndPopulate);
+Router.get('/', findByQueryIds, r);
+
 
 module.exports = Router;

@@ -12,13 +12,13 @@ const controller = require('../../../controllers/api/hotel/hotel');
 
 const {
     c, r, u, d,
-    findOne, find,
+    findOne, find, findByQueryIds,
     filesValidation
 } = controller;
 
 Router.route('/')
     .post(filesValidation, c)
-    .get(find, r)
+    .get(findByQueryIds, r)
     .put(filesValidation, findOne, u)
     .delete(findOne, d);
 

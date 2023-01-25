@@ -2,11 +2,13 @@ const BookingModel = require('../../../models/services/Booking');
 
 const Model = BookingModel;
 
+const bookingController = require('../../controller')({Model: BookingModel});
+
 /**
  * В некоторых местах bookings и services controller.searchAndPopulate схожи, но они все таки достаточно разные.
  * Booking-и могут читать только менеджера и люди прикрепленные к брони
  * */
-module.exports.searchAndPopulate = async (req, res) => {
+bookingController.searchAndPopulate = async (req, res) => {
     // Вытаскиваем id из query и переименовываем на ids
     let ids = {...req.query}.id;
 
@@ -56,3 +58,5 @@ module.exports.searchAndPopulate = async (req, res) => {
 
     return res.json(models);
 }
+
+module.exports = bookingController;

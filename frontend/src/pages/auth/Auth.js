@@ -27,43 +27,6 @@ export default function Auth() {
     const [data, setData] = useState({})
     const [type, setType] = useState('login')
 
-    /*function onSubmit(e){
-        (async ()=>{
-            if(type === 'login'){
-                await login(data);
-            }
-            else{
-                await register(data);
-            }
-
-            if(location.state?.redirect){
-                const state = {...location.state};
-
-                if(type === 'login'){
-                    // console.log("navigate to", location.state.redirect, "\nstate", state);
-                    delete state.redirect;
-                    navigate(location.state.redirect, {replace: true, state});
-                }
-                else{
-                    setType('login')
-                    // console.log("navigate to /authenticate", "\nstate", state);
-                    navigate('/authenticate', {replace: true, state});
-                }
-            }
-            else {
-                if(type === 'login'){
-                    // console.log("navigate to / with no state");
-                    navigate('/', {replace: true});
-                }
-                else{
-                    setType('login')
-                    // console.log("navigate to /authenticate with no state");
-                    navigate('/authenticate', {replace: true});
-                }
-            }
-        })()
-    }*/
-
     function onSubmit(e){
         (async ()=>{
 

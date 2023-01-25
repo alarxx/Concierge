@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useNavigate} from "react-router-dom";
 
 import findIndexById from "../../handlers/findIndexById";
+import setIds from "../../handlers/setIds";
 
 function log(...str){
     // console.log("useOrder\n", ...str);
@@ -21,8 +22,7 @@ export default function useOrder({ socketHandler, authHandler }){
     const { socket, isConnected } = socketHandler;
 
     function _addOrder(order){
-        order.id = order._id;
-        delete order._id;
+        setIds(order)
 
         log("/save/order", order);
         setOrders(prev => [...prev, order])
@@ -68,39 +68,20 @@ export default function useOrder({ socketHandler, authHandler }){
     }, [orders])
 
 
-    async function createOrder(meta){
-        const order = {meta, conversation_name: meta.conversation_name}
-        // Убеждаемся, что пользователь авторизован и создаем заказ
-
-        if (!isAuthenticated()) {
-            navigate('/auth', {
-                replace: true,
-                state: {
-                    redirect: '/order',
-                    order: order
-                }
-            });
-        }
-        else {
-            // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
-            try{
-                // Код делее рабочий, просто, чтобы не насоздавать ордеров закоментил
-                fetch('/api/order', {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    method: 'POST',
-                    body: JSON.stringify(order)
-                })
-                    .then(res=>res.json())
-                    .then(json => log("Create", json))
-                    .catch(e => log("Error on create", e))
-
-                navigate(-1)
-            }catch(e){
-                log(e);
-            }
-        }
+    async function createOrder(order){
+        if(!isAuthenticated()) return; // Защита от дурака, на всякий случай
+        // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
+        // Код делее рабочий, просто, чтобы не насоздавать ордеров закоментил
+        return await fetch('/api/order', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(order)
+        })
+            .then(res=>res.json())
+            .then(json => log("Create", json))
+            .catch(e => log("Error on create", e))
     }
 
     /* Не нужно сетить ордера здесь, потому что у нас придет уведомление /save, /delete */
@@ -147,15 +128,7 @@ export default function useOrder({ socketHandler, authHandler }){
             setOrdersLoading(false);
             setOrdersError(null);
             if(res.status === 200){
-                setOrders(json.map(order => {
-                    order.id = order._id;
-                    delete order._id;
-
-                    order.meta.id = order.meta._id;
-                    delete order.meta._id;
-
-                    return order;
-                }))
+                setOrders(json.map(order => setIds(order)))
             }
         }
         catch (err){

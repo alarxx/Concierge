@@ -29,7 +29,7 @@ const FORMS = [
 
 /* На самом деле лучше не писать это так, а устанавливать default значения в каждой форме */
 // Это order_meta, все что выбирает пользователь идет в order_meta, сам order может менять только manager
-const _INITIAL_DATA_DEFAULT = {
+/*const _INITIAL_DATA_DEFAULT = {
     type: 'informal', // ['business_trip', 'event', 'informal']
     needs: [], //['housing', 'transport', 'travel', 'informal']
     num_of_people: 1,
@@ -49,7 +49,7 @@ const _INITIAL_DATA_DEFAULT = {
 
     description: '',
     preferred_services: [] //ObjectIds
-}
+}*/
 const _useFilled = () => {
     const location = useLocation()
     const [isFilledBefore, setFilledBefore] = useState(false)

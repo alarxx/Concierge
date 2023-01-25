@@ -272,6 +272,40 @@ module.exports = ({Model}) => {
     }
 
 
+    controller.findByQueryIds = async (req, res, next) => {
+        // Вытаскиваем id из query и переименовываем на ids
+        let {id: ids} = req.query;
+
+        // Если ids null или []
+        if(!ids || ids.length===0)
+            return res.status(403).json({error: 'Required search parameter/parameters `id` not found'});
+
+        // ids обязательно должен быть массивом
+        if(!Array.isArray(ids))
+            ids = [ids];
+
+        /* Найти, проверить, отдать */
+
+        let models = await Model.find({ '_id': { $in: ids } });//.select('-price -discount');
+
+        // Если количество найденных элементов не совпадает с количеством требуемых, то сообщаем какие id не найдены
+        if(models.length !== ids.length){
+            let filteredIds = ids.reduce((filtered, id) => {
+                if(models.some(model => model.id === id))
+                    return filtered;
+                filtered.push(id);
+                return filtered
+            }, []);
+            return res.status(404).json({error: `[${filteredIds}] ids not found`});
+        }
+
+
+        res.locals.models = models;
+
+        next();
+    }
+
+
     /**
      * Здесь нужна только первичная проверка кажется (??)
      * Метод create и update сильно похожи, но create имеет функцию автоматического добавления некоторой информации (onCreate).

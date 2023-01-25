@@ -11,15 +11,15 @@ const controller = require('../../../../controllers/api/hotel/service/service');
 
 const {
     c, r, u, d,
-    findOne, find,
+    findOne, find,findByQueryIds,
     filesValidation,
     addToArray, removeFromArray, arrayField
 } = controller;
 
 Router.route('/')
-    .post(filesValidation, c)
-    .get(find, r)
-    .put(filesValidation, findOne, u)
-    .delete(findOne, d);
+    // .post(filesValidation, c)
+    .get(findByQueryIds, r)
+    // .put(filesValidation, findOne, u)
+    // .delete(findOne, d);
 
 module.exports = Router;

@@ -2,11 +2,13 @@ const ServiceModel = require('../../../models/services/Service');
 
 const Model = ServiceModel;
 
+const serviceController = require('../../controller')({Model: ServiceModel});
+
 /**
  * В некоторых местах bookings и services controller.searchAndPopulate схожи, но они все таки достаточно разные.
  * Service могут чекать все, кроме полей цены сервиса
  * */
-module.exports.searchAndPopulate = async (req, res) => {
+serviceController.searchAndPopulate = async (req, res) => {
     // Вытаскиваем id из query и переименовываем на ids
     let {id: ids} = req.query;
 
@@ -58,3 +60,5 @@ module.exports.searchAndPopulate = async (req, res) => {
     return res.json(models)
 
 }
+
+module.exports = serviceController;

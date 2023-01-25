@@ -19,6 +19,13 @@ function AppContextProvider({ children }){
     const orderHandler = useOrder({socketHandler, authHandler});
     const chatHandler = useChat({socketHandler, authHandler, orderHandler});
 
+    useEffect(()=>{
+        (async ()=>{
+            // console.log(new Query)
+            // const response = await fetch('/api/office');
+        })();
+    }, []);
+
     return (
         <Context.Provider value={{
             socketHandler,

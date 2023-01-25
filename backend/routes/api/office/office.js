@@ -6,9 +6,21 @@ const express = require('express');
 
 const Router = express.Router();
 
-const {searchAndPopulate} = require('../../../controllers/api/service/service');
 
-/** Возвращает все совпавшие с req.query */
-Router.get('/extended', searchAndPopulate);
+const controller = require('../../../controllers/api/office/office');
+
+const {
+    c, r, u, d,
+    findOne, find,findByQueryIds,
+    filesValidation,
+    addToArray, removeFromArray, arrayField
+} = controller;
+
+Router.route('/')
+    // .post(filesValidation, c)
+    .get(findByQueryIds, r)
+    // .put(filesValidation, findOne, u)
+    // .delete(findOne, d);
+
 
 module.exports = Router;
