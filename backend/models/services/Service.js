@@ -8,6 +8,12 @@ const {Schema, model} = require('mongoose');
 // const Flight_Class 1 require('');
 
 const ServiceSchema = new Schema({
+    office: {
+        type: Schema.Types.ObjectId,
+        ref: 'Office',
+        required: true,
+        immutable: true
+    },
     type: {
         type: String,
         enum: ['hotel/service', 'flight/service', 'informal'],

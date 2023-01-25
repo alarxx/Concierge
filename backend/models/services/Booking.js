@@ -9,6 +9,12 @@ const {Schema, model} = require('mongoose');
 // const Flight_Class = require('');
 
 const BookingSchema = new Schema({
+    service: {
+        type: Schema.Types.ObjectId,
+        ref: 'Service',
+        required: true,
+        immutable: true
+    },
     type: {
         type: String,
         enum: ['hotel/booking', 'flight/booking', 'informal/booking'],

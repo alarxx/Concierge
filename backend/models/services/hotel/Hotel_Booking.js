@@ -84,29 +84,32 @@ BookingSchema.statics.publicFiles = function(){
 // const colors = require("../../../logging/colors");
 
 BookingSchema.methods.onCreate = async function({req, res, body, user}){
-    /*### Автоматическое установление цены booking-а такой же, как и у service. Не уверен, что это хорошое решение ### */
-    /*if(!body['hotel/service']) {
-        const err = 'Path `hotel/service` is required.';
-        log(colors.red(err));
-        return res.status(400).json({error: err});
-    }
-    const hotel_service = await require('./Hotel_Service').findOne({'hotel/service': body['hotel/service']})
-    if(!hotel_service){
-        const err = 'Provided `hotel/service` not found ';
-        log(colors.red(err));
-        return res.status(400).json({error: err});
-    }
-    this.price = hotel_service.price;*/
-    /*######*/
-
-    // Creating booking
-    const booking = await new Booking({
-        type: 'hotel/booking',
-        'hotel/booking': this.id
-    }).save();
-    this.booking = booking.id;
+    const Hotel_Services = require('../../modelsManager').models.Hotel_Service;
 
     this.customer = user.id;
+
+    const booking = new Booking({
+        type: 'hotel/booking',
+        'hotel/booking': this.id
+    });
+    this.booking = booking.id;
+
+    if(!body['hotel/service']){
+        await this.validate();
+    }
+
+    const hotel_service = await Hotel_Services.findById(body['hotel/service']);
+
+    if(!hotel_service){
+        return res.status(400).json({error: "Hotel/Service not found"});
+    }
+
+    booking.service = hotel_service.service;
+
+    // Creating booking
+    await booking.save();
+
+
 }
 
 const handlers = require("../../handlers");

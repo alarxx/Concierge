@@ -76,19 +76,33 @@ const Hotel_Booking = require('./Hotel_Booking');
 const handlers = require('../../handlers');
 const colors = require("../../../logging/colors");
 
-ServiceSchema.methods.onCreate = async function({body, user}){
-    // Creating service
-    const service = await new Service({
+ServiceSchema.methods.onCreate = async function({res, req, body, user}){
+    const service = new Service({
         type: 'hotel/service',
         'hotel/service': this.id
-    }).save();
-    this.service = service.id;
+    })
+    this.service = service.id
+
+    const Hotels = require('../../modelsManager').models.Hotel;
+    // Creating service
+    if(!body.hotel) {
+        await this.validate();
+    }
+
+    const hotel = await Hotels.findById(body.hotel);
+    if(!hotel){
+        return res.status(400).json({error: "Hotel not found"});
+    }
+
+    service.office = hotel.office;
+
+    await service.save();
 }
 
 ServiceSchema.methods.deepDelete = async function(){
     //Должен удалить service, прикрепленный к нему, и все букинги, которые отсылаются на него
     const bookings = await Hotel_Booking.find({'hotel/service': this.id});
-    console.log(colors.red('bookings[]='), bookings);
+    // console.log(colors.red('bookings[]='), bookings);
     await Promise.all(bookings.map(async booking => booking.deepDelete()));
 
     await handlers.deleteModels(this, ['logo', 'service']);

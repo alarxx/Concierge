@@ -66,9 +66,11 @@ HotelSchema.statics.publicFiles = function(){
     return ['logo'];
 }
 
-HotelSchema.methods.onCreate = async function({}){
+HotelSchema.methods.onCreate = async function({body}){
     const Offices = require('../../modelsManager').models.Office;
+
     const office = new Offices({
+        company: body.company,
         type: 'hotel',
         hotel: this.id
     });
@@ -80,12 +82,12 @@ HotelSchema.methods.onCreate = async function({}){
 HotelSchema.methods.deepDelete = async function(){
     //Еще надо удалить все Hotel/Service, которые принадлежат этому отелю
     const hotels = await Hotel_Service.find({hotel: this.id});
-    console.log(colors.red('services[]='), hotels);
+    // console.log(colors.red('services[]='), hotels);
     await Promise.all(hotels.map(async hotel => hotel.deepDelete()));
 
 
     // if(this.logo) await File.deepDeleteById(this.logo);
-    await handlers.deleteModels(this, ['logo']);
+    await handlers.deleteModels(this, ['logo', 'office']);
 
     // await Promise.all(this.images.map(async id => await File.deepDeleteById(id)));
     await handlers.deleteArraysOfModels(this, ['images']);

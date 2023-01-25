@@ -2,22 +2,13 @@ import React from 'react'
 
 import LocationIcon from "../../assets/icons/location.svg";
 import StarIcon from "../../assets/icons/star.svg";
-import Star from "../../assets/icons/star.svg";
 import Search from "../form/Search";
-import Image from "../cards/atoms/Image";
-import Name from "../cards/atoms/Name";
-import Rate from "../cards/atoms/Rate";
-import Rooms from "../cards/atoms/Rooms";
-import Address from "../cards/atoms/Address";
-import Description from "../cards/atoms/Description";
-import Price from "../cards/atoms/Price";
-import Contacts from "../cards/atoms/Contacts";
 import CardItem from "../cards/CardItem";
 
 function PartnerInfo({
                          name='Название отеля',
                          address='Адрес отеля',
-                         rate='4,5'}){
+                         rate=4.5}){
     return (
         <div className="partners-item__info">
             <div className="partners-item__block">
@@ -87,6 +78,25 @@ function Tag({
         </div>
     );
 }
+
+
+// hotel.services мы должны будем добавлять на фронте. hotels и services мы должны будем в контексте соотнести и присвоить отелям массив services
+// Мы должны будем все сервисы прислать в контекст раскрытыми или нет. Долго ли populate-ить? Или нам легче отправить и отели и сервисы и на фронте их как то за-compare-ить
+const offices = [
+    {
+        "id": "63d16cdb63463dbeb41dc690",
+        "type": "hotel",
+        "hotel": {
+            "id": "63d16cdb63463dbeb41dc68f",
+            "office":"63d16cdb63463dbeb41dc690",
+            "name": "Отель компании 1",
+            "logo": "id of file or null",
+            "services": [
+
+            ],
+        }
+    },
+];
 
 export default function ServicesFrame({ offices=[] }){
     return (

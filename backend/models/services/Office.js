@@ -5,6 +5,12 @@
 const {Schema, model} = require('mongoose');
 
 const OfficeSchema = new Schema({
+    company: {
+        type: Schema.Types.ObjectId,
+        ref: 'Company',
+        required: true,
+        immutable: true
+    },
     type: {
         type: String,
         enum: ['hotel', 'flight'],
