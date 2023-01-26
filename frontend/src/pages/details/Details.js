@@ -2,12 +2,15 @@ import React from 'react';
 import Workflow from "../../components/phone/Workflow";
 import Container from "../../components/phone/Container";
 import Navbar from "../../components/phone/Navbar";
+import {useNavigate} from "react-router-dom";
 
 export default function Details({}){
+    const navigate = useNavigate()
+
     return (
         <Workflow>
 
-            <Navbar title={"Детали командировки"} back info/>
+            <Navbar title={"Детали командировки"} back info onBackClick={e=>navigate(-1)}/>
             <Container>
                     <div className="details-card">
                         <div className="details-card__header">
