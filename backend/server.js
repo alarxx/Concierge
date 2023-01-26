@@ -1,10 +1,11 @@
-// const dotenv = require('dotenv').config()
+const dotenv = require('dotenv').config()
 
 const colors = require('./logging/colors');
 
 const {credentials} = require(`./config`);
 
 const mongoose = require('mongoose');
+const path = require('path');
 
 // credentials.dbUri = 'mongodb://127.0.0.1:27017/test';
 mongoose.connect(credentials.dbUri, {useNewUrlParser: true})
@@ -33,6 +34,7 @@ if(app.get('env') === 'development')
 
 /** Доступ к статическим файлам */
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/dist'));
 
 /** Body Parser */
 const bodyParser = require('body-parser');

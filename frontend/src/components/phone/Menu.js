@@ -23,7 +23,7 @@ export default function Menu(){
                         </div>
                     </li>
                     <li className="menu__li">
-                        <div className="menu__icon" onClick={e => navigate('/', {replace: true,})}>
+                        <div className="menu__icon" onClick={e => navigate('/order', {replace: true,})}>
                             <Math width="26" height="26" viewBox="0 0 26 26"/>
                         </div>
                     </li>
