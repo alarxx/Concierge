@@ -4,8 +4,8 @@ import {Link, Routes, Route} from "react-router-dom";
 
 import Home from "./pages/Home";
 import Auth from './pages/auth/Auth'
+import Logout from "./pages/auth/Logout";
 
-import Logout from "../arch/authArchive/Logout";
 import ChatApp from "./pages/chat/ChatApp";
 import Order from './pages/order/Order'
 import Profile from './pages/profile/Profile'

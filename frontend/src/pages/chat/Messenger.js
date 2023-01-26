@@ -5,7 +5,6 @@ import React, {useEffect, useRef, useState} from 'react'
 import Navbar from "../../components/phone/Navbar";
 import Container from "../../components/phone/Container";
 import Message from "../../components/chat/Message";
-import ControlPanel from "../../../arch/ControlPanel";
 import Workflow from "../../components/phone/Workflow";
 import Day from "../../components/chat/Day";
 import ChoiceForm from "../../components/chat/ChoiceForm";

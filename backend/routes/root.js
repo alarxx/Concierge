@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+
 const Router = express.Router();
 
 Router.use('/auth', require('./auth/auth'));
@@ -16,8 +18,7 @@ Router.use('/file', require('./file/file'));
 }*/
 
 Router.get('/*', (req, res) => {
-	console.log(require('path').resolve(__dirname, '../view/index.html'));
-	res.sendFile(require('path').resolve(__dirname, '../view/index.html'));
+	res.sendFile(path.resolve(__dirname, '../../build-client/index.html'));
 });
 
 Router.use((err, req, res, next)=>{

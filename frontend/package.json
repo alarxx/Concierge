@@ -5,7 +5,8 @@
   "main": "./src/index.js",
   "proxy": "http://localhost:3000",
   "scripts": {
-    "test": "webpack serve --mode development --open --hot",
+    "test": "",
+    "start": "webpack serve --mode development --open --hot",
     "build": "webpack --mode production"
   },
   "keywords": [],

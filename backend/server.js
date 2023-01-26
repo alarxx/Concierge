@@ -36,7 +36,7 @@ app.use(cors());
 
 /** Доступ к статическим файлам */
 app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/view'));
+app.use(express.static(path.resolve(__dirname, '../build-client')));
 
 /** Body Parser */
 const bodyParser = require('body-parser');
