@@ -17,6 +17,7 @@ import AttachPanel from '../../components/chat/AttachPanel';
 import ActionButtons from "../../components/chat/ActionsButtons"
 import ServicesPanel from "../../components/partners/ServicesPanel"
 import findIndexById from "../../handlers/findIndexById";
+import {useNavigate} from "react-router-dom";
 
 function objClone(obj){
     return JSON.parse(JSON.stringify(obj))
@@ -31,6 +32,8 @@ export default function Messenger({
     closeConversation=f=>f,
     sendMessage=f=>f,
 }){
+
+    const navigate = useNavigate()
 
     /**
      * Всегда когда меняется состояние сообщений мы пересчитываем messagesSelected для choice form,
@@ -151,7 +154,7 @@ export default function Messenger({
 
     return (
         <Workflow isOverflowBg={control === 'attach'}>
-            <Navbar title={conversation.name} back info onBackClick={closeConversation}/>
+            <Navbar title={conversation.name} back info onBackClick={closeConversation} onInfoClick={e=>navigate('/details')}/>
 
             <Container chat>
                 {messages.map((message, messageIndex) => {

@@ -15,6 +15,8 @@ import {AppContextProvider} from "./context/AppContext";
 
 import './assets/css/style.css'
 import './assets/css/adaptive.css'
+import Archive from "./pages/chat/Archive";
+import Details from "./pages/details/Details";
 
 export default function Router(){
 	// return (<TestSocket />)
@@ -31,7 +33,10 @@ export default function Router(){
 					<Route path=':id' element={<ChatApp />} />
 				</Route>
 
+				<Route path={'/archive'} element={<Archive/>}/>
+
 				<Route path='/order' element={<Order />} />
+				<Route path='/details' element={<Details />} />
 
 				<Route path='/profile' element={<Profile />} />
 
