@@ -27,10 +27,12 @@ const server = http.createServer(app);
 
 /** Используем CORS в окружении разработки */
 const cors = require('cors')
-if(app.get('env') === 'development')
+/*if(app.get('env') === 'development')
 	app.use(cors({
 		origin: ['http://localhost:9000']
-	}));
+	}));*/
+
+app.use(cors());
 
 /** Доступ к статическим файлам */
 app.use(express.static(__dirname + '/public'));
