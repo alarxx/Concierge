@@ -18,7 +18,7 @@ socket_io.initialize = function({server, sessionMiddleware, env}) {
     // }
 
     io_opt.cors = {
-        origin: ['http://localhost:9000'],
+        origin: '*',
         credentials: true
     };
 
