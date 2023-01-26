@@ -46,10 +46,10 @@ function PartnerServices({ children }){
 
 function PartnerItem({ office, services, onSelect=f=>f, selected=[] }){
 
-    useEffect(()=>{
+    /*useEffect(()=>{
         console.log("office", office);
         console.log("services", services);
-    }, [office, services])
+    }, [office, services])*/
 
     const measuring = "Т / ночь";
 

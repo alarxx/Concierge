@@ -10,8 +10,8 @@ import {useAppContext} from "../../context/AppContext";
 
 export default function Profile(){
 
-    const { orderHandler, chatHandler } = useAppContext();
-    const { orders } = orderHandler;
+    const { ordersHandler, chatHandler } = useAppContext();
+    const { orders } = ordersHandler;
     const { joinConversation } = chatHandler;
 
     return (
