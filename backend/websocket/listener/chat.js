@@ -51,9 +51,18 @@ async function createMessage(message, socket){
 
 module.exports = socket => {
     socket.on("join-conversation", async conversation => {
+
         const { user } = socket.request;
 
-        console.log("conversation", conversation);
+        console.log(`join socket(${socket.id}) to room`, conversation)
+
+        const Participants = require('../../models/modelsManager').models.Participant;
+
+        const info = {conversation: conversation.id, user: user.id};
+
+        const exists = await Participants.findOne(info);
+        if(exists)
+            return console.log(`Participant already exists `, exists)
 
         if(user.role === 'manager'){
             const script_messages = [
@@ -74,14 +83,6 @@ module.exports = socket => {
             }
         }
 
-        const Participants = require('../../models/modelsManager').models.Participant;
-
-        const info = {conversation: conversation.id, user: user.id};
-
-        const exists = await Participants.findOne(info);
-        if(exists)
-            return console.log(`Participant already exists `, exists)
-
         const p = new Participants(info);
 
         try{
@@ -90,7 +91,6 @@ module.exports = socket => {
             console.log(e)
         }
 
-        console.log(`join socket(${socket.id}) to room`, conversation)
     })
 
 
