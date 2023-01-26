@@ -68,7 +68,7 @@ export default function Conversations({
             <Navbar title={"Мои заявки"}/>
 
             <Container>
-                <ArchiveButton />
+                <ArchiveButton onClick={e=>navigate('/archive')}/>
 
                 {chatLoading && <p style={{textAlign:"center", margin: "3rem"}}>loading...</p>}
 

@@ -32,6 +32,7 @@ export default function Navbar({
             <div className="navbar__right info-control" onClick={onInfoClick}>
                 <InfoCirce />
             </div>}
+
             {select &&
             <div className="select-navbar">
                 <div className="select__name">

@@ -28,6 +28,9 @@ export default function Home(){
                 <li><Link to="/chat">Chat</Link></li>
                 <li><Link to="/order">Order</Link></li>
                 <li><Link to="/partners">Partners</Link></li>
+
+                <li><Link to="/details">Details</Link></li>
+
             </nav>
         </>
     );
