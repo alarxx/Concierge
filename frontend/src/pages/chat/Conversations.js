@@ -13,6 +13,15 @@ import ChatItem from "../../components/chat/ChatItem";
 import CreateIcon from "../../assets/icons/arrow-right.svg"
 import findIndexByKey from "../../handlers/findIndexByKey";
 
+function truncateString(str) {
+    // console.log("last message", str);
+    if(!str) return str;
+    if (str.length > 40) {
+        return str.slice(0, 37) + "...";
+    }
+    return str;
+}
+
 export default function Conversations({
                                           conversations=[],
                                           notifications=[],
@@ -49,6 +58,7 @@ export default function Conversations({
             });
         })
 
+        console.log("lastMessages", lastMessages1);
         setLastMessages(lastMessages1)
         setConversationNotifications(conversationNotifications1)
     }, [notifications]) // нужно ли нам перерисовывать conversation, без изменения уведомлений? У нас всегда новое сообщение сопровождается уведомлением
@@ -66,12 +76,11 @@ export default function Conversations({
 
                 <Chats>
                     {conversations.map((conversation, i) => {
-
                         return <ChatItem
                             key={i}
                             name={conversation.name}
                             unread_num={i < conversationNotifications.length ? conversationNotifications[i] : 0}
-                            last_message={lastMessages[i]}
+                            last_message={truncateString(lastMessages[i])}
                             onClick={e => openConversation(conversation)}
                         />
                     })}
