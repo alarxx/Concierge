@@ -120,7 +120,7 @@ const messagesDefault = [
 ]*/
 
 function log(...str){
-    // console.log("useChat\n", ...str);
+    console.log("useChat\n", ...str);
 }
 
 /**

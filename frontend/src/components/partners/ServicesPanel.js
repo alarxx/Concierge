@@ -1,30 +1,37 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 import LocationIcon from "../../assets/icons/location.svg";
 import StarIcon from "../../assets/icons/star.svg";
 import Search from "../form/Search";
 import CardItem from "../cards/CardItem";
+import {useAppContext} from "../../context/AppContext";
+import useOffice from "../../context/hooks/data/useOffice";
 
+/*
+name='Название отеля',
+address='Адрес отеля',
+rate=4.5
+*/
 function PartnerInfo({
-                         name='Название отеля',
-                         address='Адрес отеля',
-                         rate=4.5}){
+                         name,
+                         address,
+                         rate
+}){
     return (
         <div className="partners-item__info">
             <div className="partners-item__block">
-                <div className="partners-item__name">
+                {name && <div className="partners-item__name">
                     {name}
-                </div>
-                <div className="partners-item__rate">
+                </div>}
+                {rate && <div className="partners-item__rate">
                     <StarIcon viewBox="0 0 24 24"/>
                     <span>{rate}</span>
-                </div>
+                </div>}
             </div>
-            <div className="partners-item__right">
+            {address && <div className="partners-item__right">
                 <LocationIcon viewBox="0 0 24 24"/>
                 <span>{address}</span>
-            </div>
-
+            </div>}
         </div>
     );
 }
@@ -37,29 +44,46 @@ function PartnerServices({ children }){
     );
 }
 
-function PartnerItem({ office, services }){
+function PartnerItem({ office, services, onSelect=f=>f, selected=[] }){
+
+    useEffect(()=>{
+        console.log("office", office);
+        console.log("services", services);
+    }, [office, services])
+
     const measuring = "Т / ночь";
+
+    const hotel = office[office.type]
+
     return (
         <div className="partners-item">
 
-            <PartnerInfo />
+            <PartnerInfo name={hotel.name} rate={hotel.rate} address={hotel.address}/>
 
             <PartnerServices>
 
-                <CardItem
-                    name={"Название номера"}
-                    img_url={"/img/hotelimg.png"}
-                    rate={4.2}
-                    description={`Цена: ${10000} ${measuring}`}
+                {services.map((service, index) => {
 
-                    rooms_num={1}
+                    const room = service[service.type];
 
-                    contact_name="Зарина"
-                    contact_phone="+7 730 376 1222"
+                    return (
+                        <CardItem
+                            key={index}
+                            name={room.name}
+                            img_url={room.logo}
+                            rate={room.rate}
+                            description={room.price?`Цена: ${room.price} ${measuring}`:null}
 
-                    active={false}
-                    onClick={f=>f}
-                />
+                            rooms_num={room.rooms_num}
+
+                            contact_name={room.contact_name}
+                            contact_phone={room.contact_phone}
+
+                            active={selected.includes(service.id)}
+                            onClick={e => onSelect(service)}
+                        />
+                    );
+                })}
 
             </PartnerServices>
 
@@ -67,10 +91,16 @@ function PartnerItem({ office, services }){
     );
 }
 
+/*
+name="Квартиры",
+number=34,
+active=false
+*/
 function Tag({
-                 name="Квартиры",
-                 number=34,
-                 active=false}){
+                 name,
+                 number,
+                 active
+}){
     return (
         <div className={`tag ${active?'tag-active':''}`}>
             <div className="tag__name">{name}</div>
@@ -98,30 +128,63 @@ const offices = [
     },
 ];
 
-export default function ServicesFrame({ offices=[] }){
+export default function ServicesFrame({
+                                          onSubmit=f=>console.log(f)
+}){ //Why not ServicePanel
+
+    const { officesHandler, servicesHandler } = useAppContext();
+
+    const { offices } = officesHandler;
+    const { services } = servicesHandler;
+
+    const [selected, setSelected] = useState([]);
+
+    function upsertSelected(value){
+        const clone = [...selected];
+
+        const index = clone.indexOf(value);
+
+        if(index === -1)
+            clone.push(value);
+        else
+            clone.splice(index, 1);
+
+        setSelected(clone)
+    }
+
+    function onSelect(service){
+        upsertSelected(service.id);
+    }
+
     return (
         <div className="partners">
+
             <div className="partners__search">
                 <Search placeholder={"Найти по названию"}/>
             </div>
 
             <div className="partners__category tags">
-                <Tag name={"Квартиры"} number={34} active={true}/>
-                <Tag name={"Отели"} number={123} active={false}/>
+                <Tag name={"Квартиры"} number={123} active={false}/>
+                <Tag name={"Отели"} number={services.filter(s => s.type === 'hotel/service').length} active={true}/>
             </div>
+
+            {selected.length>0 && <button onClick={e => onSubmit(selected)}>Отправить</button>}
 
             <div className="partners__wrapper">
 
                 {/* Вот так должно быть, если мы подключим бэкенд.  */}
-                {/*{offices.map(
-                    office => (
-                            <PartnerItem office={office}
-                                         services={office.services}
-                                         preferred_services={order.meta.preferred_service}
+                {offices.map(
+                    (office, index) => (
+                            <PartnerItem key={index}
+                                         office={office}
+                                         services={services.filter(service => service.office == office.id)}
+                                         onSelect={onSelect}
+                                         selected={selected}
                             />
                         )
-                )}*/}
-                <PartnerItem />
+                )}
+
+                {/*<PartnerItem />*/}
 
             </div>
 

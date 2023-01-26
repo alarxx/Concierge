@@ -6,7 +6,7 @@ import setIds from "../../handlers/setIds";
 import useFreshData from "../../hooks/useFreshData";
 
 function log(...str){
-    console.log("useOrder\n", ...str);
+    // console.log("useOrder\n", ...str);
 }
 
 /**

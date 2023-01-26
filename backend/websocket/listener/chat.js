@@ -9,7 +9,7 @@ async function createMessage(message, socket){
      * Нужно не только тупое сохранение сделать, но и изменение
      * */
 
-    const m = message.id ?
+    let m = message.id ?
         await Messages.findById(message.id) :
         new Messages({
             sender: user.id,
@@ -24,8 +24,8 @@ async function createMessage(message, socket){
         }
         else if(m.type === 'choice'){
             m.choice.selectedServices = message.choice.selectedServices;
-            m.choice.submitted = true;
-
+            if(message.id)
+                m.choice.submitted = true;
         }
         // А когда файл?
         await m.save();

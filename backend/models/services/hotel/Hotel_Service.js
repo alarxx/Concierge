@@ -53,6 +53,12 @@ const ServiceSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'File'
     }],
+    contact_name: {
+        type: String,
+    },
+    contact_phone:{
+        type: String
+    },
     createdDate: {
         type: Date,
         immutable: true,

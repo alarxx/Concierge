@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 
 function log(...str){
-    console.log("useAuth\n", ...str);
+    // console.log("useAuth\n", ...str);
 }
 
 export default function useAuth({socketHandler}){

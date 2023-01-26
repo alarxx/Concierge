@@ -53,14 +53,18 @@ export default function Messenger({
     const [isAttach, setIsAttach] = useState(false);
     const [action, setAction] = useState('actions');
 
+    function dropAttachPanel(){
+        setControl('text');
+        setAction('actions');
+        setIsAttach(false);
+    }
+
     // const [lastDate, setLastDate] = useState();
 
     useEffect(()=>{
         if(action === 'request files'){
             onFileRequest();
-            setControl('text')
-            setAction('actions')
-            setIsAttach(false);
+            dropAttachPanel();
         }
         else if(messagesSelected.length !== 0)
             setControl('choice')
@@ -87,6 +91,18 @@ export default function Messenger({
         setMessagesSelected([]);
     }
     function onChoiceRequest(services){
+        console.log("onChoiceRequest", services);
+        sendMessage({
+            conversation: conversation.id,
+            type: 'choice',
+            choice: {
+                services,
+                selectedServices: [],
+                multiple_choice: true,
+                submitted: false,
+            }
+        });
+        dropAttachPanel();
     }
 
     function onFileSend(file){
@@ -196,8 +212,7 @@ export default function Messenger({
                 <AttachPanel
                     title="Выберите паттерн"
                     onClose={ e => {
-                        setIsAttach(false)
-                        setAction('actions')
+                        dropAttachPanel()
                     }}
                 >
 
@@ -205,7 +220,9 @@ export default function Messenger({
                         <ActionButtons setAction={action => setAction(action)}/>
                     }
                     {action === 'offer services' &&
-                        <ServicesPanel />
+                        <ServicesPanel
+                            onSubmit={services => onChoiceRequest(services)}
+                        />
                     }
                 </AttachPanel>
             }

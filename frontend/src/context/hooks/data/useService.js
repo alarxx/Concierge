@@ -5,7 +5,7 @@ import useFreshData from "../../../hooks/useFreshData";
 
 
 function log(...str){
-    console.log("useService:", ...str);
+    // console.log("useService:", ...str);
 }
 
 /**
@@ -18,7 +18,7 @@ export default function useService({authHandler, socketHandler}){
     const [servicesLoading, setServicesLoading] = useState(true);
     const [servicesError, setServicesError] = useState(null);
 
-    const [service, setServices, updateServices] = useFreshData({socket, modelName:'Service'});
+    const [services, setServices, updateServices] = useFreshData({socket, modelName:'Service'});
 
     /* Думаю что и preload можно вынести в userFreshData, тогда вообще легко будет создавать авто-обновляемые данные */
     async function preload(){
@@ -52,7 +52,7 @@ export default function useService({authHandler, socketHandler}){
         }
         else {
             // Как понять, что до этого мы были авторизованы
-            if(service.length){
+            if(services.length){
                 log([]);
                 setServices([])
             }
@@ -60,5 +60,5 @@ export default function useService({authHandler, socketHandler}){
         }
     }, [user])
 
-    return {offices: service}
+    return {services}
 }

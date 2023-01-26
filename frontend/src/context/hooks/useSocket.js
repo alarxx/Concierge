@@ -9,7 +9,7 @@ const OPTS = {
 const socket = io(URL, OPTS);
 
 function log(...str){
-    console.log("useSocket\n", ...str);
+    // console.log("useSocket\n", ...str);
 }
 
 export default function useSocket(){

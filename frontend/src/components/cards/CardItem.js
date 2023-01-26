@@ -51,6 +51,7 @@ export default function CardItem({
         <div className={`card-item ${active?'card-item-active':''}`} onClick={onClick}>
 
             {img_url && <Image img_url={img_url} />}
+            {!img_url && <Image img_url={'/img/hotelimg.png'} />}
 
             <div className="card-item__info">
 

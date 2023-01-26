@@ -17,8 +17,8 @@ function AppContextProvider({ children }){
 
     const socketHandler = useSocket()
     const authHandler = useAuth({socketHandler});
-    const orderHandler = useOrder({socketHandler, authHandler});
-    const chatHandler = useChat({socketHandler, authHandler, orderHandler});
+    const ordersHandler = useOrder({socketHandler, authHandler});
+    const chatHandler = useChat({socketHandler, authHandler, ordersHandler});
 
     const officesHandler = useOffice({authHandler, socketHandler})
     const servicesHandler = useService({authHandler, socketHandler})
@@ -27,7 +27,7 @@ function AppContextProvider({ children }){
         <Context.Provider value={{
             socketHandler,
             authHandler,
-            orderHandler,
+            ordersHandler,
             chatHandler,
             officesHandler,
             servicesHandler
