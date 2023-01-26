@@ -19,6 +19,7 @@ socket_io.initialize = function({server, sessionMiddleware, env}) {
 
     io_opt.cors = {
         origin: '*',
+        methods: ["GET", "POST"],
         credentials: true
     };
 
