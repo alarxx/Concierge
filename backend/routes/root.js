@@ -16,8 +16,8 @@ Router.use('/file', require('./file/file'));
 }*/
 
 Router.get('/*', (req, res) => {
-	console.log(require('path').resolve(__dirname, '../dist/index.html'));
-	res.sendFile(require('path').resolve(__dirname, '../dist/index.html'));
+	console.log(require('path').resolve(__dirname, '../view/index.html'));
+	res.sendFile(require('path').resolve(__dirname, '../view/index.html'));
 });
 
 Router.use((err, req, res, next)=>{

@@ -34,7 +34,7 @@ if(app.get('env') === 'development')
 
 /** Доступ к статическим файлам */
 app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/dist'));
+app.use(express.static(__dirname + '/view'));
 
 /** Body Parser */
 const bodyParser = require('body-parser');
