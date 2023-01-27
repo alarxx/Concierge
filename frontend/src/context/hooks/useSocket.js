@@ -3,8 +3,6 @@ import {io} from "socket.io-client";
 
 const URL = process.env.NODE_ENV==='production' ? 'http://159.223.19.108:3000' : 'http://localhost:3000';
 
-console.log(URL);
-
 const OPTS = {
     withCredentials: true
 }
