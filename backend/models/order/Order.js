@@ -12,7 +12,6 @@ const {Schema, model} = require('mongoose');
 const modelName = 'Order';
 
 const OrderSchema = new Schema({
-    name: String,
 
     customer: {
         type: Schema.Types.ObjectId,
@@ -55,19 +54,27 @@ const OrderSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'File',
     },
-    startTime: {
-        type: Date,
-        immutable: true,
-        default: new Date()
-    },
+
     status: {
         type: String,
-        enum: ['new', 'handling', 'completed']
+        enum: ['new', 'handling', 'canceled', 'completed'],
+        default: 'new'
+    },
+
+    createdDate: {
+        type: Date,
+        immutable: true,
+        default: () => new Date(),
+    },
+    updatedDate: {
+        type: Date,
+        default: () => new Date(),
     }
 });
 
 OrderSchema.plugin(require('mongoose-unique-validator'));
 OrderSchema.plugin(require('../logPlugin'))
+OrderSchema.plugin(require('../updatedDate'))
 OrderSchema.plugin(require('../../websocket/observer/order/order'))
 
 const handlers = require("../handlers");
@@ -83,31 +90,41 @@ OrderSchema.statics.nestedObjectKeys = function(){
 }
 
 OrderSchema.methods.onCreate = async function({body, user}){
-    const Order_Meta = require('./Order_Meta');
-    const Conversation = require('../chat/Conversation');
-    const Participant = require('../chat/Participant');
+    const Orders = require('../modelsManager').models.Order;
+    const Order_Metas = require('../modelsManager').models.Order_Meta;
+    const Conversations = require('../modelsManager').models.Conversation;
+    const Participants = require('../modelsManager').models.Participant;
 
     // Creating meta
-    const meta = await new Order_Meta({order: this.id});
+    const meta = new Order_Metas({order: this.id});
     this.meta = meta.id;
     if(body.meta){
         meta.set(body.meta);
     }
-    await meta.save();
+    await meta.validate();
 
-    // if(!body.conversation_name) return res.status(400).json({error: 'please provide name for conversation'});
-
-    // Мы наверное должны здесь еще создавать Conversation, Participant и прикреплять везде user-a
-    const conversation = await new Conversation({});
-    if(body.conversation_name)
-        conversation.name = body.conversation_name;
-
+// Мы наверное должны здесь еще создавать Conversation, Participant и прикреплять везде user-a
+    const conversation = await new Conversations({});
     this.conversation = conversation.id;
 
-    const participant = new Participant({user: user.id, conversation: conversation.id})
+    const participant = new Participants({user: user.id, conversation: conversation.id})
+    // Нужно автоматически генерировать name, если его не предоставили.
+    if(!body.meta?.name){
+        const customersOrders = await Orders.find({customer: user.id});
+        let name = `Нестандартная услуга ${customersOrders.length + 1}`;
+        if(body.meta.type === 'event'){
+            name = `Мероприятие ${customersOrders.length + 1}`;
+        }
+        else if(body.meta.type === 'business_trip'){
+            name = `Командировка ${customersOrders.length + 1}`;
+        }
+        meta.name = name;
+        conversation.name = name;
+    }
 
+
+    await meta.save();
     await participant.save();
-
     await conversation.save();
 
     this.customer = user.id;

@@ -13,6 +13,10 @@ import ChatItem from "../../components/chat/ChatItem";
 import CreateIcon from "../../assets/icons/arrow-right.svg"
 import findIndexByKey from "../../handlers/findIndexByKey";
 
+function log(...str){
+    // console.log(...str);
+}
+
 function truncateString(str) {
     // console.log("last message", str);
     if(!str) return str;
@@ -58,7 +62,7 @@ export default function Conversations({
             });
         })
 
-        console.log("lastMessages", lastMessages1);
+        log("lastMessages", lastMessages1);
         setLastMessages(lastMessages1)
         setConversationNotifications(conversationNotifications1)
     }, [notifications]) // нужно ли нам перерисовывать conversation, без изменения уведомлений? У нас всегда новое сообщение сопровождается уведомлением

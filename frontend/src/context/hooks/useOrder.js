@@ -6,7 +6,7 @@ import setIds from "../../handlers/setIds";
 import useFreshData from "../../hooks/useFreshData";
 
 function log(...str){
-    // console.log("useOrder\n", ...str);
+    console.log("useOrder\n", ...str);
 }
 
 /**
@@ -55,20 +55,19 @@ export default function useOrder({ socketHandler, authHandler }){
 
     /* Не нужно сетить ордера здесь, потому что у нас придет уведомление /save, /delete */
     async function updateOrder(order){
-        try{
-            const res = await fetch('/api/order', {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                method: 'PUT',
-                body: JSON.stringify(order)
-            });
-            const json = await res.json();
-            log("update", json);
-            navigate(-1)
-        }catch(e){
-            log(e);
-        }
+        if(!isAuthenticated()) return; // Защита от дурака, на всякий случай
+        // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
+        // Код делее рабочий, просто, чтобы не насоздавать ордеров закоментил
+        return await fetch('/api/order', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify(order)
+        })
+            .then(res=>res.json())
+            .then(json => log("Update", json))
+            .catch(e => log("Error on update", e))
     }
 
     async function deleteOrder(order){

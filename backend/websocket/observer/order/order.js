@@ -13,13 +13,23 @@ async function findSubscribersOf(order){
     const subscribers = await Users.find({role: 'manager'});
 
     const customer = {_id: order.customer};//await User.findOne({id: document.customer});
+
     subscribers.push(customer);
 
     return subscribers;
 }
 
-async function notify(method, order){
+/** Такая же функция есть handler функциях frontend */
+function objClone(obj){
+    return JSON.parse(JSON.stringify(obj))
+}
+async function notify(method, _order){
     const io = require('../../../websocket/socket.io').io;
+    const Order_Metas = require('../../../models/modelsManager').models.Order_Meta;
+
+    const order = objClone(_order)
+
+    order.meta = await Order_Metas.findById(order.meta);
 
     log(colors.cyan(`--- NOTIFY Order.${method}() ---`), order);
 

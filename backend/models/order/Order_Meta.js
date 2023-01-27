@@ -9,6 +9,13 @@ const modelName = 'Order/Meta';
 const handlers = require("../handlers");
 
 const MetaSchema = new Schema({
+
+    name: {
+        type: String,
+        required: true,
+        default: ()=>`Order ${Date.now()}`
+    },
+
     order: {
         type: Schema.Types.ObjectId,
         ref: 'Order',
@@ -44,7 +51,7 @@ const MetaSchema = new Schema({
     // если в needs входит 'tickets'
     travel_transport: {
         type: String,
-        enum: ['airplane', 'train', null]
+        enum: ['airplane', 'train']
     },
     date_start: {
       type: Date,
@@ -58,7 +65,7 @@ const MetaSchema = new Schema({
 
     housing: {
         type: String,
-        enum: ['hotel', 'apartment', null],
+        enum: ['hotel', 'apartment'],
     },
     separate_apartments: {
         type: Boolean,
@@ -66,7 +73,7 @@ const MetaSchema = new Schema({
 
     transport: {
         type: String,
-        enum: ['car', 'limousine', null]
+        enum: ['car', 'limousine']
     },
     driverNeeded: {
         type: Boolean,

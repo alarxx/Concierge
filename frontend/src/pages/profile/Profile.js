@@ -6,13 +6,17 @@ import Container from "../../components/phone/Container";
 import CardOrder from "../../components/cards/CardOrder";
 import PushIcon from "../../assets/icons/clipboard-tick.svg";
 import {useAppContext} from "../../context/AppContext";
+import {useNavigate} from "react-router-dom";
 
 
 export default function Profile(){
 
-    const { ordersHandler, chatHandler } = useAppContext();
-    const { orders } = ordersHandler;
+    const navigate = useNavigate();
+
+    const { ordersHandler, chatHandler, authHandler } = useAppContext();
+    const { orders, updateOrder } = ordersHandler;
     const { joinConversation } = chatHandler;
+    const { user } = authHandler;
 
     return (
         <Workflow>
@@ -23,7 +27,7 @@ export default function Profile(){
                     <div className="profile__person">
                         <div className="profile__hello">
                             Здравствуйте, <br/>
-                            <span>Олжас!</span>
+                            <span>{user.name}!</span>
                         </div>
                         <div className="profile__avatar">
                             {/* <!-- <img src="" alt=""> --> */}
@@ -32,7 +36,7 @@ export default function Profile(){
 
                     <div className="profile__stats stats">
                         <div className="stats__block">
-                            <div className="stats__num">12</div>
+                            <div className="stats__num">{orders.length}</div>
                             <div className="stats__category">Заявок</div>
                         </div>
                         <div className="stats__block">
@@ -80,7 +84,8 @@ export default function Profile(){
                                     order={order}
                                     onClick={ e => {
                                         joinConversation({id: order.conversation});
-                                        console.log(order)
+                                        updateOrder({id: order.id, status: 'handling'});
+                                        // setTimeout(()=>navigate('/chat'), 500);
                                     }}
                                 />
                             )

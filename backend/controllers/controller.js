@@ -348,6 +348,9 @@ module.exports = ({Model}) => {
                 }
             }
 
+            /**
+             * Потому что там не id-шник, а нам нужен будет id на этом поле
+             * */
             nestedObjectKeys.map(key => delete req.body[key])
             /**
              * Назначаем примитивные поля и производим валидацию.

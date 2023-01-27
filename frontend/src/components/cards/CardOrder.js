@@ -1,22 +1,21 @@
 import React from 'react';
+import monthName from "../../handlers/monthName";
 
 export default function CardOrder({order,
-                                      name="Астана - Будапешт",
-                                      date="12 мая - 20 мая",
-                                      type="Командировка",
-                                      num_of_people="100 чел.",
                                       clientName="Казмунайгаз",
-                                      statusOrder="Новый",
                                       onClick=f=>f
 }){
+
+    const date = new Date(order.createdDate);
+
     return (
         <div className="card card-order" onClick={onClick}>
             <div className="card-order__info info">
                 <div className="info__title">
-                    {name}
+                    {order.meta.name}
                 </div>
                 <div className="info__date">
-                    {date}
+                    {`${date.getDate()} ${monthName(date.getMonth())}`}
                 </div>
                 <div className="info__details">
                     <span>{order.meta.type}</span>

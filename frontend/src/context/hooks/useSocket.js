@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {io} from "socket.io-client";
 
-const URL = 'http://localhost:3000';
+const URL = 'http://localhost:3000'; // Здесь в продакшене нужно другой адрес вбивать
 const OPTS = {
     withCredentials: true
 }

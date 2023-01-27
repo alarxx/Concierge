@@ -9,7 +9,7 @@ import F5_Housing from "./forms/F5_Housing";
 import F6_HotelsSelection from "./forms/F6_HotelsSelection";
 import F7_Transport from "./forms/F7_Transport";
 import F8_Calculation from "./forms/F8_Calculation";
-import F9_ConversationName from "./forms/F9_ConversationName";
+import F9_OrderName from "./forms/F9_OrderName";
 
 import MultistepForm from "../../components/form/MultistepForm";
 
@@ -24,7 +24,7 @@ const FORMS = [
     // F6_HotelsSelection,
     F7_Transport,
     F8_Calculation,
-    F9_ConversationName
+    F9_OrderName
 ]
 
 /* На самом деле лучше не писать это так, а устанавливать default значения в каждой форме */
@@ -89,7 +89,8 @@ export default function Order({ }) {
             });
         }
         else {
-            const order = {meta: data, conversation_name: data.conversation_name}
+            const order = {meta: data}
+            console.log("Create order on Order", order);
             // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
             createOrder(order)
             navigate(-1)

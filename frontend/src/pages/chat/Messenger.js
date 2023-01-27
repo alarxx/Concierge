@@ -18,10 +18,9 @@ import ActionButtons from "../../components/chat/ActionsButtons"
 import ServicesPanel from "../../components/partners/ServicesPanel"
 import findIndexById from "../../handlers/findIndexById";
 import {useNavigate} from "react-router-dom";
+import objClone from "../../handlers/objClone";
 
-function objClone(obj){
-    return JSON.parse(JSON.stringify(obj))
-}
+
 
 //message: {type=choice, id, items, selected, submitted}
 export default function Messenger({

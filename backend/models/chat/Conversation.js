@@ -6,7 +6,7 @@ const ConversationSchema = new Schema({
     name: {
         type: String,
         required: true,
-        default: ()=>`Service ${Date.now()}`
+        default: ()=>`Conversation ${Date.now()}`
     },
     type: {
         type: String,
@@ -37,6 +37,7 @@ ConversationSchema.plugin(require('../logPlugin'))
 ConversationSchema.plugin(require('../../websocket/observer/chat/conversation'))
 
 
+/* Срабатывает только на REST API */
 ConversationSchema.methods.onCreate = async function({body, user}){
     const Participant = require('./Participant');
     const participant = new Participant({conversation: this, user: user.id});
