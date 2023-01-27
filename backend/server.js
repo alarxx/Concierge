@@ -1,8 +1,7 @@
-const dotenv = require('dotenv').config()
+// const dotenv = require('dotenv').config()
+const {credentials} = require(`./config`);
 
 const colors = require('./logging/colors');
-
-const {credentials} = require(`./config`);
 
 const mongoose = require('mongoose');
 const path = require('path');
@@ -24,15 +23,6 @@ const app = express();
 
 const http = require('http');
 const server = http.createServer(app);
-
-/** Используем CORS в окружении разработки */
-const cors = require('cors')
-/*if(app.get('env') === 'development')
-	app.use(cors({
-		origin: ['http://localhost:9000']
-	}));*/
-
-app.use(cors());
 
 /** Доступ к статическим файлам */
 app.use(express.static(__dirname + '/public'));
@@ -73,7 +63,6 @@ const sessionMiddleware = session({
 	saveUninitialized: false,
 });
 
-
 app.use(sessionMiddleware);
 
 /** Passport JS */
@@ -100,22 +89,31 @@ const stream = fs.createWriteStream(
 	{flags: 'a'}
 )
 app.use(morgan('combined', { stream }))
-const object2string = require('./logging/object2string')
-app.use((req, res, next)=>{
-	const request = {
-		user: req.user?.email,
-		url: req.url,
-		method: req.method,
-		headers: {'Content-Type': req.headers['content-type']},
-	}
-	if(request.method === 'GET')
-		request.query = req.query;
-	else
-		request.body = req.body;
-	console.log(colors.bright_cyan('REQUEST'), object2string(request));
-	next()
-});
 
+
+if(process.env.NODE_ENV !== 'production') {
+	/** Используем CORS в окружении разработки */
+	app.use(require('cors')({
+		origin: ['http://localhost:9000']
+	}));
+
+	/** Используем логирование в окружении разработки */
+	const object2string = require('./logging/object2string')
+	app.use((req, res, next) => {
+		const request = {
+			user: req.user?.email,
+			url: req.url,
+			method: req.method,
+			headers: {'Content-Type': req.headers['content-type']},
+		}
+		if (request.method === 'GET')
+			request.query = req.query;
+		else
+			request.body = req.body;
+		console.log(colors.bright_cyan('REQUEST'), object2string(request));
+		next()
+	});
+}
 
 /** All Routes */
 app.use('/', require('./routes/root'));

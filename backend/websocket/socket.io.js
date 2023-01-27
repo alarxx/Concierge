@@ -11,7 +11,7 @@ const socket_io = {
 socket_io.initialize = function({server, sessionMiddleware, env}) {
     const { Server } = require('socket.io');
 
-    const io_opt={}
+    const io_opt = {}
     if(env !== 'production') {
         io_opt.cors = {
             // origin: '*',

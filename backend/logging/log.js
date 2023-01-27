@@ -1,4 +1,4 @@
-const LOG_NEEDED = true;
+const LOG_NEEDED = process.env;
 
 module.exports = function(...str){
     if(LOG_NEEDED)
