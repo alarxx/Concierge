@@ -2,7 +2,6 @@ const passport = require('passport');
 
 const auth_listener = require('./listener/auth');
 const chat_listener = require('./listener/chat');
-// const service_listener = require('./listener/service');
 
 const socket_io = {
     io: null,
@@ -13,15 +12,15 @@ socket_io.initialize = function({server, sessionMiddleware, env}) {
     const { Server } = require('socket.io');
 
     const io_opt={}
-    // if(env !== 'production') {
-    //
-    // }
+    if(env !== 'production') {
+        io_opt.cors = {
+            // origin: '*',
+            origin: ['http://localhost:9000'],
+            // methods: ["GET", "POST"],
+            credentials: true
+        };
+    }
 
-    io_opt.cors = {
-        origin: '*',
-        methods: ["GET", "POST"],
-        credentials: true
-    };
 
     const io = new Server(server, io_opt);
 
@@ -46,7 +45,6 @@ socket_io.initialize = function({server, sessionMiddleware, env}) {
     io.on('connection', socket => {
         auth_listener(socket);
         chat_listener(socket);
-        // service_listener(socket);
     });
 
     return io;
