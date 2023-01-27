@@ -6,7 +6,7 @@ const OPTS = {
     withCredentials: true
 }
 
-const socket = io();
+const socket = io(URL, OPTS);
 
 function log(...str){
     // console.log("useSocket\n", ...str);
