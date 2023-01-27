@@ -11,6 +11,7 @@ async function notify(method, participant){
 
     const Conversations = require('../../../models/modelsManager').models.Conversation;
     const Participants = require('../../../models/modelsManager').models.Participant;
+    const Messages = require('../../../models/modelsManager').models.Message;
 
     log(colors.cyan(`--- NOTIFY Participant.${method}() ---`), participant);
 
@@ -18,14 +19,20 @@ async function notify(method, participant){
     log(colors.cyan(`subscribers(${participants.length}):`), participants);
 
     const conversation = await Conversations.findById(participant.conversation);
-    if(conversation){
+    // Не проверки на существование. У этого конечно есть причина. В контроллере Conversation мы создаем participant раньше, чем создается сам Conversation.
+    if(conversation){ // Означает что это не впервые созданный conversation.
         io.to(String(participant.user)).emit(`/${method}/conversation`, conversation);
+        // Нужно отослать participant-у все сообщения.
+        const last_messages = await Messages.find({conversation: participant.conversation});
+        last_messages.map(message => {
+            io.to(String(participant.user)).emit(`/${method}/message`, message);
+        });
+
     }
 
     participants.map(
         p => {
             try{
-                // Скидываем conversation как null, он не нужен клиенту, который уже сидит в беседе
                 io.to(String(p.user)).emit(`/${method}/participant`, p);
             }catch(e){
                 log(colors.red(`failed to emit /${method}/participant to user(${p.user}) with participant:`), p);
