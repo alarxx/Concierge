@@ -1,3 +1,5 @@
+
+
 async function createMessage(message, socket){
     const { user } = socket.request;
 
@@ -50,19 +52,34 @@ async function createMessage(message, socket){
 
 
 module.exports = socket => {
+
     socket.on("join-conversation", async conversation => {
+
+        const Participants = require('../../models/modelsManager').models.Participant;
+        const Conversations = require('../../models/modelsManager').models.Conversation;
 
         const { user } = socket.request;
 
         console.log(`join socket(${socket.id}) to room`, conversation)
 
-        const Participants = require('../../models/modelsManager').models.Participant;
+        const conversationDoc = await Conversations.findById(conversation.id);
+        if(!conversationDoc){
+            return console.log(`Conversation does not exist`, conversation)
+        }
 
-        const info = {conversation: conversation.id, user: user.id};
+        const participant_info = {conversation: conversation.id, user: user.id};
 
-        const exists = await Participants.findOne(info);
-        if(exists)
-            return console.log(`Participant already exists `, exists)
+        const exist_participant = await Participants.findOne(participant_info);
+        if(exist_participant){
+            return console.log(`Participant already exists `, exist_participant)
+        }
+
+        const p = new Participants(participant_info);
+        try{
+            await p.save();
+        }catch(e){
+            return console.log(e)
+        }
 
         if(user.role === 'manager'){
             const script_messages = [
@@ -83,13 +100,6 @@ module.exports = socket => {
             }
         }
 
-        const p = new Participants(info);
-
-        try{
-            await p.save();
-        }catch(e){
-            console.log(e)
-        }
 
     })
 

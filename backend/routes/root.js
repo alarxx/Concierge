@@ -18,7 +18,7 @@ Router.use('/file', require('./file/file'));
 }*/
 
 Router.get('/*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../../build-client/index.html'));
+	res.sendFile(path.resolve(__dirname, '../../build-frontend/index.html'));
 });
 
 Router.use((err, req, res, next)=>{
