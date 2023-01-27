@@ -11,7 +11,6 @@ export default function Home(){
     return (
         <>
             <h1>[Home page]</h1>
-            <h3>ENV={process.env.NODE_ENV}</h3>
 
             {!userLoading && isAuthenticated() && <h2>{user.email}</h2>}
             {!userLoading && !isAuthenticated() && !isConnected && <h2>Disconnected</h2>}
