@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="nav__left">
+                    <div class="logo">
+                        <a href="#">
+                            <img src="img/logo.png" alt="ConciergeService">
+                        </a>
+                    </div>
+                    <ul class="menu">
+                        <li class="menu__li"><a href="#">Заявки</a></li>
+                        <li class="menu__li menu__li-active"><a href="#">Пользователи</a></li>
+                        <li class="menu__li"><a href="#">Партнеры</a></li>
+                        <li class="menu__li"><a href="#">Направления</a></li>
+                    </ul>
+                </div>
+                <div class="user_nav dflex aic">
+                    <span>John Fish</span>
+                    <div class="user_avatar">
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="workflow">
+        <div class="container2">
+            <div class="sign__wrapper">
+                <div class="sign sign-fixed">
+                    <div class="sign__header">
+                        <div class="sign__logo">
+                            <img src="./img/logo.png" alt="ConciergeService">
+                        </div>
+                        <div class="sign__tabs dflex aic">
+                            <span class="sign__tab sign__tab-active">Вход</span>
+                            <span class="sign__tab">Регистрация</span>
+                        </div>
+                    </div>
+                    <div class="sign__body">
+                        <form action="">  
+                            <div class="input-form">
+                                <label for="people_quantity">Эл. почта *</label>
+                                <input type="email" name="email" class="input input-choice" placeholder="Введите вашу эл. почту" required>
+                            </div>  
+                            <div class="input-form">
+                                <label for="people_quantity">Пароль</label>
+                                <input type="password" name="password" class="input input-choice" placeholder="Введите пароль" required>
+                            </div>  
+                            <button class="btn btn-main" type="submit">Войти</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+</body>
+</html>
