@@ -27,7 +27,7 @@ export default function Document({ message, user, onClick }){
             {!message.file &&
                 <div className="chat-attach">
                     <div className="btn btn-main btn-withicon">
-                        <input name="file" type="file" />
+                        <input name="file" type="file" onInput={e => console.log(e)} onSubmit={e => console.log(e)}/>
 
                         <div className="btn__icon">
                             <DocumentTextIcon />

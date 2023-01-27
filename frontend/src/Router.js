@@ -17,6 +17,7 @@ import './assets/css/style.css'
 import './assets/css/adaptive.css'
 import Archive from "./pages/chat/Archive";
 import Details from "./pages/details/Details";
+import AuthNew from "./pages/auth/AuthNew";
 
 export default function Router(){
 	// return (<TestSocket />)
@@ -26,6 +27,7 @@ export default function Router(){
 				<Route path="/" element={<Home />} />
 
 				<Route path='/authenticate' element={<Auth />} />
+				<Route path='/authenticate_new' element={<AuthNew />} />
 				<Route path="/logout" element={<Logout />} />
 
 				<Route path={'/chat'}>

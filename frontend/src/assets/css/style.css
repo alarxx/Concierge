@@ -133,7 +133,7 @@ body {
 .btn-prev svg {
     width: 16px;
     margin-right: 10px;
-    transform: rotate(180deg);    
+    transform: rotate(180deg);
 }
 .btn-attchinchat {
     background: #4D545C;
@@ -160,7 +160,7 @@ body {
     width: 100%;
     height: 52px;
     background: #FFFFFF;
-    border: 1px solid rgba(30, 38, 47, 0.06);    
+    border: 1px solid rgba(30, 38, 47, 0.06);
     box-shadow: 2px 4px 4px rgba(30, 38, 47, 0.02);
     border-radius: 16px;
     display: flex;
@@ -184,7 +184,7 @@ body {
     opacity: 70%;
 }
 
-/* 
+/*
 .select {
     cursor: pointer;
     font-size: 14px;
@@ -199,12 +199,12 @@ body {
     position: absolute;
     display: block;
     top: 0;
-    // padding-left: 10px; 
+    // padding-left: 10px;
     width: 320px;
     padding: 11px 20px;
     border-radius: 16px;
     color: rgba(53, 53, 53, 0.5);
-// карточка 
+// карточка
 
 }
 
@@ -226,14 +226,14 @@ body {
     top: 17px;
     z-index: 2;
     width: 18px;
-    height: 18px;   
+    height: 18px;
     cursor: pointer;
     opacity: 70%;
 }
 
 .select input[name="list"]:not(:checked) ~ #text
 {
-  // color: black; 
+  // color: black;
   background: white;
 }
 
@@ -255,15 +255,15 @@ body {
     display: block;
     min-height: 52px;
     position: absolute;
-    // border: 2px solid #ddd; 
+    // border: 2px solid #ddd;
     overflow: hidden;
-    //  width: 160px; 
+    //  width: 160px;
     cursor: pointer;
-    // background: red; 
+    // background: red;
     border-radius: 16px;
     padding: 16;
     background: #F1F2F3;
-    // border: 1px solid rgba(30, 38, 47, 0.06); 
+    // border: 1px solid rgba(30, 38, 47, 0.06);
     border: 1px solid rgb(30 38 47 / 2%);
 
 }
@@ -277,7 +277,7 @@ body {
 {
     border-bottom: 1px solid #dddddd;
     display: none;
-    // padding-left: 10px; 
+    // padding-left: 10px;
     background: #F1F2F3;
     padding: 10px 20px;
 }
@@ -589,8 +589,8 @@ body {
     align-items: start;
     font-size: 14px;
     background: #FFFFFF;
-    border-radius: 16px;    
-    padding: 20px 24px;    
+    border-radius: 16px;
+    padding: 20px 24px;
 }
 .result-example__row {
     display: flex;
@@ -605,7 +605,7 @@ body {
 .result-example__price {
     margin-top: 12px;
     margin-bottom: 12px;
-    color: #2086E5;    
+    color: #2086E5;
     font-weight: 700;
     font-size: 20px;
     line-height: 27px;
@@ -733,7 +733,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-width: thin;
 }
 input[type="date"]:not(:empty) {
-    
+
 }
 /* input[type="date"]:before {
     content: attr(placeholder) !important;
@@ -908,7 +908,7 @@ input[type="date"]:not(:empty) {
     justify-content: center;
 }
 
-.navbar {    
+.navbar {
     display: flex;
     align-items: center;
     padding: 21px;
@@ -1017,7 +1017,7 @@ input[type="date"]:not(:empty) {
 
 .link {
     display: flex;
-    color: #2086E5; 
+    color: #2086E5;
     cursor: pointer;
 }
 .link__text {
@@ -1102,8 +1102,8 @@ input[type="date"]:not(:empty) {
 .chat-choice {
     margin-bottom: 18px;
 }
-.chat-choice__link {  
-    margin-top: 12px;  
+.chat-choice__link {
+    margin-top: 12px;
 }
 .chat-choice__link .link__text {
     font-size: 12px;
@@ -1200,7 +1200,7 @@ input[type="date"]:not(:empty) {
 .chat-download__block {
     width: 28px;
     height: 40px;
-    background: #D9D9D9; 
+    background: #D9D9D9;
     margin-right: 12px;
     border-radius: 4px;
 }
@@ -1428,7 +1428,7 @@ textarea::-webkit-scrollbar {
 .status {
     padding: 6px;
     font-weight: 600;
-    font-size: 14px; 
+    font-size: 14px;
 }
 .status-new {
     border-radius: 4px;
