@@ -36,7 +36,7 @@ export default function Conversations({
     const navigate = useNavigate();
 
     /** Не думаю что этот поиск последнего сообщения должен быть здесь */
-    const [lastMessagesASC, setLastMessagesASC] = useState([])
+    const [lastMessagesDateDESC, setLastMessagesDateDESC] = useState([])
     const [conversationNotifications, setConversationNotifications] = useState([])
 
     useEffect(()=>{
@@ -45,11 +45,11 @@ export default function Conversations({
         const lastMessages = []
         const conversationNotifications1 = []
 
-        conversations.map((c, index) => {
+        conversations.map((conversation, index) => {
             conversationNotifications1.push(0);
-            lastMessages.push({originalIndex: index});
+            lastMessages.push({conversationIndex: index});
 
-            const conv_ms = messages.filter(m => m.conversation == c.id)
+            const conv_ms = messages.filter(m => m.conversation == conversation.id)
 
             if(conv_ms.length){
                 const lastMessage = conv_ms[conv_ms.length-1]
@@ -64,13 +64,12 @@ export default function Conversations({
             }
 
         })
-
-        const asc = lastMessages.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
-        setLastMessagesASC(asc)
-
         setConversationNotifications(conversationNotifications1)
 
-    }, [notifications]) // нужно ли нам перерисовывать conversation, без изменения уведомлений? У нас всегда новое сообщение сопровождается уведомлением
+        const asc = lastMessages.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+        setLastMessagesDateDESC(asc)
+
+    }, [conversations, notifications]) // нужно ли нам перерисовывать conversation, без изменения уведомлений? У нас всегда новое сообщение сопровождается уведомлением
 
     return (
         <Workflow>
@@ -84,15 +83,15 @@ export default function Conversations({
                 <YummyButton name={"Заказать услугу"} icon={<CreateIcon/>} onClick={ e => navigate('/order')}/>
 
                 <Chats>
-                    {lastMessagesASC.map( (m, key) => {
-                        const i = m.originalIndex;
+                    {lastMessagesDateDESC.map( (lastMessage, key) => {
+                        const i = lastMessage.conversationIndex;
                         const conversation = conversations[i];
 
                         return <ChatItem
                             key={key}
                             name={conversation.name}
                             unread_num={conversationNotifications[i] ? conversationNotifications[i] : 0}
-                            last_message={m.text ? truncateString(m.text) : m.type}
+                            last_message={lastMessage.text ? truncateString(lastMessage.text) : lastMessage.type}
                             onClick={e => openConversation(conversation)}
                         />
                     })}
