@@ -32,7 +32,7 @@ export default function Admin(){
         <section className="workflow">
             <div className="container2">
                 <div className="workflow__wrapper">
-                    <div className="title">
+                    <div className="title-admin">
                         Пользователи
                     </div>
                     <div className="tabs">
@@ -127,7 +127,7 @@ export default function Admin(){
                     </div>
                 </div>
                 <div className="workflow__wrapper">
-                    <div className="title">
+                    <div className="title-admin">
                         Новые заявки
                     </div>
                     <div className="tabs dflex aic jcsb">
