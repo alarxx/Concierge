@@ -19,6 +19,7 @@ export default function Home(){
 
             <nav>
                 <li><Link to="/">Home page</Link></li>
+                <li><Link to="/admin">Admin page</Link></li>
 
                 <li><Link to="/profile">Profile</Link></li>
 

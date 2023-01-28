@@ -10,14 +10,15 @@ import ChatApp from "./pages/chat/ChatApp";
 import Order from './pages/order/Order'
 import Profile from './pages/profile/Profile'
 import Partners from './pages/partners/Partners'
+import Archive from "./pages/chat/Archive";
+import Details from "./pages/details/Details";
+import AuthNew from "./pages/auth/AuthNew";
+import Admin from "./pages/Admin";
 
 import {AppContextProvider} from "./context/AppContext";
 
 import './assets/css/style.css'
 import './assets/css/adaptive.css'
-import Archive from "./pages/chat/Archive";
-import Details from "./pages/details/Details";
-import AuthNew from "./pages/auth/AuthNew";
 
 export default function Router(){
 	// return (<TestSocket />)
@@ -25,6 +26,7 @@ export default function Router(){
 		<AppContextProvider>
 			<Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/admin" element={<Admin />} />
 
 				<Route path='/authenticate' element={<Auth />} />
 				<Route path='/authenticate_new' element={<AuthNew />} />

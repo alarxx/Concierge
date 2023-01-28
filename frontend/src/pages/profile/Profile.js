@@ -78,17 +78,19 @@ export default function Profile(){
                         </div>
 
                         {orders.map((order, i) => {
-                            return (
-                                <CardOrder
-                                    key={i}
-                                    order={order}
-                                    onClick={ e => {
-                                        joinConversation({id: order.conversation});
-                                        updateOrder({id: order.id, status: 'handling'});
-                                        // setTimeout(()=>navigate('/chat'), 500);
-                                    }}
-                                />
-                            )
+                            if(order.status == 'new') {
+                                return (
+                                    <CardOrder
+                                        key={i}
+                                        order={order}
+                                        onClick={e => {
+                                            joinConversation({id: order.conversation});
+                                            updateOrder({id: order.id, status: 'handling'});
+                                            // setTimeout(()=>navigate('/chat'), 500);
+                                        }}
+                                    />
+                                )
+                            }
                         })}
                     </div>
                 </div>
