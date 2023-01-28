@@ -12,11 +12,11 @@ export default function Admin(){
                                 <img src={"/img/logo.png"} alt="ConciergeService"/>
                             </a>
                         </div>
-                        <ul className="menu">
-                            <li className="menu__li"><a href="#">Заявки</a></li>
-                            <li className="menu__li menu__li-active"><a href="#">Пользователи</a></li>
-                            <li className="menu__li"><a href="#">Партнеры</a></li>
-                            <li className="menu__li"><a href="#">Направления</a></li>
+                        <ul className="menu-admin">
+                            <li className="menu-admin__li"><a href="#">Заявки</a></li>
+                            <li className="menu-admin__li menu-admin__li-active"><a href="#">Пользователи</a></li>
+                            <li className="menu-admin__li"><a href="#">Партнеры</a></li>
+                            <li className="menu-admin__li"><a href="#">Направления</a></li>
                         </ul>
                     </div>
                     <div className="user_nav dflex aic">
