@@ -78,7 +78,7 @@ export default function Profile(){
                         </div>
 
                         {orders.map((order, i) => {
-                            if(order.status == 'new') {
+                            if(user.role !== 'manager' || order.status == 'new') {
                                 return (
                                     <CardOrder
                                         key={i}
@@ -86,7 +86,7 @@ export default function Profile(){
                                         onClick={e => {
                                             joinConversation({id: order.conversation});
                                             updateOrder({id: order.id, status: 'handling'});
-                                            // setTimeout(()=>navigate('/chat'), 500);
+                                            setTimeout(()=>navigate('/chat'), 500);
                                         }}
                                     />
                                 )
