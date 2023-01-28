@@ -15,7 +15,7 @@ export default function AuthNew(){
                             </div>
                             <ul className="menu-admin">
                                 <li className="menu-admin__li"><a href="#">Заявки</a></li>
-                                <li className="menu-admin__li menu-admin-active"><a href="#">Пользователи</a></li>
+                                <li className="menu-admin__li menu-admin__li-active"><a href="#">Пользователи</a></li>
                                 <li className="menu-admin__li"><a href="#">Партнеры</a></li>
                                 <li className="menu-admin__li"><a href="#">Направления</a></li>
                             </ul>
