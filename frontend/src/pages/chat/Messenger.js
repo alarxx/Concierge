@@ -106,7 +106,20 @@ export default function Messenger({
         dropAttachPanel();
     }
 
-    function onFileSend(file){
+    function onFileLoad(message, file){
+        console.log(file);
+
+        const formData = new FormData();
+        formData.append('id', message.id)
+        formData.append('file', file)
+
+        fetch('/api/chat/message', {
+            method: 'PUT',
+            body: formData,
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
     }
 
     function onFileRequest(){
@@ -171,7 +184,7 @@ export default function Messenger({
                         return (
                             <div key={messageIndex}>
                                 {newDates.includes(messageIndex) && <Day date={new Date(message.createdDate)}/>}
-                                <Document message={message} user={user}/>
+                                <Document message={message} user={user} onFileLoad={onFileLoad}/>
                             </div>
                         );
                     }

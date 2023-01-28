@@ -18,7 +18,7 @@ async function createMessage(message, socket){
             ...message
         });
 
-    if(!m) return;
+    if(!m) return; // Если id есть, но сообщение не найдено
 
     try {
         if(m.type === 'text'){
@@ -29,7 +29,11 @@ async function createMessage(message, socket){
             if(message.id)
                 m.choice.submitted = true;
         }
-        // А когда файл?
+        // А когда файл? Нужно сохранить file и установить его id в message.file
+        else if(m.type === 'file'){
+            console.log(m);
+        }
+        else return; // ничего не делаем при других type пока
         await m.save();
     }catch(e){
         console.log(e);
@@ -96,7 +100,7 @@ module.exports = socket => {
                         conversation: conversation.id
                     }, socket);
                     return;
-                }, 3000*(i+1))
+                }, 1500*(i+1))
             }
         }
 

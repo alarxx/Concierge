@@ -12,7 +12,13 @@ export default function Home(){
         <>
             <h1>[Home page]</h1>
 
-            <img src={"/img/logo.png"}/>
+            {/*<button onClick={e =>{
+                fetch('/file/download/63d5133831128f2ba1e83506')
+                    .then(res => {
+                        console.log(res);
+                        return res.json();
+                    }).then(console.log).catch(console.log);
+            }}>Download</button>*/}
 
             {!userLoading && isAuthenticated() && <h2>{user.email}</h2>}
             {!userLoading && !isAuthenticated() && !isConnected && <h2>Disconnected</h2>}

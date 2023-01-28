@@ -1,34 +1,18 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+import {useAppContext} from "../../context/AppContext";
+import Header from "./Header";
+
 
 
 export default function AuthNew(){
+
+    const {authHandler} = useAppContext();
+    const {user} = authHandler;
+
     return (
         <div className='admin'>
-            <header>
-                <div className="container">
-                    <nav>
-                        <div className="nav__left">
-                            <div className="logo">
-                                <a href="#">
-                                    <img src="/img/logo.png" alt="ConciergeService"/>
-                                </a>
-                            </div>
-                            <ul className="menu-admin">
-                                <li className="menu-admin__li"><a href="#">Заявки</a></li>
-                                <li className="menu-admin__li menu-admin__li-active"><a href="#">Пользователи</a></li>
-                                <li className="menu-admin__li"><a href="#">Партнеры</a></li>
-                                <li className="menu-admin__li"><a href="#">Направления</a></li>
-                            </ul>
-                        </div>
-                        <div className="user_nav dflex aic">
-                            <span>John Fish</span>
-                            <div className="user_avatar">
-
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-            </header>
+            <Header user={user}></Header>
 
             <section className="workflow">
                 <div className="container2">
@@ -44,7 +28,7 @@ export default function AuthNew(){
                                 </div>
                             </div>
                             <div className="sign__body">
-                                <form action="">
+                                <form action="auth">
                                     <div className="input-form">
                                         <label htmlFor="people_quantity">Эл. почта *</label>
                                         <input type="email" name="email" className="input input-choice"

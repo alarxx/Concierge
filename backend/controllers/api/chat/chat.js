@@ -54,6 +54,12 @@ controller.preload = async (req, res) => {
                 await service.populate(service.type);
             }))
         }
+        else if(message.type === 'file'){
+            await message.populate('file');
+            if(typeof message.file === 'object'){
+                delete message.file.path;
+            }
+        }
     }))
 
     const notifications = await NotificationModel.find({ user })

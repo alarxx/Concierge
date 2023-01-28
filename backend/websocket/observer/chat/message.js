@@ -22,7 +22,12 @@ async function notify(method, message){
                 await service.populate(service.type);
             }))
         }
-        // console.log(colors.red('save'), object2string(message));
+        else if(message.type === 'file'){
+            await message.populate('file');
+            if(typeof message.file === 'object'){
+                delete message.file.path;
+            }
+        }
     }
 
     participants.map(
