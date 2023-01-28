@@ -9,7 +9,7 @@ export default function Admin(){
                     <div className="nav__left">
                         <div className="logo">
                             <a href="#">
-                                <img src="img/logo.png" alt="ConciergeService"/>
+                                <img src={"/img/logo.png"} alt="ConciergeService"/>
                             </a>
                         </div>
                         <ul className="menu">
