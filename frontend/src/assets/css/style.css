@@ -1671,3 +1671,6 @@ textarea::-webkit-scrollbar {
 .success .title{
     margin-bottom: 40px;
 }
+
+
+@import url('./admin.css');
