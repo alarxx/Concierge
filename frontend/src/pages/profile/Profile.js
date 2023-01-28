@@ -74,7 +74,7 @@ export default function Profile(){
                     
                     <div className="cards">
                         <div className="cards__title">
-                            Мои заявки
+                            {user.role !== 'manager' ? 'Мои заявки' : 'Новые заявки'}
                         </div>
 
                         {orders.map((order, i) => {
