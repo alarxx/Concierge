@@ -120,6 +120,8 @@ OrderSchema.methods.onCreate = async function({body, user}){
         }
         meta.name = name;
         conversation.name = name;
+    }else{
+        conversation.name = body.meta.name;
     }
 
 
