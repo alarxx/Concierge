@@ -145,7 +145,7 @@
 .admin .menu-admin__li:last-child {
     margin-right: 0;
 }
-.admin .menu-admin__li-active {
+.menu-admin__li-active a {
     font-weight: 800;
 }
 
