@@ -128,24 +128,24 @@
     align-items: center;
 }
 
-.admin .menu {
+.admin .menu-admin {
     display: flex;
     align-items: center;
     list-style: none;
 }
 
-.admin .menu__li a {
+.admin .menu-admin__li a {
     text-decoration: none;
     color: black;
 }
 
-.admin .menu__li {
+.admin .menu-admin__li {
     margin-right: 40px;
 }
-.admin .menu__li:last-child {
+.admin .menu-admin__li:last-child {
     margin-right: 0;
 }
-.admin .menu__li-active {
+.admin .menu-admin__li-active {
     font-weight: 800;
 }
 
