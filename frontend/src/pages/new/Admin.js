@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {useAppContext} from "../../context/AppContext";
 import Header from "./Header";
+import Table from "../../components/ui/Table";
 
 export default function Admin(){
 
     const {authHandler} = useAppContext();
     const {user} = authHandler;
+
 
     return (
         <div className="admin">
@@ -37,77 +39,11 @@ export default function Admin(){
                                 </div>
                             </div>
                             <div className="table__body">
-                                <table>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Имя менеджера</th>
-                                        <th>Эл. почта</th>
-                                        <th>Направление</th>
-                                        <th>Кол-во партнеров</th>
-                                        <th>Общ. сумма</th>
-                                        <th>Статус</th>
-                                        <th></th>
-                                    </tr>
-                                    <tr>
-                                        <td>984561</td>
-                                        <td>Имя Фамилия</td>
-                                        <td>sample_mail@mail.ru</td>
-                                        <td>Консультант</td>
-                                        <td>3</td>
-                                        <td>120 000тг</td>
-                                        <td className="color-success">Свободен</td>
-                                        <td>
-                                            {/*<!-- svg more -->*/}
-
-                                            <ul className="context-menu">
-                                                <li className="context-menu__li">Полная информация</li>
-                                                <li className="context-menu__li">Удалить</li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>984561</td>
-                                        <td>Имя Фамилия</td>
-                                        <td>sample_mail@mail.ru</td>
-                                        <td>Консультант</td>
-                                        <td>3</td>
-                                        <td>120 000тг</td>
-                                        <td className="color-danger">Свободен</td>
-                                        <td>
-                                            {/*<!-- svg more -->*/}
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>984561</td>
-                                        <td>Имя Фамилия</td>
-                                        <td>sample_mail@mail.ru</td>
-                                        <td>Консультант</td>
-                                        <td>3</td>
-                                        <td>120 000тг</td>
-                                        <td className="color-primary">Свободен</td>
-                                        <td>
-                                            {/*<!-- svg more -->*/}
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>984561</td>
-                                        <td>Имя Фамилия</td>
-                                        <td>sample_mail@mail.ru</td>
-                                        <td>Консультант</td>
-                                        <td>3</td>
-                                        <td>120 000тг</td>
-                                        <td>Свободен</td>
-                                        <td>
-                                            {/*<!-- svg more -->*/}
-
-                                        </td>
-                                    </tr>
-                                </table>
+                                <Table />
                             </div>
                         </div>
                     </div>
+                    
                     <div className="workflow__wrapper">
                         <div className="title-admin">
                             Новые заявки

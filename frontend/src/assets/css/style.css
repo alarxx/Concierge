@@ -1674,3 +1674,42 @@ textarea::-webkit-scrollbar {
 
 
 @import url('./admin.css');
+
+
+
+.modal-overlay {
+    position: fixed;
+    top: 74px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    width: 90%;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.modal-overlay button {
+    background-color: lightgray;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+  
+.modal-overlay iframe {
+    top:0px;
+    left:0px;
+    border:0px;
+    width:100%;
+    height:500px;
+}

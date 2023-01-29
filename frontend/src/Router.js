@@ -14,6 +14,7 @@ import Archive from "./pages/chat/Archive";
 import Details from "./pages/details/Details";
 import AuthNew from "./pages/new/AuthNew";
 import Admin from "./pages/new/Admin";
+import FlightTracker from "./pages/new/FlightTracker";
 
 import {AppContextProvider} from "./context/AppContext";
 
@@ -27,6 +28,7 @@ export default function Router(){
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/admin" element={<Admin />} />
+				<Route path="/flightracker" element={<FlightTracker />} />
 
 				<Route path='/authenticate' element={<Auth />} />
 				<Route path='/authenticate_new' element={<AuthNew />} />
