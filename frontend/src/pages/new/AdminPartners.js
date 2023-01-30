@@ -3,7 +3,7 @@ import {useAppContext} from "../../context/AppContext";
 import Header from "./Header";
 import Table from "../../components/ui/Table";
 
-export default function Admin(){
+export default function AdminPartners(){
 
     const {authHandler} = useAppContext();
     const {user} = authHandler;
@@ -11,13 +11,13 @@ export default function Admin(){
 
     return (
         <div className="admin">
-            <Header user={user} pageName="users"></Header>
+            <Header user={user} pageName="partners"></Header>
 
             <div className="workflow">
                 <div className="container2">
                     <div className="workflow__wrapper">
                         <div className="title-admin">
-                            Пользователи
+                            Партнеры
                         </div>
                         <div className="tabs">
                             <ul className="tab dflex aic">
@@ -30,11 +30,11 @@ export default function Admin(){
                         <div className="table" id="managers">
                             <div className="table__header dflex aic jcsb">
                                 <div className="table__title">
-                                    Главные менеджеры
+                                    Отели
                                 </div>
                                 <div className="table__btn">
                                     <div className="btn btn-main">
-                                        Добавить пользователя
+                                        Добавить отель
                                     </div>
                                 </div>
                             </div>

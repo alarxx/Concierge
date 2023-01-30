@@ -1,7 +1,7 @@
 import React from "react";
 
 
-export default function CardAdmin(props) {
+export default function CardAdmin({props, handleRowClick}) {
     
     // принимает какой-то объект заказа с бд, ниже формируем объект из props, чтобы дальше выводить в карточке
     const cardData = {

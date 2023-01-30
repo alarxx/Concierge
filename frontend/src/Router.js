@@ -16,6 +16,7 @@ import AuthNew from "./pages/new/AuthNew";
 import Admin from "./pages/new/Admin";
 import FlightTracker from "./pages/new/FlightTracker";
 import AdminOrders from "./pages/new/AdminOrders";
+import AdminPartners from "./pages/new/AdminPartners";
 
 import {AppContextProvider} from "./context/AppContext";
 
@@ -31,6 +32,7 @@ export default function Router(){
 				<Route path="/admin" element={<Admin />} />
 				<Route path="/admin/flightracker" element={<FlightTracker />} />
 				<Route path="/admin/orders" element={<AdminOrders />} />
+				<Route path="/admin/partners" element={<AdminPartners />} />
 
 				<Route path='/authenticate' element={<Auth />} />
 				<Route path='/authenticate_new' element={<AuthNew />} />

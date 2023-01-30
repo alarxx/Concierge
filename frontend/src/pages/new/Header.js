@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import React from "react";
 
-export default function Header({ user }){
+export default function Header({ user, pageName }){
     return (
         <header>
             <div className="container">
@@ -13,10 +13,10 @@ export default function Header({ user }){
                             </Link>
                         </div>
                         <ul className="menu-admin">
-                            <li className="menu-admin__li"><Link to="/admin/orders">Заявки</Link></li>
-                            <li className="menu-admin__li menu-admin__li-active"><Link to="/">Пользователи</Link></li>
-                            <li className="menu-admin__li"><Link to="/">Партнеры</Link></li>
-                            <li className="menu-admin__li"><Link to="/admin/flightracker">Направления</Link></li>
+                            <li className={`menu-admin__li ${pageName == "orders" ? "menu-admin__li-active" : "" }`}><Link to="/admin/orders">Заявки</Link></li>
+                            <li className={`menu-admin__li ${pageName == "users" ? "menu-admin__li-active" : "" }`}><Link to="/admin">Пользователи</Link></li>
+                            <li className={`menu-admin__li ${pageName == "partners" ? "menu-admin__li-active" : "" }`}><Link to="/admin/partners">Партнеры</Link></li>
+                            <li className={`menu-admin__li ${pageName == "flightracker" ? "menu-admin__li-active" : "" }`}><Link to="/admin/flightracker">Направления</Link></li>
                         </ul>
                     </div>
                     <div className="user_nav dflex aic">

@@ -59,7 +59,7 @@ export default function Admin(){
 
     return (
         <div className="admin">
-            <Header user={user}></Header>
+            <Header user={user} pageName="flightracker"></Header>
 
             <div className="workflow">
                 <div className="container2">
