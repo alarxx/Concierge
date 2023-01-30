@@ -57,3 +57,11 @@ See also the list of [contributors](https://github.com/alar-q/concierge/contribu
 ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝╚══════╝    
 ```
 
+## License
+▄───▄  
+█▀█▀█  
+█▄█▄█  
+─███──▄▄  
+─████▐█─█  
+─████───█  
+─▀▀▀▀▀▀▀  
