@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {useAppContext} from "../../context/AppContext";
 import Header from "./Header";
 import Table from "../../components/ui/Table";
-import FlightTrackerMap from "../../components/ui/FlightTrackerMap";
+import Modal from "../../components/ui/Modal";
 
 export default function Admin(){
 
@@ -44,6 +44,18 @@ export default function Admin(){
     const handleRowClick = (id) => setSelectedId(id);
     const handleModalClose = () => setSelectedId(null);
 
+    
+    // const [filteredData, setFilteredData] = useState(null);
+    // const [searchTerm, setSearchTerm] = useState('');
+    // useEffect(() => {
+    //     setFilteredData(
+    //       flights.filter(row =>
+    //         Object.values(row).some(val =>
+    //           val.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    //         )
+    //       )
+    //     );
+    //   }, [searchTerm, flights]);
 
     return (
         <div className="admin">
@@ -58,6 +70,12 @@ export default function Admin(){
                             { isLoading ? '' : <span><button onClick={handleUpdate}>Update</button></span>}
                         </div>
                         
+                        {/* <input
+                            type="text"
+                            placeholder="Search"
+                            value={searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                        /> */}
 
                         <div className="table" id="managers">
                             <div className="table__body">
@@ -68,6 +86,7 @@ export default function Admin(){
                                             <th>План</th>
                                             <th>Факт</th>
                                             <th>Авиакомпания</th>
+                                            <th>Отправление</th>
                                             <th>Прибытие</th>
                                             <th>Рейс</th>
                                             <th>Статус</th>
@@ -85,6 +104,7 @@ export default function Admin(){
                                                 <td>{item.stad.split(" ")[1]}</td>
                                                 <td>{item.etad.split(" ")[1]}</td>
                                                 <td>{item.airlineName}</td>
+                                                <td>{item.path.origin.originEn}</td>
                                                 <td>{item.path.destination.destinationEn}</td>
                                                 <td>{item.airlineIata + " " + item.flightNumber}</td>
                                                 <td>{item.remark.remarkEn}</td>
@@ -94,7 +114,13 @@ export default function Admin(){
                                     </tbody>
                                 </table>
                                 {selectedId !== null && (
-                                    <FlightTrackerMap id={selectedId} onClose={handleModalClose} />
+                                    <Modal id={selectedId} onClose={handleModalClose}> 
+                                        <iframe 
+                                            scrolling="no" 
+                                            onLoad={ () => setIsMapLoading(false)} 
+                                            src={`https://flighttrack.tavtechnologies.aero/flight_track?flight=${selectedId}`} 
+                                        ></iframe>
+                                    </Modal>
                                 )}
                             </div>
                         </div>
@@ -106,14 +132,3 @@ export default function Admin(){
         </div>
     );
 }
-
-function Modal({ objectId, onClose }) {
-    return (
-      <div className="modal-overlay">
-        <div className="modal-content">
-          <button onClick={onClose}>Close</button>
-          <p>Object Id: {objectId}</p>
-        </div>
-      </div>
-    );
-  }
