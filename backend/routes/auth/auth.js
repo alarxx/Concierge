@@ -1,4 +1,7 @@
 const express = require('express');
+
+const trimStrings = require('../../../common/trimStrings');
+
 const Router = express.Router();
 
 Router.get('/', (req, res)=>{
@@ -16,6 +19,11 @@ Router.get('/', (req, res)=>{
 });
 
 Router.use('/logout', require('./logout/logout'));
+
+Router.use((req, res, next)=>{
+	req.body = trimStrings(req.body);
+	next();
+})
 
 Router.use('/login', require('./login/login'));
 Router.use('/register', require('./register/register'));
