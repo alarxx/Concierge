@@ -214,10 +214,10 @@
 }
 .admin .tabs {
     margin-top: 16px;
+    margin-bottom: 50px;
 }
 
 .admin .table {
-    margin-top: 50px;
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;

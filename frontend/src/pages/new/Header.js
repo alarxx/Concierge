@@ -13,7 +13,7 @@ export default function Header({ user }){
                             </Link>
                         </div>
                         <ul className="menu-admin">
-                            <li className="menu-admin__li"><Link to="/">Заявки</Link></li>
+                            <li className="menu-admin__li"><Link to="/admin/orders">Заявки</Link></li>
                             <li className="menu-admin__li menu-admin__li-active"><Link to="/">Пользователи</Link></li>
                             <li className="menu-admin__li"><Link to="/">Партнеры</Link></li>
                             <li className="menu-admin__li"><Link to="/admin/flightracker">Направления</Link></li>
