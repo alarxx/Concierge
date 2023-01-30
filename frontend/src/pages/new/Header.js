@@ -16,7 +16,7 @@ export default function Header({ user }){
                             <li className="menu-admin__li"><Link to="/">Заявки</Link></li>
                             <li className="menu-admin__li menu-admin__li-active"><Link to="/">Пользователи</Link></li>
                             <li className="menu-admin__li"><Link to="/">Партнеры</Link></li>
-                            <li className="menu-admin__li"><Link to="/flightracker">Направления</Link></li>
+                            <li className="menu-admin__li"><Link to="/admin/flightracker">Направления</Link></li>
                         </ul>
                     </div>
                     <div className="user_nav dflex aic">

@@ -28,7 +28,7 @@ export default function Router(){
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/admin" element={<Admin />} />
-				<Route path="/flightracker" element={<FlightTracker />} />
+				<Route path="/admin/flightracker" element={<FlightTracker />} />
 
 				<Route path='/authenticate' element={<Auth />} />
 				<Route path='/authenticate_new' element={<AuthNew />} />
