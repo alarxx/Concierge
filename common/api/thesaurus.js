@@ -1,12 +1,9 @@
-let fetch;
-
-if (typeof window !== 'undefined') {
-    fetch = window.fetch;
-} else {
-    fetch = require('node-fetch');
-}
-
+/* fetch api теперь есть в node js */
 const key = 'J3G1Urb5+UAEM6Ula7N4zQ==GMz7yhxm89jJCAEk';
+
+function log(...str){
+    console.log("thesaurus()", ...str);
+}
 
 /** Возвращает массивы синонимов и антонимов.
  * {
@@ -39,7 +36,7 @@ async function thesaurus(word){
         return data;
     }
     catch(e){
-        console.log(e);
+        log(e);
     }
 
     /*

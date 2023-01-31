@@ -1,13 +1,12 @@
-let fetch;
-
-if (typeof window !== 'undefined') {
-    fetch = window.fetch;
-} else {
-    fetch = require('node-fetch');
-}
+/* fetch api теперь есть в node js */
 
 // const key = 'df59ba06f38eee20a0ec';
 // const email = 'alar.akilbekov99@gmail.com'
+
+function log(...str){
+    console.log("translate()", ...str);
+}
+
 
 /**
  * Переводит текст.
@@ -66,11 +65,11 @@ async function translate(text, langpair){
         }
 
         const data = await response.json();
-
+        log(data);
         return data;
     }
     catch(e){
-        console.log(e);
+        log(e);
     }
 
 
