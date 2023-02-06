@@ -1,16 +1,21 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useLocation} from "react-router-dom";
 
 import {useAppContext} from "../context/AppContext";
 
 export default function Home(){
-    const {authHandler, socketHandler} = useAppContext();
+
+    const {authHandler, socketHandler, adaptiveHandler} = useAppContext();
     const {user, userLoading, userError, isAuthenticated} = authHandler;
     const {isConnected} = socketHandler;
+
+    const { isMobile } = adaptiveHandler;
 
     return (
         <>
             <h1>[Home page]</h1>
+
+            <h2>{`${isMobile ? 'Mobile' : 'Web'}`}</h2>
 
             {!userLoading && isAuthenticated() && <h2>{user.email}</h2>}
             {!userLoading && !isAuthenticated() && !isConnected && <h2>Disconnected</h2>}
