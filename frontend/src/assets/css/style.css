@@ -909,6 +909,20 @@ input[type="date"]:not(:empty) {
     display: flex;
     align-items: center;
 }
+.menu__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.menu__icon path {
+    stroke: #fff;
+}
+.menu__icon-active path {
+    fill: white;
+}
+.menu__li:nth-child(2) .menu__icon-active path {
+    stroke: #1e262f;
+}
 .menu__wrapper {
     display: flex;
     align-items: center;
