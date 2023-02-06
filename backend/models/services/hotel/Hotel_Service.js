@@ -106,14 +106,14 @@ ServiceSchema.methods.onCreate = async function({res, req, body, user}){
 }
 
 ServiceSchema.methods.deepDelete = async function(){
-    //Должен удалить service, прикрепленный к нему, и все букинги, которые отсылаются на него
-    const bookings = await Hotel_Booking.find({'hotel/service': this.id});
-    // console.log(colors.red('bookings[]='), bookings);
-    await Promise.all(bookings.map(async booking => booking.deepDelete()));
-
     await handlers.deleteModels(this, ['logo', 'service']);
 
     await handlers.deleteArraysOfModels(this, ['images']);
+
+    //Должен удалить service, прикрепленный к нему, и все букинги, которые отсылаются на него
+    const bookings = await Hotel_Booking.find({'hotel/service': this.id});
+    // console.log(colors.red('bookings[]='), bookings);
+    await Promise.all(bookings.map(async booking => await booking.deepDelete()));
 
     await this.delete();
 

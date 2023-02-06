@@ -18,6 +18,7 @@ const HotelSchema = new Schema({
       required: true,
       immutable: true,
     },
+
     name: {
         type: String,
         required: true,
@@ -61,7 +62,6 @@ HotelSchema.plugin(require('../../updatedDate'));
 HotelSchema.plugin(require('../../logPlugin'));
 
 const handlers = require('../../handlers');
-const Hotel_Service = require('./Hotel_Service');
 const colors = require("../../../logging/colors");
 
 HotelSchema.statics.publicFiles = function(){
@@ -83,10 +83,12 @@ HotelSchema.methods.onCreate = async function({body}){
 }
 
 HotelSchema.methods.deepDelete = async function(){
+    const Hotel_Service = require('../../modelsManager').models.Hotel_Service;
+
     //Еще надо удалить все Hotel/Service, которые принадлежат этому отелю
     const hotels = await Hotel_Service.find({hotel: this.id});
     // console.log(colors.red('services[]='), hotels);
-    await Promise.all(hotels.map(async hotel => hotel.deepDelete()));
+    await Promise.all(hotels.map(async hotel => await hotel.deepDelete()));
 
 
     // if(this.logo) await File.deepDeleteById(this.logo);

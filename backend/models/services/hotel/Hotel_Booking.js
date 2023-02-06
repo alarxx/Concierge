@@ -15,18 +15,20 @@ const BookingSchema = new Schema({
         immutable: true,
         unique: true,
     },
-    customer: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-        immutable: true,
-    },
     'hotel/service': {
         type: Schema.Types.ObjectId,
         ref: 'Hotel/Service',
         required: true,
         immutable: true,
     },
+
+    customer: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+        immutable: true,
+    },
+
     checkInDate: {
         type: Date,
         default: () => new Date(), // Просто хз как из postman-a ставить
