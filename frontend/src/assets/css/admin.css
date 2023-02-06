@@ -435,7 +435,7 @@
     width: 100%;
     padding: 16px;
 }
-.sign__body {
+.sign__body, .register__body {
     padding-top: 36px;
     padding: 36px 20px 20px 20px;
 }
