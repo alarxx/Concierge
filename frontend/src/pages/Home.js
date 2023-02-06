@@ -27,6 +27,7 @@ export default function Home(){
                 <li><Link to="/admin">Admin page</Link></li>
 
                 <li><Link to="/profile">Profile</Link></li>
+                <li><Link to="/main">Main</Link></li>
 
                 <li><Link to="/authenticate">Auth</Link></li>
                 <li><Link to="/logout">Log Out</Link></li>

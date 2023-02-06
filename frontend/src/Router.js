@@ -21,6 +21,7 @@ import {AppContextProvider} from "./context/AppContext";
 
 import './assets/css/style.css'
 import './assets/css/adaptive.css'
+import Main from "./pages/main/Main";
 
 export default function Router(){
 	// return (<TestSocket />)
@@ -46,6 +47,7 @@ export default function Router(){
 				<Route path='/order' element={<Order />} />
 				<Route path='/details' element={<Details />} />
 
+				<Route path='/main' element={<Main />} />
 				<Route path='/profile' element={<Profile />} />
 
 				<Route path='/partners' element={<Partners />} />

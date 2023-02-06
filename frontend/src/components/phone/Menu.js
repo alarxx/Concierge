@@ -15,7 +15,7 @@ export default function Menu(){
             <div className="menu__wrapper">
                 <ul className="menu__links">
                     <li className="menu__li">
-                        <div className={`menu__icon ${pathname==='/profile'?'menu__icon-active':''}`} onClick={e => navigate('/profile', {replace: true,})}>
+                        <div className={`menu__icon ${pathname==='/main'?'menu__icon-active':''}`} onClick={e => navigate('/main', {replace: true,})}>
                             <Category width="28" height="28" viewBox="0 0 28 28"/>
                         </div>
                     </li>
@@ -25,7 +25,7 @@ export default function Menu(){
                         </div>
                     </li>
                     <li className="menu__li">
-                        <div className={`menu__icon ${pathname==='/'?'menu__icon-active':''}`} onClick={e => navigate('/', {replace: true,})}>
+                        <div className={`menu__icon ${pathname==='/profile'?'menu__icon-active':''}`} onClick={e => navigate('/profile', {replace: true,})}>
                             <User width="28" height="28" viewBox="0 0 28 28"/>
                         </div>
                     </li>
