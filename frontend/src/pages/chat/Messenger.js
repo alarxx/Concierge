@@ -3,7 +3,7 @@
  * */
 import React, {useEffect, useRef, useState} from 'react'
 import Navbar from "../../components/phone/Navbar";
-import Container from "../../components/phone/Container";
+import Workspace from "../../components/phone/Workspace";
 import Message from "../../components/chat/Message";
 import Workflow from "../../components/phone/Workflow";
 import Day from "../../components/chat/Day";
@@ -168,7 +168,7 @@ export default function Messenger({
         <Workflow isOverflowBg={control === 'attach'}>
             <Navbar title={conversation.name} back info onBackClick={closeConversation} onInfoClick={e=>navigate('/details')}/>
 
-            <Container chat>
+            <Workspace chat>
                 {messages.map((message, messageIndex) => {
                     if(message.type==='text'){
                         return (
@@ -206,7 +206,7 @@ export default function Messenger({
                 })}
 
 
-            </Container>
+            </Workspace>
 
             {control ==='text' &&
                 <InputPanel

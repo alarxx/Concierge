@@ -1,6 +1,6 @@
 import React, {useEffect, useLayoutEffect, useRef} from 'react'
 
-export default function Container({chat=false, children }){
+export default function Workspace({chat=false, children }){
     const chatList = useRef(null);
 
     useEffect(() => {
@@ -9,7 +9,7 @@ export default function Container({chat=false, children }){
             //     top: document.body.scrollHeight,
             //     behavior: 'smooth'
             // });
-            // console.log("Container TOP HEIGHT", chatList.current.scrollTop, chatList.current.scrollHeight);
+            // console.log("Workspace TOP HEIGHT", chatList.current.scrollTop, chatList.current.scrollHeight);
             // chatList.current.scrollTop = 7000//chatList.current.scrollHeight;
             // chatList.current.scrollToBottom()
 

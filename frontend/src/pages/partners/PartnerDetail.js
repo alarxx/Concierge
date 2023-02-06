@@ -2,7 +2,7 @@ import React from 'react'
 
 import Workflow from "../../components/phone/Workflow";
 import Menu from "../../components/phone/Menu";
-import Container from "../../components/phone/Container";
+import Workspace from "../../components/phone/Workspace";
 import Navbar from "../../components/phone/Navbar";
 
 
@@ -13,7 +13,7 @@ export default function PartnerDetail(){
             
             <Navbar title={"Информация по партнеру"} select/>
 
-            <Container>
+            <Workspace>
 
                 
                 <ServiceItem
@@ -21,7 +21,7 @@ export default function PartnerDetail(){
                     // active={type === 'event'}
                 />
 
-            </Container>
+            </Workspace>
 
             <Menu />
 

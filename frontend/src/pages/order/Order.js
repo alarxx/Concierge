@@ -98,7 +98,7 @@ export default function Order({ }) {
     }
 
     return (
-        <>
+        <div className={"container"}>
             {userLoading && <p>loading...</p>}
             {!userLoading &&
                 <MultistepForm
@@ -110,6 +110,6 @@ export default function Order({ }) {
                     submitButtonName={"Оставить заявку"}
                 />
             }
-        </>
+        </div>
     );
 }

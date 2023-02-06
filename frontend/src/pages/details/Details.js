@@ -1,6 +1,6 @@
 import React from 'react';
 import Workflow from "../../components/phone/Workflow";
-import Container from "../../components/phone/Container";
+import Workspace from "../../components/phone/Workspace";
 import Navbar from "../../components/phone/Navbar";
 import {useNavigate} from "react-router-dom";
 
@@ -11,7 +11,7 @@ export default function Details({}){
         <Workflow>
 
             <Navbar title={"Детали командировки"} back info onBackClick={e=>navigate(-1)}/>
-            <Container>
+            <Workspace>
                     <div className="details-card">
                         <div className="details-card__header">
                             <div className="details-card__title">
@@ -133,7 +133,7 @@ export default function Details({}){
                             </div>
                         </div>
                     </div>
-            </Container>
+            </Workspace>
         </Workflow>
     )
 }

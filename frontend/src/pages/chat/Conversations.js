@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import Workflow from "../../components/phone/Workflow";
 import Navbar from "../../components/phone/Navbar";
 import Menu from "../../components/phone/Menu";
-import Container from "../../components/phone/Container";
+import Workspace from "../../components/phone/Workspace";
 import ArchiveButton from "../../components/chat/ArchiveButton";
 import Chats from "../../components/chat/Chats";
 import YummyButton from "../../components/chat/YummyButton";
@@ -75,7 +75,7 @@ export default function Conversations({
         <Workflow>
             <Navbar title={"Мои заявки"}/>
 
-            <Container>
+            <Workspace>
                 <ArchiveButton onClick={e=>navigate('/archive')}/>
 
                 {chatLoading && <p style={{textAlign:"center", margin: "3rem"}}>loading...</p>}
@@ -98,7 +98,7 @@ export default function Conversations({
                 </Chats>
 
 
-            </Container>
+            </Workspace>
 
             <Menu />
         </Workflow>

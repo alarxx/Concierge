@@ -2,7 +2,7 @@ import React from 'react'
 
 import Workflow from "../../components/phone/Workflow";
 import Menu from "../../components/phone/Menu";
-import Container from "../../components/phone/Container";
+import Workspace from "../../components/phone/Workspace";
 import Navbar from "../../components/phone/Navbar";
 import CardOrder from "../../components/cards/CardOrder";
 import PushIcon from "../../assets/icons/clipboard-tick.svg";
@@ -16,11 +16,11 @@ export default function Partners(){
             
             <Navbar title={"Партнеры"} select/>
 
-            <Container>
+            <Workspace>
 
                 <ServicesPanel />
 
-            </Container>
+            </Workspace>
 
             <Menu />
 

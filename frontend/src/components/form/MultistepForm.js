@@ -75,7 +75,7 @@ export default function MultistepForm({
 
 
     return (
-        <div className='container'>
+        <>
             {wasAttempts && formErrors.map(error => <p>{error}</p>)}
             
             <form onSubmit={onSubmitInside} className={`form-workflow ${inverted.includes(currentStepIndex) ? 'reverse-column' : ''}`}>
@@ -105,7 +105,7 @@ export default function MultistepForm({
                 </div>
 
             </form>
-        </div>
+        </>
     );
 }
 

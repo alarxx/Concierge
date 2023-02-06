@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Navbar from "../../components/phone/Navbar";
-import Container from "../../components/phone/Container";
+import Workspace from "../../components/phone/Workspace";
 import ArchiveButton from "../../components/chat/ArchiveButton";
 import YummyButton from "../../components/chat/YummyButton";
 import CreateIcon from "../../assets/icons/arrow-right.svg";
@@ -121,7 +121,7 @@ export default function Archive({conversations=[]}){
         <Workflow>
             <Navbar title={"Архив"} back onBackClick={e => navigate(-1)}/>
 
-            <Container>
+            <Workspace>
                 <Chats>
                     {conversations.map((conversation, i) => {
                         return <ChatItem
@@ -136,7 +136,7 @@ export default function Archive({conversations=[]}){
 
                 <div className="secondarytext tac">В архиве хранится информация о завершившихся или отмененных командировках</div>
 
-            </Container>
+            </Workspace>
 
             <Menu />
         </Workflow>

@@ -2,7 +2,7 @@ import React from 'react'
 
 import Workflow from "../../components/phone/Workflow";
 import Menu from "../../components/phone/Menu";
-import Container from "../../components/phone/Container";
+import Workspace from "../../components/phone/Workspace";
 import CardOrder from "../../components/cards/CardOrder";
 import PushIcon from "../../assets/icons/clipboard-tick.svg";
 import {useAppContext} from "../../context/AppContext";
@@ -21,7 +21,7 @@ export default function Profile(){
     return (
         <Workflow>
 
-            <Container>
+            <Workspace>
 
                 <div className='profile_content'>
                     <div className="profile__person">
@@ -95,7 +95,7 @@ export default function Profile(){
                     </div>
                 </div>
 
-            </Container>
+            </Workspace>
 
             <Menu />
 
