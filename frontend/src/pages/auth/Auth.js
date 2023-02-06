@@ -23,7 +23,7 @@ export default function Auth() {
     const navigate = useNavigate();
 
     const {authHandler, adaptiveHandler} = useAppContext();
-    const { isMobile } = adaptiveHandler;
+    const { device } = adaptiveHandler;
     const { user, login, register, userLoading, isAuthenticated } = authHandler;
 
     const [data, setData] = useState({})
@@ -76,7 +76,7 @@ export default function Auth() {
     return (
         <>{!isAuthenticated() && 
         <div className='admin'>
-            {!isMobile && <Header user={user} isAuthenticated={isAuthenticated} />}
+            {device === 'desktop' && <Header user={user} isAuthenticated={isAuthenticated} />}
 
             <section className={`workflow ${isMobile?'mobile':''}`}>
                 <div className="container2">
@@ -129,7 +129,7 @@ export default function Auth() {
                 </div>
             </section>
 
-            {isMobile && <Menu />}
+            {device === 'mobile' && <Menu />}
 
         </div>
         }</>

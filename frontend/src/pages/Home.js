@@ -9,13 +9,13 @@ export default function Home(){
     const {user, userLoading, userError, isAuthenticated} = authHandler;
     const {isConnected} = socketHandler;
 
-    const { isMobile } = adaptiveHandler;
+    const { device } = adaptiveHandler;
 
     return (
         <>
             <h1>[Home page]</h1>
 
-            <h2>{`${isMobile ? 'Mobile' : 'Web'}`}</h2>
+            <h2>{device}</h2>
 
             {!userLoading && isAuthenticated() && <h2>{user.email}</h2>}
             {!userLoading && !isAuthenticated() && !isConnected && <h2>Disconnected</h2>}

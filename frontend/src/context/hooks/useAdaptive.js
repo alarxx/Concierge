@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 
 export default function useAdaptive(){
     const [width, setWidth] = useState(window.innerWidth);
-    const [isMobile, setIsMobile] = useState();
+    const [device, setDevice] = useState('');
 
     useEffect(() => {
         const handleResize = () => {
@@ -17,10 +17,12 @@ export default function useAdaptive(){
 
     useEffect(()=>{
         if(width < 596)
-            setIsMobile(true)
+            setDevice('mobile')
+        else if(width < 768)
+            setDevice('tablet')
         else
-            setIsMobile(false)
+            setDevice('desktop')
     }, [width]);
 
-    return { width, isMobile }
+    return { width, device }
 }
