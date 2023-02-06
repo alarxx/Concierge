@@ -430,14 +430,27 @@
     box-shadow: 2px 4px 40px rgba(30, 38, 47, 0.04);
     border-radius: 20px;
 }
-.sign .btn {
+/* .sign .btn {
     margin-top: 24px;
     width: 100%;
     padding: 16px;
+} */
+.sign--style .btn {
+    width: 100%;
+
 }
 .sign__body, .register__body {
     padding-top: 36px;
     padding: 36px 20px 20px 20px;
+}
+.sign__body .title {
+    display: none;
+}
+.sign__body .form-workflow, .sign__body .in_form_wrapper {
+    margin-top: 0;
+}
+.sign__body .form-controls {
+    margin-top: 24px;
 }
 .sign__tabs {
     font-size: 18px;

@@ -92,7 +92,7 @@ export default function Auth() {
                             {userLoading && <p>loading...</p>}
 
                             {type === 'login' &&
-                                <div className="sign__body">
+                                <div className="sign__body sign--style">
                                     {/*<form action="auth">*/}
                                     {/*    <div className="input-form">*/}
                                     {/*        <label htmlFor="people_quantity">Эл. почта *</label>*/}
