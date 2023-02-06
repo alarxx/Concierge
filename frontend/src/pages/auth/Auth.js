@@ -79,7 +79,7 @@ export default function Auth() {
             {device !== 'mobile' && <Header user={user} isAuthenticated={isAuthenticated} />}
 
             <section className={`workflow`}>
-                <div className="container2">
+                <div className="container">
                     <div className="sign__wrapper">
                         <div className="sign sign-fixed">
                             <div className="sign__header">
