@@ -15,19 +15,24 @@ export default function MultistepForm({
                                           submitButtonName="Отправить"
 }) {
 
+    const [formErrors, setFormErrors] = useState([]);
+    const [wasAttempts, setWasAttempts] = useState(false);
+
     function updateFields(fields){
-        setData(prev => {
-            // console.log({...prev, ...fields});
-            return ({...prev, ...fields})
-        });
+        setData(prev => ({...prev, ...fields}))
     }
 
     const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo} = useMultistepForm(
-        forms.map(form => form({...data, updateFields, next, back, goTo}) )
+        forms.map(form => form({...data, updateFields, setFormErrors, next, back, goTo}) )
     );
 
     function onSubmitInside(e){
         e.preventDefault();
+
+        if(formErrors.length !== 0)
+            return setWasAttempts(true)
+
+        setWasAttempts(false)
 
         if(!isLastStep){
             return next();
@@ -71,6 +76,8 @@ export default function MultistepForm({
 
     return (
         <div className='container'>
+            {wasAttempts && formErrors.map(error => <p>{error}</p>)}
+            
             <form onSubmit={onSubmitInside} className={`form-workflow ${inverted.includes(currentStepIndex) ? 'reverse-column' : ''}`}>
                 <div style={{
                     position: "absolute", top: "0.5rem", right: "0.5rem",
@@ -94,7 +101,7 @@ export default function MultistepForm({
                         <span>{isLastStep ? submitButtonName : nextButtonName}</span>
                         <ArrowRight viewBox="0 0 24 24"/>
                     </button>
-                    
+
                 </div>
 
             </form>

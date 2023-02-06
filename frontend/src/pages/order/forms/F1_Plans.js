@@ -4,7 +4,16 @@ import ServiceItem from "../../../components/form/ServiceItem";
 
 import HouseSVG from "../../../assets/icons/house.svg";
 
-export default function F1_Plans({type, updateFields=f=>f }){
+export default function F1_Plans({type, updateFields=f=>f, setFormErrors=f=>f }){
+
+    useEffect(()=>{
+        if(!type){
+            setFormErrors(["Выберите один один из пунктов"])
+        } else {
+            setFormErrors([])
+        }
+    })
+
     return (
         <>
             <FormWrapper title={"Что вы планируете организовать?"}>
