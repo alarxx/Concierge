@@ -29,7 +29,16 @@ function WorkCard({
     );
 }
 
-export default function WorkTypesForm({entity, updateFields=f=>f }){
+export default function WorkTypesForm({entity, updateFields=f=>f, setFormErrors=f=>f }){
+
+    useEffect(()=>{
+        if(!entity){
+            setFormErrors(["Выберите один один из пунктов"])
+        } else {
+            setFormErrors([])
+        }
+    });
+
     return (
         <FormWrapper title={"Выберите подходящий вариант"}>
             <WortTypes>
