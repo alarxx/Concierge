@@ -10,10 +10,10 @@ export default function PasswordsForm({password, password_confirmation, updateFi
     return (
         <FormWrapper title={"Последняя деталь"}>
 
-            <InputForm label={"Password *"} placeHolder={"Введите пароль"}
+            <InputForm type="password" required={true} label={"Password *"} placeHolder={"Введите пароль"}
                        updateFields={updateFields} field_key={"password"} value={password}
             />
-            <InputForm placeHolder={"Введите пароль повторно"}
+            <InputForm type="password" required={true} placeHolder={"Введите пароль повторно"}
                        updateFields={updateFields} field_key={"password_confirmation"} value={password_confirmation}
             />
 

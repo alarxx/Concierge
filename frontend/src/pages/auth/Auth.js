@@ -8,6 +8,7 @@ import LoginForm from "./loginForms/LoginForm";
 import MultistepForm from "../../components/form/MultistepForm";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAppContext} from "../../context/AppContext";
+import Header from "../new/Header";
 
 const registerForms = [WorkTypes, UserForm, PasswordsForm]
 const loginForms = [LoginForm]
@@ -21,11 +22,10 @@ export default function Auth() {
     const navigate = useNavigate();
 
     const {authHandler} = useAppContext();
-    const {login, register, userLoading } = authHandler;
-
+    const {user, login, register, userLoading} = authHandler;
 
     const [data, setData] = useState({})
-    const [type, setType] = useState('login')
+    const [type, setType] = useState('login');
 
     function onSubmit(e){
         (async ()=>{
@@ -66,32 +66,72 @@ export default function Auth() {
     }
 
     return (
-        <>
-            {userLoading && <p>loading...</p>}
+        <div className='admin'>
+            <Header user={user}></Header>
 
-            <div>
-                <button onClick={e=>setType('login')}>Login</button>
-                <button onClick={e=>setType('register')}>Register</button>
-            </div>
-            {type === 'login' &&
-                <MultistepForm
-                    forms={loginForms}
-                    data={data}
-                    setData={setData}
-                    onSubmit={onSubmit}
-                    submitButtonName={"Войти"}
-                />
-            }
-            {type === 'register' &&
-                <MultistepForm
-                    forms={registerForms}
-                    data={data}
-                    setData={setData}
-                    onSubmit={onSubmit}
-                    submitButtonName={"Создать аккаунт"}
-                />
-            }
+            <section className="workflow">
+                <div className="container2">
+                    <div className="sign__wrapper">
+                        <div className="sign sign-fixed">
+                            <div className="sign__header">
+                                <div className="sign__logo">
+                                    <img src="/img/logo.png" alt="ConciergeService"/>
+                                </div>
+                                <div className="sign__tabs dflex aic">
+                                    <span
+                                        className={`sign__tab ${type === 'login' ? 'sign__tab-active' : ''}`}
+                                        onClick={() => setType('login')}
+                                    >Вход</span>
+                                    <span
+                                        className={`sign__tab ${type === 'register' ? 'sign__tab-active' : ''}`}
+                                        onClick={() => setType('register')}
+                                    >Регистрация</span>
+                                </div>
+                            </div>
 
-        </>
+                            {userLoading && <p>loading...</p>}
+
+                            {type === 'login' &&
+                                <div className="sign__body">
+                                    {/*<form action="auth">*/}
+                                    {/*    <div className="input-form">*/}
+                                    {/*        <label htmlFor="people_quantity">Эл. почта *</label>*/}
+                                    {/*        <input type="email" name="email" className="input input-choice"*/}
+                                    {/*            placeholder="Введите вашу эл. почту" required/>*/}
+                                    {/*    </div>*/}
+                                    {/*    <div className="input-form">*/}
+                                    {/*        <label htmlFor="people_quantity">Пароль</label>*/}
+                                    {/*        <input type="password" name="password" className="input input-choice"*/}
+                                    {/*            placeholder="Введите пароль" required/>*/}
+                                    {/*    </div>*/}
+                                    {/*    <button className="btn btn-main" type="submit">Войти</button>*/}
+                                    {/*</form>*/}
+                                    <MultistepForm
+                                        forms={loginForms}
+                                        data={data}
+                                        setData={setData}
+                                        onSubmit={onSubmit}
+                                        submitButtonName={"Войти"}
+                                    />
+                                </div>
+                            }
+
+                            {type === 'register' &&
+                                <div className="sign__body">
+                                    <MultistepForm
+                                        forms={registerForms}
+                                        data={data}
+                                        setData={setData}
+                                        onSubmit={onSubmit}
+                                        submitButtonName={"Создать аккаунт"}
+                                    />
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     );
 }

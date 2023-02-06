@@ -12,7 +12,6 @@ import Profile from './pages/profile/Profile'
 import Partners from './pages/partners/Partners'
 import Archive from "./pages/chat/Archive";
 import Details from "./pages/details/Details";
-import AuthNew from "./pages/new/AuthNew";
 import Admin from "./pages/new/Admin";
 import FlightTracker from "./pages/new/FlightTracker";
 import AdminOrders from "./pages/new/AdminOrders";
@@ -35,7 +34,6 @@ export default function Router(){
 				<Route path="/admin/partners" element={<AdminPartners />} />
 
 				<Route path='/authenticate' element={<Auth />} />
-				<Route path='/authenticate_new' element={<AuthNew />} />
 				<Route path="/logout" element={<Logout />} />
 
 				<Route path={'/chat'}>

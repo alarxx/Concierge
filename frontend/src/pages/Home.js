@@ -24,7 +24,6 @@ export default function Home(){
                 <li><Link to="/profile">Profile</Link></li>
 
                 <li><Link to="/authenticate">Auth</Link></li>
-                <li><Link to="/authenticate_new">Auth New</Link></li>
                 <li><Link to="/logout">Log Out</Link></li>
 
                 <li><Link to="/chat">Chat</Link></li>

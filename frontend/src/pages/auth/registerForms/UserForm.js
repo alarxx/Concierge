@@ -11,6 +11,7 @@ export default function UserForm({entity, name, company_name, phone, email, upda
 
                 <InputForm
                     label={"ФИО *"}
+                    type="text" required={true}
                     placeHolder={"Введите ваше полное имя"}
                     updateFields={updateFields}
                     field_key={"name"} value={name}
@@ -18,6 +19,7 @@ export default function UserForm({entity, name, company_name, phone, email, upda
 
                 {entity === 'juridical' &&
                     <InputForm
+                        type="text" required={true}
                         label={"Название комании *"}
                         placeHolder={"Введите название компании"}
                         updateFields={updateFields}
@@ -27,6 +29,7 @@ export default function UserForm({entity, name, company_name, phone, email, upda
                 }
 
                 <InputForm
+                    type="text" required={true}
                     label={"Моб. телефон *"}
                     placeHolder={"+7   (7 _ _)   _ _ _    _ _    _ _"}
                     updateFields={updateFields}
@@ -35,6 +38,7 @@ export default function UserForm({entity, name, company_name, phone, email, upda
                 />
 
                 <InputForm
+                    type="email" required={true}
                     label={"Электронная почта *"}
                     placeHolder={"Введите вашу эл. почту"}
                     updateFields={updateFields}
