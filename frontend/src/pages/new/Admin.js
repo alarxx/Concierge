@@ -2,12 +2,19 @@ import React, { useState, useEffect } from 'react';
 import {useAppContext} from "../../context/AppContext";
 import Header from "./Header";
 import Table from "../../components/ui/Table";
+import {useNavigate} from "react-router-dom";
 
 export default function Admin(){
+    const navigate = useNavigate()
 
     const {authHandler} = useAppContext();
-    const {user} = authHandler;
+    const {user, isAuthenticated} = authHandler;
 
+    useEffect(()=>{
+        if(!isAuthenticated() || user.role !== 'manager') {
+            navigate('/', {replace: true})
+        }
+    }, []);
 
     return (
         <div className="admin">
