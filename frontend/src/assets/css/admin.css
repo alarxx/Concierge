@@ -2,10 +2,10 @@
     background-color: #F5F6F7;
 }
 
-.admin .container {
+/* .admin .container {
     width: 1200px;
     margin: 0 auto;
-}
+} */
 
 .admin .container2 {
     width: 1116px;
@@ -482,8 +482,17 @@
     width: 464px;
 }
 .sign__wrapper {
+    position: relative;
     height: calc(100vh - 180px);
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.close-page {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    cursor: pointer;
 }

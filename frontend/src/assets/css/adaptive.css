@@ -1,6 +1,29 @@
 @media(max-width:596px) {
-    .container {
-        padding: 0 24px;
-    }
+    .close-page {
+        display: block;
+    } 
 
 }
+
+@media(max-width:768px) {
+    
+
+}
+
+@media (max-width:992px){
+
+}
+
+@media (max-width: 1150px) {
+    .container {
+        width: auto;
+        padding: 0 24px;
+    }
+    
+}
+
+/* 
+.mobile .container {
+    width: auto;
+    padding: 0 24px;
+} */

@@ -10,6 +10,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useAppContext} from "../../context/AppContext";
 import Header from "../new/Header";
 import Menu from "../../components/phone/Menu";
+import ClosePageIcon from "../../assets/icons/close-square.svg";
 
 const registerForms = [WorkTypes, UserForm, PasswordsForm]
 const loginForms = [LoginForm]
@@ -81,6 +82,9 @@ export default function Auth() {
             <section className={`workflow`}>
                 <div className="container">
                     <div className="sign__wrapper">
+                        <div className='close-page'>
+                            <ClosePageIcon />
+                        </div> 
                         <div className="sign sign-fixed">
                             <div className="sign__header">
                                 <div className="sign__logo">
