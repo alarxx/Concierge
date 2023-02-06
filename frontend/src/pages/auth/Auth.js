@@ -22,10 +22,16 @@ export default function Auth() {
     const navigate = useNavigate();
 
     const {authHandler} = useAppContext();
-    const {user, login, register, userLoading} = authHandler;
+    const {user, login, register, userLoading, isAuthenticated} = authHandler;
 
     const [data, setData] = useState({})
     const [type, setType] = useState('login');
+
+    useEffect(()=>{
+        if(isAuthenticated()){
+           navigate(-1, {replace: true}) 
+        }
+    }, []);
 
     function onSubmit(e){
         (async ()=>{
@@ -66,8 +72,9 @@ export default function Auth() {
     }
 
     return (
+        <>{!isAuthenticated() && 
         <div className='admin'>
-            <Header user={user}></Header>
+            <Header user={user} isAuthenticated={isAuthenticated} />
 
             <section className="workflow">
                 <div className="container2">
@@ -133,5 +140,6 @@ export default function Auth() {
                 </div>
             </section>
         </div>
+        }</>
     );
 }
