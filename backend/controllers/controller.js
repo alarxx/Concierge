@@ -271,11 +271,12 @@ module.exports = ({Model}) => {
         next();
     }
 
-
+    /** Специфичный метод */
     controller.findByQueryIds = async (req, res, next) => {
         // Вытаскиваем id из query и переименовываем на ids
         let {id: ids} = req.query;
 
+        // Менеджеру мы отдаем все данные
         if(!ids && req.user.role === 'manager'){
             res.locals.models = await Model.find({});
             return next();

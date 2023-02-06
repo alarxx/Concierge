@@ -6,7 +6,6 @@ const express = require('express');
 
 const Router = express.Router();
 
-
 const controller = require('../../../../controllers/api/hotel/booking/booking');
 
 const {
@@ -17,10 +16,10 @@ const {
 } = controller;
 
 Router.route('/')
-    // .post(filesValidation, c)
+    .post(filesValidation, c)
     .get(findByQueryIds, r)
-    // .put(filesValidation, findOne, u)
-    // .delete(findOne, d);
+    .put(filesValidation, findOne, u)
+    .delete(findOne, d);
 
 
 module.exports = Router;

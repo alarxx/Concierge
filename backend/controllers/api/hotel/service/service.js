@@ -1,6 +1,6 @@
 
-const HotelClassModel = require('../../../../models/services/hotel/Hotel_Service');
+const HotelServiceModel = require('../../../../models/services/hotel/Hotel_Service');
 
-const hotelClassController = require('../../../controller')({Model:HotelClassModel});
+const hotelServiceController = require('../../../controller')({Model:HotelServiceModel});
 
-module.exports = hotelClassController;
+module.exports = hotelServiceController;

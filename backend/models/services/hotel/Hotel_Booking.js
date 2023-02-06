@@ -88,7 +88,11 @@ BookingSchema.statics.publicFiles = function(){
 BookingSchema.methods.onCreate = async function({req, res, body, user}){
     const Hotel_Services = require('../../modelsManager').models.Hotel_Service;
 
-    this.customer = user.id;
+    if(body.customer)
+        this.customer = body.customer;
+    else
+        this.customer = user.id;
+
 
     const booking = new Booking({
         type: 'hotel/booking',

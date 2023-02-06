@@ -1,7 +1,5 @@
 const {Schema, model} = require('mongoose');
 
-// const Booking = require('../BookingAbstract');
-
 const BookingSchema = new Schema({
     booking: {
         type: Schema.Types.ObjectId,
@@ -37,8 +35,12 @@ BookingSchema.plugin(require('../../updatedDate'));
 BookingSchema.plugin(require('../../logPlugin'));
 
 BookingSchema.methods.onCreate = async function({req, res, body, user}){
+    const Booking = require('../../modelsManager').models.Booking;
 
-    this.customer = user.id;
+    if(body.customer)
+        this.customer = body.customer;
+    else
+        this.customer = user.id;
 
     // Creating booking
 
