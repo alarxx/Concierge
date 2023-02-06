@@ -9,6 +9,7 @@ import MultistepForm from "../../components/form/MultistepForm";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAppContext} from "../../context/AppContext";
 import Header from "../new/Header";
+import Menu from "../../components/phone/Menu";
 
 const registerForms = [WorkTypes, UserForm, PasswordsForm]
 const loginForms = [LoginForm]
@@ -21,8 +22,9 @@ export default function Auth() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const {authHandler} = useAppContext();
-    const {user, login, register, userLoading, isAuthenticated} = authHandler;
+    const {authHandler, adaptiveHandler} = useAppContext();
+    const { isMobile } = adaptiveHandler;
+    const { user, login, register, userLoading, isAuthenticated } = authHandler;
 
     const [data, setData] = useState({})
     const [type, setType] = useState('login');
@@ -74,9 +76,9 @@ export default function Auth() {
     return (
         <>{!isAuthenticated() && 
         <div className='admin'>
-            <Header user={user} isAuthenticated={isAuthenticated} />
+            {!isMobile && <Header user={user} isAuthenticated={isAuthenticated} />}
 
-            <section className="workflow">
+            <section className={`workflow ${isMobile?'mobile':''}`}>
                 <div className="container2">
                     <div className="sign__wrapper">
                         <div className="sign sign-fixed">
@@ -100,19 +102,6 @@ export default function Auth() {
 
                             {type === 'login' &&
                                 <div className="sign__body sign--style">
-                                    {/*<form action="auth">*/}
-                                    {/*    <div className="input-form">*/}
-                                    {/*        <label htmlFor="people_quantity">Эл. почта *</label>*/}
-                                    {/*        <input type="email" name="email" className="input input-choice"*/}
-                                    {/*            placeholder="Введите вашу эл. почту" required/>*/}
-                                    {/*    </div>*/}
-                                    {/*    <div className="input-form">*/}
-                                    {/*        <label htmlFor="people_quantity">Пароль</label>*/}
-                                    {/*        <input type="password" name="password" className="input input-choice"*/}
-                                    {/*            placeholder="Введите пароль" required/>*/}
-                                    {/*    </div>*/}
-                                    {/*    <button className="btn btn-main" type="submit">Войти</button>*/}
-                                    {/*</form>*/}
                                     <MultistepForm
                                         forms={loginForms}
                                         data={data}
@@ -139,6 +128,9 @@ export default function Auth() {
                     </div>
                 </div>
             </section>
+
+            {isMobile && <Menu />}
+
         </div>
         }</>
     );
