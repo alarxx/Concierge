@@ -94,6 +94,7 @@ export default function MultistepForm({
                         <span>{isLastStep ? submitButtonName : nextButtonName}</span>
                         <ArrowRight viewBox="0 0 24 24"/>
                     </button>
+                    
                 </div>
 
             </form>
