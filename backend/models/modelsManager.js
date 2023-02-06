@@ -25,6 +25,10 @@ function initialize(){
     models.Hotel = require('./services/hotel/Hotel');
     models.Hotel_Service = require('./services/hotel/Hotel_Service');
     models.Hotel_Booking = require('./services/hotel/Hotel_Booking');
+
+    models.Flight = require('./services/flight/Flight');
+    models.Flight_Service = require('./services/flight/Flight_Service');
+    models.Flight_Booking = require('./services/flight/Flight_Booking');
 }
 
 
