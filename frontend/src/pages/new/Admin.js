@@ -17,7 +17,7 @@ export default function Admin(){
     }, []);
 
     return (
-        <>{isAuthenticated() && user.role !== 'manager' &&
+        <>{isAuthenticated() && user.role === 'manager' &&
 
             <div className="admin">
                 <Header user={user} pageName="users"></Header>
