@@ -129,6 +129,8 @@ body {
 }
 .btn-prev {
     padding: 10px 20px 10px 0;
+    border: none;
+    background: none;
 }
 .btn-prev svg {
     width: 16px;
@@ -880,8 +882,13 @@ input[type="date"]:not(:empty) {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    padding-bottom: 85px;
 }
 .menu {
+    /**/
+    position: fixed;
+    bottom: 0;
+    /**/
     width: 100%;
     padding-top: 26px;
     padding-bottom: 26px;

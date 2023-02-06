@@ -85,15 +85,15 @@ export default function MultistepForm({
                 <div className={isFirstStep ? "form-controls form-controls-done" : "form-controls"}>
 
                     {!isFirstStep &&
-                        <div className="btn btn-secondary btn-prev mr-5" onClick={back}>
+                        <button className="btn btn-secondary btn-prev mr-5" onClick={back}>
                             <ArrowRight viewBox="0 0 24 24"/>
                             <span>{backButtonName}</span>
-                        </div>}
+                        </button>}
 
-                    <div className="btn btn-main btn-next" onClick={ e => onSubmitInside(e) }>
+                    <button className="btn btn-main btn-next" onClick={ e => onSubmitInside(e) }>
                         <span>{isLastStep ? submitButtonName : nextButtonName}</span>
                         <ArrowRight viewBox="0 0 24 24"/>
-                    </div>
+                    </button>
                 </div>
 
             </form>
