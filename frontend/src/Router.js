@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 
 import {Link, Routes, Route} from "react-router-dom";
 
-import Home from "./pages/Home";
 import Auth from './pages/auth/Auth'
 import Logout from "./pages/auth/Logout";
 
@@ -28,7 +27,7 @@ export default function Router(){
 	return (
 		<AppContextProvider>
 			<Routes>
-				<Route path="/" element={<Home />} />
+				<Route path="/" element={<Profile />} />
 				<Route path="/admin" element={<Admin />} />
 				<Route path="/admin/flightracker" element={<FlightTracker />} />
 				<Route path="/admin/orders" element={<AdminOrders />} />
