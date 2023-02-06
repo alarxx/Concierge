@@ -71,7 +71,7 @@ export default function MultistepForm({
 
     return (
         <div className='container'>
-            <form className={`form-workflow ${inverted.includes(currentStepIndex) ? 'reverse-column' : ''}`}>
+            <form onSubmit={onSubmitInside} className={`form-workflow ${inverted.includes(currentStepIndex) ? 'reverse-column' : ''}`}>
                 <div style={{
                     position: "absolute", top: "0.5rem", right: "0.5rem",
                 }}>
@@ -85,12 +85,12 @@ export default function MultistepForm({
                 <div className={isFirstStep ? "form-controls form-controls-done" : "form-controls"}>
 
                     {!isFirstStep &&
-                        <button className="btn btn-secondary btn-prev mr-5" onClick={back}>
-                            <ArrowRight viewBox="0 0 24 24"/>
-                            <span>{backButtonName}</span>
-                        </button>}
+                    <button type="button" className="btn btn-secondary btn-prev mr-5" onClick={back}>
+                        <ArrowRight viewBox="0 0 24 24"/>
+                        <span>{backButtonName}</span>
+                    </button>}
 
-                    <button className="btn btn-main btn-next" onClick={ e => onSubmitInside(e) }>
+                    <button type="submit" className="btn btn-main btn-next">
                         <span>{isLastStep ? submitButtonName : nextButtonName}</span>
                         <ArrowRight viewBox="0 0 24 24"/>
                     </button>

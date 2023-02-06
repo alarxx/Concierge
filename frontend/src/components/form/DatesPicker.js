@@ -7,8 +7,8 @@ export default function DatesPicker({
                                         date_end,
                                         date_end_key,
                                         one_way_ticket,
-                                        placeholderOnStart,
-                                        placeholderOnEnd,
+                                        // placeholderOnStart,
+                                        // placeholderOnEnd,
 }){
 
     function setField(key, date){
@@ -22,12 +22,14 @@ export default function DatesPicker({
             <label>Даты</label>
             <div className="datepicker">
                 <input
+                    required
                     type="date" className="input-date" name="datepicker_start" placeholder="Выбрать"
                     value={date_start}
                     onChange={e => setField(date_start_key, e.target.value)}
                 />
                 {!one_way_ticket &&
                 <input
+                    required
                     type="date" className="input-date" name="datepicker_end" placeholder="Выбрать"
                     value={date_end}
                     onChange={e => setField(date_end_key, e.target.value)}

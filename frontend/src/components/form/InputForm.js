@@ -6,22 +6,14 @@ export default function InputForm({
                                       updateFields=f=>f,
                                       value = "",
                                       field_key="",
-                                      type="string"
+                                      type="text",
+                                      required=false
                                   }){
 
-    function check(value, type){
-        if (typeof value === type){
-            return true
-        }
-        else {
-            return false
-        }
-    }
+    // function check(value){}
 
     function setField(value){
-        if ( false && !check(value, type) ){
-            return
-        }
+        // check(value);
         const obj = {};
         obj[field_key] = value;
         updateFields(obj);
@@ -31,8 +23,8 @@ export default function InputForm({
         <div className="input-form">
             {label && <label>{label}</label>}
             <input
-                type="text"
-                required
+                type={type}
+                required={required}
                 className="input input-choice"
                 placeholder={placeHolder}
                 value={value}
