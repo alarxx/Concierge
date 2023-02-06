@@ -13,7 +13,7 @@ export default function Menu(){
             <div className="menu__wrapper">
                 <ul className="menu__links">
                     <li className="menu__li">
-                        <div className="menu__icon" onClick={e => navigate('/profile', {replace: true,})}>
+                        <div className="menu__icon menu__icon-active" onClick={e => navigate('/profile', {replace: true,})}>
                             <Category width="28" height="28" viewBox="0 0 28 28"/>
                         </div>
                     </li>
