@@ -115,6 +115,8 @@ export default function Admin(){
                                 </table>
                                 {selectedId !== null && (
                                     <Modal id={selectedId} onClose={handleModalClose}> 
+                                        <p>Id: {selectedId}</p>
+
                                         <iframe 
                                             scrolling="no" 
                                             onLoad={ () => setIsMapLoading(false)} 

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 
-export default function CardAdmin({props, handleRowClick}) {
+export default function CardAdmin({props, handleClick}) {
     
     // принимает какой-то объект заказа с бд, ниже формируем объект из props, чтобы дальше выводить в карточке
     const cardData = {
-        title: "Астана - Будапешт",
+        title: props.name,
         date: "12 мая - 20 мая",
         info: {
             type: "Командировка",
@@ -18,8 +18,11 @@ export default function CardAdmin({props, handleRowClick}) {
             width: 80+'%'
         }
     }
+    
+
     return (
-        <div className="card card-order">
+        <>
+        <div className="card card-order" onClick={handleClick}>
             <div className="card-order__header">
                 <div className="card-order__info info">
                     <div className="info__title">
@@ -59,5 +62,7 @@ export default function CardAdmin({props, handleRowClick}) {
                 </div>
             </div>
         </div>
+        
+        </>
     )
 }

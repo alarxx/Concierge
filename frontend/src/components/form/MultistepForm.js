@@ -79,11 +79,11 @@ export default function MultistepForm({
             {wasAttempts && formErrors.map(error => <p>{error}</p>)}
             
             <form onSubmit={onSubmitInside} className={`form-workflow ${inverted.includes(currentStepIndex) ? 'reverse-column' : ''}`}>
-                <div style={{
+                {/* <div style={{
                     position: "absolute", top: "0.5rem", right: "0.5rem",
                 }}>
                     {currentStepIndex + 1} / {steps.length}
-                </div>
+                </div> */}
 
                 <div className="form__body">
                     {step}

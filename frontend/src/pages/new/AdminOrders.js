@@ -15,11 +15,16 @@ export default function AdminOrders(){
 
     // }
 
-    
-    // const [selectedId, setSelectedId] = useState(null);
-    // const handleRowClick = (id) => setSelectedId(id);
-    // const handleModalClose = () => setSelectedId(null);
 
+    const [showModal, setShowModal] = useState(false);
+
+    const handleClick = () => {
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
 
     return (
         <div className="admin">
@@ -42,15 +47,16 @@ export default function AdminOrders(){
 
                         <div className="orders" id="all">
                             <div className="orders__wrapper">
-                                {/* <CardAdmin onClick={handleRowClick} /> */}
-                                <CardAdmin />
+                                <CardAdmin props={{name: "Астана - Будапешт"}} handleClick={handleClick} />
+                                <CardAdmin props={{name: "Алматы - Атырау"}} />
                             </div>
                         </div>
-                        {/* {selectedId !== null && (
-                            <Modal id={selectedId} onClose={handleModalClose}> 
-                                card info
+                        {showModal && (
+                            <Modal onClose={closeModal}>
+                                {/* modal component code */}
+                                {/* {cardData.title} */}
                             </Modal>
-                        )} */}
+                        )}
                     </div>
                 </div>
             </div>
