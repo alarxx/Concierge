@@ -1,10 +1,7 @@
 import React from 'react';
-import FormWrapper from "../../../components/form/FormWrapper";
-import ServiceItem from "../../../components/form/ServiceItem";
 
-import HouseSVG from "../../../assets/icons/house.svg";
+import FormWrapper from "../../../components/form/FormWrapper";
 import InputForm from "../../../components/form/InputForm";
-import SelectForm from "../../../components/form/SelectForm";
 
 export default function F3_General({num_of_people, departure_place, destination_place,
                                        updateFields=f=>f }){
@@ -12,6 +9,8 @@ export default function F3_General({num_of_people, departure_place, destination_
         <>
             <FormWrapper title={"Заполните данные о командировке для расчета стоимости"}>
                 <InputForm
+                    type="text"
+                    required={true}
                     label={"Количество людей *"}
                     placeHolder={"Введите ваше полное имя"}
                     updateFields={updateFields}
@@ -19,18 +18,24 @@ export default function F3_General({num_of_people, departure_place, destination_
                     value={num_of_people}
                 />
 
-                <InputForm label={"Место отправления *"}
-                           placeHolder={"Введите ваше полное имя"}
-                           updateFields={updateFields}
-                           field_key={"departure_place"}
-                           value={departure_place}
+                <InputForm
+                    type="text"
+                    required={true}
+                    label={"Место отправления *"}
+                    placeHolder={"Введите ваше полное имя"}
+                    updateFields={updateFields}
+                    field_key={"departure_place"}
+                    value={departure_place}
                 />
 
-                <InputForm label={"Место прибытия *"}
-                           placeHolder={"Введите ваше полное имя"}
-                           updateFields={updateFields}
-                           field_key={"destination_place"}
-                           value={destination_place}
+                <InputForm
+                    type="text"
+                    required={true}
+                    label={"Место прибытия *"}
+                    placeHolder={"Введите ваше полное имя"}
+                    updateFields={updateFields}
+                    field_key={"destination_place"}
+                    value={destination_place}
                 />
             </FormWrapper>
         </>
