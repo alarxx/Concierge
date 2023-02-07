@@ -33,7 +33,7 @@ export default function Auth() {
 
     useEffect(()=>{
         if(isAuthenticated()){
-           navigate(-1, {replace: true}) 
+           navigate('/profile', {replace: true})
         }
     }, []);
 
