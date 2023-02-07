@@ -20,8 +20,14 @@ const ServiceSchema = new Schema({
         required: true,
     },
     price: {
-        type: Schema.Types.ObjectId,
-        ref: 'Price'
+        type: Number,
+        required: true,
+    },
+    discount: {
+        type: Number,
+        min: 0,
+        max: 100,
+        default: 0
     },
     logo: {
         type: Schema.Types.ObjectId,

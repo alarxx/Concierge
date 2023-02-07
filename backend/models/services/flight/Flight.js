@@ -18,6 +18,9 @@ const FlightSchema = new Schema({
         type: String,
         required: true,
     },
+    description: {
+        type: String,
+    },
     placeOfArrival: {
         type: String, // Schema.Types.ObjectId or Number?
     },
