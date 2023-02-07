@@ -5,7 +5,7 @@ import useFreshData from "../../../hooks/useFreshData";
 
 
 function log(...str){
-    // console.log("useOffice:", ...str);
+    console.log("useOffice:", ...str);
 }
 
 /**
