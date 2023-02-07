@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import Image from './atoms/Image'
 import Name from "./atoms/Name";
@@ -47,10 +47,15 @@ export default function CardItem({
                                      onClick=f=>f,
 
 }){
+
+    useEffect(()=>{
+        console.log(img_url);
+    }, []);
+
     return (
         <div className={`card-item ${active?'card-item-active':''}`} onClick={onClick}>
 
-            {img_url && <Image img_url={img_url} />}
+            {img_url && <Image img_url={`/file/${img_url}`} />}
             {!img_url && <Image img_url={'/img/hotelimg.png'} />}
 
             <div className="card-item__info">
