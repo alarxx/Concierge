@@ -22,6 +22,7 @@ export default function ChoiceForm({
                     const img_url = s.logo ? `/file/${s.logo}` : null; // Это работает
                     return (
                             <CardItem key={i}
+                                      img_url={img_url}
                                       {...s}
                                       active={message.choice.selectedServices.includes(service.id)}
                                       onClick={e => onServiceSelect(service)}
