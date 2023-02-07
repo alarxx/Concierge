@@ -20,7 +20,7 @@ export default function Admin(){
         <>{isAuthenticated() && user.role === 'manager' &&
 
             <div className="admin">
-                <Header user={user} pageName="users"></Header>
+                <Header user={user} isAuthenticated={isAuthenticated} pageName="users"></Header>
 
                 <div className="workflow">
                     <div className="container2">
