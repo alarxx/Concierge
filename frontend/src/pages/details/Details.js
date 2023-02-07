@@ -134,7 +134,7 @@ export default function Details({}){
                     </div>
                 </div>
 
-                
+            {/*  Кнопка -> Partners -> Add Form  */}
             </Workspace>
         </Workflow>
     )
