@@ -12,7 +12,7 @@ export default function F1_Plans({type, updateFields=f=>f, setFormErrors=f=>f })
         } else {
             setFormErrors([])
         }
-    })
+    }, [type])
 
     return (
         <>

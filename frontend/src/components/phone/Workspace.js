@@ -3,7 +3,7 @@ import React, {useEffect, useLayoutEffect, useRef} from 'react'
 export default function Workspace({chat=false, children }){
     const chatList = useRef(null);
 
-    useEffect(() => {
+    /*useEffect(() => {
         if(chat) {
             // chatList.current.scrollIntoView({
             //     top: document.body.scrollHeight,
@@ -27,7 +27,7 @@ export default function Workspace({chat=false, children }){
             if(chatList.current)
                 chatList.current.scrollTop = chatList.current.scrollHeight;
         }
-    });
+    });*/
 
     /*useEffect(() => {
         // 👇️ scroll to bottom every time messages change

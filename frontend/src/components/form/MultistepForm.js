@@ -61,7 +61,7 @@ export default function MultistepForm({
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
         };
-    });
+    }, []);
 
 
     const [inverted,] = useState(forms.map((form, i) => {
@@ -73,7 +73,7 @@ export default function MultistepForm({
         if(init_step===-1)
             goTo(steps.length - 1)
         else goTo(init_step)
-    }, [init_step])
+    }, [])
 
 
     return (

@@ -13,7 +13,7 @@ export default function ChoiceForm({
 }){
 
     return (
-        <div className="chat-choice">
+        <div className={`chat-choice ${message.sender == user.id ? 'mymssg' : ''}`}>
 
             <Cards>
                 {message.choice.services.map((service, i) => {
