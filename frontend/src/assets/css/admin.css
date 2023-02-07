@@ -482,17 +482,20 @@
     width: 464px;
 }
 .sign__wrapper {
-    position: relative;
     height: calc(100vh - 180px);
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
-.admin .close-page {
-    display: none;
+.container {
+    position: relative;
+}
+.close-page {
     position: absolute;
     top: 40px;
     right: 20px;
     cursor: pointer;
+}
+.admin .close-page {
+    display: none;
 }

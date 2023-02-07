@@ -16,6 +16,9 @@ import MultistepForm from "../../components/form/MultistepForm";
 import {useAppContext} from "../../context/AppContext";
 import CloseButton from "../../components/phone/CloseButton";
 
+import Workflow from '../../components/phone/Workflow';
+import Workspace from '../../components/phone/Workspace';
+
 const FORMS = [
     F1_Plans,
     F2_Needs,
@@ -99,21 +102,23 @@ export default function Order({ }) {
     }
 
     return (
-        <div className={"container"}>
-            {userLoading && <p>loading...</p>}
+        <Workflow>
+            <Workspace>
+                {userLoading && <p>loading...</p>}
 
-            <CloseButton onClick={e => {}}/>
+                <CloseButton onClick={e => {}}/>
 
-            {!userLoading &&
-                <MultistepForm
-                    forms={FORMS}
-                    data={data}
-                    setData={setData}
-                    init_step={isFilledBefore ? -1 : 0}
-                    onSubmit={onSubmit}
-                    submitButtonName={"Оставить заявку"}
-                />
-            }
-        </div>
+                {!userLoading &&
+                    <MultistepForm
+                        forms={FORMS}
+                        data={data}
+                        setData={setData}
+                        init_step={isFilledBefore ? -1 : 0}
+                        onSubmit={onSubmit}
+                        submitButtonName={"Оставить заявку"}
+                    />
+                }
+            </Workspace>
+        </Workflow>
     );
 }

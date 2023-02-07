@@ -2,7 +2,9 @@
     .close-page {
         display: block;
     } 
-
+    .admin .close-page {
+        display: block;
+    }
 }
 
 @media(max-width:768px) {
