@@ -702,6 +702,7 @@ body {
     display: flex;
 }
 .mymssg {
+    display: flex;
     justify-content: end;
 
 }
