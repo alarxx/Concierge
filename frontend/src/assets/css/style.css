@@ -917,6 +917,9 @@ input[type="date"]:not(:empty) {
     align-items: center;
     justify-content: center;
 }
+.menu__icon g {
+    opacity: 100;
+}
 .menu__icon path {
     stroke: #fff;
 }
