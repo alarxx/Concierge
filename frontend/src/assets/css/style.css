@@ -1746,3 +1746,58 @@ textarea::-webkit-scrollbar {
     width:100%;
     height:500px;
 }
+
+
+
+
+
+.promoland {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: black;
+    color: white;
+}
+.promoland__wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.promoland__logo {
+    width: 200px;
+    margin-bottom: 50px;
+}
+.promoland__logo img {
+    width: 100%;
+}
+.promoland h1 {
+    font-size: 40px;
+    line-height: 120%;
+    /* or 48px */
+    color: #FFFFFF;
+}
+.promoland h2 {
+    margin-top: 24px;
+    margin-bottom: 60px;
+    font-size: 18px;
+    line-height: 180%;
+    /* or 32px */
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.promoland a {
+    color: black;
+    text-decoration: none;
+
+}
+
+.promoland .promoland__btn {
+    padding: 16px 26px;
+    background-color: white;
+    border-radius: 8px;
+
+}

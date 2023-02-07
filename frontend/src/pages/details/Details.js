@@ -4,6 +4,15 @@ import Workspace from "../../components/phone/Workspace";
 import Navbar from "../../components/phone/Navbar";
 import {useNavigate} from "react-router-dom";
 
+function ActionButton({name, icon, archive, onClick}){
+    return (
+        <div className={`btn btn-main btn-icon `} onClick={onClick}>
+            <span>{name}</span>
+            {icon}
+        </div>
+    )
+}
+
 export default function Details({}){
     const navigate = useNavigate()
 
@@ -134,6 +143,11 @@ export default function Details({}){
                     </div>
                 </div>
 
+                <ActionButton
+                    name={"Add Booking"}
+                    icon=""
+                    onClick=""
+                />
             {/*  Кнопка -> Partners -> Add Form  */}
             </Workspace>
         </Workflow>
