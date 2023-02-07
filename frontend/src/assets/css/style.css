@@ -1779,6 +1779,7 @@ textarea::-webkit-scrollbar {
     line-height: 120%;
     /* or 48px */
     color: #FFFFFF;
+    text-align: center;
 }
 .promoland h2 {
     margin-top: 24px;
@@ -1787,6 +1788,7 @@ textarea::-webkit-scrollbar {
     line-height: 180%;
     /* or 32px */
     color: rgba(255, 255, 255, 0.8);
+    text-align: center;
 }
 
 .promoland a {
@@ -1800,4 +1802,8 @@ textarea::-webkit-scrollbar {
     background-color: white;
     border-radius: 8px;
     cursor: pointer;
+    margin-right: 15px;
+}
+.promoland__btn:last-child {
+    margin-right: 0;
 }
