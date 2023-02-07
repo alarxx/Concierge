@@ -706,7 +706,12 @@ body {
     justify-content: end;
 
 }
-
+.cards {
+    width: 100%;
+}
+.mymssg .cards {
+    justify-content: end;
+}
 .input-date {
     position: relative;
     padding: 16px 20px;
