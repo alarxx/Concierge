@@ -56,4 +56,13 @@ UserSchema.plugin(require('../logPlugin'));
 
 UserSchema.plugin(require('../../websocket/observer/user'));
 
+const handlers = require('../handlers');
+
+UserSchema.methods.onCreate = async function({body, user}){}
+
+UserSchema.methods.deepDelete = async function (){
+	await this.delete();
+	return this;
+}
+
 module.exports = model(modelName, UserSchema);

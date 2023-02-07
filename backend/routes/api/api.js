@@ -3,6 +3,8 @@ const Router = express.Router();
 
 Router.use(require('../../auth/checkAuthenticated'));
 
+Router.use('/user', require('./user/user'));
+
 Router.use('/order', require('./order/order'));
 Router.use('/company', require('./company/company'))
 
