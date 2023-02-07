@@ -18,6 +18,17 @@
     .promoland__btn:last-child {
         margin-bottom: 0;
     }
+
+    .admin {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .admin .workflow {
+        height: auto;
+        flex: 1 0 auto;
+    }
+
 }
 
 @media(max-width:768px) {
