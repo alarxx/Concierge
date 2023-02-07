@@ -410,6 +410,9 @@ body {
 .card-item-active {
     border: 2px solid #1E262F;
 }
+.card-item {
+    width: 25%;
+}
 .card-item__img img {
     width: 100%;
 }

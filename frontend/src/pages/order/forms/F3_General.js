@@ -12,7 +12,7 @@ export default function F3_General({num_of_people, departure_place, destination_
                     type="number"
                     required={true}
                     label={"Количество людей *"}
-                    placeHolder={"Введите ваше полное имя"}
+                    placeHolder={"Введите количество людей"}
                     updateFields={updateFields}
                     field_key={"num_of_people"}
                     value={num_of_people}
