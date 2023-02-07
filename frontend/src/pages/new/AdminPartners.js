@@ -6,12 +6,18 @@ import Table from "../../components/ui/Table";
 export default function AdminPartners(){
 
     const {authHandler} = useAppContext();
-    const {user} = authHandler;
+    const {user, isAuthenticated} = authHandler;
+
+    useEffect(()=>{
+        if(!isAuthenticated() || user.role !== 'manager') {
+            navigate('/', {replace: true})
+        }
+    }, []);
 
 
     return (
         <div className="admin">
-            <Header user={user} pageName="partners"></Header>
+            <Header user={user} isAuthenticated={isAuthenticated} pageName="users"></Header>
 
             <div className="workflow">
                 <div className="container2">

@@ -20,8 +20,8 @@ export default function ServiceForm({title, onClose=f=>f, children, updateFields
                             label={"Название услуги"}
                             placeHolder={"Введите значение"}
                             updateFields={updateFields}
-                            field_key={"num_of_people"}
-                            value={num_of_people}
+                            field_key={"service_name"}
+                            // value={num_of_people}
                         />
                         <div class="input-form">
                             <label for="people_quantity"></label>

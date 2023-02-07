@@ -7,7 +7,13 @@ import Modal from "../../components/ui/Modal";
 export default function Admin(){
 
     const {authHandler} = useAppContext();
-    const {user} = authHandler;
+    const {user, isAuthenticated} = authHandler;
+
+    useEffect(()=>{
+        if(!isAuthenticated() || user.role !== 'manager') {
+            navigate('/', {replace: true})
+        }
+    }, []);
 
     const [flights, setFlights] = useState([]);
     const [TimeResultsCurrent, setDate] = useState([]);
@@ -59,7 +65,7 @@ export default function Admin(){
 
     return (
         <div className="admin">
-            <Header user={user} pageName="flightracker"></Header>
+            <Header user={user} isAuthenticated={isAuthenticated} pageName="users"></Header>
 
             <div className="workflow">
                 <div className="container2">

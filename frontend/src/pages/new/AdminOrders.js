@@ -8,7 +8,13 @@ import Modal from "../../components/ui/Modal";
 export default function AdminOrders(){
 
     const {authHandler} = useAppContext();
-    const {user} = authHandler;
+    const {user, isAuthenticated} = authHandler;
+
+    useEffect(()=>{
+        if(!isAuthenticated() || user.role !== 'manager') {
+            navigate('/', {replace: true})
+        }
+    }, []);
 
     // const cardData = {
     //     title: "",
@@ -28,7 +34,7 @@ export default function AdminOrders(){
 
     return (
         <div className="admin">
-            <Header user={user} pageName="orders"></Header>
+            <Header user={user} isAuthenticated={isAuthenticated} pageName="users"></Header>
 
             <div className="workflow">
                 <div className="container2">

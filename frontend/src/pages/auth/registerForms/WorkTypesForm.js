@@ -37,7 +37,7 @@ export default function WorkTypesForm({entity, updateFields=f=>f, setFormErrors=
         } else {
             setFormErrors([])
         }
-    });
+    }, [entity]);
 
     return (
         <FormWrapper title={"Выберите подходящий вариант"}>
