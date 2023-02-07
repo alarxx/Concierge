@@ -49,11 +49,11 @@ export default function Auth() {
                     navigate('/authenticate', {replace: true, state});
                 }
                 else{
-                    log("Successful login redirect to", location.state?.redirect ? location.state.redirect : '/');
+                    log("Successful login redirect to", location.state?.redirect ? location.state.redirect : '/profile');
 
                     delete state.redirect;
                     // console.log("navigate to", location.state.redirect, "\nstate", state);
-                    navigate(location.state?.redirect ? location.state.redirect : '/', {replace: true, state});
+                    navigate(location.state?.redirect ? location.state.redirect : '/profile', {replace: true, state});
                 }
             }
             else{
