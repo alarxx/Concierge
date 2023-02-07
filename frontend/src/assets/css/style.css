@@ -410,9 +410,6 @@ body {
 .card-item-active {
     border: 2px solid #1E262F;
 }
-.card-item {
-    width: 25%;
-}
 .card-item__img img {
     width: 100%;
 }
@@ -1143,7 +1140,10 @@ input[type="date"]:not(:empty) {
 }
 .chat-choice .card-item {
     margin-bottom: 8px;
+    width: 40%;
+
 }
+
 .chat-choice .card-item:nth-last-of-type(-n+2) {
     margin-bottom: 0;
 }
