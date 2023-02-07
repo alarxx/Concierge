@@ -9,7 +9,7 @@ export default function F3_General({num_of_people, departure_place, destination_
         <>
             <FormWrapper title={"Заполните данные о командировке для расчета стоимости"}>
                 <InputForm
-                    type="text"
+                    type="number"
                     required={true}
                     label={"Количество людей *"}
                     placeHolder={"Введите ваше полное имя"}

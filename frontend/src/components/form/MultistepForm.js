@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import useMultistepForm from "../../hooks/useMultistepForm";
 
@@ -14,6 +14,8 @@ export default function MultistepForm({
                                           backButtonName="Назад",
                                           submitButtonName="Отправить"
 }) {
+
+    const submitButtonRef = useRef()
 
     const [formErrors, setFormErrors] = useState([]);
     const [wasAttempts, setWasAttempts] = useState(false);
@@ -45,7 +47,7 @@ export default function MultistepForm({
 
     function handleKeyDown(e){
         if (e.keyCode === 13) { //'ENTER'
-            onSubmitInside(e);
+            submitButtonRef.current.click();
         }
         else if(e.keyCode === 27){ //'ESC'
             back()
@@ -97,7 +99,7 @@ export default function MultistepForm({
                         <span>{backButtonName}</span>
                     </button>}
 
-                    <button type="submit" className="btn btn-main btn-next">
+                    <button ref={submitButtonRef} type="submit" className="btn btn-main btn-next">
                         <span>{isLastStep ? submitButtonName : nextButtonName}</span>
                         <ArrowRight viewBox="0 0 24 24"/>
                     </button>
