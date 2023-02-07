@@ -102,7 +102,7 @@ export default function Order({ }) {
         <div className={"container"}>
             {userLoading && <p>loading...</p>}
 
-            <CloseButton onClick={e => {}}/>
+            <CloseButton />
 
             {!userLoading &&
                 <MultistepForm
