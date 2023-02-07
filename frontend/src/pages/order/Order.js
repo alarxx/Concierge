@@ -14,6 +14,7 @@ import F9_OrderName from "./forms/F9_OrderName";
 import MultistepForm from "../../components/form/MultistepForm";
 
 import {useAppContext} from "../../context/AppContext";
+import CloseButton from "../../components/phone/CloseButton";
 
 const FORMS = [
     F1_Plans,
@@ -100,6 +101,9 @@ export default function Order({ }) {
     return (
         <div className={"container"}>
             {userLoading && <p>loading...</p>}
+
+            <CloseButton onClick={e => {}}/>
+
             {!userLoading &&
                 <MultistepForm
                     forms={FORMS}

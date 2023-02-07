@@ -11,6 +11,7 @@ import {useAppContext} from "../../context/AppContext";
 import Header from "../new/Header";
 import Menu from "../../components/phone/Menu";
 import ClosePageIcon from "../../assets/icons/close-square.svg";
+import CloseButton from "../../components/phone/CloseButton";
 
 const registerForms = [WorkTypes, UserForm, PasswordsForm]
 const loginForms = [LoginForm]
@@ -79,12 +80,13 @@ export default function Auth() {
         <div className='admin'>
             {device !== 'mobile' && <Header user={user} isAuthenticated={isAuthenticated} />}
 
+
             <section className={`workflow`}>
                 <div className="container">
+
+                    <CloseButton onClick={e => {}}/>
+
                     <div className="sign__wrapper">
-                        <div className='close-page'>
-                            <ClosePageIcon />
-                        </div> 
                         <div className="sign sign-fixed">
                             <div className="sign__header">
                                 <div className="sign__logo">
