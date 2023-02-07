@@ -106,7 +106,7 @@ export default function Order({ }) {
             <Workspace>
                 {userLoading && <p>loading...</p>}
 
-                <CloseButton onClick={e => {}}/>
+                <CloseButton />
 
                 {!userLoading &&
                     <MultistepForm

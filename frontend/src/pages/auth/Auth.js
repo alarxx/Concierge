@@ -84,7 +84,7 @@ export default function Auth() {
             <section className={`workflow`}>
                 <div className="container">
 
-                    <CloseButton onClick={e => {}}/>
+                    <CloseButton />
 
                     <div className="sign__wrapper">
                         <div className="sign sign-fixed">
