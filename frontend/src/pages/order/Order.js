@@ -27,7 +27,7 @@ const FORMS = [
     F5_Housing,
     // F6_HotelsSelection,
     F7_Transport,
-    F8_Calculation,
+    // F8_Calculation,
     F9_OrderName
 ]
 
@@ -54,6 +54,7 @@ const FORMS = [
     description: '',
     preferred_services: [] //ObjectIds
 }*/
+
 const _useFilled = () => {
     const location = useLocation()
     const [isFilledBefore, setFilledBefore] = useState(false)
