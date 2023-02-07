@@ -1,13 +1,16 @@
 import React from 'react';
+import {useNavigate} from "react-router-dom";
 
 
 export default function Landing({}){
 
+    const navigate = useNavigate();
+
     return (
-        <section class="promoland">
-            <div class="container">
-                <div class="promoland__wrapper">
-                    <div class="promoland__logo">
+        <section className="promoland">
+            <div className="container">
+                <div className="promoland__wrapper">
+                    <div className="promoland__logo">
                         <img src="/img/concierge.png" alt=""/>
                     </div>
                     <h1>
@@ -16,10 +19,10 @@ export default function Landing({}){
                     <h2>
                         Позвольте себе не думать об организационных моментах
                     </h2>
-                    <div class="promoland__btns">
-                        <a href="" class="promoland__btn">Заказать услугу</a>
-                        <a href="" class="promoland__btn">Авторизация</a>
-                        <a href="" class="promoland__btn">Рассчитать стоимость</a>
+                    <div className="promoland__btns">
+                        <a className="promoland__btn" onClick={e => navigate('/order')}>Заказать услугу</a>
+                        <a className="promoland__btn" onClick={e => navigate('/authenticate')}>Авторизация</a>
+                        <a className="promoland__btn" onClick={e => navigate('/')}>Рассчитать стоимость</a>
                     </div>
                 </div>
             </div>

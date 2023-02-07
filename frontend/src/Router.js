@@ -21,13 +21,14 @@ import {AppContextProvider} from "./context/AppContext";
 import './assets/css/style.css'
 import './assets/css/adaptive.css'
 import Main from "./pages/main/Main";
+import Landing from "./pages/landing/Landing";
 
 export default function Router(){
 	// return (<TestSocket />)
 	return (
 		<AppContextProvider>
 			<Routes>
-				<Route path="/" element={<Profile />} />
+				<Route path="/" element={<Landing />} />
 				<Route path="/admin" element={<Admin />} />
 				<Route path="/admin/flightracker" element={<FlightTracker />} />
 				<Route path="/admin/orders" element={<AdminOrders />} />
