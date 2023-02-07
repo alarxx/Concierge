@@ -487,9 +487,9 @@
     align-items: center;
     justify-content: center;
 }
-.container {
+/* .container {
     position: relative;
-}
+} */
 .close-page {
     position: absolute;
     top: 40px;
@@ -498,4 +498,7 @@
 }
 .admin .close-page {
     display: none;
+}
+.sign .form-workflow {
+    padding-top: 0;
 }
