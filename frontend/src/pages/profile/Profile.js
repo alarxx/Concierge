@@ -2,10 +2,24 @@ import React from 'react'
 import Workflow from "../../components/phone/Workflow";
 import Workspace from "../../components/phone/Workspace";
 import Menu from "../../components/phone/Menu";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useAppContext} from "../../context/AppContext";
+import Icon from "../../assets/icons/add.svg";
+
+function MyLink({title="Page", onClick=f=>f}){
+    return (
+        <div className="push" onClick={onClick}>
+            <div className="push__icon"><Icon /></div>
+            <div className="push__info">
+                <div className="push__title">{title}</div>
+            </div>
+        </div>
+    );
+}
 
 export default function Profile(){
+
+    const navigate = useNavigate()
 
     const {authHandler, socketHandler, adaptiveHandler} = useAppContext();
     const {user, userLoading, userError, isAuthenticated} = authHandler;
@@ -17,8 +31,6 @@ export default function Profile(){
         <Workflow>
 
             <Workspace>
-                <h1>[Profile page]</h1>
-
                 <h2>{device}</h2>
 
                 {!userLoading && isAuthenticated() && <h2>{user.email}</h2>}
@@ -26,23 +38,22 @@ export default function Profile(){
                 {userError?.error && <h2>{userError.error}</h2>}
                 {userLoading && <p>loading...</p>}
 
-                <nav>
-                    <li><Link to="/">Home page</Link></li>
-                    <li><Link to="/admin">Admin page</Link></li>
+                <div className="profile__pushs">
+                    <MyLink title={"Home page"} onClick={e => navigate('/')}/>
+                    <MyLink title={"Admin page"} onClick={e => navigate('/admin')}/>
 
-                    <li><Link to="/profile">Profile</Link></li>
-                    <li><Link to="/main">Main</Link></li>
+                    <MyLink title={"Profile page"} onClick={e => navigate('/profile')}/>
+                    <MyLink title={"Main page"} onClick={e => navigate('/main')}/>
 
-                    <li><Link to="/authenticate">Auth</Link></li>
-                    <li><Link to="/logout">Log Out</Link></li>
+                    <MyLink title={"Auth page"} onClick={e => navigate('/authenticate')}/>
+                    <MyLink title={"Log Out page"} onClick={e => navigate('/logout')}/>
 
-                    <li><Link to="/chat">Chat</Link></li>
-                    <li><Link to="/order">Order</Link></li>
-                    <li><Link to="/partners">Partners</Link></li>
+                    <MyLink title={"Chat page"} onClick={e => navigate('/chat')}/>
+                    <MyLink title={"Order page"} onClick={e => navigate('/order')}/>
 
-                    <li><Link to="/details">Details</Link></li>
-
-                </nav>
+                    <MyLink title={"Partners page"} onClick={e => navigate('/partners')}/>
+                    <MyLink title={"Details page"} onClick={e => navigate('/details')}/>
+                </div>
             </Workspace>
 
             <Menu />
