@@ -1799,5 +1799,5 @@ textarea::-webkit-scrollbar {
     padding: 16px 26px;
     background-color: white;
     border-radius: 8px;
-
+    cursor: pointer;
 }
