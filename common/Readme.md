@@ -1,0 +1,1 @@
+Сюда можно добавить генерацию рандомных строк для cookies https://github.com/Alar-q/random-string-generator
