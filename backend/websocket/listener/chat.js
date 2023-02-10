@@ -1,4 +1,83 @@
 
+/*
+// Демо функция анализа текста (тональность, перевод, синонимы-антонимы)
+// Возможны ошибки, писалось в другом модуле
+// Переводим синонимы и антонимы.
+async function translateArray(texts, langpair){
+    const a = texts.join('. ');
+    const tr = (await translate(a, langpair)).responseData.translatedText;
+    const res = tr.split('. ');
+    const data = uniqueWords(res);
+    console.log('translateArray', data);
+    return data
+}
+
+async function answer(message){
+    try{
+        const {text, conversation} = message;
+        console.log('answer to message', message);
+
+        const info = {
+            translated: null,
+            sentiment: null,
+            synonyms: [],
+            antonyms: [],
+        };
+
+        // Мы переводим, в любом случае ru|en.
+        info.translated = (await translate(text, 'ru|en')).responseData.translatedText
+        // Нужно разделить на количество слов.
+        // console.log(colors.red('63d692999b4eb9fbee342bfa'), translated);
+        const words = text.split(' ');
+        // Если количество слов больше одного, то мы делаем семантический анализ.
+        // Если одно слово, то мы находим синонимы и антонимы.
+        // Скинуть все одним большим сообщением.
+        if(words.length === 1){
+            const thesaurusData = await thesaurus(info.translated);
+            info.synonyms = thesaurusData.synonyms;
+            info.antonyms = thesaurusData.antonyms;
+            console.log('thesaurus analyze', thesaurusData);
+        }
+        else {
+            const sentimentData = await sentiment(info.translated);
+            info.sentiment = sentimentData.sentiment;
+            console.log('sentiment analyze', sentimentData);
+        }
+
+        let response = `Перевод на английский: ${info.translated}. `;
+
+        if(info.sentiment){
+            response += `Тональность текста ${info.sentiment}. `;
+        }
+        if(info.synonyms.length){
+            const tr = await translateArray(info.synonyms, 'en|ru');
+            const a = tr.join(', ').toLowerCase();
+            response += 'Синонимы слова: ' + a + '. ';
+        }
+        if(info.antonyms.length){
+            const tr = await translateArray(info.antonyms, 'en|ru');
+            const a = tr.join(', ').toLowerCase();
+            response += 'Антонимы слова: ' + a + '. ';
+        }
+        await createMessage({
+                type: "text",
+                text: response,
+                conversation,
+                sender: '63d692999b4eb9fbee342bfa'
+        })
+
+        await createMessage({
+            type: "text",
+            text: "JSON: " + JSON.stringify(info),
+            conversation,
+            sender: '63d692999b4eb9fbee342bfa'
+        })
+
+    }
+    catch(e){console.log(e)}
+}
+*/
+
 
 async function createMessage(message, socket){
     const { user } = socket.request;
@@ -7,9 +86,7 @@ async function createMessage(message, socket){
     const Notifications = require('../../models/modelsManager').models.Notification;
     const Participants = require('../../models/modelsManager').models.Participant;
 
-    /**
-     * Нужно не только тупое сохранение сделать, но и изменение
-     * */
+    //Нужно не только тупое сохранение сделать, но и изменение
 
     let m = message.id ?
         await Messages.findById(message.id) :
