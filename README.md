@@ -54,6 +54,7 @@ React будет общаться с API через proxy.
 3. [REST API](https://www.restapitutorial.com/lessons/restquicktips.html "REST API")
 4. [Socket.IO](https://socket.io/docs/ "Socket.IO")
 5. [npm](https://en.wikipedia.org/wiki/Npm_(software))
+6. [webpack](https://webpack.js.org/)
 
 #### Frontend
 1. [React](https://reactjs.org/docs/getting-started.html "React")
