@@ -24,7 +24,7 @@ $ npm install
 ### Serving the app in development environment
 
 ```sh
-$ npm test
+$ npm start
 ```
 
 ### Building a distribution version
