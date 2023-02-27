@@ -1,4 +1,4 @@
-# Concierge back-end
+# Concierge front-end
 > Front-end проекта Concierge
 
 ## Getting Started
