@@ -16,6 +16,8 @@
 * Chat с разными типами сообщений (текст, формы, документы)
 * Flight Tracker
 * CRM
+* Переводчик в чате на разные языки
+* Автоматическая генерация документов для бухгалтерии (приложение 50 форма P-1) 
 
 ## Описание
 [**Concierge Service**](https://github.com/Alar-q/Concierge) - это [SPA](https://medium.com/NeotericEU/single-page-application-vs-multiple-page-application-2591588efe58 "SPA") с архитектурой и структурой реализованной на стеке MERN.  
