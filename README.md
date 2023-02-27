@@ -139,6 +139,6 @@ React будет общаться с API через proxy.
 
 * **Alar Akilbekov** (Backend, React) - [Alar-q](https://github.com/alar-q) - [@alar4j](https://t.me/alar4j)
 * **Ayan Ualiev** (Backend, Frontend) - [Ualiyevvv](https://github.com/ualiyevvv) - [@mitxp](https://t.me/mitxp)
-* **Dinara Dandibayeva** (Designer) - [Dina](https://github.com/DanDina777) - [@dandi_w](https://t.me/dandi_w)
+* **Dinara Dandibayeva** (UI/UX Designer) - [Dina](https://github.com/DanDina777) - [@dandi_w](https://t.me/dandi_w)
 
 See also the list of [contributors](https://github.com/alar-q/concierge/contributors) who participated in this project.
