@@ -1,10 +1,18 @@
 import React from 'react';
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
+import {useAppContext} from "../../context/AppContext";
 
 
 export default function Landing({}){
 
     const navigate = useNavigate();
+
+    const {authHandler} = useAppContext();
+    const {isAuthenticated} = authHandler;
+
+    if(isAuthenticated()){
+        return <Navigate to={"/profile"}/>
+    }
 
     return (
         <section className="promoland">
