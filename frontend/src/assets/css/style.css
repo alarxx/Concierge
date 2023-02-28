@@ -1807,3 +1807,11 @@ textarea::-webkit-scrollbar {
 .promoland__btn:last-child {
     margin-right: 0;
 }
+
+.sign svg path {
+    stroke: #1E262F;
+}
+
+.sign .btn-main svg {
+    display: none;
+}
