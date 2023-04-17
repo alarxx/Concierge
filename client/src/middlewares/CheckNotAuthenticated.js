@@ -6,6 +6,7 @@ import {Navigate} from "react-router-dom";
 import Logger from '../internal/Logger';
 const logger = new Logger('CheckNotAuthenticated');
 
+/** Не реализован */
 export default function CheckNotAuthenticated({ page }){
 
     const { authHandler } = useAppContext();

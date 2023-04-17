@@ -9,7 +9,8 @@ export default function Logout(){
 
     const navigate = useNavigate();
 
-    const { logout } = useAppContext().authHandler;
+    const { authHandler } = useAppContext();
+    const { logout } = authHandler;
 
     return (<>
         <h1>[Logout page]</h1>

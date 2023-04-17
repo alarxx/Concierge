@@ -16,6 +16,7 @@ import SendResetPasswordMail from "../password/SendResetPasswordMail";
  * */
 export default function Authentication({ }){
 
+    const location = useLocation();
     const navigate = useNavigate();
 
     const { authHandler } = useAppContext();
@@ -49,7 +50,7 @@ export default function Authentication({ }){
         <br/><br/>
 
 
-        <button onClick={e => navigate('/authn/send-reset', {replace:true})}>Forgot Password?</button>
+        <button onClick={e => navigate('/authn/send-reset', {replace: true})}>Forgot Password?</button>
         <br/><br/>
 
 

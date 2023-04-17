@@ -18,9 +18,9 @@ export default function useAuth({ socketHandler }){
 
     const {saveLastPage, navigateLastPage} = useLastPage();
 
-    const [user, setUserState] = useState({});
+    const [user, setUserState] = useState({}); // always object
     const [userLoading, setUserLoading] = useState(true);
-    const [userError, setUserError] = useState(null);
+    const [userError, setUserError] = useState(null); // null or { message, error/errors }
     /**
      * Вызов setUser означает что пользователь загрузился без ошибки.
      *
@@ -56,7 +56,8 @@ export default function useAuth({ socketHandler }){
     useEffect(()=>{
         socket.on("connect_error", (err) => {
             logger.error(err.message);
-            setUser({});
+            // setUser({}); // Нужно ли это делать? Если пользователь просто хочет дочитать статью
+            setUserLoading(false);
             setUserError(err);
         });
         socket.on("/delete/auth", (u)=>{
@@ -88,11 +89,12 @@ export default function useAuth({ socketHandler }){
         // ...isConnected из-за начального промежуточного ПО socket.io - показатель аутентификации пользователя
 
         // Даже если мы и пропускаем при отключенном socket-е, мы все равно говорим, что пользователь грузится.
+        // Если пользователь все таки получает connect_error, то только тогда мы говорим, что пользователь больше не грузится.
         setUserLoading(true);
 
         // Не выполнять whoami, может быть просто потеряна связь
         if(!isConnected) {
-            return logger.log('Не выполнять whoami, может быть просто потеряна связь');
+            return logger.log('Не выполнять whoami, может быть просто временно потеряна связь');
         }
 
         logger.log("check /whoami");
@@ -135,22 +137,23 @@ export default function useAuth({ socketHandler }){
     /**
      * Любое действие которое требует перехода на аутентификацию должно выполняться так, а не напрямую через navigate('/authn')
      * */
-    function authenticate(){
+    function authenticate(opt= { replace: false }){
         if(userLoading){
             return logger.error('Please wait for the user to connect');
         }
         if(isAuthenticated) {
             return logger.error('Already authenticated');
         }
-        if(location.pathname.startsWith('/authn')) {
+        if(location.pathname === '/authn') { // Иначе он сохранит страницу /authn и потом начнет крутить
             return logger.error(`Cannot call the authenticate() method from the '/authn' path`);
         }
 
         saveLastPage();
         // Здесь я ставлю replace.
         // Например, неаутентифицированный пользователь проходит: /home -> /protected -> /authn
-        // Не захотел логиниться, хочет вернуться обратно, и его должно перебросить на /home
-        navigate('/authn', {replace:true});
+        // Не захотел логиниться, хочет вернуться обратно, и его должно перебросить на /home.
+        // Но если я просто хочу с /home -> /authn
+        navigate('/authn', { replace: opt.replace });
     }
 
     /**
@@ -353,13 +356,6 @@ export default function useAuth({ socketHandler }){
         }*/
     }
 
-
-    /**
-     * Зачем я здесь оборачиваю в функцию?
-     * */
-    const isAuthenticated = (() => Boolean(user.email))();
-
-
     /**
      * */
     async function resetPassword({ reset_password_token, password }){
@@ -381,6 +377,12 @@ export default function useAuth({ socketHandler }){
         });
     }
 
+    /**
+     * Зачем я здесь оборачиваю в функцию?
+     * Так я убеждаюсь что данные user-а свежие и не какие-то из старого буфера.
+     * */
+    const wasAuthenticated = (() => Object.keys(user).length > 0)();
+    const isAuthenticated = (() => !userLoading && !userError && Object.keys(user).length > 0)();
 
     return ({
         user, userLoading, userError,
@@ -389,6 +391,7 @@ export default function useAuth({ socketHandler }){
         signin,
         logout,
         isAuthenticated,
+        wasAuthenticated,
         authenticate,
         assignName,
         resetPassword,
