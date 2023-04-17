@@ -7,9 +7,10 @@ Start with cloning this repo on your local machine:
 
 ```sh
 $ cd directory
-$ git clone https://github.com/ualiyevvv/book-club-app.git
-$ cd ./book-club-app/client
+$ git clone https://github.com/alar-q/concierge.git
+$ cd ./concierge
 $ git switch bizup
+$ cd ./client
 ```
 
 ## Installation

@@ -8,8 +8,9 @@ Start with cloning this repo on your local machine:
 ```sh
 $ cd directory
 $ git clone https://github.com/alar-q/concierge.git
-$ cd ./concierge/server
+$ cd ./concierge
 $ git switch bizup
+$ cd ./server
 ```
 
 ## Installation
