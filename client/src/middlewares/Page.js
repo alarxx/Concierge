@@ -11,10 +11,10 @@ const logger = new Logger('ProtectedPage');
 export default function Page({ children }){
 
     const { authHandler } = useAppContext();
-    const { userLoading, userError } = authHandler;
+    const { userLoading, isOffline } = authHandler;
 
     // Если был залогинен, то мы не дергаем страницу.
-    if(userError?.message === 'xhr poll error'){
+    if(isOffline){
         // pop-up окно должно быть
         return (<>
             <p>offline</p>

@@ -3,9 +3,12 @@ import React, {useEffect} from 'react';
 import {useAppContext} from "../context/AppContext";
 
 import Logger from '../internal/Logger';
+import {Navigate, useNavigate} from "react-router-dom";
 const logger = new Logger('ProtectedPage');
 
 /**
+ * Тестить нужно с выключенным и включенным сервером для имитации потери сигнала.
+ *
  * Нужно пересмотреть. Здесь идет race isAuthenticated, изначально он null и если перейти по ссылке с этим middleware, то он перебросит на /authentication, хотя user(whoami) просто не успел догрузиться.
  * Может быть можно блокировать все, пока userLoading?
  * Решил эту проблему простым бездействием пока userLoading=true
@@ -30,39 +33,41 @@ const logger = new Logger('ProtectedPage');
 export default function ProtectedPage({ children }){
 
     const { authHandler } = useAppContext();
-    const { user, userLoading, userError, isAuthenticated, wasAuthenticated, authenticate } = authHandler;
+    const { user, userLoading, userError, isAuthenticated, wasAuthenticated, isOffline, authenticate } = authHandler;
 
-    /* Здесь рассчитываем всего на 2 типа ошибки: 'xhr poll error' и 'Unauthorized'*/
+    // Что вообще должно происходить здесь?
+    // оффлайн не повод скидывать нас на страницу аутентификации, поэтому мы перекидываем на home page ('/')
     useEffect(()=>{
-        if(userLoading){
-            return logger.log({ userLoading });
-        }
-
-        if(!isAuthenticated && userError.message !== 'xhr poll error') {
+        // isAuthenticated = (!userLoading && !userError) && Object.keys(user).length > 0, - 100% пользователь аутентифицирован
+        // wasAuthenticated = (userLoading || userError) && Object.keys(user).length > 0, - пользователь был аутентифицирован, но соединение прервано или произошла ошибка
+        // isOffline = userError?.message === 'xhr poll error' - 100% оффлайн
+        if(!isAuthenticated && !wasAuthenticated && !isOffline){
             authenticate({ replace: true });
         }
-        else if(!userError){
-            logger.log("passed:", {email: user.email});
-        }
+
     }, [userLoading, userError])
 
 
     // Если был залогинен, то мы не дергаем страницу.
-    if(userError?.message === 'xhr poll error'){
+    if(isOffline){
+        if(!wasAuthenticated){
+            return (<Navigate to={'/'} />);
+        }
         return (<>
             <p>offline</p>
-            {wasAuthenticated && children}
+            {children}
         </>);
     }
-    else if(userLoading && !wasAuthenticated){
+    else if(userLoading){
         return (<>
             <p>loading...</p>
             {wasAuthenticated && children}
         </>);
     }
-    // Здесь может выдаться непредвиденная ошибка только, так как в useEffect рассчитываю некоторые ошибки.
+    // Здесь может выдаться непредвиденная ошибка только, потому что в useEffect рассчитываю некоторые ошибки.
+    // Никогда не будет выполняться?
     else if(!isAuthenticated) {
-        return <p>Unhandled error: {userError.message}</p>
+        return <p>Unhandled error: {userError?.message}</p>
     }
     else {
         return children;

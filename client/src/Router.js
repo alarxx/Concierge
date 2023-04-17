@@ -20,6 +20,7 @@ import NoName from "./pages/auth/status/NoName";
 import SendResetPasswordMail from "./pages/auth/password/SendResetPasswordMail";
 import ResetPassword from "./pages/auth/password/ResetPassword";
 import Page from "./middlewares/Page";
+import Protected from './pages/protected/Protected';
 
 export default function Router(){
 
@@ -69,7 +70,7 @@ export default function Router(){
 
 				<Route path='/protected' element={
 					<ProtectedPage>
-						<h1>[Protected page]</h1>
+						<Protected />
 					</ProtectedPage>
 				}></Route>
 
@@ -94,6 +95,11 @@ export default function Router(){
 				<Route path='/awards' element={<Awards />} />
 				<Route path='/profile' element={<Profile />} />
 
+				<Route path={'*'} element={
+					// Нужна чтобы несуществующие страницы не отличались от существующих защищенных
+					// Хотя какая разница, наверное, здесь можно указывать 404 Not Found
+					<Page><h1>[404 Not Found]</h1></Page>
+				}/>
 			</Routes>
 		</AppContextProvider>
 	);

@@ -138,6 +138,9 @@ export default function useAuth({ socketHandler }){
      * Любое действие которое требует перехода на аутентификацию должно выполняться так, а не напрямую через navigate('/authn')
      * */
     function authenticate(opt= { replace: false }){
+        if(isOffline){ // Если захотеть можно попасть на /authn и в оффлайн режиме, защита какая-то должна быть в компоненте
+            return logger.error(`Can't go to the page in offline mode`);
+        }
         if(userLoading){
             return logger.error('Please wait for the user to connect');
         }
@@ -381,8 +384,9 @@ export default function useAuth({ socketHandler }){
      * Зачем я здесь оборачиваю в функцию?
      * Так я убеждаюсь что данные user-а свежие и не какие-то из старого буфера.
      * */
-    const wasAuthenticated = (() => Object.keys(user).length > 0)();
-    const isAuthenticated = (() => !userLoading && !userError && Object.keys(user).length > 0)();
+    const wasAuthenticated = (() => ( userLoading ||  userError) && Object.keys(user).length > 0)();
+    const isAuthenticated  = (() => (!userLoading && !userError) && Object.keys(user).length > 0)();
+    const isOffline = (()=>userError?.message === 'xhr poll error')();
 
     return ({
         user, userLoading, userError,
@@ -392,6 +396,7 @@ export default function useAuth({ socketHandler }){
         logout,
         isAuthenticated,
         wasAuthenticated,
+        isOffline,
         authenticate,
         assignName,
         resetPassword,
