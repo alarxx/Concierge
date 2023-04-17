@@ -138,12 +138,17 @@ export default function useAuth({ socketHandler }){
      * Любое действие которое требует перехода на аутентификацию должно выполняться так, а не напрямую через navigate('/authn')
      * */
     function authenticate(opt= { replace: false }){
-        if(isOffline){ // Если захотеть можно попасть на /authn и в оффлайн режиме, защита какая-то должна быть в компоненте
+        /*
+        // Зачем эти проверки?
+        // Если захотеть можно попасть на /authn и в оффлайн режиме
+        // Защита какая-то должна быть в компоненте на случаи оффлайн и так далее, либо уведомление кидать
+        if(isOffline){
             return logger.error(`Can't go to the page in offline mode`);
         }
         if(userLoading){
             return logger.error('Please wait for the user to connect');
         }
+        */
         if(isAuthenticated) {
             return logger.error('Already authenticated');
         }

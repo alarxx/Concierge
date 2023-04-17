@@ -16,11 +16,10 @@ import SendResetPasswordMail from "../password/SendResetPasswordMail";
  * */
 export default function Authentication({ }){
 
-    const location = useLocation();
     const navigate = useNavigate();
 
     const { authHandler } = useAppContext();
-    const { userLoading, signin, sendActivationMail } = authHandler;
+    const { signin, sendActivationMail } = authHandler;
 
     const logger = useMemo(()=>new Logger('Authentication'), []);
 
@@ -28,9 +27,8 @@ export default function Authentication({ }){
 
     // SignUp/SignIn должны быть в одном компоненте и OAuth тоже, все должно быть в одном Authentication page
     return (<>
-        <h1>[Authenticate]</h1>
 
-        {userLoading && <p>loading...</p>}
+        <h1>[Authenticate]</h1>
 
 
         {type === 'signin' &&

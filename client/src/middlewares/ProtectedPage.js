@@ -38,9 +38,13 @@ export default function ProtectedPage({ children }){
     // Что вообще должно происходить здесь?
     // оффлайн не повод скидывать нас на страницу аутентификации, поэтому мы перекидываем на home page ('/')
     useEffect(()=>{
+        if(userLoading){
+            return logger.log("We can't say anything yet, the user is loading");
+        }
         // isAuthenticated = (!userLoading && !userError) && Object.keys(user).length > 0, - 100% пользователь аутентифицирован
         // wasAuthenticated = (userLoading || userError) && Object.keys(user).length > 0, - пользователь был аутентифицирован, но соединение прервано или произошла ошибка
         // isOffline = userError?.message === 'xhr poll error' - 100% оффлайн
+        logger.log("fuck", {isAuthenticated, wasAuthenticated, isOffline});
         if(!isAuthenticated && !wasAuthenticated && !isOffline){
             authenticate({ replace: true });
         }

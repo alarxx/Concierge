@@ -30,6 +30,7 @@ export default function SignIn({ signin=f=>f }){
     }, [email, password])
 
     useEffect(()=>{
+        // Эту проверку response лучше занести в функцию signin
         if(response?.status === 409 && response?.errors[0].identity_provider_mismatch){
             navigate('/authn/send-reset', {
                 state: {
