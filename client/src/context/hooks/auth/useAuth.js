@@ -133,6 +133,11 @@ export default function useAuth({ socketHandler }){
 
     }, [isConnected]);
 
+    useEffect(()=>{
+        if((userLoading || isOffline) && wasAuthenticated){
+            setUserState({});
+        }
+    }, [location.pathname])
 
     /**
      * Любое действие которое требует перехода на аутентификацию должно выполняться так, а не напрямую через navigate('/authn')
@@ -151,6 +156,9 @@ export default function useAuth({ socketHandler }){
         */
         if(isAuthenticated) {
             return logger.error('Already authenticated');
+        }
+        if(wasAuthenticated) {
+            return logger.error('It is impossible to say for sure, but before losing the connection the user was authenticated');
         }
         if(location.pathname === '/authn') { // Иначе он сохранит страницу /authn и потом начнет крутить
             return logger.error(`Cannot call the authenticate() method from the '/authn' path`);
