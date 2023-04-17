@@ -1,0 +1,103 @@
+import React, {useEffect, useMemo, useState} from 'react';
+
+import {useLocation, useNavigate} from "react-router-dom";
+import {isExpired} from "react-jwt";
+import {useAppContext} from "../../../context/AppContext";
+
+import Logger from '../../../internal/Logger';
+import useTimer from "../../../hooks/useTimer";
+
+/**
+ * Страница активации аккаунта.
+ *
+ * Контекст наблюдает за этой страницей, здесь пользователь всегда не аутентифицирован.
+ *
+ * Если в контексте не передан токен активации или если он не пришел на почту,
+ * то мы дожидаемся аутентификации/загрузки-whoami пользователя и запрашиваем новый e-mail.
+ *
+ * Если e-mail со ссылкой пришел на почту, то мы переходим по ссылке,
+ * нас перенаправляет на /authn/activation с токеном в контексте и сразу отключаем socket,
+ * потому что иначе нас может здесь перенаправить на прошлую страницу, что убьет флоу.
+ *
+ * */
+export default function Activation(){
+
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const logger = useMemo(()=>new Logger('Activation'),[])
+
+    const { authHandler } = useAppContext();
+    const { activation } = authHandler;
+
+    const [success, setSuccess] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const {timer, startTimer} = useTimer(()=>window.close(), 5);
+
+    const [token] = useState(location.state?.activation_token);
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
+
+    function onActivateAccount(e){
+        setSuccess(null);
+        setError(null);
+        setLoading(true);
+
+        activation({ activation_token: token, name, password })
+            .then(json => {
+                logger.log(json)
+                if(json.status >= 200 && json.status < 300){
+                    startTimer();
+                    setSuccess(json);
+                }
+                else {
+                    setError(json);
+                }
+            })
+            .catch(e=>setError(e))
+            .finally(()=>setLoading(false));
+
+    }
+
+    useEffect(()=>{
+        logger.log("state.activation_token", token);
+        if(!token){ // Нужно эту проверку сделать в useAuth
+            return navigate('/');
+        }
+        /*
+        * Можно не проверять здесь токен на самом деле.
+        * Сервер все равно не примет запрос с просроченным токеном.
+        * */
+        const expired = isExpired(token);
+        if(expired){
+            setError(new Error('The activation token has expired'));
+        }
+    }, []);
+
+
+    return (<>
+        <h1>[Activation Page]</h1>
+
+        {success && <p>{success.message}. This tab will automatically close after {timer} second{timer>=2?'s':''}</p>}
+
+        {loading && <p>loading...</p>}
+        {error && <p>{error.message}</p>}
+
+        {/* Если токен просрочен, то это показывать нельзя, простую проверку наличия error ставить нельзя, может выйти ошибка "слабый пароль" */}
+        {token && (!loading && !success) && <>
+            <label>Name</label>
+            <input type={'text'} name={'name'} value={name} onChange={e=>setName(e.target.value)} /> {/*required*/}
+            <br/>
+
+            <label>Password</label>
+            <input type={'text'} name={'password'} value={password} onChange={e=>setPassword(e.target.value)} required />
+            <br/>
+
+            <button onClick={onActivateAccount}>Activate account</button>
+            <br/>
+        </>}
+
+    </>);
+}

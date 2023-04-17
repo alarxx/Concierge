@@ -5,8 +5,8 @@
 ## Описание
 [**Concierge Service**](https://github.com/Alar-q/Concierge) - это [SPA](https://medium.com/NeotericEU/single-page-application-vs-multiple-page-application-2591588efe58 "SPA") с архитектурой и структурой реализованной на стеке MERN.
 
-Документация [backend](https://github.com/Alar-q/Concierge/tree/main/backend#readme)
-и [frontend](https://github.com/Alar-q/Concierge/tree/main/frontend#readme).
+Документация [backend](https://github.com/Alar-q/Concierge/tree/bizup/backend#readme)
+и [frontend](https://github.com/Alar-q/Concierge/tree/bizup/frontend#readme).
 
 В целом, общей темой консьерж-сервиса является предоставление индивидуальной помощи и внимания к потребностям клиента, независимо от отрасли, в которой он предлагается.
 
@@ -103,8 +103,8 @@ React будет общаться с API через proxy.
 и будет выдаваться сервером.
 
 Инструкции, которые помогут вам запустить
-[backend](https://github.com/Alar-q/Concierge/tree/main/backend#readme)
-и [frontend](https://github.com/Alar-q/Concierge/tree/main/frontend#readme)  
+[backend](https://github.com/Alar-q/Concierge/tree/bizup/server#readme)
+и [frontend](https://github.com/Alar-q/Concierge/tree/bizup/client#readme)  
 проекта на вашем локальном компьютере для целей разработки  
 и тестирования
 смотреть в соответствующих README.
@@ -141,5 +141,20 @@ React будет общаться с API через proxy.
 * **Alar Akilbekov** (Backend, React) - [Alar-q](https://github.com/alar-q) - [@alar4j](https://t.me/alar4j)
 * **Ayan Ualiev** (Backend, Frontend) - [Ualiyevvv](https://github.com/ualiyevvv) - [@mitxp](https://t.me/mitxp)
 * **Dinara Dandibayeva** (UI/UX Designer) - [Dina](https://github.com/DanDina777) - [@dandi_w](https://t.me/dandi_w)
+* **Ernar Tursinaly** (DevOps) - [Ernar](https://github.com/tshipenchko) - [@merura](https://t.me/merura)
+
+## Team
+```
+██████╗ ███████╗███╗   ██╗ █████╗ ██╗███████╗███████╗ █████╗ ███╗   ██╗ ██████╗███████╗   
+██╔══██╗██╔════╝████╗  ██║██╔══██╗██║██╔════╝██╔════╝██╔══██╗████╗  ██║██╔════╝██╔════╝    
+██████╔╝█████╗  ██╔██╗ ██║███████║██║███████╗███████╗███████║██╔██╗ ██║██║     █████╗    
+██╔══██╗██╔══╝  ██║╚██╗██║██╔══██║██║╚════██║╚════██║██╔══██║██║╚██╗██║██║     ██╔══╝    
+██║  ██║███████╗██║ ╚████║██║  ██║██║███████║███████║██║  ██║██║ ╚████║╚██████╗███████╗     
+╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝╚══════╝    
+```
+
+## License
+[MIT](https://github.com/alar-q/concierge/blob/bizup/LICENSE)
+
 
 See also the list of [contributors](https://github.com/alar-q/concierge/contributors) who participated in this project.
