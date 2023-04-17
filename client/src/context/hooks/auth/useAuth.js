@@ -399,7 +399,7 @@ export default function useAuth({ socketHandler }){
      * */
     const wasAuthenticated = (() => ( userLoading ||  userError) && Object.keys(user).length > 0)();
     const isAuthenticated  = (() => (!userLoading && !userError) && Object.keys(user).length > 0)();
-    const isOffline = (()=>userError?.message === 'xhr poll error')();
+    const isOffline = (() => !userLoading && (/*(!isConnected && !userError) || */userError?.message === 'xhr poll error'))(); // Можно ли убрать проверку на 'xhr poll error'?
 
     return ({
         user, userLoading, userError,
