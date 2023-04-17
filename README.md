@@ -143,6 +143,8 @@ React будет общаться с API через proxy.
 * **Dinara Dandibayeva** (UI/UX Designer) - [Dina](https://github.com/DanDina777) - [@dandi_w](https://t.me/dandi_w)
 * **Ernar Tursinaly** (DevOps) - [Ernar](https://github.com/tshipenchko) - [@merura](https://t.me/merura)
 
+See also the list of [contributors](https://github.com/alar-q/concierge/contributors) who participated in this project.
+
 ## Team
 ```
 ██████╗ ███████╗███╗   ██╗ █████╗ ██╗███████╗███████╗ █████╗ ███╗   ██╗ ██████╗███████╗   
@@ -155,6 +157,3 @@ React будет общаться с API через proxy.
 
 ## License
 [MIT](https://github.com/alar-q/concierge/blob/bizup/LICENSE)
-
-
-See also the list of [contributors](https://github.com/alar-q/concierge/contributors) who participated in this project.
