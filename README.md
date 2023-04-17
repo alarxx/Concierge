@@ -5,8 +5,8 @@
 ## Описание
 [**Concierge Service**](https://github.com/Alar-q/Concierge) - это [SPA](https://medium.com/NeotericEU/single-page-application-vs-multiple-page-application-2591588efe58 "SPA") с архитектурой и структурой реализованной на стеке MERN.
 
-Документация [backend](https://github.com/Alar-q/Concierge/tree/bizup/backend#readme)
-и [frontend](https://github.com/Alar-q/Concierge/tree/bizup/frontend#readme).
+Документация [backend](https://github.com/Alar-q/Concierge/tree/bizup/server#readme)
+и [frontend](https://github.com/Alar-q/Concierge/tree/bizup/client#readme).
 
 В целом, общей темой консьерж-сервиса является предоставление индивидуальной помощи и внимания к потребностям клиента, независимо от отрасли, в которой он предлагается.
 
