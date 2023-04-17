@@ -59,6 +59,13 @@ export default function useAuth({ socketHandler }){
             setUser({});
             setUserError(err);
         });
+        socket.on("/delete/auth", (u)=>{
+            reconnect();
+        });
+        socket.on("/save/auth", (u)=>{
+            setUser(u);
+            // reconnect();
+        });
     }, []);
 
 

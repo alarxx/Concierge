@@ -2,12 +2,24 @@
  * Идея в том, чтобы уведомлять пользователя о каких-то изменениях в базе данных
  * */
 
-async function notify(method, user){
-    const io = require('../../websocket/socket-io').io;
+const userDto = require('../../dtos/user-dto');
 
+async function notify(method, user){
+    const {User} = require('../../models/models-manager');
+
+    const io = require('../../websocket/socket-io').io;
     try{
-        io.to(String(user.id)).emit(`/${method}/user`, user);
+        // Эта строка выполняется в auth-observer, здесь мы только админов уведомляем об изменении
+        // io.to(String(user.id)).emit(`/${method}/user`, userDto(user));
+        const admins = await User.find({ role: 'admin' });
+        admins.map(admin => {
+            if(admin.id === user.id){
+                return;
+            }
+            io.to(String(admin.id)).emit(`/${method}/user`, userDto(user));
+        });
     }catch(e){
+        console.log(e);
     }
 
 }

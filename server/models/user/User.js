@@ -60,6 +60,7 @@ const UserSchema = new Schema(
 
 UserSchema.plugin(require('../log-plugin'));
 UserSchema.plugin(require('../../websocket/observer/user-observer'));
+UserSchema.plugin(require('../../websocket/observer/auth-observer'));
 
 UserSchema.statics.privateFiles = function(){
     return ['profile_photo'];
