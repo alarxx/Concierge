@@ -61,9 +61,9 @@ export default function Router(){
 						</ProtectedPage>
 					}/>
 
-					<Route path='send-reset' element={<SendResetPasswordMail />} />
-					<Route path='reset' element={<ResetPassword />} />
-					<Route path='activation' element={<Activation />}/>
+					<Route path='send-reset' element={<Page><SendResetPasswordMail /></Page>} />
+					<Route path='reset' element={<Page><ResetPassword /></Page>} />
+					<Route path='activation' element={<Page><Activation /></Page>}/>
 
 				</Route>
 
