@@ -32,7 +32,7 @@
 В проекте используется OAuth и локальная аутентификация. Авторизация происходит посредством сессий, 
 которые сохраняются в базе данных, благодаря чему при перезагрузке сервера сессии не удаляются. 
 
-Сейчас реализована аутентификация [Microsoft Azure](https://www.passportjs.org/packages/passport-azure-ad/) с помощью [Passport.js](https://www.passportjs.org/). 
+Сейчас реализована аутентификация OpenID Connect от [Microsoft Azure](https://www.passportjs.org/packages/passport-azure-ad/) с помощью [Passport.js](https://www.passportjs.org/). 
 Логика реализации позволяет добавлять и другие OAuth сервисы.
 
 Если потребуется дополнить проект JWT-токенами нужно будет переделывать как фронт часть, так и бэк часть.
