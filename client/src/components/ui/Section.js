@@ -3,8 +3,7 @@ import React from 'react';
 import styles from "../../assets/css/styles.css"
 import sectionStyles from "../../assets/css/section.css"
 
-export default function Section({title, text}){
-
+export default function Section({ title, text }){
 
     return (
         <div className="section">

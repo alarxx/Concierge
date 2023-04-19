@@ -1,6 +1,4 @@
 import React from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
-
 import styles from "../../assets/css/styles.css"
 
 import Menu from "../ui/Menu";

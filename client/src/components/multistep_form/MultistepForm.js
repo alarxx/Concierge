@@ -2,12 +2,26 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import useMultistepForm from "./hooks/useMultistepForm";
 
+import CloseButton from "./CloseButton";
+import OrderProgress from "./OrderProgress";
+
 export default function MultistepForm({
                                           forms=[],
+
                                           data={},
                                           setData=f=>f,
-                                          onSubmit=f=>f,
 
+                                          errors=[],
+                                          setErrors=f=>f,
+
+                                          loading=false,
+                                          setLoading=f=>f,
+
+                                          onSubmit=f=>f,
+                                          // Непонятно куда перенаправлять при нажатии кнопки закрытия
+                                          onClose=f=>f,
+
+                                          // optional
                                           init_step=0,
                                           nextButtonName="Далее",
                                           backButtonName="Назад",
@@ -19,7 +33,8 @@ export default function MultistepForm({
 
     // formErrors потом должны отображаться как-то.
     // Ошибки назначает каждая отдельная форма.
-    const [formErrors, setFormErrors] = useState([]);
+    // Кажется лучше определить их внешне
+    // const [formErrors, setFormErrors] = useState([]);
 
     /**
      * updateFields(fields) создает копию прошлого объекта data и добавляет новые поля из объекта fields.
@@ -58,27 +73,26 @@ export default function MultistepForm({
      * // Now data = { meow: 'meow' }
      * */
     const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo} = useMultistepForm(
-        forms.map(form => form({...data, updateFields, setFormErrors/*, next, back, goTo*/}))
+        forms.map(form => form({...data, updateFields, setErrors/*, next, back, goTo*/}))
     );
-
 
 
     function onSubmitInside(e){
         e.preventDefault();
 
         // Если форма добавила ошибки, то мы не можем пройти вперед или submit-нуть, если это последняя форма
-        if(formErrors.length !== 0) {
+        if(errors.length !== 0) {
             return;
         }
 
-        setFormErrors([]);
+        setErrors([]);
 
         if(!isLastStep){
             return next();
         }
 
         // Очевидно, функция onSubmit отвечает на то, что делать после того, как у нас готова форма?
-        onSubmit(e);
+        onSubmit();
     }
 
 
@@ -120,13 +134,17 @@ export default function MultistepForm({
 
     return (
         <>
-            {formErrors.map(error => <p>{error}</p>)}
-
             {/*
                 Либо снаружи, либо внутри формы, нужно добавить OrderProgress.
                 reverse-column поднимает кнопки вверх. Во-первых, почему называется reverse-column.
                 Во-вторых, почему reverse-column находится в className form-ы, а не в диве кнопок?
             */}
+            {steps.length > 1 && <OrderProgress n={steps.length} currentStepIndex={currentStepIndex} goTo={goTo}/>}
+
+            {errors.map(error => <p>{error}</p>)}
+
+            <CloseButton onClick={onClose}/>
+
             <form onSubmit={onSubmitInside} className={`form-workflow ${inverted.includes(currentStepIndex) ? 'reverse-column' : ''}`}>
 
                 <div className="form__body">

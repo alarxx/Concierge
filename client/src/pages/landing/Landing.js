@@ -21,6 +21,8 @@ export default function Landing({}){
         <button onClick={e => navigate('/protected')}>Protected</button><br/>
         <button onClick={e => navigate('/authn/logout')}>Logout</button><br/>
 
+        <button onClick={e => navigate('/service-order')}>Service Order</button><br/>
+
         <button onClick={e => navigate('/asdfasdfasdf')}>Not existed</button><br/>
     </>)
 }

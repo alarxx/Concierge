@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react';
 
 import {Link, Routes, Route, Navigate, useSearchParams, useNavigate, useLocation} from "react-router-dom";
 
+import Page from "./middlewares/Page";
+import Protected from './pages/protected/Protected';
+
 import Landing from "./pages/landing/Landing";
 import Layout from "./components/layouts/Layout";
 import Main from "./pages/Main"
@@ -19,8 +22,7 @@ import Test from "./pages/auth/test/Test";
 import NoName from "./pages/auth/status/NoName";
 import SendResetPasswordMail from "./pages/auth/password/SendResetPasswordMail";
 import ResetPassword from "./pages/auth/password/ResetPassword";
-import Page from "./middlewares/Page";
-import Protected from './pages/protected/Protected';
+import ServiceOrder from "./pages/service_order/ServiceOrder";
 
 export default function Router(){
 
@@ -90,10 +92,15 @@ export default function Router(){
 					</ProtectedPage>
 				}/>
 
+				<Route path={'/service-order'} element={
+					<Page>
+						<ServiceOrder />
+					</Page>
+				}/>
 
-				<Route path='/voting' element={<Voting />} />
+				{/*<Route path='/voting' element={<Voting />} />
 				<Route path='/awards' element={<Awards />} />
-				<Route path='/profile' element={<Profile />} />
+				<Route path='/profile' element={<Profile />} />*/}
 
 				<Route path={'*'} element={
 					// Нужна чтобы несуществующие страницы не отличались от существующих защищенных
