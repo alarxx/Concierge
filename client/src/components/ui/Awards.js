@@ -1,11 +1,6 @@
 import React from 'react';
 
-import styles from "../../assets/css/styles.css"
-import awardsStyles from "../../assets/css/awards.css"
-
 export default function Awards(){
-
-
     return (
         <div className="awards">
             <div className="awards__wrapper">

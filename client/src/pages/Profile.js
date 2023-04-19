@@ -12,8 +12,7 @@ import ListItem from "../components/ui/Listitem"
 import Icon from '../assets/icons/arrow_forward_FILL0_wght400_GRAD0_opsz48.svg'
 import LogoutIcon from '../assets/icons/logout_FILL0_wght400_GRAD0_opsz48.svg'
 
-
-import profileStyles from "../assets/css/profile.css"
+import profileStyles from "../assets/css/profile.module.css"
 
 export default function Profile({}){
 

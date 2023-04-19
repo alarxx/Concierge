@@ -1,8 +1,5 @@
 import React from 'react';
 
-import styles from "../../assets/css/styles.css"
-import awardsStyles from "../../assets/css/modal.css"
-
 import Button from "../ui/Button"
 
 export default function Modal({data, onClose}){

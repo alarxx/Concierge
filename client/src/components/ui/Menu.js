@@ -6,10 +6,6 @@ import AwardsIcon from '../../assets/icons/workspace_premium_FILL0_wght400_GRAD0
 import BookIcon from '../../assets/icons/book_FILL0_wght400_GRAD0_opsz48.svg'
 import ProfileIcon from '../../assets/icons/person_FILL0_wght400_GRAD0_opsz48.svg'
 
-import styles from "../../assets/css/styles.css"
-import menuStyles from "../../assets/css/menu.css"
-
-
 export default function Menu(){
     const navigate = useNavigate();
 

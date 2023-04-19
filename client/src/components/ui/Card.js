@@ -1,12 +1,8 @@
 import React from 'react';
 
-import styles from "../../assets/css/styles.css"
-import cardStyles from "../../assets/css/card.css"
 import Icon from '../../assets/icons/arrow_forward_FILL0_wght400_GRAD0_opsz48.svg'
 
 export default function Card({data, onClick}){
-
-
     return (
         <div className="card" onClick={onClick}>
             <div className='card__title title title-mini'>

@@ -1,8 +1,5 @@
 import React from 'react';
 
-import styles from "../../assets/css/styles.css"
-import profileStyles from "../../assets/css/profile.css"
-
 export default function ProfileBlock({name, username, isMe}){
 
 
