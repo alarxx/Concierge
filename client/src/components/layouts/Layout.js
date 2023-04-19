@@ -16,7 +16,7 @@ export default function Layout({ children }){
             </div>
         </header> */}
         <main>
-            <div className="container">
+            <div>{/*className="container"*/}
                 { children }
             </div>
         </main>

@@ -3,10 +3,12 @@ import {useNavigate} from "react-router-dom";
 import {useAppContext} from "../../context/AppContext";
 import MultistepForm from "../../components/multistep_form/MultistepForm";
 import F1 from "./forms/F1";
+import F2 from "./forms/F2";
 import Logger from "../../internal/Logger";
 
 const FORMS = [
     F1,
+    F2,
 ];
 
 export default function ServiceOrder(){

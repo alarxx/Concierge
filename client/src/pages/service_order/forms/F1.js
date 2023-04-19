@@ -8,7 +8,8 @@ export default function F1({ clientName='', updateFields=f=>f, setErrors=f=>f })
 
     return (
         <>
-            <div className={'title'}>Информация о заказе</div>
+            {/*className={'title'}*/}
+            <div>Информация о клиенте</div>
 
             <Section title={"Заказ №"} text={"requestId"} />
 

@@ -12,9 +12,14 @@ export default function Input({
 }){
 
     return (
-        <div className='input-form'>
-            <div className='inputLabel'>{tip}</div>
-            <input name={name} type={type} className="input" placeholder={placeholder} value={value} onChange={e=>updateFields({[name]: e.target.value})} required={required} />
+        <div>{ /*className='input-form'*/}
+
+            {/*className='inputLabel'*/}
+            <div>{tip}</div>
+
+            {/*className="input"*/}
+            <input name={name} type={type} placeholder={placeholder} value={value} onChange={e=>updateFields({[name]: e.target.value})} required={required} />
+
         </div>
     );
 }

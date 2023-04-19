@@ -134,34 +134,38 @@ export default function MultistepForm({
 
     return (
         <>
+            <CloseButton onClick={onClose}/>
+
             {/*
                 Либо снаружи, либо внутри формы, нужно добавить OrderProgress.
-                reverse-column поднимает кнопки вверх. Во-первых, почему называется reverse-column.
-                Во-вторых, почему reverse-column находится в className form-ы, а не в диве кнопок?
+                goTo переключает неглядя, без никаких валидаций форм, это проблема.
             */}
             {steps.length > 1 && <OrderProgress n={steps.length} currentStepIndex={currentStepIndex} goTo={goTo}/>}
 
+
             {errors.map(error => <p>{error}</p>)}
 
-            <CloseButton onClick={onClose}/>
+            {/*
+                reverse-column поднимает кнопки вверх. Во-первых, почему называется reverse-column.
+                Во-вторых, почему reverse-column находится в className form-ы, а не в диве кнопок?
+            */}
+            <form onSubmit={onSubmitInside}>{/*className={`form-workflow ${inverted.includes(currentStepIndex) ? 'reverse-column' : ''}`}*/}
 
-            <form onSubmit={onSubmitInside} className={`form-workflow ${inverted.includes(currentStepIndex) ? 'reverse-column' : ''}`}>
-
-                <div className="form__body">
+                <div>{/*className="form__body"*/}
                     {step}
                 </div>
 
                 {/* Почему здесь на первом шаге идет form-controls-done??? */}
-                <div className={`form-controls ${isFirstStep?'form-controls-done':''}`}>
+                <div>{/*className={`form-controls ${isFirstStep?'form-controls-done':''}`}*/}
 
                     {!isFirstStep &&
-                    <button type="button" className="btn btn-secondary btn-prev mr-5" onClick={back}>
+                    <button type="button" /*className="btn btn-secondary btn-prev mr-5"*/ onClick={back}>
                         {/*<ArrowRight viewBox="0 0 24 24"/>*/}
                         <span>{backButtonName}</span>
                     </button>
                     }
 
-                    <button ref={submitButtonRef} type="submit" className="btn btn-main btn-next">
+                    <button ref={submitButtonRef} type="submit">{/*className="btn btn-main btn-next"*/}
                         <span>{isLastStep ? submitButtonName : nextButtonName}</span>
                         {/*<ArrowRight viewBox="0 0 24 24"/>*/}
                     </button>
