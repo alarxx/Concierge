@@ -1,4 +1,5 @@
 const {Schema, model} = require('mongoose');
+const colors = require("../../log/colors");
 
 const PostSchema = new Schema(
     {
@@ -19,12 +20,21 @@ const PostSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User',
         },
+
+        accessType: {
+            type: String,
+            enum: ['public', 'private'],
+            default: 'public',
+        },
+        accessHolders: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     },
     {
         timestamps: true,
         strict: true,
     }
 )
+
+PostSchema.index({ createdAt: -1 }); // сначала новые
 
 PostSchema.plugin(require('../log-plugin'));
 
