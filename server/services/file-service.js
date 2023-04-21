@@ -29,43 +29,13 @@ class FileService {
                 throw ApiError.UnauthorizedError();
             }
 
-            if(user.role === 'client' && file.creator != user.id){
+            if(user.role === 'client' && file.owner != user.id){
                 if(!file.accessHolders.includes(user.id)){
                     // return res.status(403).json({ error: 'Permission denied' });
                     throw ApiError.Forbidden('Permission denied')
                 }
             }
         }
-
-        return file;
-    }
-
-    async createFile(multifile, user, opt={}){
-        if(!multifile)
-            throw new Error('createFile did not get multifile')
-        if(!user)
-            throw new Error('createFile did not get user');
-
-        // local disk storage
-        const path = await multifile.save();
-        if(!path){
-            throw new Error('Can not move file');
-        }
-
-        const file = new File({
-            path,
-            creator: user.id,
-            name: multifile.originalname,
-            encoding: multifile.encoding,
-            mimetype: multifile.mimetype,
-
-            ...opt
-            // Default values
-            // accessHolders: [],
-            // accessType: 'public',
-        })
-
-        await file.save();
 
         return file;
     }
@@ -94,6 +64,8 @@ class FileService {
         return file;
 
     }
+
 }
+
 
 module.exports = new FileService();
