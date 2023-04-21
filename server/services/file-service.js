@@ -1,6 +1,6 @@
 /**
  * Метод сохраняет файл локально и сохраняет в базе mongo
- * function arguments: express-fileupload file and creator user id
+ * function arguments: express-fileupload file and owner user id
  * returns {status, created_doc, message}
  * */
 
@@ -45,6 +45,7 @@ class FileService {
      * returns deleted doc
      * */
     async deleteFile(id){
+        // id всегда должно быть валидным ObjectId
         const file = await File.findByIdAndDelete(id);
 
         if(!file){

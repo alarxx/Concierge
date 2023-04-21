@@ -14,7 +14,11 @@ const PostSchema = new Schema(
         },
         file: {
             type: Schema.Types.ObjectId,
-            ref: 'File',
+            ref: 'File'
+        },
+        private_file: {
+            type: Schema.Types.ObjectId,
+            ref: 'File'
         },
         creator: {
             type: Schema.Types.ObjectId,
@@ -39,7 +43,7 @@ PostSchema.index({ createdAt: -1 }); // сначала новые
 PostSchema.plugin(require('../log-plugin'));
 
 PostSchema.statics.privateFiles = function(){
-    return ['file'];
+    return ['private_file'];
 }
 
 module.exports = model('Post', PostSchema);
