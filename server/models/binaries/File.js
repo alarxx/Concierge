@@ -24,11 +24,11 @@ const FileSchema = new Schema({
         required: true,
         index: true,
     },
-    creator: {
+    owner: { // Не всегда есть owner, могут быть публичные файлы
         type: Schema.Types.ObjectId,
         ref: 'User',
         immutable: true,
-        required: true,
+        // required: true, // Это кажется необязательное поле, если нужно будет добавляем id в accessHolders, то есть так будет гибче.
         index: true,
     },
     name: {
