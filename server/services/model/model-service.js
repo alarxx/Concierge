@@ -92,13 +92,14 @@ class ModelService {
      * Если файлов в модели нет, то можно просто делать `model.save();`
      * */
     async saveWithFiles(model, files, fileFields, privateFiles, opts={ user: undefined, accessHolders: [] }){
-        // Вот этот момент нужно пересмотреть. Здесь мы не меняем случайно req.files? Некрасиво изменять аргументы, но другая реализация будет сильно сложнее.
+        // Вот этот момент нужно пересмотреть.
+        // Здесь мы не меняем случайно req.files? Нельзя изменять аргументы, но другая реализация будет сильно сложнее.
         // На application/json типе может быть files будет не определен.
         if(!files){
             files = {};
         }
 
-        logger.log({ model, files, fileFields, privateFiles });
+        logger.log("saveWithFiles arguments:", { model, files, fileFields, privateFiles });
 
         if(!model || !fileFields || !privateFiles){
             throw ApiError.ServerError('Some required fields are missing')
@@ -106,41 +107,24 @@ class ModelService {
 
         // Если файлов нет, то мы просто пытаемся сохранить модель
         if(Object.keys(files).length === 0){
-            return await model.save()
-                .catch(err => { throw ApiError.MongooseError(err) });
+            return await model.save(); // .catch(err => { throw ApiError.MongooseError(err) });
         }
 
         /*
         * Обязательно перед сохранением файлов, нужно свалидировать модель, нет ли там ошибки.
         * Иначе в файл сохранится, а модель нет и файл затеряется в файловой системе.
-        *
-        * По-хорошему мы должны объявить документ file, назначить модельке, попробовать сохранить модель и только потом сохранять файл.
-        *
-        * Обязательно нужна проверка unique полей,
-        * validate не проверяет unique поля, они проверяются только на save();
+        * Обязательно нужна проверка unique полей
         * */
-        const new_files = await setFiles(model, files, fileFields=[], privateFiles=[], { owner: opts.user?.id, accessHolders: opts.accessHolders });
+        await model.validate();
 
-        await model.save()
-            .catch(err => { throw ApiError.MongooseError(err) });
+        const new_files = await setFiles(model, files, fileFields, privateFiles, {
+            owner: opts.user?.id,
+            accessHolders: opts.accessHolders ? opts.accessHolders : []
+        });
 
-        // Дальше мы должны назначить точный путь файлам и сохранить их все.
-        const errors = [];
+        logger.log({ new_files })
 
-        await Promise.all(new_files.map(async ({ file, multifile }) => {
-            // Что будет если здесь выйдет ошибка? У нас модель будет с битым файлом или id файла, которого не будет существовать в худшем случае или path=broken будет.
-            const path = await multifile.save()
-                .catch(err => errors.push(err));
-
-            file.path = path ? path : 'broken';
-
-            await file.save()
-                .catch(err => { throw ApiError.MongooseError(err) });
-        }));
-
-        if(errors.length > 0){
-            throw ApiError.ServerError("Something wrong with files", errors);
-        }
+        await model.save(); // .catch(err => { throw ApiError.MongooseError(err) });
 
         return model;
     }
@@ -167,44 +151,32 @@ class ModelService {
 
 
 /**
- * Возвращает массив псевдо документов файлов.
- * Создает модельки файлов, но не сохраняет их ни в базе, ни на диске.
+ *
  * */
-async function setFiles(model, files={}, fileFields=[], privateFiles=[], opts = { owner: undefined, accessHolders: []}) {
-    if(!opts.accessHolders){
-        opts.accessHolders = [];
-    }
-
-    return await Promise.all(
-        fileFields.map(async key => {
-            // Если в форме есть файл под таким ключом
-            if(files[key]) {
-                // delete if file already exist
-                if(mongoose.isValidObjectId(model[key])){
-                    await fileService.deleteFile(model[key]);
-                }
-
-                // const newFile = await this.createFile(files[key], opts);
-                const multifile = files[key];
-                if(!multifile){
-                    throw ApiError.ServerError('createFile did not get multifile');
-                }
-
-                const file = new File({
-                    name: multifile.originalname,
-                    encoding: multifile.encoding,
-                    mimetype: multifile.mimetype,
-                    accessType: privateFiles.includes(key) ? 'private' : 'public',
-                    accessHolders: opts.owner ? [...opts.accessHolders, opts.owner] : opts.accessHolders,
-                    ...opts
-                })
-
-                model[key] = file.id;
-
-                return { file, multifile };
+async function setFiles(model, files={}, fileFields=[], privateFiles=[], opts = {
+    owner: undefined,
+    accessHolders: []
+}) {
+    // Здесь стоит загружать файлы синхронно, чтобы не другие файлы не завершались в неопределенное состояние.
+    return await Promise.all(fileFields.map(async key => {
+        // Если в форме есть файл под таким ключом
+        if(files[key]) {
+            // delete if file already exist
+            if(mongoose.isValidObjectId(model[key])){
+                await fileService.deleteFile(model[key]);
             }
-        })
-    );
+
+            const file = await fileService.createFile(files[key], {
+                owner: opts.owner,
+                accessType: privateFiles.includes(key) ? 'private' : 'public',
+                accessHolders: opts.owner ? [...opts.accessHolders, opts.owner] : opts.accessHolders,
+            });
+
+            model[key] = file.id;
+
+            return file;
+        }
+    }));
 }
 
 module.exports = new ModelService();

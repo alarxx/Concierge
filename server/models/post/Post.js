@@ -9,6 +9,12 @@ const PostSchema = new Schema(
             unique: true,
             immutable: true,
         },
+        title2: {
+            type: String,
+            required: true,
+            unique: true,
+            immutable: true,
+        },
         body: {
             type: String,
         },
@@ -38,8 +44,10 @@ const PostSchema = new Schema(
     }
 )
 
+
 PostSchema.index({ createdAt: -1 }); // сначала новые
 
+PostSchema.plugin(require('mongoose-unique-validator'));
 PostSchema.plugin(require('../log-plugin'));
 
 PostSchema.statics.privateFiles = function(){
