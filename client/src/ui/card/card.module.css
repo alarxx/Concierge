@@ -1,0 +1,14 @@
+.card {
+    display: flex;
+    flex-direction: column;
+}
+.card__header {
+    padding: 24px 12px 14px 12px;
+    border-bottom: 1px solid grey;
+}
+.card__body {
+    padding: 12px;
+}
+.card__footer {
+    padding: 16px 21px;
+}

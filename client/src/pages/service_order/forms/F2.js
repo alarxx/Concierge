@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import Input from '../../../components/ui/Input';
-import Section from '../../../components/ui/Section'
+import Input from '../../../ui/input/Input';
 
 
 export default function F1({ phone='', updateFields=f=>f, setErrors=f=>f }){

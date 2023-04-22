@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Menu from "../ui/Menu";
 
 export default function Layout({ children }){
 
@@ -20,7 +19,6 @@ export default function Layout({ children }){
                 { children }
             </div>
         </main>
-        <Menu />
         </>
     );
 }
