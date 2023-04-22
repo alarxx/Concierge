@@ -5,12 +5,8 @@ import {Link, Routes, Route, Navigate, useSearchParams, useNavigate, useLocation
 import Page from "./middlewares/Page";
 import Protected from './pages/protected/Protected';
 
-import Landing from "./pages/landing/Landing";
 import Layout from "./components/layouts/Layout";
-import Main from "./pages/Main"
-import Profile from "./pages/Profile"
-import Awards from "./pages/Awards"
-import Voting from "./pages/Voting"
+import Landing from "./pages/Landing"
 import Authentication from "./pages/auth/main/Authentication";
 import Logout from "./pages/auth/logout/Logout";
 
@@ -88,7 +84,7 @@ export default function Router(){
 
 				<Route path='/main' element={
 					<ProtectedPage>
-						<Main />
+						{/* <Main /> */}
 					</ProtectedPage>
 				}/>
 

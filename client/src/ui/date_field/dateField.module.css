@@ -1,0 +1,31 @@
+.input-date {
+    position: relative;
+    padding: 16px 20px;
+    background: #FFFFFF;
+    border: 1px solid rgba(30, 38, 47, 0.06);
+    /* карточка */
+
+    box-shadow: 2px 4px 4px rgba(30, 38, 47, 0.02);
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+
+    outline-color: #1E262F;
+
+    color: rgba(53, 53, 53, 0.5);
+    cursor: pointer;
+    margin-right: 10px;
+}
+.input-date:last-child {
+    margin-right: 0;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    display: block;
+    background: url("../icons/calendar.png") no-repeat;
+    width: 20px;
+    height: 20px;
+    border-width: thin;
+}

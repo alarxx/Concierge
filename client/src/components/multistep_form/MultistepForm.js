@@ -5,6 +5,8 @@ import useMultistepForm from "./hooks/useMultistepForm";
 import CloseButton from "./CloseButton";
 import OrderProgress from "./OrderProgress";
 
+import Button from '../../ui/button/Button'
+
 export default function MultistepForm({
                                           forms=[],
 
@@ -73,7 +75,7 @@ export default function MultistepForm({
      * // Now data = { meow: 'meow' }
      * */
     const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo} = useMultistepForm(
-        forms.map(form => form({...data, updateFields, setErrors/*, next, back, goTo*/}))
+        forms.map(form => form({...data, updateFields, errors, setErrors/*, next, back, goTo*/}))
     );
 
 
@@ -159,16 +161,17 @@ export default function MultistepForm({
                 <div>{/*className={`form-controls ${isFirstStep?'form-controls-done':''}`}*/}
 
                     {!isFirstStep &&
-                    <button type="button" /*className="btn btn-secondary btn-prev mr-5"*/ onClick={back}>
+
+                    <Button type="button" /*className="btn btn-secondary btn-prev mr-5"*/ onClick={back}>
                         {/*<ArrowRight viewBox="0 0 24 24"/>*/}
                         <span>{backButtonName}</span>
-                    </button>
+                    </Button>
                     }
 
-                    <button ref={submitButtonRef} type="submit">{/*className="btn btn-main btn-next"*/}
+                    <Button ref={submitButtonRef} type="submit">{/*className="btn btn-main btn-next"*/}
                         <span>{isLastStep ? submitButtonName : nextButtonName}</span>
                         {/*<ArrowRight viewBox="0 0 24 24"/>*/}
-                    </button>
+                    </Button>
 
                 </div>
 

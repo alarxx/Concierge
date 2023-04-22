@@ -1,0 +1,15 @@
+.btn {
+    width: 100%;
+    padding: 16px;
+    font-family: var(--font-family-title);
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.btn-main {
+    background-color: #1E262F;
+    color: white;
+}
