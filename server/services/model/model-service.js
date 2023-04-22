@@ -92,6 +92,8 @@ class ModelService {
      * Если файлов в модели нет, то можно просто делать `model.save();`
      * */
     async saveWithFiles(model, files, fileFields, privateFiles, opts={ user: undefined, accessHolders: [] }){
+        // Вот этот момент нужно пересмотреть. Здесь мы не меняем случайно req.files? Некрасиво изменять аргументы, но другая реализация будет сильно сложнее.
+        // На application/json типе может быть files будет не определен.
         if(!files){
             files = {};
         }
@@ -117,11 +119,10 @@ class ModelService {
         * Обязательно нужна проверка unique полей,
         * validate не проверяет unique поля, они проверяются только на save();
         * */
-        const new_files = await setFiles(model, files, fileFields, privateFiles, { owner: opts.user?.id, accessHolders: opts.accessHolders });
+        const new_files = await setFiles(model, files, fileFields=[], privateFiles=[], { owner: opts.user?.id, accessHolders: opts.accessHolders });
 
         await model.save()
             .catch(err => { throw ApiError.MongooseError(err) });
-
 
         // Дальше мы должны назначить точный путь файлам и сохранить их все.
         const errors = [];
