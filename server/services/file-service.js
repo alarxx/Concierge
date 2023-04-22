@@ -23,6 +23,13 @@ class FileService {
             throw ApiError.NotFound('File not found')
         }
 
+        // Проверить существует ли файл на file.path
+        await fs.promises.access(file.path)
+            .catch(err => {
+                logger.log(err);
+                throw ApiError.BadRequest("Could not access the binary file, no such file or directory");
+            });
+
         if(file.accessType === 'private'){
             if(!user){
                 // res.status(401).json({message: 'Unauthorized'});
