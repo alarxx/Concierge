@@ -22,9 +22,13 @@
     border-radius: 16px;
     font-size: 14px;
     outline-color: #1E262F;
+    margin-bottom: 10px;
 
 }
 .input::placeholder { /* Most modern browsers support this now. */
     color: rgba(53, 53, 53, 0.5);
-    font-weight: 600;
+    font-weight: 500;
 }
+/* .input:last-child {
+    margin-bottom: 0;
+} */

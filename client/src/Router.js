@@ -32,6 +32,18 @@ export default function Router(){
 						<Landing />
 					</Page>
 				}/>
+				<Route path="/signup" element={
+					// Можно оставить для проверки Middleware
+					<Page>
+						<Landing />
+					</Page>
+				}/>
+				<Route path="/signin" element={
+					// Можно оставить для проверки Middleware
+					<Page>
+						<Landing />
+					</Page>
+				}/>
 
 
 				<Route path='/authn'>
