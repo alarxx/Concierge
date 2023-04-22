@@ -16,7 +16,7 @@ class ModelsManager {
         // this.Participant = require('./chat/Participant')
         // this.Notification = require('./chat/Notification')
 
-        // this.Order = require('./order/Order')
+        this.Order = require('./order/Order')
         // this.Order_Meta = require('./order/Order_Meta')
 
         // this.Office = require('./services/Office');
