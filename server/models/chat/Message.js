@@ -1,10 +1,5 @@
 const {Schema, model} = require("mongoose");
 
-const modelName = 'Message';
-
-const log = require('../../logging/log');
-
-const colors = require("../../logging/colors");
 
 const MessageSchema = new Schema({
     conversation: {
@@ -68,12 +63,11 @@ const MessageSchema = new Schema({
 });
 
 MessageSchema.plugin(require('mongoose-unique-validator'));
-MessageSchema.plugin(require('../updatedDate'))
-MessageSchema.plugin(require('../logPlugin'))
-MessageSchema.plugin(require('../../websocket/observer/chat/message'))
+MessageSchema.plugin(require('../log-plugin'))
+// MessageSchema.plugin(require('../../websocket/observer/chat/message'))
 
 
-MessageSchema.methods.onCreate = async function({req, res, body, user}){
+/*MessageSchema.methods.onCreate = async function({req, res, body, user}){
     if(body.type ? !body[body.type] : true){
         throw new Error(`Fields 'type' or with 'String(type)' are not provided`);
     }
@@ -92,18 +86,18 @@ MessageSchema.methods.onCreate = async function({req, res, body, user}){
     }))
 
     this.sender = user.id;
-}
+}*/
 
 
-MessageSchema.statics.deepDeleteById = async function(id){
+/*MessageSchema.statics.deepDeleteById = async function(id){
     const message = await this.findById(id);
     if(!message)
         return `Not found message with id ${id}`;
     return await message.deepDelete();
-}
+}*/
 
 
-MessageSchema.methods.deepDelete = async function(){
+/*MessageSchema.methods.deepDelete = async function(){
     // Нужно удалить notifications, если они есть
     const Notifications = require('../modelsManager').models.Notification;
     const notifications = await Notifications.find({message: this.id});
@@ -116,8 +110,7 @@ MessageSchema.methods.deepDelete = async function(){
     // Если message.type = choice или файл, то мы не только саму модель удаляем
     await this.delete();
     return this;
-}
+}*/
 
 
-
-module.exports = model(modelName, MessageSchema);
+module.exports = model('Message', MessageSchema);

@@ -1,12 +1,9 @@
 /**
  * Обертка над всеми booking-ами услуг.
- * Используется только в OrderArch
  * */
 
 const {Schema, model} = require('mongoose');
 
-// const Hotel_Class = require('');
-// const Flight_Class = require('');
 
 const BookingSchema = new Schema({
     service: {
@@ -39,12 +36,13 @@ const BookingSchema = new Schema({
     }
 });
 
-BookingSchema.plugin(require('mongoose-unique-validator'));
-BookingSchema.plugin(require('../logPlugin'));
 
-BookingSchema.methods.deepDelete = async function(){
+BookingSchema.plugin(require('mongoose-unique-validator'));
+BookingSchema.plugin(require('../log-plugin'));
+
+/*BookingSchema.methods.deepDelete = async function(){
     await this.delete();
     return this;
-}
+}*/
 
 module.exports = model('Booking', BookingSchema);

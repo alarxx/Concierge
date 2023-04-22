@@ -2,8 +2,6 @@ const {Schema, model} = require('mongoose');
 
 const modelName = 'Company';
 
-const log = require('../../logging/log');
-
 const CompanySchema = new Schema({
     name: {
         type: String,
@@ -18,24 +16,14 @@ const CompanySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'File'
     }],
-    createdDate: {
-        type: Date,
-        immutable: true,
-        default: () => new Date(),
-    },
-    updatedDate: {
-        type: Date,
-        default: () => new Date(),
-    }
 });
 
 
 CompanySchema.plugin(require('mongoose-unique-validator'));
-CompanySchema.plugin(require('../updatedDate'))
-CompanySchema.plugin(require('../logPlugin'))
+CompanySchema.plugin(require('../log-plugin'))
 
-CompanySchema.statics.publicFiles = function(){
-    return ['logo'];
+CompanySchema.statics.privateFiles = function(){
+    return [];
 }
 
 const handlers = require('../handlers');

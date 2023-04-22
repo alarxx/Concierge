@@ -1,10 +1,5 @@
 const {Schema, model} = require('mongoose');
 
-const modelName = 'Hotel/Service';
-
-const Hotel = require('./Hotel');
-const File = require('../../binaries/File');
-const Service = require('../Service');
 
 const ServiceSchema = new Schema({
     service: { // foreign/primary key как-будто
@@ -70,19 +65,16 @@ const ServiceSchema = new Schema({
     }
 });
 
-ServiceSchema.plugin(require('mongoose-unique-validator'));
-ServiceSchema.plugin(require('../../updatedDate'))
-ServiceSchema.plugin(require('../../logPlugin'))
 
-ServiceSchema.statics.publicFiles = function(){
-    return ['logo'];
+ServiceSchema.plugin(require('mongoose-unique-validator'));
+ServiceSchema.plugin(require('../../log-plugin'))
+
+
+ServiceSchema.statics.privateFiles = function(){
+    return [];
 }
 
-const Hotel_Booking = require('./Hotel_Booking');
-const handlers = require('../../handlers');
-const colors = require("../../../logging/colors");
-
-ServiceSchema.methods.onCreate = async function({res, req, body, user}){
+/*ServiceSchema.methods.onCreate = async function({res, req, body, user}){
     const service = new Service({
         type: 'hotel/service',
         'hotel/service': this.id
@@ -103,9 +95,9 @@ ServiceSchema.methods.onCreate = async function({res, req, body, user}){
     service.office = hotel.office;
 
     await service.save();
-}
+}*/
 
-ServiceSchema.methods.deepDelete = async function(){
+/*ServiceSchema.methods.deepDelete = async function(){
     await handlers.deleteModels(this, ['logo', 'service']);
 
     await handlers.deleteArraysOfModels(this, ['images']);
@@ -118,7 +110,7 @@ ServiceSchema.methods.deepDelete = async function(){
     await this.delete();
 
     return this;
-}
+}*/
 
 
-module.exports = model(modelName, ServiceSchema);
+module.exports = model('Hotel/Service', ServiceSchema);

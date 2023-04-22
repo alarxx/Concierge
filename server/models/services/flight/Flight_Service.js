@@ -1,5 +1,6 @@
 const {Schema, model} = require('mongoose');
 
+
 const ServiceSchema = new Schema({
     service: {
         type: Schema.Types.ObjectId,
@@ -41,18 +42,17 @@ const ServiceSchema = new Schema({
     isActive: Boolean, // Например, поменяли цену
 });
 
-ServiceSchema.plugin(require('mongoose-unique-validator'));
-ServiceSchema.plugin(require('../../updatedDate'))
-ServiceSchema.plugin(require('../../logPlugin'))
 
-ServiceSchema.statics.publicFiles = function(){
-    return ['logo'];
+ServiceSchema.plugin(require('mongoose-unique-validator'));
+ServiceSchema.plugin(require('../../log-plugin'))
+
+
+ServiceSchema.statics.privateFiles = function(){
+    return [];
 }
 
-const handlers = require('../../handlers');
-const colors = require("../../../logging/colors");
 
-ServiceSchema.methods.onCreate = async function({res, req, body, user}){
+/*ServiceSchema.methods.onCreate = async function({res, req, body, user}){
     const Services = require('../../modelsManager').models.Service;
     const Flights = require('../../modelsManager').models.Flight;
 
@@ -78,9 +78,9 @@ ServiceSchema.methods.onCreate = async function({res, req, body, user}){
     await service.save();
 
     // flight сетится в контроллере
-}
+}*/
 
-ServiceSchema.methods.deepDelete = async function(){
+/*ServiceSchema.methods.deepDelete = async function(){
     await handlers.deleteModels(this, ['logo', 'service']);
     await handlers.deleteArraysOfModels(this, ['images']);
 
@@ -93,5 +93,6 @@ ServiceSchema.methods.deepDelete = async function(){
     await this.delete();
 
     return this;
-}
+}*/
+
 module.exports = model('Flight/Service', ServiceSchema);

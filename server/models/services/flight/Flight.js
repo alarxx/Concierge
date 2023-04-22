@@ -1,5 +1,6 @@
 const {Schema, model} = require('mongoose');
 
+
 const FlightSchema = new Schema({
     company: {
         type: Schema.Types.ObjectId,
@@ -34,19 +35,16 @@ const FlightSchema = new Schema({
 });
 
 FlightSchema.plugin(require('mongoose-unique-validator'));
-FlightSchema.plugin(require('../../updatedDate'));
-FlightSchema.plugin(require('../../logPlugin'));
+FlightSchema.plugin(require('../../log-plugin'));
 
-const handlers = require('../../handlers');
-const colors = require("../../../logging/colors");
 
-FlightSchema.statics.publicFiles = function(){
+FlightSchema.statics.privateFiles = function(){
     // Наверное можно как-то прямо в схему это вписывать {type: Schema.Types.ObjectId, ref: 'File', private: false} типа так
-    return ['logo'];
+    return [];
 }
 
 
-FlightSchema.methods.onCreate = async function({body}){
+/*FlightSchema.methods.onCreate = async function({body}){
     if(body.flight || body.type)
         return new Error(`You cannot manually enter the 'type' and specific '*service' fields`);
 
@@ -60,9 +58,9 @@ FlightSchema.methods.onCreate = async function({body}){
 
     this.office = office.id;
     await office.save();
-}
+}*/
 
-FlightSchema.methods.deepDelete = async function(){
+/*FlightSchema.methods.deepDelete = async function(){
     await handlers.deleteModels(this, ['logo', 'office']);
 
     const Flight_Services = require('../../modelsManager').models.Flight_Service;
@@ -73,6 +71,6 @@ FlightSchema.methods.deepDelete = async function(){
 
     await this.delete();
     return this;
-}
+}*/
 
 module.exports = model('Flight', FlightSchema);

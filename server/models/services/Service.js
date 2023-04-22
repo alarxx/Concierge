@@ -4,8 +4,6 @@
 
 const {Schema, model} = require('mongoose');
 
-// const Hotel_Class = require('');
-// const Flight_Class 1 require('');
 
 const ServiceSchema = new Schema({
     office: {
@@ -37,12 +35,13 @@ const ServiceSchema = new Schema({
     },
 });
 
-ServiceSchema.plugin(require('mongoose-unique-validator'));
-ServiceSchema.plugin(require('../logPlugin'));
 
-ServiceSchema.methods.deepDelete = async function(){
+ServiceSchema.plugin(require('mongoose-unique-validator'));
+ServiceSchema.plugin(require('../log-plugin'));
+
+/*ServiceSchema.methods.deepDelete = async function(){
     await this.delete();
     return this;
-}
+}*/
 
 module.exports = model('Service', ServiceSchema);

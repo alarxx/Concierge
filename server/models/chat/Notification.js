@@ -1,6 +1,5 @@
 const {Schema, model} = require('mongoose');
 
-const modelName = 'Notification';
 
 const NotificationSchema = new Schema({
     type: {
@@ -21,24 +20,23 @@ const NotificationSchema = new Schema({
 });
 
 NotificationSchema.plugin(require('mongoose-unique-validator'));
-NotificationSchema.plugin(require('../updatedDate'))
-NotificationSchema.plugin(require('../logPlugin'))
-NotificationSchema.plugin(require('../../websocket/observer/chat/notification'))
+NotificationSchema.plugin(require('../log-plugin'))
+// NotificationSchema.plugin(require('../../websocket/observer/chat/notification'))
 
-NotificationSchema.methods.onCreate = async function({body, user}){
+/*NotificationSchema.methods.onCreate = async function({body, user}){
     this.user = user.id;
-}
+}*/
 
-NotificationSchema.statics.deepDeleteById = async function(id){
+/*NotificationSchema.statics.deepDeleteById = async function(id){
     const notification = await this.findById(id);
     if(!notification)
         return `Not found notification with id ${id}`;
     return await notification.deepDelete();
-}
+}*/
 
-NotificationSchema.methods.deepDelete = async function(){
+/*NotificationSchema.methods.deepDelete = async function(){
     await this.delete();
     return this;
-}
+}*/
 
-module.exports = model(modelName, NotificationSchema);
+module.exports = model('Notification', NotificationSchema);

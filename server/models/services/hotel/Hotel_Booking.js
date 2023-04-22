@@ -1,11 +1,5 @@
 const {Schema, model} = require('mongoose');
 
-const modelName = 'Hotel/Booking';
-
-const User = require('../../user/User');
-const Bill = require('../../../public/arch/payment/Bill');
-const File = require('../../binaries/File');
-const Booking = require('../Booking');
 
 const BookingSchema = new Schema({
     booking:{
@@ -74,18 +68,17 @@ const BookingSchema = new Schema({
     }
 });
 
-BookingSchema.plugin(require('mongoose-unique-validator'));
-BookingSchema.plugin(require('../../updatedDate'));
-BookingSchema.plugin(require('../../logPlugin'));
 
-BookingSchema.statics.publicFiles = function(){
+BookingSchema.plugin(require('mongoose-unique-validator'));
+BookingSchema.plugin(require('../../log-plugin'));
+
+
+BookingSchema.statics.privateFiles = function(){
     return [];
 }
 
-// const log = require("../../../logging/log");
-// const colors = require("../../../logging/colors");
 
-BookingSchema.methods.onCreate = async function({req, res, body, user}){
+/*BookingSchema.methods.onCreate = async function({req, res, body, user}){
     const Hotel_Services = require('../../modelsManager').models.Hotel_Service;
 
     if(body.customer)
@@ -116,11 +109,10 @@ BookingSchema.methods.onCreate = async function({req, res, body, user}){
     await booking.save();
 
 
-}
+}*/
 
-const handlers = require("../../handlers");
 
-BookingSchema.methods.deepDelete = async function(){
+/*BookingSchema.methods.deepDelete = async function(){
     // Должны удалить Bill, File
     await handlers.deleteModels(this, ['bill', 'file', 'booking']);
 
@@ -128,11 +120,11 @@ BookingSchema.methods.deepDelete = async function(){
     await this.delete();
 
     return this;
-}
+}*/
 
-BookingSchema.virtual('current_price').get(function(){
+/*BookingSchema.virtual('current_price').get(function(){
     return this.price - this.price * (this.discount / 100)
-});
+});*/
 
 
-module.exports = model(modelName, BookingSchema);
+module.exports = model('Hotel/Booking', BookingSchema);

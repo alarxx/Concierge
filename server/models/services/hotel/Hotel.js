@@ -1,9 +1,5 @@
 const {Schema, model} = require('mongoose');
 
-const modelName = 'Hotel';
-
-const Company = require('../../company/Company');
-const File = require('../../binaries/File');
 
 const HotelSchema = new Schema({
     company: {
@@ -58,18 +54,14 @@ const HotelSchema = new Schema({
 });
 
 HotelSchema.plugin(require('mongoose-unique-validator'));
-HotelSchema.plugin(require('../../updatedDate'));
-HotelSchema.plugin(require('../../logPlugin'));
+HotelSchema.plugin(require('../../log-plugin'));
 
-const handlers = require('../../handlers');
-const colors = require("../../../logging/colors");
-
-HotelSchema.statics.publicFiles = function(){
+HotelSchema.statics.privateFiles = function(){
     // Наверное можно как-то прямо в схему это вписывать {type: Schema.Types.ObjectId, ref: 'File', private: false} типа так
-    return ['logo'];
+    return [];
 }
 
-HotelSchema.methods.onCreate = async function({body}){
+/*HotelSchema.methods.onCreate = async function({body}){
     const Offices = require('../../modelsManager').models.Office;
 
     const office = new Offices({
@@ -80,9 +72,9 @@ HotelSchema.methods.onCreate = async function({body}){
     this.office = office.id;
     await office.save();
     // Возможно нужна проверка существования отеля
-}
+}*/
 
-HotelSchema.methods.deepDelete = async function(){
+/*HotelSchema.methods.deepDelete = async function(){
     const Hotel_Service = require('../../modelsManager').models.Hotel_Service;
 
     //Еще надо удалить все Hotel/Service, которые принадлежат этому отелю
@@ -99,6 +91,6 @@ HotelSchema.methods.deepDelete = async function(){
 
     await this.delete();
     return this;
-}
+}*/
 
-module.exports = model(modelName, HotelSchema);
+module.exports = model('Hotel', HotelSchema);

@@ -1,6 +1,5 @@
 const {Schema, model} = require('mongoose');
 
-const handlers = require("../handlers");
 
 const ConversationSchema = new Schema({
     name: {
@@ -32,20 +31,19 @@ const ConversationSchema = new Schema({
 
 
 ConversationSchema.plugin(require('mongoose-unique-validator'));
-ConversationSchema.plugin(require('../updatedDate'))
-ConversationSchema.plugin(require('../logPlugin'))
-ConversationSchema.plugin(require('../../websocket/observer/chat/conversation'))
+ConversationSchema.plugin(require('../log-plugin'))
+// ConversationSchema.plugin(require('../../websocket/observer/chat/conversation'))
 
 
 /* Срабатывает только на REST API */
-ConversationSchema.methods.onCreate = async function({body, user}){
+/*ConversationSchema.methods.onCreate = async function({body, user}){
     const Participant = require('./Participant');
     const participant = new Participant({conversation: this, user: user.id});
     await participant.save();
-}
+}*/
 
 
-ConversationSchema.methods.deepDelete = async function(){
+/*ConversationSchema.methods.deepDelete = async function(){
     await this.delete();
 
     // Delete all messages that belong to conversation
@@ -64,7 +62,7 @@ ConversationSchema.methods.deepDelete = async function(){
     ));
 
     return this;
-}
+}*/
 
 
 module.exports = model('Conversation', ConversationSchema);

@@ -6,8 +6,6 @@ const {Schema, model} = require('mongoose');
 
 const modelName = 'Order/Meta';
 
-const handlers = require("../handlers");
-
 const MetaSchema = new Schema({
 
     name: {
@@ -88,20 +86,6 @@ const MetaSchema = new Schema({
 });
 
 MetaSchema.plugin(require('mongoose-unique-validator'));
-MetaSchema.plugin(require('../logPlugin'))
-
-MetaSchema.methods.onCreate = async function({}){
-}
-
-MetaSchema.methods.deepDelete = async function(){
-    await handlers.deleteModels(this, []);
-
-    await handlers.deleteArraysOfModels(this, ['preferred_services']);
-
-    await this.delete();
-
-    return this;
-}
-
+MetaSchema.plugin(require('../log-plugin'))
 
 module.exports = model(modelName, MetaSchema);

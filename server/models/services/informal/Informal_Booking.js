@@ -1,12 +1,5 @@
 const {Schema, model} = require('mongoose');
 
-const User = require('../../user/User');
-const Informal = require('./Informal');
-const Bill = require('../../../public/arch/payment/Bill');
-const File = require('../../binaries/File');
-const BookingModel = require('../Booking');
-
-const modelName = 'Informal/Booking';
 
 const BookingSchema = new Schema({
     customer: {
@@ -31,7 +24,9 @@ const BookingSchema = new Schema({
     },
 });
 
-BookingSchema.plugin(require('mongoose-unique-validator'));
-BookingSchema.plugin(require('../../logPlugin'));
 
-module.exports = model(modelName, BookingSchema);
+BookingSchema.plugin(require('mongoose-unique-validator'));
+BookingSchema.plugin(require('../../log-plugin'));
+
+
+module.exports = model('Informal/Booking', BookingSchema);

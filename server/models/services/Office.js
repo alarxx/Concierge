@@ -4,6 +4,7 @@
 
 const {Schema, model} = require('mongoose');
 
+
 const OfficeSchema = new Schema({
     company: {
         type: Schema.Types.ObjectId,
@@ -29,12 +30,13 @@ const OfficeSchema = new Schema({
     },
 });
 
-OfficeSchema.plugin(require('mongoose-unique-validator'));
-OfficeSchema.plugin(require('../logPlugin'));
 
-OfficeSchema.methods.deepDelete = async function(){
+OfficeSchema.plugin(require('mongoose-unique-validator'));
+OfficeSchema.plugin(require('../log-plugin'));
+
+/*OfficeSchema.methods.deepDelete = async function(){
     await this.delete();
     return this;
-}
+}*/
 
 module.exports = model('Office', OfficeSchema);

@@ -1,5 +1,6 @@
 const {Schema, model} = require('mongoose');
 
+
 const BookingSchema = new Schema({
     booking: {
         type: Schema.Types.ObjectId,
@@ -30,11 +31,12 @@ const BookingSchema = new Schema({
     },
 });
 
-BookingSchema.plugin(require('mongoose-unique-validator'));
-BookingSchema.plugin(require('../../updatedDate'));
-BookingSchema.plugin(require('../../logPlugin'));
 
-BookingSchema.methods.onCreate = async function({req, res, body, user}){
+BookingSchema.plugin(require('mongoose-unique-validator'));
+BookingSchema.plugin(require('../../log-plugin'));
+
+
+/*BookingSchema.methods.onCreate = async function({req, res, body, user}){
     const Booking = require('../../modelsManager').models.Booking;
 
     if(body.customer)
@@ -65,11 +67,9 @@ BookingSchema.methods.onCreate = async function({req, res, body, user}){
     await booking.save();
 
     //'flight/service' сетится в модель в controller
-}
+}*/
 
-const handlers = require("../../handlers");
-
-BookingSchema.methods.deepDelete = async function(){
+/*BookingSchema.methods.deepDelete = async function(){
     // Должны удалить Bill, File
     await handlers.deleteModels(this, ['bill', 'file', 'booking']);
 
@@ -78,10 +78,10 @@ BookingSchema.methods.deepDelete = async function(){
     await this.delete();
 
     return this;
-}
+}*/
 
-BookingSchema.virtual('current_price').get(function(){
+/*BookingSchema.virtual('current_price').get(function(){
     return this.price - this.price * (this.discount / 100)
-});
+});*/
 
 module.exports = model('Flight/Booking', BookingSchema);
