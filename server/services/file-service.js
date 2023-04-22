@@ -1,6 +1,6 @@
 /**
  * Метод сохраняет файл локально и сохраняет в базе mongo
- * function arguments: express-fileupload file and creator user id
+ * function arguments: express-fileupload file and owner user id
  * returns {status, created_doc, message}
  * */
 
@@ -29,7 +29,7 @@ class FileService {
                 throw ApiError.UnauthorizedError();
             }
 
-            if(user.role === 'client' && file.creator != user.id){
+            if(user.role === 'client' && file.owner != user.id){
                 if(!file.accessHolders.includes(user.id)){
                     // return res.status(403).json({ error: 'Permission denied' });
                     throw ApiError.Forbidden('Permission denied')
@@ -40,41 +40,12 @@ class FileService {
         return file;
     }
 
-    async createFile(multifile, user, opt={}){
-        if(!multifile)
-            throw new Error('createFile did not get multifile')
-        if(!user)
-            throw new Error('createFile did not get user');
-
-        // local disk storage
-        const path = await multifile.save();
-        if(!path){
-            throw new Error('Can not move file');
-        }
-
-        const file = new File({
-            path,
-            creator: user.id,
-            name: multifile.originalname,
-            encoding: multifile.encoding,
-            mimetype: multifile.mimetype,
-
-            ...opt
-            // Default values
-            // accessHolders: [],
-            // accessType: 'public',
-        })
-
-        await file.save();
-
-        return file;
-    }
-
     /**
      * delete by Id
      * returns deleted doc
      * */
     async deleteFile(id){
+        // id всегда должно быть валидным ObjectId
         const file = await File.findByIdAndDelete(id);
 
         if(!file){
@@ -94,6 +65,8 @@ class FileService {
         return file;
 
     }
+
 }
+
 
 module.exports = new FileService();

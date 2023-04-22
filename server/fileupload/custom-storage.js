@@ -13,7 +13,13 @@ async function _fileExists(filepath){
 async function _dstPath(dstDir, hash){
   // Нужно переместить из file.tmpPath в dstDir/hash[0]/hash
   const dir = path.join(dstDir, hash.substring(0, 1));
-  await fs.promises.mkdir(dir).catch(err=>{});
+
+  // Получается это просто /data/{symbol}, количество которых ограничено
+  await fs.promises.mkdir(dir)
+      .catch(err=>{
+        // Это никогда не должно произойти.
+        console.error(err)
+      });
 
   // файлы с одинаковым содержимым, будут иметь одинаковый hash
   return path.join(dir, hash);
@@ -42,7 +48,7 @@ function CustomStorage (opts){
  * */
 CustomStorage.prototype._handleFile = function _handleFile (req, file, cb) {
   (async ()=>{
-    const user = { id: '6405e8c268dadbbfadd21932' }; // from req, можно, наверное, еще в body какие нибудь данные передавать
+    const user = { id: '0' }; // from req, можно, наверное, еще в body какие нибудь данные передавать
 
     const dstDir = this.dstDir;
     const tmpDir = this.tmpDir;
@@ -59,7 +65,11 @@ CustomStorage.prototype._handleFile = function _handleFile (req, file, cb) {
     const filename = `${user.id}-${file.originalname}`;
 
     const destination = path.join(tmpDir, String(Date.now()));
-    await fs.promises.mkdir(destination, { recursive: true }).catch(err => {});
+    await fs.promises.mkdir(destination, { recursive: true })
+        .catch(err => {
+          // Это не должно происходить никогда. Не вижу возможной причины возникновения.
+          console.error(err);
+        });
 
     const tmpPath = path.join(destination, filename);
     const outStream = fs.createWriteStream(tmpPath);

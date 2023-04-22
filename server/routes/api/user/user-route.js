@@ -6,6 +6,8 @@ const controller = require('../../../controllers/api/user/user-controller');
 
 const { createOne, findByQueryParams, updateOne, deleteOne } = controller;
 
+Router.use(require('../../../middlewares/checkAuthenticated'));
+
 Router.use(require('../../../middlewares/checkAdminRole'));
 
 Router.route('/')
