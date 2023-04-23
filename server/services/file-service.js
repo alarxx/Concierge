@@ -23,6 +23,13 @@ class FileService {
             throw ApiError.NotFound('File not found')
         }
 
+        // Проверить существует ли файл на file.path
+        await fs.promises.access(file.path)
+            .catch(err => {
+                logger.log(err);
+                throw ApiError.BadRequest("Could not access the binary file, no such file or directory");
+            });
+
         if(file.accessType === 'private'){
             if(!user){
                 // res.status(401).json({message: 'Unauthorized'});
@@ -40,13 +47,46 @@ class FileService {
         return file;
     }
 
+
+    async createFile(multifile, opts={
+        owner: undefined,
+        accessType: 'public',
+        accessHolders: []
+    }){
+        if(!multifile)
+            throw ApiError.ServerError('createFile did not get multifile')
+
+        // local disk storage
+        const path = await multifile.save();
+        if(!path){
+            throw ApiError.ServerError('Can not move file');
+        }
+
+        const file = new File({
+            path: path,
+            name: multifile.originalname,
+            encoding: multifile.encoding,
+            mimetype: multifile.mimetype,
+
+            ...opts
+            // Default values in mongoose
+            // owner: undefined
+            // accessHolders: [],
+            // accessType: 'public',
+        })
+
+        await file.save();
+
+        return file;
+    }
+
     /**
      * delete by Id
      * returns deleted doc
      * */
     async deleteFile(id){
         // id всегда должно быть валидным ObjectId
-        const file = await File.findByIdAndDelete(id);
+        const file = await File.findByIdAndDelete(id); // equals to findOneAndDelete
 
         if(!file){
             // ничего страшного, если не найден

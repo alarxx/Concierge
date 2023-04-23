@@ -1,7 +1,5 @@
 const {Schema, model} = require('mongoose');
 
-const colors = require("../../log/colors");
-
 const UserSchema = new Schema(
     {
         name: {
@@ -38,6 +36,15 @@ const UserSchema = new Schema(
             enum: ['client', 'admin'],
             default: 'client',
         },
+        entity: {
+            type: String,
+            enum: ['individual', 'juridical'], // Может ли он делать какие-то действия от лица компании или только пользоваться
+            default: 'individual'
+        },
+        company: {
+            type: Schema.Types.ObjectId,
+            ref: 'Company'
+        },
         status: {
             type: String,
             enum: ['ok', 'banned'], // not_activated - это не статус, это означает полное отсутствие пользователя
@@ -54,9 +61,7 @@ const UserSchema = new Schema(
     }
 )
 
-/*UserSchema.path('email').validate(async (email)=>{
-    return !await modelsManager.models.User.findOne({ email });
-}, 'Error, expected email to be unique');*/
+UserSchema.plugin(require('mongoose-unique-validator'));
 
 UserSchema.plugin(require('../log-plugin'));
 UserSchema.plugin(require('../../websocket/observer/user-observer'));
@@ -65,12 +70,5 @@ UserSchema.plugin(require('../../websocket/observer/auth-observer'));
 UserSchema.statics.privateFiles = function(){
     return ['profile_photo'];
 }
-
-/*UserSchema.methods.onCreate = async function({body, user}){}
-
-UserSchema.methods.deepDelete = async function (){
-    await this.delete();
-    return this;
-}*/
 
 module.exports = model('User', UserSchema);

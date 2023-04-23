@@ -58,6 +58,7 @@ const FileSchema = new Schema({
     strict: true,
 });
 
+FileSchema.plugin(require('mongoose-unique-validator'));
 FileSchema.plugin(require('../log-plugin'));
 
 module.exports = model('File', FileSchema);

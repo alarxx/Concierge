@@ -20,6 +20,7 @@ const MailSchema = new Schema(
     }
 )
 
+MailSchema.plugin(require('mongoose-unique-validator'));
 MailSchema.plugin(require('../log-plugin'));
 
 module.exports = model('Mailer', MailSchema);
