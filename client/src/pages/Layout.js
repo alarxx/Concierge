@@ -1,15 +1,13 @@
 import React from 'react';
 
-
-import Auth from '../components/auth/Auth'
 import Navigation from '../widgets/navigation/Navigation';
 
-
-export default function Main({}){
+export default function Layout({children}){
 
     return (
             <div className="section section-profile">
-                <Auth/>
+                {children}
+                <Navigation />
             </div>
     )
 }

@@ -11,16 +11,16 @@ export default function CardForm({
 }){
 
     return (
-        <div class="card-form">
-            <div class="card-form__header">
-                <div class="logo">
+        <div className="card-form">
+            <div className="card-form__header">
+                <div className="logo">
                     LOGO
                 </div>
             </div>
-            <div class="card-form__body">
+            <div className="card-form__body">
 
             </div>
-            <div class="card-form__footer">
+            <div className="card-form__footer">
 
             </div>
         </div>

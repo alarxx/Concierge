@@ -5,7 +5,7 @@ import styles from './logo.module.css'
 export default function Logo(){
 
     return (
-        <div class={styles.logo}>
+        <div className={styles.logo}>
             LOGO
         </div>
     );

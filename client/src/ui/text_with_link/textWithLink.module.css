@@ -1,0 +1,11 @@
+.textWithLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.textWithLink .link {
+    margin-top: 4px;
+}
+.textWithLink span {
+    text-align: center;
+}

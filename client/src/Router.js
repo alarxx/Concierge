@@ -5,7 +5,7 @@ import {Link, Routes, Route, Navigate, useSearchParams, useNavigate, useLocation
 import Page from "./middlewares/Page";
 import Protected from './pages/protected/Protected';
 
-import Layout from "./components/layouts/Layout";
+import Layout from "./pages/Layout";
 import Landing from "./pages/Landing"
 import Authentication from "./pages/auth/main/Authentication";
 import Logout from "./pages/auth/logout/Logout";
@@ -19,6 +19,10 @@ import NoName from "./pages/auth/status/NoName";
 import SendResetPasswordMail from "./pages/auth/password/SendResetPasswordMail";
 import ResetPassword from "./pages/auth/password/ResetPassword";
 import ServiceOrder from "./pages/service_order/ServiceOrder";
+import Auth from './components/auth/Auth';
+import Orders from './pages/Orders';
+import Chat from './pages/Chat';
+import Profile from './pages/Profile';
 
 export default function Router(){
 
@@ -27,6 +31,7 @@ export default function Router(){
 			<Routes>
 
 				<Route path="/" element={
+					//почему при жестком переходе через url на "/" выбрасывает {"message":"Unauthorized","errors":[]} (до этого выбрасывал чето с proxy, пока сервер на запустил) с редиректом обратно. приходится стопить клинт и npm start прописывать
 					// Можно оставить для проверки Middleware
 					<Page>
 						<Landing />
@@ -105,6 +110,12 @@ export default function Router(){
 						<ServiceOrder />
 					</Page>
 				}/>
+
+				
+				<Route path='/new' element={<Page> <Auth /></Page>}/>
+				<Route path='/orders' element={<Page><Orders /></Page>}/>
+				<Route path='/chat' element={<Page><Chat /></Page>}/>
+				<Route path='/profile' element={<Page><Profile /></Page>}/>
 
 				{/*<Route path='/voting' element={<Voting />} />
 				<Route path='/awards' element={<Awards />} />

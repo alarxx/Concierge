@@ -5,7 +5,7 @@ import styles from './link.module.css'
 export default function Link({text='', href=''}){
 
     return (
-        <a class={styles.link} href={href}>
+        <a className={styles.link} href={href}>
             {text}
         </a>
     );

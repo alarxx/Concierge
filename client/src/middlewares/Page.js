@@ -1,9 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {Fragment, useEffect} from 'react';
 
 import {useAppContext} from "../context/AppContext";
 
 import Logger from '../internal/Logger';
 const logger = new Logger('ProtectedPage');
+
+import Navigation from '../widgets/navigation/Navigation';
 
 /**
  * Скопировано из ProtectedPage.js
@@ -29,7 +31,12 @@ export default function Page({ children }){
         </>);
     }
     else {
-        return children;
+        return (
+            <Fragment>
+                {children}
+                <Navigation />
+            </Fragment>
+        );
     }
 
 }
