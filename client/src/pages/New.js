@@ -7,6 +7,7 @@ import CardBody from '../ui/card/CardBody';
 import CardFooter from '../ui/card/CardFooter';
 import Button from '../ui/button/Button';
 import CircleButton from '../ui/circle_button/CircleButton';
+import GroupButtons from '../ui/group_buttons/GroupButtons';
 
 import NewHotelOrder from '../entities/order/new_hotel_order/NewHotelOrder'
 import NewTransferOrder from '../entities/order/new_transfer_order/NewTransferOrder'
@@ -54,11 +55,11 @@ export default function New({}){
                 <CardBody>
                     {isActiveTab && activeEl
                         ? activeEl
-                        : <Fragment>
+                        : <GroupButtons>
                             <Button onClick={()=>handleClick('hotel')}>Найти отель</Button>
                             <Button onClick={()=>handleClick('transfer')}>Найти трансфер</Button>
                             <Button onClick={()=>handleClick()}>Найти билеты</Button>
-                        </Fragment>
+                        </GroupButtons>
                     }
                     
                 </CardBody>

@@ -1,0 +1,6 @@
+.GroupButtons button {
+    margin-bottom: 10px;
+}
+.GroupButtons button:last-child {
+    margin-bottom: 0;
+}
