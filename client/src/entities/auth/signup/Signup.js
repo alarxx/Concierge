@@ -1,6 +1,7 @@
 import React from 'react';
-import Input from '../../ui/input/Input';
-import Button from '../../ui/button/Button';
+
+import Input from '../../../ui/input/Input';
+import Button from '../../../ui/button/Button';
 
 export default function Signup({}){
     return (

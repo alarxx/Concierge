@@ -19,7 +19,7 @@ import NoName from "./pages/auth/status/NoName";
 import SendResetPasswordMail from "./pages/auth/password/SendResetPasswordMail";
 import ResetPassword from "./pages/auth/password/ResetPassword";
 import ServiceOrder from "./pages/service_order/ServiceOrder";
-import Auth from './components/auth/Auth';
+import New from './pages/New';
 import Orders from './pages/Orders';
 import Chat from './pages/Chat';
 import Profile from './pages/Profile';
@@ -112,7 +112,7 @@ export default function Router(){
 				}/>
 
 				
-				<Route path='/new' element={<Page> <Auth /></Page>}/>
+				<Route path='/new' element={<Page> <New /></Page>}/>
 				<Route path='/orders' element={<Page><Orders /></Page>}/>
 				<Route path='/chat' element={<Page><Chat /></Page>}/>
 				<Route path='/profile' element={<Page><Profile /></Page>}/>
