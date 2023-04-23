@@ -1,57 +1,54 @@
 const {Schema, model} = require('mongoose');
 
 
-const HotelSchema = new Schema({
-    company: {
-        type: Schema.Types.ObjectId,
-        ref: 'Company',
-        required: true,
-        immutable: true,
-    },
-    office: {
-      type: Schema.Types.ObjectId,
-      ref: 'Office',
-      required: true,
-      immutable: true,
-    },
+const HotelSchema = new Schema(
+    {
+        company: {
+            type: Schema.Types.ObjectId,
+            ref: 'Company',
+            required: true,
+            immutable: true,
+        },
+        office: {
+          type: Schema.Types.ObjectId,
+          ref: 'Office',
+          required: true,
+          immutable: true,
+        },
 
-    name: {
-        type: String,
-        required: true,
+        name: {
+            type: String,
+            required: true,
+        },
+        description: {
+            type: String,
+        },
+        address: {
+            type: String,
+            // ref: 'Address'
+        },
+        rate: {
+            type: Number,
+        },
+        stars: {
+            type: Number,
+            min: 1,
+            max: 5,
+        },
+        logo: {
+            type: Schema.Types.ObjectId,
+            ref: 'File'
+        },
+        images: [{ // Как работать с массивами изображений?
+            type: Schema.Types.ObjectId,
+            ref: 'File',
+        }],
     },
-    description: {
-        type: String,
-    },
-    address: {
-        type: String,
-        // ref: 'Address'
-    },
-    rate: {
-        type: Number,
-    },
-    stars: {
-        type: Number,
-        min: 1,
-        max: 5,
-    },
-    logo: {
-        type: Schema.Types.ObjectId,
-        ref: 'File'
-    },
-    images: [{ // Как работать с массивами изображений?
-        type: Schema.Types.ObjectId,
-        ref: 'File',
-    }],
-    createdDate: {
-        type: Date,
-        immutable: true,
-        default: () => new Date(),
-    },
-    updatedDate: {
-        type: Date,
-        default: () => new Date(),
+    {
+        timestamps: true,
+        strict: true,
     }
-});
+);
 
 HotelSchema.plugin(require('mongoose-unique-validator'));
 HotelSchema.plugin(require('../../log-plugin'));

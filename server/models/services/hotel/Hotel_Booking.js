@@ -1,72 +1,69 @@
 const {Schema, model} = require('mongoose');
 
 
-const BookingSchema = new Schema({
-    booking:{
-        type: Schema.Types.ObjectId,
-        ref: 'Booking',
-        required: true,
-        immutable: true,
-        unique: true,
-    },
-    'hotel/service': {
-        type: Schema.Types.ObjectId,
-        ref: 'Hotel/Service',
-        required: true,
-        immutable: true,
-    },
+const BookingSchema = new Schema(
+    {
+        booking:{
+            type: Schema.Types.ObjectId,
+            ref: 'Booking',
+            required: true,
+            immutable: true,
+            unique: true,
+        },
+        'hotel/service': {
+            type: Schema.Types.ObjectId,
+            ref: 'Hotel/Service',
+            required: true,
+            immutable: true,
+        },
 
-    customer: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-        immutable: true,
-    },
+        customer: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+            immutable: true,
+        },
 
-    checkInDate: {
-        type: Date,
-        default: () => new Date(), // Просто хз как из postman-a ставить
-        required: true,
-    },
-    checkOutDate: {
-        type: Date,
-        default: () => new Date(), // Просто хз как из postman-a ставить
-        required: true,
-    },
+        checkInDate: {
+            type: Date,
+            default: () => new Date(), // Просто хз как из postman-a ставить
+            required: true,
+        },
+        checkOutDate: {
+            type: Date,
+            default: () => new Date(), // Просто хз как из postman-a ставить
+            required: true,
+        },
 
-    // Bill
-    price: {
-        type: Number, // or String?
-        required: true,
+        // Bill
+        price: {
+            type: Number, // or String?
+            required: true,
+        },
+        discount: {
+            type: Number,
+            min: 0,
+            max: 100,
+            default: 0
+        },
+        bill: { // Счет выставленный нам и оплачиваемый Concierge
+            type: Schema.Types.ObjectId,
+            ref: 'File',
+        },
+        isPaid: {
+            type: Boolean,
+            default: false
+        },
+        file: { // Подтверждающий документ, не знаю
+            type: Schema.Types.ObjectId,
+            ref: 'File'
+        },
     },
-    discount: {
-        type: Number,
-        min: 0,
-        max: 100,
-        default: 0
-    },
-    bill: { // Счет выставленный нам и оплачиваемый Concierge
-        type: Schema.Types.ObjectId,
-        ref: 'File',
-    },
-    isPaid: {
-        type: Boolean,
-        default: false
-    },
-    file: { // Подтверждающий документ, не знаю
-        type: Schema.Types.ObjectId,
-        ref: 'File'
-    },
-    createdDate: {
-        type: Date,
-        immutable: true,
-        default: () => new Date(),
-    },
-    updatedDate: {
-        type: Date,
-        default: () => new Date(),
+    {
+        timestamps: true,
+        strict: true,
     }
-});
+);
 
 
 BookingSchema.plugin(require('mongoose-unique-validator'));
