@@ -3,6 +3,8 @@
     align-items: center;
     justify-content: center;
     padding: 8px;
+    font-weight: 600;
+    font-size: 16px;
 }
 .chip-blue {
     background-color: rgba(32, 134, 229, 0.1);
@@ -23,4 +25,8 @@
 .chip-green {
     background-color: rgba(62, 193, 40, 0.1);
     color: #3EC128;
+}
+.chip-small {
+    font-size: 12px;
+    padding: 6px;
 }
