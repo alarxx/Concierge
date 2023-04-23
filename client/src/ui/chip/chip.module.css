@@ -1,0 +1,26 @@
+.chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+.chip-blue {
+    background-color: rgba(32, 134, 229, 0.1);
+    color: #2086E5;
+}
+.chip-violet {
+    background-color: rgba(62, 106, 215, 0.1);
+    color: #3E6AD7;
+}
+.chip-yellow {
+    background-color: rgba(235, 175, 21, 0.1);
+    color: #EBBC15;
+}
+.chip-grey {
+    background-color: rgba(145, 152, 160, 0.1);
+    color: #9198A0;
+}
+.chip-green {
+    background-color: rgba(62, 193, 40, 0.1);
+    color: #3EC128;
+}
