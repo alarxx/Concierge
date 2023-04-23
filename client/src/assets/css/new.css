@@ -1,0 +1,31 @@
+:root {
+	--color-main: #263f5f;
+	--color-second: #fd7c33;
+	--color-bg: #fffdfc;
+	--color-danger: #dc3545;
+	--font-family-text: 'Montserrat';
+	--font-family-title: 'Orelega One';
+	--font-size-mobile: 14px;
+	--font-size-title: 42px;
+	--font-size-desktop: 16px;
+}
+/*
+.tal {
+    text-align: left;
+} */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: var(--font-family-text), sans-serif;
+}
+
+body {
+	position: relative;
+	background-color: var(--color-bg);
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+
+}

@@ -24,6 +24,7 @@
 body {
 	position: relative;
 	background-color: var(--color-bg);
+	width: 100vh;
 	height: 100vh;
 	display: flex;
 	flex-direction: column;

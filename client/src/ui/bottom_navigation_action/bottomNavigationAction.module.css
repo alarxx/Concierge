@@ -1,18 +1,31 @@
 .bottomNavigationAction {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: white;
-    
+    padding: 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
 }
-.bottomNavigationAction svg {
-    
+.bottomNavigationAction:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+.bottomNavigationAction svg path {
+    fill: rgba(255, 255, 255, 0.4);;
 }
 .bottomNavigationAction span {
     margin-top: 4px;
     text-align: center;
 }
 .bottomNavigationAction-active {
-    color: red;
+    color: white;
+}
+.bottomNavigationAction-active svg path {
+    fill: white;
 }
