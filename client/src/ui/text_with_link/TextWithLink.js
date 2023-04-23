@@ -4,12 +4,12 @@ import styles from './textWithLink.module.css'
 
 import Link from '../link/Link'
 
-export default function TextWithLink({text, linktext, link}){
+export default function TextWithLink({text, linktext, onClick}){
 
     return (
         <div class={styles["textWithLink"]}>
             <span>{text}</span>
-            <Link text={linktext} href={link} />
+            <Link text={linktext} onClick={onClick} />
         </div>
     );
 }

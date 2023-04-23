@@ -6,9 +6,8 @@ export default function Signup({}){
     return (
         <div className="">
             <form>
-                <Input />
-                <Input />
-                <Button>Вход</Button>
+                <Input placeHolder='Эл. почта' type='email' field_key='email' />
+                <Button>Получить доступ</Button>
             </form>
         </div>
     );

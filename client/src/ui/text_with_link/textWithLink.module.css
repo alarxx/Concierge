@@ -1,7 +1,10 @@
 .textWithLink {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-weight: 500;
+    font-size: 14px;
 }
 .textWithLink .link {
     margin-top: 4px;

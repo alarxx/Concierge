@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 import Auth from '../components/auth/Auth'
@@ -10,9 +10,20 @@ import CardBody from '../ui/card/CardBody';
 import CardFooter from '../ui/card/CardFooter';
 import TextWithLink from '../ui/text_with_link/TextWithLink'
 import SignIn from '../entities/signin/Signin';
+import Signup from '../entities/signup/Signup';
 
 
 export default function Main({}){
+
+    const [isSignup, setIsSignup] = useState(false)
+
+    // useEffect(()=> {
+    //     if 
+    // }, [isSignup])
+
+    const handleClick = (isSignup) => {
+        setIsSignup(isSignup);
+    };
 
     return (
         <Card>
@@ -20,10 +31,15 @@ export default function Main({}){
                 <Logo />
             </CardHeader>
             <CardBody>
-                <SignIn />
+                {isSignup ? <Signup /> : <SignIn /> }
+                
             </CardBody>
             <CardFooter>
-                <TextWithLink text="Нет аккаунта?" linktext="Регистрация" link="" />
+                {isSignup 
+                    ? <TextWithLink text="Уже есть аккаунт?" linktext="Авторизация" onClick={() => handleClick(false)} />
+                    : <TextWithLink text="Нет аккаунта?" linktext="Регистрация" onClick={() => handleClick(true)} />
+                }
+                
             </CardFooter>
         </Card>
     )
