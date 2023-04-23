@@ -3,3 +3,6 @@
     padding-bottom: 145px;
     flex-grow: 1;
 }
+.container {
+    padding: 10px 20px;
+}
