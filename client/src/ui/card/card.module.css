@@ -19,3 +19,8 @@
 .card__footer {
     padding: 16px 21px;
 }
+
+.card--info {
+    border-radius: 12px;
+    box-shadow: none;
+}

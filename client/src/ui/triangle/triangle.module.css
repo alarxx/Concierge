@@ -1,0 +1,16 @@
+.triangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 9px 8px 0 8px;
+    border-color: #959ba1 transparent transparent transparent;
+    line-height: 0px;
+    _border-color: #959ba1 #000000 #000000 #000000;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+}
+.Accordion-expanded .AccordionSummary .triangle {
+    border-width: 0 8px 9px 8px !important;
+    border-color: transparent transparent #959ba1 transparent !important;
+    line-height: 0px !important;
+    _border-color: #000000 #000000 #959ba1 #000000 !important;
+}

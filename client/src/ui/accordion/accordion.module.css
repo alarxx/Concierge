@@ -1,22 +1,33 @@
 .Accordion {
     height: auto;
     visibility: visible;
-
+    margin-bottom: 10px;
+}
+.AccordionSummary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 20px;
 }
 .Accordion .AccordionDetails {
     height: 0;
     visibility: hidden;
+    /* transition: 80ms cubic-bezier(0,0,1,1) ; */
+    /* transition-duration: 222ms; */
+    /* transition: 0.3s all; */
 }
 
 .Accordion-expanded {
-    margin-bottom: 16px;
+    /* margin-bottom: 16px; */
 }
 
 .Accordion-expanded .AccordionDetails {
     height: auto;
     visibility: visible;
+    margin-top: 10px;
+    transition: 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 
 .Accordion-expanded .AccordionSummary svg {
     transform: rotate(180deg);
 }
+

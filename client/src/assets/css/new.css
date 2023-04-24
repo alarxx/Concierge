@@ -1,7 +1,8 @@
 :root {
 	--color-main: #263f5f;
 	--color-second: #fd7c33;
-	--color-bg: #fffdfc;
+	--color-bg: #EBECED;
+	/* --color-bg: #fffdfc; */
 	--color-danger: #dc3545;
 	--font-family-text: 'Montserrat';
 	--font-family-title: 'Orelega One';
