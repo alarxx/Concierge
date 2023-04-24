@@ -5,7 +5,6 @@ import {Link, Routes, Route, Navigate, useSearchParams, useNavigate, useLocation
 import Page from "./middlewares/Page";
 import Protected from './pages/protected/Protected';
 
-import Layout from "./pages/Layout";
 import Landing from "./pages/Landing"
 import Authentication from "./pages/auth/main/Authentication";
 import Logout from "./pages/auth/logout/Logout";

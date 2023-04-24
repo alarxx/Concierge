@@ -1,0 +1,22 @@
+.Accordion {
+    height: auto;
+    visibility: visible;
+
+}
+.Accordion .AccordionDetails {
+    height: 0;
+    visibility: hidden;
+}
+
+.Accordion-expanded {
+    margin-bottom: 16px;
+}
+
+.Accordion-expanded .AccordionDetails {
+    height: auto;
+    visibility: visible;
+}
+
+.Accordion-expanded .AccordionSummary svg {
+    transform: rotate(180deg);
+}

@@ -1,0 +1,15 @@
+.BottomControl {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 12px 20px 34px 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #1E262F;
+    /* border: 6px solid #E3E4E6; */
+    border-radius: 28px 28px 0px 0px;
+    
+}
