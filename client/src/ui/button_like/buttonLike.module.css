@@ -1,0 +1,22 @@
+.ButtonLike {
+    background: none;
+    border: none;
+}
+.ButtonLike-small {
+    width: 24px;
+}
+.ButtonLike-big {
+    width: 30px;
+}
+.ButtonLike-fill svg path {
+    fill: white;
+}
+.ButtonLike-outline svg {
+    stroke: #1E262F;
+}
+.ButtonLike-active svg path{
+    fill:  #C22F2F;
+}
+.ButtonLike-active svg {
+    stroke:  #C22F2F;
+}

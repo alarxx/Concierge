@@ -6,7 +6,7 @@ import Logo from '../ui/logo/Logo';
 import CardBody from '../ui/card/CardBody';
 import CardFooter from '../ui/card/CardFooter';
 import Button from '../ui/button/Button';
-import CircleButton from '../ui/circle_button/CircleButton';
+import ButtonCircle from '../ui/button_circle/ButtonCircle';
 import GroupButtons from '../ui/group_buttons/GroupButtons';
 
 import NewHotelOrder from '../entities/order/new_hotel_order/NewHotelOrder'
@@ -45,7 +45,7 @@ export default function New({}){
     return (
         <Fragment>
             {isActiveTab && activeEl 
-                ? <CircleButton onClick={()=>handleClick('')}>Назад</CircleButton>
+                ? <ButtonCircle onClick={()=>handleClick('')}>Назад</ButtonCircle>
                 : ""
             }
             <Card>

@@ -1,0 +1,17 @@
+.GroupFlex {
+    width: 100%;
+    display: flex;
+}
+
+.GroupFlex-ais {
+    align-items: start;
+}
+.GroupFlex-aic {
+    align-items: center;
+}
+.GroupFlex-jcc {
+    justify-content: center;
+}
+.GroupFlex-jcsb {
+    justify-content: space-between;
+}
