@@ -61,6 +61,8 @@ $ npm start
 
 ## Development 
 Точка входа - server.js
+
 В общем структура проекта имеет такой вид: 
-server.js -> routes -> controllers -> services.
+
+server.js -> routes <=> controllers <=> DTOs <=> services <=> models.
 
