@@ -1,8 +1,8 @@
 /** File Upload multipart/form-data */
 
-const logger = require('../log/logger')
+const logger = require('../log/logger')('MulterManager');
 function log(...str) {
-    logger("MulterManager", ...str)
+    logger.log(...str)
 }
 
 const fs = require("fs");
@@ -26,8 +26,6 @@ module.exports = class MulterManager {
      * @dstDir - месторасположение постоянных файлов (по ум. "data/").
      * */
     constructor(opts={}) {
-        log("Initialize Multer Manager");
-
         /* Default values */
         this.#clearTmpTime = opts.clearTmpTime || 1000 * 60 * 60 * 12; // 12 hours
         this.#clearTmpIntervalTime = opts.clearTmpIntervalTime || 1000 * 60 * 60; // 1 hour

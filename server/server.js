@@ -73,7 +73,6 @@ require('./websocket/socket-io').initialize({
 
 /** Logging with Morgan JS */
 const morgan = require('morgan');
-const {File} = require("./models/models-manager");
 const stream = fs.createWriteStream(
 	path.join(__dirname, '/log/access.log'),
 	{flags: 'a'}
