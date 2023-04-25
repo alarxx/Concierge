@@ -25,7 +25,7 @@ const MetaSchema = new Schema({
     needs: [{
         type: String,
         enum: ['housing', 'transport', 'travel', 'informal'],
-        required: true,
+        // required: true,
     }],
 
     num_of_people: {
@@ -73,13 +73,13 @@ const MetaSchema = new Schema({
 
     description: String,
 
-    preferred_services:[{
+    /*preferred_services:[{
         type: Schema.Types.ObjectId,
         ref: 'Service'
-    }],
+    }],*/
 });
 
-const ServiceSchema = new Schema({
+const BookingSchema = new Schema({
     type: {
         type: String,
         enum: ['hotel/booking', 'flight/booking', 'informal/booking'],
@@ -112,25 +112,25 @@ const OrderSchema = new Schema(
             immutable: true,
             required: true
         },
-        conversation: {
+        /*conversation: {
             type: Schema.Types.ObjectId,
             ref: 'Conversation',
             immutable: true,
             required: true,
             unique: true,
-        },
+        },*/
         meta: {
             type: MetaSchema,
             required: true,
             // immutable: true,
         },
-        services: [{
-          type: ServiceSchema,
-        }],
         bookings: [{
+          type: BookingSchema,
+        }],
+        /*bookings: [{
             type: Schema.Types.ObjectId,
             ref: 'Booking',
-        }],
+        }],*/
         // bill: { // Счет от Concierge, который оплачивает клиент
         //     type: Schema.Types.ObjectId,
         //     ref: 'Bill'
@@ -144,7 +144,7 @@ const OrderSchema = new Schema(
             max: 100,
             default: 0
         },
-        bill: { // Счет от Concierge, который оплачивает клиент
+        bill_file: { // Счет от Concierge, который оплачивает клиент
             type: Schema.Types.ObjectId,
             ref: 'File',
         },

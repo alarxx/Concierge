@@ -39,7 +39,7 @@ module.exports = class MulterManager {
     }
 
     startClearInterval(){
-        log("start clear interval")
+        log("Start clear interval.")
         // Очистить папку буфера файлов полностью на старте
         this._clearTemp({ force: true });
         const that = this;
@@ -50,7 +50,7 @@ module.exports = class MulterManager {
     }
 
     stopClearInterval(){
-        log("stop clear interval")
+        log("Stop clear interval.")
         // Очистить папку буфера файлов полностью
         this._clearTemp({ force: true });
         clearInterval(this.#clearTmpInterval)
@@ -60,6 +60,7 @@ module.exports = class MulterManager {
      * @force - forced deletion of a temporary folder
      * */
     async _clearTemp({ force }){
+        log('Clear temp folder:', { force });
         try{
             const files = await fs.promises.readdir(this.#tmpDir);
 
