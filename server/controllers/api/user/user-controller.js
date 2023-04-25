@@ -1,7 +1,7 @@
 
 const userService = require('../../../services/user-service');
 
-class UserController {
+module.exports = ({
 
     async createOne(req, res, next){
         try{
@@ -11,7 +11,7 @@ class UserController {
         catch(e){
             next(e);
         }
-    }
+    },
 
     async findByQueryParams(req, res, next){
         try{
@@ -21,7 +21,7 @@ class UserController {
         catch(e){
             next(e);
         }
-    }
+    },
 
     async updateOne(req, res, next){
         try{
@@ -31,7 +31,7 @@ class UserController {
         catch(e){
             next(e);
         }
-    }
+    },
 
     async deleteOne(req, res, next){
         try{
@@ -43,7 +43,4 @@ class UserController {
         }
     }
 
-
-}
-
-module.exports = new UserController();
+});

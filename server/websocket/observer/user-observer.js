@@ -1,13 +1,15 @@
 /**
- * Идея в том, чтобы уведомлять пользователя о каких-то изменениях в базе данных
+ * Идея в том, чтобы уведомлять пользователей о каких-то изменениях в базе данных.
+ * Нужно админам и возможно менеджерам Concierge и партнерам об их клиентах.
  * */
 
 const userDto = require('../../dtos/user-dto');
 
 async function notify(method, user){
-    const {User} = require('../../models/models-manager');
+    const { User } = require('../../models/models-manager');
 
     const io = require('../../websocket/socket-io').io;
+
     try{
         // Эта строка выполняется в auth-observer, здесь мы только админов уведомляем об изменении
         // io.to(String(user.id)).emit(`/${method}/user`, userDto(user));
@@ -18,7 +20,8 @@ async function notify(method, user){
             }
             io.to(String(admin.id)).emit(`/${method}/user`, userDto(user));
         });
-    }catch(e){
+    }
+    catch(e){
         console.log(e);
     }
 

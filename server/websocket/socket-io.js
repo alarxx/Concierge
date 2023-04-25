@@ -1,7 +1,7 @@
 const passport = require('passport');
 const { Server } = require("socket.io");
 
-const auth_listener = require('./listener/auth');
+const auth_listener = require('./listener/auth-listener');
 
 const logger = require('../log/logger')('socket-io')
 

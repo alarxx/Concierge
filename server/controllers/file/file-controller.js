@@ -1,10 +1,10 @@
 const path = require('path');
 
 const { File } = require("../../models/models-manager");
-
 const fileService = require('../../services/file-service');
 
-class FileController {
+module.exports = ({
+
     async r_id(req, res, next){
         try{
             const id = req.params.id;
@@ -21,7 +21,7 @@ class FileController {
         catch(e){
             next(e);
         }
-    }
+    },
 
     async download_id(req, res, next){
         try{
@@ -32,11 +32,9 @@ class FileController {
         catch(e){
             next(e);
         }
-    }
-}
+    },
 
-module.exports = new FileController();
-
+});
 
 /*
 ▄───▄

@@ -1,8 +1,9 @@
+
 const postService = require('../../../services/post/post-service');
+const StandardController = require('../../StandardController');
+const standardController = StandardController(postService);
 
-const controller = require('../../controller')(postService);
-
-controller.pagination = async function(req, res, next){
+async function pagination(req, res, next){
     try{
         const posts = await postService.paginate(req.query);
         res.json({ posts });
@@ -12,4 +13,7 @@ controller.pagination = async function(req, res, next){
     }
 }
 
-module.exports = controller;
+module.exports = ({
+    ...standardController,
+    pagination,
+});

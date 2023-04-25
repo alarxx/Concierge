@@ -20,13 +20,15 @@ async function azure_authenticate(name, email){
         });
         await user.save();
     }
+    /*
     // Если пользователь есть, но стратегия аутентификации была другой
     // Зачем выдавать такую ошибку?
     // Если он подтвердил свою почту, это же достаточно, чтобы впустить его.
     // Тем более после аутентификации сразу редирект идет, а не JSON ответ.
-    /*else if(user.identity_provider !== 'azure') {
-        throw ApiError.IdentityProviderMismatch(user.email, 'Microsoft Azure')
-    }*/
+    // else if(user.identity_provider !== 'azure') {
+    //    throw ApiError.IdentityProviderMismatch(user.email, 'Microsoft Azure')
+    // }
+    */
 
     return user;
 }

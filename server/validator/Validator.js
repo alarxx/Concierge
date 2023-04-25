@@ -1,5 +1,6 @@
 const validator = require('validator');
 const logger = require('../log/logger')('Validator');
+
 module.exports = class Validator {
     #errors;
     #data;

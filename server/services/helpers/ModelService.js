@@ -1,28 +1,40 @@
 const mongoose = require("mongoose");
-
 const ApiError = require("../../exceptions/ApiError");
-const fileService = require("../../services/file-service");
-const {File} = require("../../models/models-manager");
-const logger = require('../../log/logger')('model-service');
 
-class ModelService {
+module.exports = class ModelService {
+    Model;
+    modelName;
+    #logger;
+    #fileService;
+
+    constructor(Model) {
+        this.Model = Model;
+        this.modelName = Model.collection.modelName;
+
+        this.#logger = require('../../log/logger')('model-service');
+        this.#fileService = require("../../services/file-service");
+
+        this.fileFields = this.#getFileFields();
+        this.privateFields = this.#getPrivateFiles();
+        this.uniqueFields = this.#getUniqueFields();
+    }
 
     /**
      * Возвращает отфильтрованный массив ключей, которые содержатся в объекте.
      * Можно узнать наличие определенных ключей в объекте.
      *  */
     #hasKeys(obj, keys){
-        console.log('hasKeys',{obj, keys})
+        this.#logger.log('hasKeys', { obj, keys });
         return keys.filter(key => {
             return key in obj;
         });
     }
 
-    getFileFields(Model){
-        return Object.values(Model.schema.paths)
+    #getFileFields(){
+        return Object.values(this.Model.schema.paths)
             .filter(field =>{
-                    return Model.schema.paths[field.path].instance === 'ObjectId' &&
-                        Model.schema.paths[field.path].options.ref === 'File';
+                    return this.Model.schema.paths[field.path].instance === 'ObjectId' &&
+                        this.Model.schema.paths[field.path].options.ref === 'File';
                 }
             )
             .map(field => {
@@ -30,12 +42,12 @@ class ModelService {
             });
     }
 
-    getPrivateFiles(Model){
-        return Model.privateFiles ? Model.privateFiles() : [];
+    #getPrivateFiles(){
+        return this.Model.privateFiles ? this.Model.privateFiles() : [];
     }
 
-    getUniqueFields(Model) {
-        const uniqueFields = Object.values(Model.schema.paths)
+    #getUniqueFields() {
+        const uniqueFields = Object.values(this.Model.schema.paths)
             .filter(field => field.options.unique)
             .map(field => field.path);
         uniqueFields.unshift('id');
@@ -45,15 +57,15 @@ class ModelService {
     /**
      * Возвращает ключ по которому можно искать документ в базе данных
      * */
-    get_pkey(body, uniqueFields){
-        const contains = uniqueFields.filter(key => {
+    get_pkey(body){
+        const contains = this.uniqueFields.filter(key => {
             return key in body;
         })
         if (contains.length === 0) {
-            throw ApiError.BadRequest(`${'\''.concat(uniqueFields.join('\' or \'')).concat('\'')} field not provided`);
+            throw ApiError.BadRequest(`${'\''.concat(this.uniqueFields.join('\' or \'')).concat('\'')} field not provided`);
         }
         else if(contains.length > 1){
-            throw ApiError.BadRequest(`More than one primary key (of ${'\''.concat(uniqueFields.join('\', \'')).concat('\'')}) provided in req.body`)
+            throw ApiError.BadRequest(`More than one primary key (of ${'\''.concat(this.uniqueFields.join('\', \'')).concat('\'')}) provided in req.body`)
         }
         // const pkey = contains[0] === 'id' ? '_id' : contains[0];
         return contains[0];
@@ -61,21 +73,22 @@ class ModelService {
 
     /**
      * Удаление файлов.
-     * Если в body fileField type != ObjectId -> то мы удаляем этот файл
+     * Это способ открепления файлов.
+     * Если в body fileField type != ObjectId -> то мы удаляем этот файл в документе.
      * */
-    async deleteInvalidFileFields(body, model, fileFields){
-        if(!body || !model || !fileFields){
+    async deleteInvalidFileFields(body, model){
+        if(!body || !model){
             throw ApiError.ServerError('Some required fields are missing')
         }
         await Promise.all(
-            fileFields.map(async key => {
+            this.fileFields.map(async key => {
                 // Если в форме есть файл под таким ключом
                 // Если боди.кей обджектАйди то, мы можем засетить, в таком случае пропускаем.
                 // Если боди.кей не обджект айди, то мы удаляем.
                 if(!mongoose.isValidObjectId(body[key])){ /*body[key] != undefined*/
                     // delete if file already exist
                     if(model[key]){
-                        await fileService.deleteFile(model[key]);
+                        await this.#fileService.deleteFile(model[key]);
                         model[key] = undefined; // null будет сохраняться в бд как null
                     }
                     delete body[key];
@@ -91,7 +104,7 @@ class ModelService {
      *
      * Если файлов в модели нет, то можно просто делать `model.save();`
      * */
-    async saveWithFiles(model, files, fileFields, privateFiles, opts={ user: undefined, accessHolders: [] }){
+    async saveWithFiles(model, files, opts={ user: undefined, accessHolders: [] }){
         // Вот этот момент нужно пересмотреть.
         // Здесь мы не меняем случайно req.files? Нельзя изменять аргументы, но другая реализация будет сильно сложнее.
         // На application/json типе может быть files будет не определен.
@@ -99,10 +112,10 @@ class ModelService {
             files = {};
         }
 
-        logger.log("saveWithFiles arguments:", { model, files, fileFields, privateFiles });
+        this.#logger.log("saveWithFiles:", { model, files, fileFields:this.fileFields, privateFiles:this.privateFields });
 
-        if(!model || !fileFields || !privateFiles){
-            throw ApiError.ServerError('Some required fields are missing')
+        if(!model){
+            throw ApiError.ServerError('model is not provided');
         }
 
         // Если файлов нет, то мы просто пытаемся сохранить модель
@@ -117,12 +130,12 @@ class ModelService {
         * */
         await model.validate();
 
-        const new_files = await setFiles(model, files, fileFields, privateFiles, {
+        const new_files = await this.#setFiles(model, files, {
             owner: opts.user?.id,
             accessHolders: opts.accessHolders ? opts.accessHolders : []
         });
 
-        logger.log({ new_files })
+        this.#logger.log({ new_files });
 
         await model.save(); // .catch(err => { throw ApiError.MongooseError(err) });
 
@@ -131,52 +144,48 @@ class ModelService {
 
 
     /**
+     *
+     * */
+    async #setFiles(model, files, opts = {
+        owner: undefined,
+        accessHolders: []
+    }) {
+        // Здесь стоит загружать файлы синхронно, чтобы не другие файлы не завершались в неопределенное состояние.
+        return await Promise.all(this.fileFields.map(async key => {
+            // Если в форме есть файл под таким ключом
+            if(files[key]) {
+                // delete if file already exist
+                if(mongoose.isValidObjectId(model[key])){
+                    await this.#fileService.deleteFile(model[key]);
+                }
+
+                const file = await this.#fileService.createFile(files[key], {
+                    owner: opts.owner,
+                    accessType: this.privateFields.includes(key) ? 'private' : 'public',
+                    accessHolders: opts.owner ? [...opts.accessHolders, opts.owner] : opts.accessHolders,
+                });
+
+                model[key] = file.id;
+
+                return file;
+            }
+        }));
+    }
+
+    /**
      * Удалить всех файлов закрепленных к модели
      * */
-    async deleteAttachedFiles(model, fileFields){
-        if(!model || !fileFields){
-            throw ApiError.ServerError('Some required fields are missing')
+    async deleteAttachedFiles(model){
+        if(!model){
+            throw ApiError.ServerError('model is not provided')
         }
         await Promise.all(
-            fileFields.map(async key => {
+            this.fileFields.map(async key => {
                 // delete if file already exist
                 if(mongoose.isValidObjectId(model[key])){ // можно было бы сделать простую проверку, if(model[key])
-                    await fileService.deleteFile(model[key]);
+                    await this.#fileService.deleteFile(model[key]);
                 }
             })
         );
     }
-
 }
-
-
-/**
- *
- * */
-async function setFiles(model, files={}, fileFields=[], privateFiles=[], opts = {
-    owner: undefined,
-    accessHolders: []
-}) {
-    // Здесь стоит загружать файлы синхронно, чтобы не другие файлы не завершались в неопределенное состояние.
-    return await Promise.all(fileFields.map(async key => {
-        // Если в форме есть файл под таким ключом
-        if(files[key]) {
-            // delete if file already exist
-            if(mongoose.isValidObjectId(model[key])){
-                await fileService.deleteFile(model[key]);
-            }
-
-            const file = await fileService.createFile(files[key], {
-                owner: opts.owner,
-                accessType: privateFiles.includes(key) ? 'private' : 'public',
-                accessHolders: opts.owner ? [...opts.accessHolders, opts.owner] : opts.accessHolders,
-            });
-
-            model[key] = file.id;
-
-            return file;
-        }
-    }));
-}
-
-module.exports = new ModelService();

@@ -1,3 +1,4 @@
+// Не нужно. Использую как использовать как использовать listener-ы socket.io
 module.exports = socket => {
     socket.on('whoami', setUser => {
         const { user } = socket.request;
