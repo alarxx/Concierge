@@ -1,10 +1,16 @@
 /**
  * Я хотел реализовать этот стандартный контроллер так:
- * class MyController extends Controller {
+ *
+ *  class MyController extends StandardController {
+ *
  *     constructor(service) {
  *         super(service);
  *     }
+ *
+ *     myMethod(args){...}
+ *
  * }
+ *
  * Проблема в том, что почему-то service становится undefined, точнее сама сущность класса не сохраняется, а работает потом как static.
  * В таком случае зачем путать и использовать класс, если на самом деле там все статично.
  *

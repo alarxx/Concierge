@@ -1,6 +1,5 @@
 const path = require('path');
 
-const { File } = require("../../models/models-manager");
 const fileService = require('../../services/file-service');
 
 module.exports = ({
