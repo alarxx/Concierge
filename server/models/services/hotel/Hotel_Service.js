@@ -3,13 +3,6 @@ const {Schema, model} = require('mongoose');
 
 const ServiceSchema = new Schema(
     {
-        service: { // foreign/primary key как-будто
-            type: Schema.Types.ObjectId,
-            ref: 'Service',
-            required: true,
-            immutable: true,
-            unique: true,
-        },
         hotel: {
             type: Schema.Types.ObjectId,
             ref: 'Hotel',

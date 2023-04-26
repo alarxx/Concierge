@@ -1,16 +1,15 @@
-
-const { Order } = require('../models/models-manager');
-const orderDto = require('../dtos/order-dto');
-
-const logger = require('../log/logger')('order-service');
-
-const StandardService = require('./helpers/StandardService');
-const standardService = StandardService(Order, orderDto, { creatorField: 'customer' });
-
-const ModelService = require("./helpers/ModelService");
 const ApiError = require("../exceptions/ApiError");
+const ModelService = require("./helpers/ModelService");
+const StandardService = require('./helpers/StandardService');
 
-const modelService = new ModelService(Order);
+const { Company } = require('../models/models-manager');
+const companyDto = require('../dtos/company-dto');
+
+const logger = require('../log/logger')('company-service');
+
+const standardService = StandardService(Company, companyDto, { creatorField: 'creator' });
+
+const modelService = new ModelService(Company);
 
 async function createOne(body, files, user) {
     if (!files) {
@@ -44,23 +43,23 @@ async function find(filters, user) {
         filters = {};
     }
 
-   /* if (user.role === 'admin') {
-        const models = await Model.find(filters);
-        return models.map(m => dto(m));
-    }
+    /* if (user.role === 'admin') {
+         const models = await Model.find(filters);
+         return models.map(m => dto(m));
+     }
 
-    /!*
-    // why not?
-    if(Object.keys(filters).length === 0){
-        throw ApiError.BadRequest("Empty request params");
-    }*!/
+     /!*
+     // why not?
+     if(Object.keys(filters).length === 0){
+         throw ApiError.BadRequest("Empty request params");
+     }*!/
 
-    if (filters.id) {
-        filters._id = filters.id;
-        delete filters.id;
-    }
+     if (filters.id) {
+         filters._id = filters.id;
+         delete filters.id;
+     }
 
-    const models = await Model.find({...filters, [opts.creatorField]: user.id});*/
+     const models = await Model.find({...filters, [opts.creatorField]: user.id});*/
 
     return []; // models.map(m => dto(m));
 }

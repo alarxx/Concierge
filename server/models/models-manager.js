@@ -9,7 +9,7 @@ class ModelsManager {
         this.Mailer = require('./mailer/Mailer');
         this.Post = require('./post/Post');
 
-        // this.Company = require('./company/Company')
+        this.Company = require('./company/Company')
 
         // this.Message = require('./chat/Message')
         // this.Conversation = require('./chat/Conversation')

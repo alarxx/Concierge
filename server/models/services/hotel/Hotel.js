@@ -9,12 +9,6 @@ const HotelSchema = new Schema(
             required: true,
             immutable: true,
         },
-        office: {
-          type: Schema.Types.ObjectId,
-          ref: 'Office',
-          required: true,
-          immutable: true,
-        },
 
         name: {
             type: String,
