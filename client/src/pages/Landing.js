@@ -7,12 +7,21 @@ import {useAppContext} from "../context/AppContext";
 export default function Landing({}){
 
     const { authHandler } = useAppContext();
-    const { authenticate } = authHandler;
+    const { authenticate, isAuthenticated } = authHandler;
     const navigate = useNavigate();
+
+    /*
+    // А если на Landing находится нужная информация?
+    useEffect(()=>{
+        if(isAuthenticated){
+            navigate('/profile', { replace: true });
+        }
+    })*/
 
     return (
         <Fragment>
-            <Button onClick={e => authenticate({replace: true})}>Войти в систему</Button>
+            { isAuthenticated && <Button onClick={e => navigate('/main')}>Главная страница</Button>}
+            {!isAuthenticated && <Button onClick={e => authenticate({replace: true})}>Войти в систему</Button>}
         </Fragment>
     )
 }
