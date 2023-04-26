@@ -2,13 +2,6 @@ const {Schema, model} = require('mongoose');
 
 
 const BookingSchema = new Schema({
-    booking: {
-        type: Schema.Types.ObjectId,
-        ref: 'Booking',
-        required: true,
-        immutable: true,
-        unique: true,
-    },
     'flight/service': {
         type: Schema.Types.ObjectId,
         ref: 'Flight/Service',

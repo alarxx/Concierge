@@ -38,6 +38,9 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
                 logger.log({body, files, user});
                 throw ApiError.ServerError('user is missing');
             }
+            if(user.role !== 'admin'){
+                throw ApiError.Forbidden('Permission denied. Only for admins.');
+            }
 
             // Нужно найти unique поля?
             // Можно просто засетить полностью и попытаться сохранить с файлами
@@ -57,40 +60,37 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
          * */
         async find(filters, user) {
             // Нужно сделать так, чтобы выводило множество по нескольким id!!!
-
             if (!user) {
                 throw ApiError.ServerError('user is missing')
+            }
+            if(user.role !== 'admin'){
+                throw ApiError.Forbidden('Permission denied. Only for admins.');
             }
             if (!filters) {
                 filters = {};
             }
-
-            if (user.role === 'admin') {
-                const models = await Model.find(filters);
-                return models.map(m => dto(m));
-            }
-
-            /*
-            // why not?
-            if(Object.keys(filters).length === 0){
-                throw ApiError.BadRequest("Empty request params");
-            }*/
 
             if (filters.id) {
                 filters._id = filters.id;
                 delete filters.id;
             }
 
+            // if (user.role === 'admin') {
+            const models = await Model.find(filters);
+            return models.map(m => dto(m));
+            // }
+
+            /*
             const models = await Model.find({...filters, [opts.creatorField]: user.id});
 
-            return models.map(m => dto(m));
+            return models.map(m => dto(m));*/
         },
 
         /**
          * Не пользоваться!!! Это просто пример.
          * Нужно сделать пагинацию по времени и по другим параметрам, как сделать.
          * */
-        async paginate(query, skip, limit) { // query
+        /*async paginate(query, skip, limit) { // query
 
             const items = await Model.find(query)
                 .sort({createdAt: -1})
@@ -98,7 +98,7 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
                 .limit(limit);
 
             return items.map(item => dto(item));
-        },
+        },*/
 
 
         async updateOne(body, files, user) {
@@ -108,6 +108,9 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
 
             if (!user) {
                 throw ApiError.ServerError('user is missing')
+            }
+            if(user.role !== 'admin'){
+                throw ApiError.Forbidden('Permission denied. Only for admins.');
             }
             if (Object.keys(body).length + Object.keys(files).length < 2) {
                 throw ApiError.BadRequest("Empty request body or too few fields");
@@ -119,9 +122,9 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
             if (!model) {
                 throw ApiError.NotFound(`${modelService.modelName} not found`)
             }
-            if (user.role !== 'admin' && model[opts.creatorField] != user.id) {
+            /*if (user.role !== 'admin' && model[opts.creatorField] != user.id) {
                 throw ApiError.Forbidden('Permission denied');
-            }
+            }*/
 
             /*
             * Здесь нужна проверка есть ли строка файла, но там нет файла
@@ -141,6 +144,9 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
             if (!body || !user) {
                 throw ApiError.ServerError('Some required arguments are missing')
             }
+            if(user.role !== 'admin'){
+                throw ApiError.Forbidden('Permission denied. Only for admins.');
+            }
             if (Object.keys(body).length === 0) {
                 throw ApiError.BadRequest("Empty request body");
             }
@@ -152,9 +158,9 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
             if (!model) {
                 throw ApiError.NotFound(`${modelService.modelName} not found`);
             }
-            if (user.role !== 'admin' && model[opts.creatorField] != user.id) {
+            /*if (user.role !== 'admin' && model[opts.creatorField] != user.id) {
                 throw ApiError.Forbidden('Permission denied');
-            }
+            }*/
 
             await Model.findOneAndDelete({[(pkey === 'id' ? '_id' : pkey)]: body[pkey]});
 

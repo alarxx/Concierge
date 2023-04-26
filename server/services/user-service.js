@@ -18,7 +18,7 @@ async function hashPassword(password){
 
 
 async function createUser(body, files){
-    const { email, password } = body;
+    const { email, password, name } = body;
 
     if(await User.findOne({ email })){
         throw ApiError.Conflict('User already exists');

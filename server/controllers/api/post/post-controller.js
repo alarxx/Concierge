@@ -1,5 +1,5 @@
 
-const postService = require('../../../services/post/post-service');
+const postService = require('../../../services/post-service');
 const StandardController = require('../../StandardController');
 const standardController = StandardController(postService);
 
