@@ -10,7 +10,9 @@ export default function Landing({}){
     const { authenticate, isAuthenticated } = authHandler;
     const navigate = useNavigate();
 
-    /*useEffect(()=>{
+    /*
+    // А если на Landing находится нужная информация?
+    useEffect(()=>{
         if(isAuthenticated){
             navigate('/profile', { replace: true });
         }
@@ -18,7 +20,8 @@ export default function Landing({}){
 
     return (
         <Fragment>
-            <Button onClick={e => authenticate({replace: true})}>Войти в систему</Button>
+            { isAuthenticated && <Button onClick={e => navigate('/main')}>Главная страница</Button>}
+            {!isAuthenticated && <Button onClick={e => authenticate({replace: true})}>Войти в систему</Button>}
         </Fragment>
     )
 }
