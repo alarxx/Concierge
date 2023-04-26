@@ -200,7 +200,7 @@ export default function useAuth({ socketHandler }){
             * хотя после activation, я сразу закрываю окно.
             * */
             socket.disconnect();
-
+            setUserLoading(false);
             return navigate('/authn/activation', {
                 state: {
                     activation_token
@@ -218,7 +218,7 @@ export default function useAuth({ socketHandler }){
             * хотя после activation, я сразу закрываю окно.
             * */
             socket.disconnect();
-
+            setUserLoading(false);
             return navigate('/authn/reset', {
                 state: {
                     reset_password_token

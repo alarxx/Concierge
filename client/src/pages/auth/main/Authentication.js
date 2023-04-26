@@ -55,7 +55,7 @@ export default function Authentication({ }){
                     {tabType === 'signin' && <>
                         <TextWithLink text="Нет аккаунта?" linktext="Регистрация" onClick={() => setTabType('signup')} /> 
                         <br/>
-                        <TextWithLink linktext="Забыли пароль?" onClick={e => navigate('/authn/send-reset', {replace: true})} /> 
+                        <TextWithLink linktext="Забыли пароль?" onClick={e => navigate('/authn/send-reset')} />
                     </>}
                 </CardFooter>
             </Card>
