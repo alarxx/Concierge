@@ -5,10 +5,6 @@ import {useAppContext} from "../context/AppContext";
 import Logger from '../internal/Logger';
 const logger = new Logger('ProtectedPage');
 
-import NavigationPanel from '../widgets/navigation_panel/NavigationPanel';
-import NavbarPanel from '../widgets/navbar_panel/NavbarPanel';
-import Box from '../ui/box/Box';
-
 /**
  * Скопировано из ProtectedPage.js
  * */
@@ -35,11 +31,7 @@ export default function Page({ children }){
     else {
         return (
             <Fragment>
-                <NavbarPanel/>
-                <Box>
                     {children}
-                </Box>
-                <NavigationPanel />
             </Fragment>
         );
     }

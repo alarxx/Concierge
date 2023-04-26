@@ -1,5 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
+import NavbarPanel from '../widgets/navbar_panel/NavbarPanel';
+import Box from '../ui/box/Box'
+import NavigationPanel from '../widgets/navigation_panel/NavigationPanel';
+
 import Card from '../ui/card/Card';
 import CardHeader from '../ui/card/CardHeader';
 import Logo from '../ui/logo/Logo';
@@ -44,33 +48,37 @@ export default function New({}){
 
     return (
         <Fragment>
-            {isActiveTab && activeEl 
-                ? <ButtonCircle onClick={()=>handleClick('')}>Назад</ButtonCircle>
-                : ""
-            }
-            <Card>
-                <CardHeader>
-                    <Logo />
-                </CardHeader>
-                <CardBody>
-                    {isActiveTab && activeEl
-                        ? activeEl
-                        : <GroupButtons>
-                            <Button onClick={()=>handleClick('hotel')}>Найти отель</Button>
-                            <Button onClick={()=>handleClick('transfer')}>Найти трансфер</Button>
-                            <Button onClick={()=>handleClick()}>Найти билеты</Button>
-                        </GroupButtons>
+            <NavbarPanel/>
+                <Box>
+                    {isActiveTab && activeEl 
+                        ? <ButtonCircle onClick={()=>handleClick('')}>Назад</ButtonCircle>
+                        : ""
                     }
-                    
-                </CardBody>
-                <CardFooter>
-                    {/* {isSignup 
-                        ? <TextWithLink text="Уже есть аккаунт?" linktext="Авторизация" onClick={() => handleClick(false)} />
-                        : <TextWithLink text="Нет аккаунта?" linktext="Регистрация" onClick={() => handleClick(true)} />
-                    }
-                    */}
-                </CardFooter>
-            </Card>
+                    <Card>
+                        <CardHeader>
+                            <Logo />
+                        </CardHeader>
+                        <CardBody>
+                            {isActiveTab && activeEl
+                                ? activeEl
+                                : <GroupButtons>
+                                    <Button onClick={()=>handleClick('hotel')}>Найти отель</Button>
+                                    <Button onClick={()=>handleClick('transfer')}>Найти трансфер</Button>
+                                    <Button onClick={()=>handleClick()}>Найти билеты</Button>
+                                </GroupButtons>
+                            }
+                            
+                        </CardBody>
+                        <CardFooter>
+                            {/* {isSignup 
+                                ? <TextWithLink text="Уже есть аккаунт?" linktext="Авторизация" onClick={() => handleClick(false)} />
+                                : <TextWithLink text="Нет аккаунта?" linktext="Регистрация" onClick={() => handleClick(true)} />
+                            }
+                            */}
+                        </CardFooter>
+                    </Card>
+                </Box>
+            <NavigationPanel />
         </Fragment>
     )
 }

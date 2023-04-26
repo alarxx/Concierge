@@ -1,12 +1,13 @@
 import React from 'react';
 import Input from '../../../ui/input/Input';
 import Button from '../../../ui/button/Button';
+import Typography from '../../../ui/typography/Typography';
 
 export default function EmployeeInfo({}){
     return (
         <div className="">
             <form>
-                Детали
+                <Typography size='18' weight='700' bottom='12'>Детали</Typography>
                 <br/>
                 Имя *
                 <Input placeHolder='Город прибытия' type='text' field_key='from_city' />

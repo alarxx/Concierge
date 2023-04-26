@@ -3,7 +3,6 @@ import {Link, Navigate, NavLink, useLocation, useNavigate, useSearchParams} from
 import {useAppContext} from "../../../context/AppContext";
 
 import Logger from '../../../internal/Logger';
-import SignIn from "./SignIn";
 import SendActivationMail from "./SendActivationMail";
 import SendResetPasswordMail from "../password/SendResetPasswordMail";
 

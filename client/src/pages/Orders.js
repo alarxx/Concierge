@@ -1,4 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
+
+import NavbarPanel from '../widgets/navbar_panel/NavbarPanel';
+import Box from '../ui/box/Box'
+import NavigationPanel from '../widgets/navigation_panel/NavigationPanel';
 
 import Accordion from '../ui/accordion/Accordion'
 import AccordionSummary from '../ui/accordion/AccordionSummary'
@@ -21,67 +25,73 @@ export default function Orders({}){
     };
 
     return (
-            <div className="section section-profile">
-                orders
-                <Accordion expanded={expanded === 'panel1'} onClick={() => handleChange('panel1')} >
-                    <AccordionSummary>
-                        <Card variant='info'>
-                            <CardBody>
-                                <GroupFlex align='aic' justify='jcsb'>
-                                    AccordionSummary11111
-                                    <TriangleIcon/>
-                                </GroupFlex>
-                            </CardBody>
-                        </Card>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Card variant='info'>
-                            <CardBody>
-                                <EmployeeInfo />
-                            </CardBody>
-                        </Card>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion expanded={expanded === 'panel12'} onClick={() => handleChange('panel12')} >
-                    <AccordionSummary>
-                        <Card variant='info'>
-                            <CardBody>
-                                <GroupFlex align='aic' justify='jcsb'>
-                                    AccordionSummary11111
-                                    <TriangleIcon/>
-                                </GroupFlex>
-                            </CardBody>
-                        </Card>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Card variant='info'>
-                            <CardBody>
-                                AccordionDetails1111
-                            </CardBody>
-                        </Card>
-                    </AccordionDetails>
-                </Accordion>
+        <Fragment>
+            <NavbarPanel/>
+                <Box>
+                    <div className="section section-profile">
+                        orders
+                        <Accordion expanded={expanded === 'panel1'} onClick={() => handleChange('panel1')} >
+                            <AccordionSummary>
+                                <Card variant='info'>
+                                    <CardBody>
+                                        <GroupFlex align='aic' justify='jcsb'>
+                                            AccordionSummary11111
+                                            <TriangleIcon/>
+                                        </GroupFlex>
+                                    </CardBody>
+                                </Card>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Card variant='info'>
+                                    <CardBody>
+                                        <EmployeeInfo />
+                                    </CardBody>
+                                </Card>
+                            </AccordionDetails>
+                        </Accordion>
+                        <Accordion expanded={expanded === 'panel12'} onClick={() => handleChange('panel12')} >
+                            <AccordionSummary>
+                                <Card variant='info'>
+                                    <CardBody>
+                                        <GroupFlex align='aic' justify='jcsb'>
+                                            AccordionSummary11111
+                                            <TriangleIcon/>
+                                        </GroupFlex>
+                                    </CardBody>
+                                </Card>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Card variant='info'>
+                                    <CardBody>
+                                        AccordionDetails1111
+                                    </CardBody>
+                                </Card>
+                            </AccordionDetails>
+                        </Accordion>
 
-                <Accordion expanded={expanded === 'panel13'} onClick={() => handleChange('panel13')} >
-                    <AccordionSummary>
-                        <Card variant='info'>
-                            <CardBody>
-                                <GroupFlex align='aic' justify='jcsb'>
-                                    AccordionSummary11111
-                                    <TriangleIcon/>
-                                </GroupFlex>
-                            </CardBody>
-                        </Card>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Card variant='info'>
-                            <CardBody>
-                                AccordionDetails1111
-                            </CardBody>
-                        </Card>
-                    </AccordionDetails>
-                </Accordion>
+                        <Accordion expanded={expanded === 'panel13'} onClick={() => handleChange('panel13')} >
+                            <AccordionSummary>
+                                <Card variant='info'>
+                                    <CardBody>
+                                        <GroupFlex align='aic' justify='jcsb'>
+                                            AccordionSummary11111
+                                            <TriangleIcon/>
+                                        </GroupFlex>
+                                    </CardBody>
+                                </Card>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Card variant='info'>
+                                    <CardBody>
+                                        AccordionDetails1111
+                                    </CardBody>
+                                </Card>
+                            </AccordionDetails>
+                        </Accordion>
 
-            </div>
+                    </div>
+                </Box>
+            <NavigationPanel />
+        </Fragment>
     )
 }

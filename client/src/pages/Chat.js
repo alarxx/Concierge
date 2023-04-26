@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-
+import NavbarPanel from '../widgets/navbar_panel/NavbarPanel';
+import Box from '../ui/box/Box'
+import NavigationPanel from '../widgets/navigation_panel/NavigationPanel';
 
 export default function Chat({}){
 
     return (
-            <div className="section section-profile">
-                chat
-            </div>
+        <Fragment>
+            <NavbarPanel/>
+                <Box>
+                    <div className="section section-profile">
+                        chat
+                    </div>
+                </Box>
+            <NavigationPanel />
+        </Fragment>
     )
 }
