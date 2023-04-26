@@ -154,6 +154,9 @@ module.exports = class ModelService {
         return await Promise.all(this.fileFields.map(async key => {
             // Если в форме есть файл под таким ключом
             if(files[key]) {
+
+                // Здесь нужно учитывать, что под files[key] может быть массив файлов, также и model[key] !!!???
+
                 // delete if file already exist
                 if(mongoose.isValidObjectId(model[key])){
                     await this.#fileService.deleteFile(model[key]);
