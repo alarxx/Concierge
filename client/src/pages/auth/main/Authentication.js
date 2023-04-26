@@ -6,16 +6,16 @@ import Logger from '../../../internal/Logger';
 import SendActivationMail from "../../../entities/auth/signup/SendActivationMail";
 import SendResetPasswordMail from "../password/SendResetPasswordMail";
 
-import Box from '../../../ui/box/Box'
-import Card from '../../../ui/card/Card';
-import CardHeader from '../../../ui/card/CardHeader';
-import Logo from '../../../ui/logo/Logo';
-import CardBody from '../../../ui/card/CardBody';
-import CardFooter from '../../../ui/card/CardFooter';
-import TextWithLink from '../../../ui/text_with_link/TextWithLink'
+import Box from '../../../shared/ui/box/Box'
+import Card from '../../../shared/ui/card/Card';
+import CardHeader from '../../../shared/ui/card/CardHeader';
+import Logo from '../../../shared/ui/logo/Logo';
+import CardBody from '../../../shared/ui/card/CardBody';
+import CardFooter from '../../../shared/ui/card/CardFooter';
+import TextWithLink from '../../../shared/ui/text_with_link/TextWithLink'
 import SignIn from '../../../entities/auth/signin/Signin';
 import Signup from '../../../entities/auth/signup/Signup';
-import Button from '../../../ui/button/Button'
+import Button from '../../../shared/ui/button/Button'
 /*
 * 1) Не всегда при OAuth2 имеется имя, а в приложении хотелось бы иметь имя всегда.
 * Для этого нужно, если нет имени пользователя, перенаправлять на страницу

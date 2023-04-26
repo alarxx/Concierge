@@ -3,8 +3,8 @@ import React, {useMemo, useState} from 'react';
 import useTimer from "../../../hooks/useTimer";
 import Logger from "../../../internal/Logger";
 
-import Input from '../../../ui/input/Input';
-import Button from '../../../ui/button/Button'
+import Input from '../../../shared/ui/input/Input';
+import Button from '../../../shared/ui/button/Button'
 
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,

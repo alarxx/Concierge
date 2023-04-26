@@ -3,13 +3,13 @@ import {useNavigate} from "react-router-dom";
 
 import SendResetPasswordMailForm from '../../../entities/reset_password/SendResetPasswordMail';
 
-import Box from '../../../ui/box/Box'
-import Card from '../../../ui/card/Card'
-import CardHeader from '../../../ui/card/CardHeader'
-import CardBody from '../../../ui/card/CardBody'
-import CardFooter from '../../../ui/card/CardFooter'
-import Logo from '../../../ui/logo/Logo'
-import TextWithLink from '../../../ui/text_with_link/TextWithLink'
+import Box from '../../../shared/ui/box/Box'
+import Card from '../../../shared/ui/card/Card'
+import CardHeader from '../../../shared/ui/card/CardHeader'
+import CardBody from '../../../shared/ui/card/CardBody'
+import CardFooter from '../../../shared/ui/card/CardFooter'
+import Logo from '../../../shared/ui/logo/Logo'
+import TextWithLink from '../../../shared/ui/text_with_link/TextWithLink'
 
 export default function SendResetPasswordMail(){
 

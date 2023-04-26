@@ -1,15 +1,15 @@
 import React, { Fragment, useEffect } from 'react';
 
 import NavbarPanel from '../widgets/navbar_panel/NavbarPanel';
-import Box from '../ui/box/Box'
+import Box from '../shared/ui/box/Box'
 import NavigationPanel from '../widgets/navigation_panel/NavigationPanel';
 
-import Accordion from '../ui/accordion/Accordion'
-import AccordionSummary from '../ui/accordion/AccordionSummary'
-import AccordionDetails from '../ui/accordion/AccordionDetails'
-import Card from '../ui/card/Card';
-import CardBody from '../ui/card/CardBody';
-import GroupFlex from '../ui/group_flex/GroupFlex'
+import Accordion from '../shared/ui/accordion/Accordion'
+import AccordionSummary from '../shared/ui/accordion/AccordionSummary'
+import AccordionDetails from '../shared/ui/accordion/AccordionDetails'
+import Card from '../shared/ui/card/Card';
+import CardBody from '../shared/ui/card/CardBody';
+import GroupFlex from '../shared/ui/group_flex/GroupFlex'
 import EmployeeInfo from '../entities/employee/employee_info/EmployeeInfo'
 
 import TriangleIcon from '../assets/icons/drop-down-info.svg';
