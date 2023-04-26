@@ -18,10 +18,28 @@ export default function Landing({}){
         }
     })*/
 
+    function setReactFavicon(){
+        const favicon = document.querySelector('[rel=icon]');
+        favicon.href = "https://reactjs.org/favicon.ico";
+    }
+
+    function setGoogleFavicon(){
+        const favicon = document.querySelector('[rel=icon]');
+        favicon.href = "https://www.google.com/favicon.ico";
+    }
+
+    function setFavicon(url){
+        const favicon = document.querySelector('[rel=icon]');
+        favicon.href = url;
+    }
+
     return (
-        <Fragment>
+        <>
             { isAuthenticated && <Button onClick={e => navigate('/profile')}>Главная страница (пока что profile)</Button>}
             {!isAuthenticated && <Button onClick={e => authenticate({replace: false})}>Войти в систему</Button>}
-        </Fragment>
+
+            <button onClick={setReactFavicon}>Set React Favicon</button><br/>
+            <button onClick={setGoogleFavicon}>Set Google Favicon</button>
+        </>
     )
 }
