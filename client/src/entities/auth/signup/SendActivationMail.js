@@ -1,6 +1,5 @@
 import React, {useMemo, useState} from 'react';
 
-import {Link, NavLink} from "react-router-dom";
 import useTimer from "../../../hooks/useTimer";
 import Logger from "../../../internal/Logger";
 

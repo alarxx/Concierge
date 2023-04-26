@@ -4,7 +4,7 @@ import {io} from "socket.io-client";
 import Logger from '../../internal/Logger';
 const logger = new Logger('useSocket');
 
-import env from '../../../.env.json';
+import env from '../../.env.json';
 
 const URL = env.API_URL;
 
