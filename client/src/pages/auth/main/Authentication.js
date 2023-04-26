@@ -1,12 +1,12 @@
-import React, {Fragment, useEffect, useMemo, useState} from 'react';
-import {Link, Navigate, NavLink, useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import React, {useEffect, useMemo, useState} from 'react';
+import {useNavigate} from "react-router-dom";
 import {useAppContext} from "../../../context/AppContext";
 
 import Logger from '../../../internal/Logger';
 import SendActivationMail from "../../../entities/auth/signup/SendActivationMail";
 import SendResetPasswordMail from "../password/SendResetPasswordMail";
 
-
+import Box from '../../../ui/box/Box'
 import Card from '../../../ui/card/Card';
 import CardHeader from '../../../ui/card/CardHeader';
 import Logo from '../../../ui/logo/Logo';
@@ -15,6 +15,7 @@ import CardFooter from '../../../ui/card/CardFooter';
 import TextWithLink from '../../../ui/text_with_link/TextWithLink'
 import SignIn from '../../../entities/auth/signin/Signin';
 import Signup from '../../../entities/auth/signup/Signup';
+import Button from '../../../ui/button/Button'
 /*
 * 1) Не всегда при OAuth2 имеется имя, а в приложении хотелось бы иметь имя всегда.
 * Для этого нужно, если нет имени пользователя, перенаправлять на страницу
@@ -35,7 +36,7 @@ export default function Authentication({ }){
 
     // SignUp/SignIn должны быть в одном компоненте и OAuth тоже, все должно быть в одном Authentication page
     return (
-        <Fragment>
+        <Box>
 
             <Card>
                 <CardHeader>
@@ -45,20 +46,21 @@ export default function Authentication({ }){
                 <CardBody>
                     {tabType === 'signup' && <SendActivationMail sendActivationMail={sendActivationMail} />}
                     {tabType === 'signin' && <SignIn signin={signin} />}
+                    <br />
+                    <Button variant='second'><a href={"/auth/azure"}>OpenID Connect</a></Button>
                 </CardBody>
                 
                 <CardFooter>
                     {tabType === 'signup' && <TextWithLink text="Уже есть аккаунт?" linktext="Авторизация" onClick={() => setTabType('signin')} />}
-                    {tabType === 'signin' && <TextWithLink text="Нет аккаунта?" linktext="Регистрация" onClick={() => setTabType('signup')} />}
+                    {tabType === 'signin' && <>
+                        <TextWithLink text="Нет аккаунта?" linktext="Регистрация" onClick={() => setTabType('signup')} /> 
+                        <br/>
+                        <TextWithLink linktext="Забыли пароль?" onClick={e => navigate('/authn/send-reset', {replace: true})} /> 
+                    </>}
                 </CardFooter>
             </Card>
 
-            <button onClick={e => navigate('/authn/send-reset', {replace: true})}>Forgot Password?</button>
-            <br/><br/>
-
-            <a href={"/auth/azure"}><button>OpenID Connect</button></a>
-
-        </Fragment>
+        </Box>
     );
 }
 

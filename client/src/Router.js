@@ -36,18 +36,6 @@ export default function Router(){
 						<Landing />
 					</Page>
 				}/>
-				<Route path="/signup" element={
-					// Можно оставить для проверки Middleware
-					<Page>
-						<Landing />
-					</Page>
-				}/>
-				<Route path="/signin" element={
-					// Можно оставить для проверки Middleware
-					<Page>
-						<Landing />
-					</Page>
-				}/>
 
 
 				<Route path='/authn'>
@@ -111,10 +99,13 @@ export default function Router(){
 				}/>
 
 				
-				<Route path='/new' element={<Page> <New /></Page>}/>
-				<Route path='/orders' element={<Page><Orders /></Page>}/>
-				<Route path='/chat' element={<Page><Chat /></Page>}/>
-				<Route path='/profile' element={<Page><Profile /></Page>}/>
+				<Route path='/new' element={
+					<ProtectedPage> <New /></ProtectedPage>
+				
+				}/>
+				<Route path='/orders' element={<ProtectedPage><Orders /></ProtectedPage>}/>
+				<Route path='/chat' element={<ProtectedPage><Chat /></ProtectedPage>}/>
+				<Route path='/profile' element={<ProtectedPage><Profile /></ProtectedPage>}/>
 
 				{/*<Route path='/voting' element={<Voting />} />
 				<Route path='/awards' element={<Awards />} />

@@ -4,6 +4,9 @@ import {Link, NavLink} from "react-router-dom";
 import useTimer from "../../../hooks/useTimer";
 import Logger from "../../../internal/Logger";
 
+import Input from '../../../ui/input/Input';
+import Button from '../../../ui/button/Button'
+
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
  * SignUp не должен перенаправлять, а только возвращать json о том, получилось ли создать нового пользователя или нет.
@@ -52,15 +55,17 @@ export default function SendActivationMail({ sendActivationMail=f=>f }){
         <form onSubmit={onSubmit}>
             <div>
                 <label>Email</label>
-                <input
+                <Input
                     type="text"
                     name="email"
                     value={email}
+                    placeHolder='Введите email'
                     onChange={e => setEmail(e.target.value)}
-                    required />
+                    required 
+                />
             </div>
 
-            <button type="submit">Continue</button>
+            <Button type="submit">Продолжить</Button>
         </form>
     </>);
 }

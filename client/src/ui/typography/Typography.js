@@ -4,10 +4,12 @@ import styles from './typography.module.css'
 
 export default function Typography({children, size="", weight="", bottom=""}){
 
+    // в children передаем только текст
+
     const fontStyle = {
-        "font-weight": weight,
-        "font-size": size, 
-        "padding-bottom": bottom,
+        fontWeight: weight,
+        fontSyze: size, 
+        paddingBottom: bottom,
     }
 
     return (

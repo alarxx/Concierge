@@ -11,6 +11,10 @@
     /* margin-bottom: 10px; */
     cursor: pointer;
 }
+.btn a {
+    color: white;
+    text-decoration: none;
+}
 .btn:hover {
     opacity: 95%;
 }

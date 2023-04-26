@@ -20,7 +20,7 @@ export default function Landing({}){
 
     return (
         <Fragment>
-            { isAuthenticated && <Button onClick={e => navigate('/main')}>Главная страница</Button>}
+            { isAuthenticated && <Button onClick={e => navigate('/profile')}>Главная страница (пока что profile)</Button>}
             {!isAuthenticated && <Button onClick={e => authenticate({replace: true})}>Войти в систему</Button>}
         </Fragment>
     )

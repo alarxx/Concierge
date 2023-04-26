@@ -8,8 +8,8 @@ export default function TextWithLink({text, linktext, onClick}){
 
     return (
         <div className={styles["textWithLink"]}>
-            <span>{text}</span>
-            <Link text={linktext} onClick={onClick} />
+            {text && <span>{text}</span>}
+            {linktext && <Link text={linktext} onClick={onClick} />}
         </div>
     );
 }
