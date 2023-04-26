@@ -3,13 +3,7 @@ const {Schema, model} = require('mongoose');
 
 const BookingSchema = new Schema(
     {
-        booking:{
-            type: Schema.Types.ObjectId,
-            ref: 'Booking',
-            required: true,
-            immutable: true,
-            unique: true,
-        },
+
         'hotel/service': {
             type: Schema.Types.ObjectId,
             ref: 'Hotel/Service',
@@ -46,7 +40,7 @@ const BookingSchema = new Schema(
             max: 100,
             default: 0
         },
-        bill: { // Счет выставленный нам и оплачиваемый Concierge
+        bill_file: { // Счет выставленный нам и оплачиваемый Concierge
             type: Schema.Types.ObjectId,
             ref: 'File',
         },
