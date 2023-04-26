@@ -30,8 +30,8 @@ export default function Orders({}){
                 <Box>
                     <div className="section section-profile">
                         orders
-                        <Accordion expanded={expanded === 'panel1'} onClick={() => handleChange('panel1')} >
-                            <AccordionSummary>
+                        <Accordion expanded={expanded === 'panel1'}>
+                            <AccordionSummary onClick={() => handleChange('panel1')} >
                                 <Card variant='info'>
                                     <CardBody>
                                         <GroupFlex align='aic' justify='jcsb'>
@@ -49,8 +49,8 @@ export default function Orders({}){
                                 </Card>
                             </AccordionDetails>
                         </Accordion>
-                        <Accordion expanded={expanded === 'panel12'} onClick={() => handleChange('panel12')} >
-                            <AccordionSummary>
+                        <Accordion expanded={expanded === 'panel12'}>
+                            <AccordionSummary onClick={() => handleChange('panel12')} >
                                 <Card variant='info'>
                                     <CardBody>
                                         <GroupFlex align='aic' justify='jcsb'>
@@ -69,8 +69,8 @@ export default function Orders({}){
                             </AccordionDetails>
                         </Accordion>
 
-                        <Accordion expanded={expanded === 'panel13'} onClick={() => handleChange('panel13')} >
-                            <AccordionSummary>
+                        <Accordion expanded={expanded === 'panel13'} >
+                            <AccordionSummary onClick={() => handleChange('panel13')} >
                                 <Card variant='info'>
                                     <CardBody>
                                         <GroupFlex align='aic' justify='jcsb'>
