@@ -7,7 +7,7 @@ import Link from '../link/Link'
 export default function TextWithLink({text, linktext, onClick}){
 
     return (
-        <div class={styles["textWithLink"]}>
+        <div className={styles["textWithLink"]}>
             <span>{text}</span>
             <Link text={linktext} onClick={onClick} />
         </div>
