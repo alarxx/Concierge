@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ActivationForm from '../../../entities/activation/Activation';
+import ActivationForm from '../../../features/activation/Activation';
 
 import Box from '../../../shared/ui/box/Box'
 import Card from '../../../shared/ui/card/Card'

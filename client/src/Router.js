@@ -10,16 +10,16 @@ import Logout from "./pages/auth/logout/Logout";
 
 import {AppContextProvider, useAppContext} from './context/AppContext'
 import ProtectedPage from "./middlewares/ProtectedPage";
-import Banned from "./entities/auth/status/Banned";
+import Banned from "./features/auth/status/Banned";
 import Activation from "./pages/auth/activation/Activation";
-import NoName from "./entities/auth/status/NoName";
+import NoName from "./features/auth/status/NoName";
 import SendResetPasswordMail from "./pages/auth/password/SendResetPasswordMail";
 import ResetPassword from "./pages/auth/password/ResetPassword";
 import ServiceOrder from "./pages/service_order/ServiceOrder";
-import New from './pages/New';
-import Orders from './pages/Orders';
-import Chat from './pages/Chat';
-import Profile from './pages/Profile';
+import New from './pages/no-admin/New';
+import Orders from './pages/no-admin/Orders';
+import Chat from './pages/no-admin/Chat';
+import Profile from './pages/no-admin/Profile';
 
 export default function Router(){
 

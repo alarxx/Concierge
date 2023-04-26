@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ResetPasswordForm from '../../../entities/reset_password/ResetPassword';
+import ResetPasswordForm from '../../../features/reset_password/ResetPassword';
 
 import Box from '../../../shared/ui/box/Box'
 import Card from '../../../shared/ui/card/Card'

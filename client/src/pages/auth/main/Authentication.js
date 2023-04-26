@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {useAppContext} from "../../../context/AppContext";
 
 import Logger from '../../../internal/Logger';
-import SendActivationMail from "../../../entities/auth/signup/SendActivationMail";
+import SendActivationMail from "../../../features/auth/signup/SendActivationMail";
 import SendResetPasswordMail from "../password/SendResetPasswordMail";
 
 import Box from '../../../shared/ui/box/Box'
@@ -13,8 +13,8 @@ import Logo from '../../../shared/ui/logo/Logo';
 import CardBody from '../../../shared/ui/card/CardBody';
 import CardFooter from '../../../shared/ui/card/CardFooter';
 import TextWithLink from '../../../shared/ui/text_with_link/TextWithLink'
-import SignIn from '../../../entities/auth/signin/Signin';
-import Signup from '../../../entities/auth/signup/Signup';
+import SignIn from '../../../features/auth/signin/Signin';
+import Signup from '../../../features/auth/signup/Signup';
 import Button from '../../../shared/ui/button/Button'
 /*
 * 1) Не всегда при OAuth2 имеется имя, а в приложении хотелось бы иметь имя всегда.
