@@ -4,7 +4,9 @@ import {io} from "socket.io-client";
 import Logger from '../../internal/Logger';
 const logger = new Logger('useSocket');
 
-const URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000': '';
+import env from '../../../.env.json';
+
+const URL = env.API_URL;
 
 const OPTS = {
     withCredentials: true
