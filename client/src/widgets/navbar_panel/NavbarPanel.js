@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 
-import Navbar from '../../ui/navbar/Navbar';
-import NavbarLeft from '../../ui/navbar/NavbarLeft';
-import NavbarRight from '../../ui/navbar/NavbarRight';
-import NavbarCenter from '../../ui/navbar/NavbarCenter';
+import Navbar from '../../shared/ui/navbar/Navbar';
+import NavbarLeft from '../../shared/ui/navbar/NavbarLeft';
+import NavbarRight from '../../shared/ui/navbar/NavbarRight';
+import NavbarCenter from '../../shared/ui/navbar/NavbarCenter';
 
 export default function NavbarPanel({}){
 

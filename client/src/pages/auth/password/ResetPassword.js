@@ -2,12 +2,12 @@ import React from 'react';
 
 import ResetPasswordForm from '../../../entities/reset_password/ResetPassword';
 
-import Box from '../../../ui/box/Box'
-import Card from '../../../ui/card/Card'
-import CardHeader from '../../../ui/card/CardHeader'
-import CardBody from '../../../ui/card/CardBody'
-import CardFooter from '../../../ui/card/CardFooter'
-import Logo from '../../../ui/logo/Logo'
+import Box from '../../../shared/ui/box/Box'
+import Card from '../../../shared/ui/card/Card'
+import CardHeader from '../../../shared/ui/card/CardHeader'
+import CardBody from '../../../shared/ui/card/CardBody'
+import CardFooter from '../../../shared/ui/card/CardFooter'
+import Logo from '../../../shared/ui/logo/Logo'
 
 /**
  * Страница смены пароля.

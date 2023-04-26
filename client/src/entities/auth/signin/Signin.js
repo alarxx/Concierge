@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import Input from '../../../ui/input/Input';
-import Button from '../../../ui/button/Button';
+import Input from '../../../shared/ui/input/Input';
+import Button from '../../../shared/ui/button/Button';
 
 import {useAppContext} from "../../../context/AppContext";
 import {useNavigate} from "react-router-dom";

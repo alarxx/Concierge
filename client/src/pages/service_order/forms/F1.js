@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import Input from '../../../ui/input/Input';
+import Input from '../../../shared/ui/input/Input';
 
 
 export default function F1({ clientName='', updateFields=f=>f, errors=[], setErrors=f=>f }){

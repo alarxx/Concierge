@@ -1,7 +1,7 @@
 import React from 'react';
-import Input from '../../../ui/input/Input';
-import Button from '../../../ui/button/Button';
-import Typography from '../../../ui/typography/Typography';
+import Input from '../../../shared/ui/input/Input';
+import Button from '../../../shared/ui/button/Button';
+import Typography from '../../../shared/ui/typography/Typography';
 
 export default function EmployeeInfo({}){
     return (

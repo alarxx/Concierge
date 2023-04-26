@@ -5,7 +5,7 @@ import useMultistepForm from "./hooks/useMultistepForm";
 import CloseButton from "./CloseButton";
 import OrderProgress from "./OrderProgress";
 
-import Button from '../../ui/button/Button'
+import Button from '../../shared/ui/button/Button'
 
 export default function MultistepForm({
                                           forms=[],

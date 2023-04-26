@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 
-import BottomNavigationAction from '../../ui/bottom_navigation_action/BottomNavigationAction'
-import Navigation from '../../ui/navigation/Navigation'
+import BottomNavigationAction from '../../shared/ui/bottom_navigation_action/BottomNavigationAction'
+import Navigation from '../../shared/ui/navigation/Navigation'
 
 import NewIcon from '../../assets/icons/Property 1=new.svg'
 import OrdersIcon from '../../assets/icons/Property 1=orders.svg'

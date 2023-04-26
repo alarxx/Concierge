@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './buttonLike.module.css' 
 
-import HeartIcon from '../../assets/icons/Property 1=heart.svg'
+import HeartIcon from '../../../assets/icons/Property 1=heart.svg'
 
 export default function ButtonLike({variant='outline', size='small', active=false, onClick=f=>f}){
     return (

@@ -7,8 +7,8 @@ import {useAppContext} from "../../context/AppContext";
 import Logger from '../../internal/Logger';
 import useTimer from "../../hooks/useTimer";
 
-import Input from '../../ui/input/Input';
-import Button from '../../ui/button/Button'
+import Input from '../../shared/ui/input/Input';
+import Button from '../../shared/ui/button/Button'
 
 /**
  * Страница активации аккаунта.

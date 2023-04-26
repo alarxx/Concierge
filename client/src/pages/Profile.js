@@ -6,7 +6,7 @@ import Logger from '../internal/Logger';
 const logger = new Logger('Logout');
 
 import NavbarPanel from '../widgets/navbar_panel/NavbarPanel';
-import Box from '../ui/box/Box'
+import Box from '../shared/ui/box/Box'
 import NavigationPanel from '../widgets/navigation_panel/NavigationPanel';
 
 
