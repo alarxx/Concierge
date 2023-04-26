@@ -5,6 +5,8 @@ import {BrowserRouter} from "react-router-dom";
 
 import Router from "./Router.js"
 
+import './assets/css/global.css'
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(<BrowserRouter><Router/></BrowserRouter>);
