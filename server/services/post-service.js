@@ -1,11 +1,11 @@
 
-const { Post } = require('../../models/models-manager');
-const postDto = require('../../dtos/post-dto');
+const { Post } = require('../models/models-manager');
+const postDto = require('../dtos/post-dto');
 
-const StandardService = require('../helpers/StandardService');
+const StandardService = require('./helpers/StandardService');
 const standardService = StandardService(Post, postDto, { creatorField: 'creator' });
 
-const logger = require('../../log/logger')('post-service');
+const logger = require('../log/logger')('post-service');
 
 // У поста например, хочется сделать и поиск конкретного поста, и пагинацию.
 // Нужно сделать пагинацию по времени и по другим параметрам, как сделать
