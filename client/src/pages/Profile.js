@@ -26,7 +26,7 @@ export default function Profile({}){
                         profile
                         <button onClick={async e => {
                             logger.log(await logout());
-                            navigate('/');
+                            // navigate('/');
                         }}>Logout</button>
                     </div>
 

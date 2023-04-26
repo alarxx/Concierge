@@ -44,7 +44,7 @@ export default function ProtectedPage({ children }){
         // isAuthenticated = (!userLoading && !userError) && Object.keys(user).length > 0, - 100% пользователь аутентифицирован
         // wasAuthenticated = (userLoading || userError) && Object.keys(user).length > 0, - пользователь был аутентифицирован, но соединение прервано или произошла ошибка
         // isOffline = userError?.message === 'xhr poll error' - 100% оффлайн
-        logger.log("fuck", {isAuthenticated, wasAuthenticated, isOffline});
+        logger.log({isAuthenticated, wasAuthenticated, isOffline});
         if(!isAuthenticated && !wasAuthenticated && !isOffline){
             authenticate({ replace: true });
         }
@@ -63,6 +63,8 @@ export default function ProtectedPage({ children }){
         </>);
     }
     else if(userLoading){
+        console.log("ProtectedPage.js: user loading");
+
         return (<>
             <p>loading...</p>
             {wasAuthenticated && children}

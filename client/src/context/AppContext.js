@@ -1,9 +1,9 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, {createContext, useContext} from 'react';
 
-import useAdaptive from "./hooks/useAdaptive";
-import useSocket from "./hooks/useSocket";
+import useAdaptive from "./hooks/adaptive/useAdaptive";
+import useSocket from "./hooks/socket/useSocket";
 import useAuth from "./hooks/auth/useAuth";
-import useURLState from "./hooks/useURLState";
+import useURLState from "./hooks/url_state/useURLState";
 
 const Context = createContext();
 

@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import Logger from '../../internal/Logger';
+import Logger from '../../../internal/Logger';
 const logger = new Logger('useAdaptive');
 
 export default function useAdaptive(){

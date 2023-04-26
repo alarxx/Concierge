@@ -1,14 +1,15 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useEffect, useMemo} from 'react';
 
 import {useAppContext} from "../context/AppContext";
 
 import Logger from '../internal/Logger';
-const logger = new Logger('ProtectedPage');
 
 /**
  * Скопировано из ProtectedPage.js
  * */
 export default function Page({ children }){
+
+    const logger = useMemo(()=>new Logger('ProtectedPage'), []);
 
     const { authHandler } = useAppContext();
     const { userLoading, isOffline } = authHandler;
@@ -22,6 +23,7 @@ export default function Page({ children }){
         </>);
     }
     else if(userLoading){
+        console.log("Page.js: user loading")
         // pop-up
         return (<>
             <p>loading...</p>
@@ -29,11 +31,9 @@ export default function Page({ children }){
         </>);
     }
     else {
-        return (
-            <Fragment>
-                    {children}
-            </Fragment>
-        );
+        return (<>
+            {children}
+        </>);
     }
 
 }

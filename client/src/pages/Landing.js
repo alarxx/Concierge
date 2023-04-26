@@ -38,7 +38,7 @@ export default function Landing({}){
             { isAuthenticated && <Button onClick={e => navigate('/profile')}>Главная страница (пока что profile)</Button>}
             {!isAuthenticated && <Button onClick={e => authenticate({replace: false})}>Войти в систему</Button>}
 
-            <button onClick={setReactFavicon}>Set React Favicon</button><br/>
+            <button onClick={setReactFavicon}>Set React Favicon</button>
             <button onClick={setGoogleFavicon}>Set Google Favicon</button>
         </>
     )

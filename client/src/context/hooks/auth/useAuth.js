@@ -287,19 +287,26 @@ export default function useAuth({ socketHandler }){
             setUserError(json);
         }
 
-        setUserLoading(false);
-
         return json;
+    }
+
+    async function delay(ms){
+        return new Promise((res, rej)=>{
+            setTimeout(()=>{
+                res();
+            }, ms)
+        });
     }
 
     /**
      * */
     async function logout(){
-        setUser({});
         const json = await userFetch('/auth/logout', { method: 'DELETE' })
+        await delay(1500);
 
         if(json.status === 200){
             localStorage.clear();
+            setUser({});
             reconnect();
         }
 
