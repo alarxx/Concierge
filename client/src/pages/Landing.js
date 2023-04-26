@@ -7,8 +7,14 @@ import {useAppContext} from "../context/AppContext";
 export default function Landing({}){
 
     const { authHandler } = useAppContext();
-    const { authenticate } = authHandler;
+    const { authenticate, isAuthenticated } = authHandler;
     const navigate = useNavigate();
+
+    /*useEffect(()=>{
+        if(isAuthenticated){
+            navigate('/profile', { replace: true });
+        }
+    })*/
 
     return (
         <Fragment>
