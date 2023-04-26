@@ -4,29 +4,22 @@ import styles from './input.module.css'
 
 export default function Input({
     placeHolder="Введите значение",
-    updateFields=f=>f,
-    value = "",
-    field_key="",
+    onChange=f=>f,
+    value="",
+    name="_",
     type="text",
     required=false
 }){
 
-    // пересмотреть это
-    function setField(value){
-        // check(value);
-        const obj = {};
-        obj[field_key] = value;
-        updateFields(obj);
-    }
-
     return (
         <input
-            type={type}
-            required={required}
             className={styles.input}
+            name={name}
             placeholder={placeHolder}
+            type={type}
             value={value}
-            onChange={e => setField(e.target.value)}
+            onChange={onChange}
+            required={required}
         />
     );
 }

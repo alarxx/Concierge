@@ -3,7 +3,7 @@ import {Link, Navigate, NavLink, useLocation, useNavigate, useSearchParams} from
 import {useAppContext} from "../../../context/AppContext";
 
 import Logger from '../../../internal/Logger';
-import SendActivationMail from "./SendActivationMail";
+import SendActivationMail from "../../../entities/auth/signup/SendActivationMail";
 import SendResetPasswordMail from "../password/SendResetPasswordMail";
 
 
@@ -43,8 +43,8 @@ export default function Authentication({ }){
                 </CardHeader>
 
                 <CardBody>
-                    {tabType === 'signup' && <Signup />}
-                    {tabType === 'signin' && <SignIn />}
+                    {tabType === 'signup' && <SendActivationMail sendActivationMail={sendActivationMail} />}
+                    {tabType === 'signin' && <SignIn signin={signin} />}
                 </CardBody>
                 
                 <CardFooter>

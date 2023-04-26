@@ -11,10 +11,10 @@ import Logout from "./pages/auth/logout/Logout";
 
 import {AppContextProvider, useAppContext} from './context/AppContext'
 import ProtectedPage from "./middlewares/ProtectedPage";
-import Banned from "./pages/auth/status/Banned";
+import Banned from "./entities/auth/status/Banned";
 import Activation from "./pages/auth/activation/Activation";
 import Test from "./pages/auth/test/Test";
-import NoName from "./pages/auth/status/NoName";
+import NoName from "./entities/auth/status/NoName";
 import SendResetPasswordMail from "./pages/auth/password/SendResetPasswordMail";
 import ResetPassword from "./pages/auth/password/ResetPassword";
 import ServiceOrder from "./pages/service_order/ServiceOrder";
