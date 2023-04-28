@@ -7,19 +7,17 @@
 const ApiError = require("../../exceptions/ApiError");
 const Logger = require('../../log/logger');
 const ModelService = require("../helpers/ModelService");
-const colors = require('../../log/colors');
 
 /**
  * Если классы не работают, используем замыкания.
  *
  * Пример как реализовывать CRUD API.
- * По умолчанию, предполагается, что доступ к api только аутентифицированным пользователям, но можно и нужно переназначать методы.
+ * По умолчанию, предполагается, что этим сервисом будут пользоваться только админы.
+ *
  * Create, Update, Delete в любом случае должны делать только аутентифицированные пользователи. В каком случае может быть не так?
  *
- * fileFields - все поля ObjectId, ref:'File', массив ключей.
- * uniqueFields - все поля с unique: true, массив ключей.
- * privateFiles - поля, которые возвращает статическая функция privateFiles() модели, массив ключей.
  * dto - data transfer object модели.
+ * creatorField - поле куда вписываем id создателя: для постов это author, для заказов это customer и так далее.
  * */
 module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
 
@@ -58,7 +56,7 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
          * Где-то нужно только одну модель найти, где-то по id-шке, где-то сразу по нескольким id-шкам.
          * Где-то нужно не по отдельности искать, а нужна пагинация массива документов.
          * */
-        async find(filters, user) {
+        async findByQueryParams(filters, user) {
             // Нужно сделать так, чтобы выводило множество по нескольким id!!!
             if (!user) {
                 throw ApiError.ServerError('user is missing')
@@ -75,36 +73,17 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
                 delete filters.id;
             }
 
-            // if (user.role === 'admin') {
             const models = await Model.find(filters);
             return models.map(m => dto(m));
-            // }
-
-            /*
-            const models = await Model.find({...filters, [opts.creatorField]: user.id});
-
-            return models.map(m => dto(m));*/
         },
 
-        /**
-         * Не пользоваться!!! Это просто пример.
-         * Нужно сделать пагинацию по времени и по другим параметрам, как сделать.
-         * */
-        /*async paginate(query, skip, limit) { // query
-
-            const items = await Model.find(query)
-                .sort({createdAt: -1})
-                .skip(skip)
-                .limit(limit);
-
-            return items.map(item => dto(item));
-        },*/
-
-
         async updateOne(body, files, user) {
-            if (!files) files = {};
-
-            if (!body) body = {};
+            if(!files){
+                files = {};
+            }
+            if(!body){
+                body = {};
+            }
 
             if (!user) {
                 throw ApiError.ServerError('user is missing')
@@ -122,9 +101,6 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
             if (!model) {
                 throw ApiError.NotFound(`${modelService.modelName} not found`)
             }
-            /*if (user.role !== 'admin' && model[opts.creatorField] != user.id) {
-                throw ApiError.Forbidden('Permission denied');
-            }*/
 
             /*
             * Здесь нужна проверка есть ли строка файла, но там нет файла

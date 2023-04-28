@@ -1,13 +1,13 @@
 const ApiError = require("../exceptions/ApiError");
 const ModelService = require("./helpers/ModelService");
-const StandardService = require('./helpers/StandardService');
+const AdminService = require('./helpers/AdminService');
 
 const { Company } = require('../models/models-manager');
 const companyDto = require('../dtos/company-dto');
 
 const logger = require('../log/logger')('company-service');
 
-const standardService = StandardService(Company, companyDto, { creatorField: 'creator' });
+const adminService = AdminService(Company, companyDto, { creatorField: 'creator' });
 
 const modelService = new ModelService(Company);
 
@@ -147,5 +147,5 @@ async function deleteOne(body, user) {
 
 
 module.exports = ({
-    ...standardService,
+    ...adminService,
 });

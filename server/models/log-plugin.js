@@ -8,7 +8,6 @@ module.exports = function(schema) {
         next();
     });
     schema.post('findOneAndDelete', function(document, next){
-        logger.error("document.constructor", document.constructor)
         logger.log(colors.red('removed:'), {[document.constructor.modelName]: document});
         next();
     });

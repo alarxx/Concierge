@@ -4,10 +4,10 @@ const service = require('../../../services/company-service');
 
 const logger = require('../../../log/logger')('company-controller');
 
-const StandardController = require('../../StandardController');
-const standardController = StandardController(service);
+const AdminController = require('../../AdminController');
+const adminController = AdminController(service);
 
 
 module.exports = ({
-    ...standardController,
+    ...adminController,
 });

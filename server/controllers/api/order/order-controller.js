@@ -4,8 +4,8 @@ const orderService = require('../../../services/order-service');
 
 const logger = require('../../../log/logger')('order-controller');
 
-const StandardController = require('../../StandardController');
-const standardController = StandardController(orderService);
+const AdminController = require('../../AdminController');
+const adminController = AdminController(orderService);
 
 
 async function createOne(req, res, next){
@@ -53,5 +53,5 @@ async function deleteOne(req, res, next){
 
 
 module.exports = ({
-    ...standardController,
+    ...adminController,
 });

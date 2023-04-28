@@ -16,12 +16,14 @@
  *
  * В такой реализации service будет static, как если бы мы изначально жестко вписывали какой сервис применять типа:
  * const myService = require('...');
+ *
+ * Если классы не работают, используем замыкания.
+ *
  * */
 
 const ApiError = require("../exceptions/ApiError");
 
 /**
- * Если классы не работают, используем замыкания.
  * */
 module.exports = (service) => ({
 
@@ -45,7 +47,7 @@ module.exports = (service) => ({
             if(!req.isAuthenticated()){
                 throw ApiError.UnauthorizedError('Unauthorized');
             }
-            const data = await service.find(req.query, req.user);
+            const data = await service.findByQueryParams(req.query, req.user);
             res.json(data);
         }
         catch(err){

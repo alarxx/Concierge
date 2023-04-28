@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 const ApiError = require("../../exceptions/ApiError");
 
+/**
+ * fileFields - все поля ObjectId, ref:'File', массив ключей.
+ * uniqueFields - все поля с unique: true, массив ключей.
+ * privateFiles - поля, которые возвращает статическая функция privateFiles() модели, массив ключей.
+ * */
 module.exports = class ModelService {
     Model;
     modelName;
@@ -103,6 +108,8 @@ module.exports = class ModelService {
      * Сохранить модель и связанные файлы в базе данных.
      *
      * Если файлов в модели нет, то можно просто делать `model.save();`
+     *
+     * Не рассчитан под массив файлов.
      * */
     async saveWithFiles(model, files, opts={ user: undefined, accessHolders: [] }){
         // Вот этот момент нужно пересмотреть.
@@ -144,7 +151,7 @@ module.exports = class ModelService {
 
 
     /**
-     *
+     * Не рассчитан под массив файлов.
      * */
     async #setFiles(model, files, opts = {
         owner: undefined,

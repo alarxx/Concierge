@@ -4,7 +4,7 @@ const orderDto = require('../dtos/order-dto');
 
 const logger = require('../log/logger')('order-service');
 
-const StandardService = require('./helpers/StandardService');
+const StandardService = require('./helpers/AdminService');
 const standardService = StandardService(Order, orderDto, { creatorField: 'customer' });
 
 const ModelService = require("./helpers/ModelService");

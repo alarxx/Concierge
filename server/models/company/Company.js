@@ -4,12 +4,17 @@ const {Schema, model} = require('mongoose');
 const CompanySchema = new Schema({
     name: {
         type: String,
+        unique: true,
         required: true,
     },
     description: String,
     logo: {
         type: Schema.Types.ObjectId,
         ref: 'File'
+    },
+    contract: {
+      type: Schema.Types.ObjectId,
+      ref: 'File'
     },
     images: [{
         type: Schema.Types.ObjectId,
@@ -23,7 +28,7 @@ CompanySchema.plugin(require('../log-plugin'));
 // CompanySchema.plugin(require('../../websocket/observer/company-observer'));
 
 CompanySchema.statics.privateFiles = function(){
-    return [];
+    return ['contract'];
 }
 
 module.exports = model('Company', CompanySchema);
