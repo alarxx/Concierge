@@ -157,6 +157,12 @@ export default function useAuth({ socketHandler }){
         if(isAuthenticated) {
             return logger.error('Already authenticated');
         }
+        if(userLoading){
+            return logger.error("We can't say anything yet, the user is loading");
+        }
+        if(isOffline){
+            return logger.error("We can't say anything, the user is offline");
+        }
         if(wasAuthenticated) {
             return logger.error('It is impossible to say for sure, but before losing the connection the user was authenticated');
         }
