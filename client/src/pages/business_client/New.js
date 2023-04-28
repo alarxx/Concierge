@@ -48,8 +48,8 @@ export default function New({}){
 
     return (
         <Fragment>
-            <NavbarPanel/>
-                <Box>
+            <NavbarPanel title={'Главная'}/>
+                <Box variant='center'>
                     {isActiveTab && activeEl 
                         ? <ButtonCircle onClick={()=>handleClick('')}>Назад</ButtonCircle>
                         : ""
@@ -69,13 +69,6 @@ export default function New({}){
                             }
                             
                         </CardBody>
-                        <CardFooter>
-                            {/* {isSignup 
-                                ? <TextWithLink text="Уже есть аккаунт?" linktext="Авторизация" onClick={() => handleClick(false)} />
-                                : <TextWithLink text="Нет аккаунта?" linktext="Регистрация" onClick={() => handleClick(true)} />
-                            }
-                            */}
-                        </CardFooter>
                     </Card>
                 </Box>
             <NavigationPanel />

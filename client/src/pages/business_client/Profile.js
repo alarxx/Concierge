@@ -19,7 +19,7 @@ export default function Profile({}){
 
     return (
         <Fragment>
-            <NavbarPanel/>
+            <NavbarPanel title={'Сервисы'}/>
                 <Box>
 
                     <div className="section section-profile">

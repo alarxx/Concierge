@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import styles from './button.module.css' 
 
-export default function Button({children, type='', variant='main', onClick=f=>f}){
+export default function Button({children, type='', variant='main', size='', onClick=f=>f}){
 
     const [btnVariant, setBtnVariant] = useState('main')
 
@@ -27,6 +27,7 @@ export default function Button({children, type='', variant='main', onClick=f=>f}
                 ${styles.btn} ${
                     // variant === 'main' ? styles['btn-main'] : 
                     styles['btn-'+btnVariant]}
+                ${styles['btn-'+ size] }
             `} 
             onClick={onClick}
             type={type}

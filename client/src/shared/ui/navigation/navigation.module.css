@@ -8,6 +8,6 @@
     justify-content: space-between;
     background: #1E262F;
     box-shadow: 0px -7px 16px rgba(30, 38, 47, 0.12);
-    border-radius: 28px 28px 0px 0px;
-    padding: 20px;
+    /*border-radius: 28px 28px 0px 0px;*/
+    padding: 5px;
 }

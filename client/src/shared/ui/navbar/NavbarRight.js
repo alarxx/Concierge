@@ -3,12 +3,12 @@ import React from 'react';
 import styles from './navbar.module.css' 
 
 
-export default function NavbarRight({icon="", onClick=f=>f}){
+export default function NavbarRight({Icon, onClick=f=>f}){
 
-    return (
-        <button className={styles["nav__right"]} onClick={onClick}>
-            {icon}
-        </button>
-    );
+    return (<>
+        {Icon && <button className={styles["nav__left"]} onClick={onClick}>
+            {Icon}
+        </button>}
+    </>);
 }
 

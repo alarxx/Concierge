@@ -16,10 +16,10 @@ import NoName from "./features/auth/status/NoName";
 import SendResetPasswordMail from "./pages/auth/password/SendResetPasswordMail";
 import ResetPassword from "./pages/auth/password/ResetPassword";
 import ServiceOrder from "./pages/service_order/ServiceOrder";
-import New from './pages/no-admin/New';
-import Orders from './pages/no-admin/Orders';
-import Chat from './pages/no-admin/Chat';
-import Profile from './pages/no-admin/Profile';
+import New from './pages/business_client/New';
+import Orders from './pages/business_client/Orders';
+import Chat from './pages/business_client/Chat';
+import Profile from './pages/business_client/Profile';
 
 export default function Router(){
 

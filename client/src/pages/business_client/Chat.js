@@ -8,7 +8,7 @@ export default function Chat({}){
 
     return (
         <Fragment>
-            <NavbarPanel/>
+            <NavbarPanel title={'Чат'}/>
                 <Box>
                     <div className="section section-profile">
                         chat
