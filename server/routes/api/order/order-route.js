@@ -6,6 +6,8 @@ const controller = require('../../../controllers/api/order/order-controller');
 
 const { createOne, updateOne, deleteOne, findByQueryParams } = controller;
 
+Router.use(require('../../../middlewares/checkAuthenticated'));
+
 Router.route('/')
     .post(createOne)
     .patch(updateOne)

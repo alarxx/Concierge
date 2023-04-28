@@ -4,9 +4,9 @@ const {Schema, model} = require('mongoose');
 const BookingSchema = new Schema(
     {
 
-        'hotel/service': {
+        'hotel/room': {
             type: Schema.Types.ObjectId,
-            ref: 'Hotel/Service',
+            ref: 'Hotel/Room',
             required: true,
             immutable: true,
         },
@@ -59,63 +59,16 @@ const BookingSchema = new Schema(
     }
 );
 
+// BookingSchema.index({ createdAt: -1 });
 
 BookingSchema.plugin(require('mongoose-unique-validator'));
 BookingSchema.plugin(require('../../log-plugin'));
+// HotelSchema.plugin(require('../../websocket/observer/hotel-observer'));
 
 
 BookingSchema.statics.privateFiles = function(){
     return [];
 }
-
-
-/*BookingSchema.methods.onCreate = async function({req, res, body, user}){
-    const Hotel_Services = require('../../modelsManager').models.Hotel_Service;
-
-    if(body.customer)
-        this.customer = body.customer;
-    else
-        this.customer = user.id;
-
-
-    const booking = new Booking({
-        type: 'hotel/booking',
-        'hotel/booking': this.id
-    });
-    this.booking = booking.id;
-
-    if(!body['hotel/service']){
-        await this.validate();
-    }
-
-    const hotel_service = await Hotel_Services.findById(body['hotel/service']);
-
-    if(!hotel_service){
-        return res.status(400).json({error: "Hotel/Service not found"});
-    }
-
-    booking.service = hotel_service.service;
-
-    // Creating booking
-    await booking.save();
-
-
-}*/
-
-
-/*BookingSchema.methods.deepDelete = async function(){
-    // Должны удалить Bill, File
-    await handlers.deleteModels(this, ['bill', 'file', 'booking']);
-
-    await handlers.deleteArraysOfModels(this, []);
-    await this.delete();
-
-    return this;
-}*/
-
-/*BookingSchema.virtual('current_price').get(function(){
-    return this.price - this.price * (this.discount / 100)
-});*/
 
 
 module.exports = model('Hotel/Booking', BookingSchema);

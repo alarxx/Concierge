@@ -7,6 +7,7 @@
 const ApiError = require("../../exceptions/ApiError");
 const Logger = require('../../log/logger');
 const ModelService = require("../helpers/ModelService");
+const checkNecessaryFields = require('../helpers/checkNecessaryFields');
 
 /**
  * Если классы не работают, используем замыкания.
@@ -26,17 +27,6 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
     // логировать от имени модели
     const logger = Logger(`${modelService.modelName}-Service`);
 
-    /**
-     * Эта функция проверяет наличие обязательных полей в теле запроса body.
-     * Если какие-то поля отсутствуют, то функция генерирует ошибку BadRequest с сообщением,
-     * которое указывает на отсутствующие поля.
-     * */
-    function checkNecessaryFields(body={}, fields=['skip', 'limit']){
-        const missingFields = fields.filter(field => !body[field]);
-        if (missingFields.length) {
-            throw ApiError.BadRequest(`Required fields missing: ${missingFields.map(field => `'${field}'`).join(', ')}`);
-        }
-    }
 
     return ({
 
@@ -45,7 +35,6 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
                 files = {};
             }
             if (!user) {
-                logger.log({body, files, user});
                 throw ApiError.ServerError('user is missing');
             }
             if(user.role !== 'admin'){
@@ -58,7 +47,7 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
 
             const model = new Model({...body, [opts.creatorField]: user.id});
 
-            logger.log("createOne", {body, model});
+            // logger.log("createOne", {body, model});
 
             await modelService.saveWithFiles(model, files, { user });
 
@@ -118,20 +107,32 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
 
             checkNecessaryFields(filters, ['skip', 'limit']);
 
-            const { skip, limit, sort } = filters;
+            const {skip, limit} = filters;
+
             // Все эти значения string, выглядеть будут примерно так -createdAt, потом нужно будет распарсить.
             // А что если сделать сортировку по несуществующему полю?
             // Потом нужно удалить из filters эти значения
 
+            let sort;
+            if (!filters.sort) {
+                sort = {createdAt: -1}; // сначала новые?
+            } else {
+                const _sort = filters.sort;
+                const fieldName = _sort.startsWith('-') ? _sort.slice(1) : _sort;
+                const sortDirection = _sort.startsWith('-') ? -1 : 1;
+                sort = {[fieldName]: sortDirection}
+            }
+
             delete filters.skip;
             delete filters.limit;
+            delete filters.sort;
 
             const items = await Model.find(filters)
-                .sort({createdAt: -1})
+                .sort(sort)
                 .skip(skip)
                 .limit(limit);
 
-            return items.map(item => dto(item));
+            return items; // items.map(item => dto(item));
         },
 
 

@@ -4,7 +4,9 @@ const {Schema, model} = require('mongoose');
 const CompanySchema = new Schema(
     {
         name: {
+            // нужен уникальный идентификатор компании, пока пусть будет имя просто
             type: String,
+            trim: true,
             unique: true,
             required: true,
         },

@@ -4,9 +4,6 @@ const orderDto = require('../dtos/order-dto');
 
 const logger = require('../log/logger')('order-service');
 
-const StandardService = require('./helpers/AdminService');
-const standardService = StandardService(Order, orderDto, { creatorField: 'customer' });
-
 const ModelService = require("./helpers/ModelService");
 const ApiError = require("../exceptions/ApiError");
 
@@ -34,7 +31,7 @@ async function createOne(body, files, user) {
  * Где-то нужно только одну модель найти, где-то по id-шке, где-то сразу по нескольким id-шкам.
  * Где-то нужно не по отдельности искать, а нужна пагинация массива документов.
  * */
-async function find(filters, user) {
+async function findByQueryParams(filters, user) {
     // Нужно сделать так, чтобы выводило множество по нескольким id!!!
 
     if (!user) {
@@ -63,20 +60,6 @@ async function find(filters, user) {
     const models = await Model.find({...filters, [opts.creatorField]: user.id});*/
 
     return []; // models.map(m => dto(m));
-}
-
-/**
- * Не пользоваться!!! Это просто пример.
- * Нужно сделать пагинацию по времени и по другим параметрам, как сделать.
- * */
-async function paginate(query, skip, limit) { // query
-
-    /*const items = await Model.find(query)
-        .sort({createdAt: -1})
-        .skip(skip)
-        .limit(limit);*/
-
-    return []; //items.map(item => dto(item));
 }
 
 
@@ -148,5 +131,8 @@ async function deleteOne(body, user) {
 
 
 module.exports = ({
-    ...standardService,
+    createOne,
+    findByQueryParams,
+    updateOne,
+    deleteOne
 });

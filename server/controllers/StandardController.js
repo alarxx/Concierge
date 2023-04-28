@@ -1,4 +1,11 @@
 /**
+ * Стандартный контроллер предоставляет контроллеры-обертки над сервисами:
+ * 1) createOne,
+ * 2) updateOne,
+ * 3) deleteOne,
+ * 4) findByQueryParams
+ * 5) pagination
+ *
  * Я хотел реализовать этот стандартный контроллер так:
  *
  *  class MyController extends StandardController {
@@ -24,15 +31,18 @@
 const ApiError = require("../exceptions/ApiError");
 
 /**
+ * function(req, res, next):
+ * 1) createOne,
+ * 2) updateOne,
+ * 3) deleteOne,
+ * 4) findByQueryParams,
+ * 5) pagination,
  * */
 module.exports = (service) => ({
 
     async createOne(req, res, next){
         try{
             // Предполагается что, по умолчанию доступ к api доступен только для аутентифицированных пользователей
-            if(!req.isAuthenticated()){
-                throw ApiError.UnauthorizedError('Unauthorized');
-            }
             const data = await service.createOne(req.body, req.files, req.user);
             res.json(data);
         }
@@ -44,14 +54,10 @@ module.exports = (service) => ({
     async findByQueryParams(req, res, next){
         try{
             // Предполагается что, по умолчанию доступ к api доступен только для аутентифицированных пользователей
-            if(!req.isAuthenticated()){
-                throw ApiError.UnauthorizedError('Unauthorized');
-            }
             const data = await service.findByQueryParams(req.query, req.user);
             res.json(data);
         }
         catch(err){
-            console.error("findByQueryParams:", err);
             next(err);
         }
     },
@@ -59,9 +65,6 @@ module.exports = (service) => ({
     async pagination(req, res, next){
         try{
             // Предполагается что, по умолчанию доступ к api доступен только для аутентифицированных пользователей
-            if(!req.isAuthenticated()){
-                throw ApiError.UnauthorizedError('Unauthorized');
-            }
             const data = await service.pagination(req.query, req.user);
             res.json(data);
         }
@@ -73,9 +76,6 @@ module.exports = (service) => ({
     async updateOne(req, res, next){
         try{
             // Предполагается что, по умолчанию доступ к api доступен только для аутентифицированных пользователей
-            if(!req.isAuthenticated()){
-                throw ApiError.UnauthorizedError('Unauthorized');
-            }
             const data = await service.updateOne(req.body, req.files, req.user);
             res.json(data);
         }
@@ -87,9 +87,6 @@ module.exports = (service) => ({
     async deleteOne(req, res, next){
         try{
             // Предполагается что, по умолчанию доступ к api доступен только для аутентифицированных пользователей
-            if(!req.isAuthenticated()){
-                throw ApiError.UnauthorizedError('Unauthorized');
-            }
             const data = await service.deleteOne(req.body, req.user);
             res.json(data);
         }

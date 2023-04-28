@@ -1,10 +1,13 @@
 const ApiError = require("../exceptions/ApiError");
 
 module.exports = function(req, res, next){
-    if(req.user?.role === 'admin'){
-        next();
+    if(!req.isAuthenticated()){
+        throw ApiError.UnauthorizedError('Unauthorized')
     }
-    else {
-        throw ApiError.Forbidden('Permission denied');
+
+    if(req.user?.role !== 'admin'){
+        throw ApiError.Forbidden('Permission denied. Only for admins.');
     }
+
+    next();
 }

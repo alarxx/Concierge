@@ -1,4 +1,3 @@
-// Просто всё отдаем
 module.exports = (obj, includes=[]) => {
     if(!obj){
         return null;
