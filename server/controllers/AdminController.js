@@ -51,7 +51,22 @@ module.exports = (service) => ({
             res.json(data);
         }
         catch(err){
+            console.error("findByQueryParams:", err);
             next(err);
+        }
+    },
+
+    async pagination(req, res, next){
+        try{
+            // Предполагается что, по умолчанию доступ к api доступен только для аутентифицированных пользователей
+            if(!req.isAuthenticated()){
+                throw ApiError.UnauthorizedError('Unauthorized');
+            }
+            const data = await service.pagination(req.query, req.user);
+            res.json(data);
+        }
+        catch(e){
+            next(e);
         }
     },
 

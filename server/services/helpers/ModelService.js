@@ -59,18 +59,32 @@ module.exports = class ModelService {
         return uniqueFields;
     }
 
+    /** Возвращает unique ключи имеющиеся в body */
+    get_pkeys(body){
+        return this.uniqueFields.filter(key => {
+            return key in body;
+        });
+    }
+
+    moreThanOnePkeyError(){
+        throw ApiError.BadRequest(`More than one primary key (of ${'\''.concat(this.uniqueFields.join('\', \'')).concat('\'')}) provided`);
+    }
+
+    pkeyNotProvidedError(){
+        throw ApiError.BadRequest(`${'\''.concat(this.uniqueFields.join('\' or \'')).concat('\'')} fields not provided`);
+    }
+
     /**
      * Возвращает ключ по которому можно искать документ в базе данных
      * */
     get_pkey(body){
-        const contains = this.uniqueFields.filter(key => {
-            return key in body;
-        })
+        const contains = this.get_pkeys(body);
+
         if (contains.length === 0) {
-            throw ApiError.BadRequest(`${'\''.concat(this.uniqueFields.join('\' or \'')).concat('\'')} field not provided`);
+            this.pkeyNotProvidedError();
         }
         else if(contains.length > 1){
-            throw ApiError.BadRequest(`More than one primary key (of ${'\''.concat(this.uniqueFields.join('\', \'')).concat('\'')}) provided in req.body`)
+            this.moreThanOnePkeyError();
         }
         // const pkey = contains[0] === 'id' ? '_id' : contains[0];
         return contains[0];
@@ -81,8 +95,8 @@ module.exports = class ModelService {
      * Это способ открепления файлов.
      * Если в body fileField type != ObjectId -> то мы удаляем этот файл в документе.
      * */
-    async deleteInvalidFileFields(body, model){
-        if(!body || !model){
+    async deleteInvalidFileFields(body, model=undefined){
+        if(!body){
             throw ApiError.ServerError('Some required fields are missing')
         }
         await Promise.all(
@@ -90,12 +104,14 @@ module.exports = class ModelService {
                 // Если в форме есть файл под таким ключом
                 // Если боди.кей обджектАйди то, мы можем засетить, в таком случае пропускаем.
                 // Если боди.кей не обджект айди, то мы удаляем.
-                if(!mongoose.isValidObjectId(body[key])){ /*body[key] != undefined*/
+                if(body[key] && !mongoose.isValidObjectId(body[key])){ /*body[key] != undefined*/
+
                     // delete if file already exist
-                    if(model[key]){
+                    if(model && model[key]){
                         await this.#fileService.deleteFile(model[key]);
                         model[key] = undefined; // null будет сохраняться в бд как null
                     }
+
                     delete body[key];
                 }
             })
@@ -189,13 +205,11 @@ module.exports = class ModelService {
         if(!model){
             throw ApiError.ServerError('model is not provided')
         }
-        await Promise.all(
-            this.fileFields.map(async key => {
-                // delete if file already exist
-                if(mongoose.isValidObjectId(model[key])){ // можно было бы сделать простую проверку, if(model[key])
-                    await this.#fileService.deleteFile(model[key]);
-                }
-            })
-        );
+        return await Promise.all(this.fileFields.map(async key => {
+            // delete if file already exist
+            if(mongoose.isValidObjectId(model[key])){ // можно было бы сделать простую проверку, if(model[key])
+                return await this.#fileService.deleteFile(model[key]);
+            }
+        }));
     }
 }

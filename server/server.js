@@ -91,8 +91,13 @@ if(process.env.NODE_ENV === 'development') {
 	app.use(require('./middlewares/dev-log-middleware'));
 }
 
+app.get('/test', (req, res)=>{
+	const ids = req.query.bar.split(','); // разбиваем строку на массив
+	console.log({...req.query, bar: ids});
+});
+
 /** All Routes */
-app.use(require('./routes/index'))
+app.use(require('./routes/index'));
 
 /** Error handling */
 app.use(require('./middlewares/error-middleware'));

@@ -26,6 +26,18 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
     // логировать от имени модели
     const logger = Logger(`${modelService.modelName}-Service`);
 
+    /**
+     * Эта функция проверяет наличие обязательных полей в теле запроса body.
+     * Если какие-то поля отсутствуют, то функция генерирует ошибку BadRequest с сообщением,
+     * которое указывает на отсутствующие поля.
+     * */
+    function checkNecessaryFields(body={}, fields=['skip', 'limit']){
+        const missingFields = fields.filter(field => !body[field]);
+        if (missingFields.length) {
+            throw ApiError.BadRequest(`Required fields missing: ${missingFields.map(field => `'${field}'`).join(', ')}`);
+        }
+    }
+
     return ({
 
         async createOne(body, files, user) {
@@ -42,12 +54,15 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
 
             // Нужно найти unique поля?
             // Можно просто засетить полностью и попытаться сохранить с файлами
+            await modelService.deleteInvalidFileFields(body);
 
             const model = new Model({...body, [opts.creatorField]: user.id});
 
+            logger.log("createOne", {body, model});
+
             await modelService.saveWithFiles(model, files, { user });
 
-            return dto(model);
+            return model; // dto(model);
         },
 
 
@@ -57,25 +72,68 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
          * Где-то нужно не по отдельности искать, а нужна пагинация массива документов.
          * */
         async findByQueryParams(filters, user) {
-            // Нужно сделать так, чтобы выводило множество по нескольким id!!!
             if (!user) {
                 throw ApiError.ServerError('user is missing')
             }
             if(user.role !== 'admin'){
                 throw ApiError.Forbidden('Permission denied. Only for admins.');
             }
+
             if (!filters) {
                 filters = {};
             }
 
-            if (filters.id) {
-                filters._id = filters.id;
-                delete filters.id;
+            const pkeys = modelService.get_pkeys(filters);
+            if(pkeys.length > 1){
+                modelService.moreThanOnePkeyError();
             }
 
-            const models = await Model.find(filters);
-            return models.map(m => dto(m));
+            // Нет pkeys, только какие-то фильтры.
+            // При отсутствии фильтров будет выдавать все документы.
+            if(pkeys.length < 1){
+                return await Model.find(filters); // запрос на получение документов
+            }
+
+            // else pkeys.length = 1
+
+            const pkey = pkeys[0];
+
+            const values = filters[pkey].split(','); // разбиваем строку на массив
+
+            delete filters[pkey];
+
+            const models = await Model.find({ ...filters, [pkey==='id'?'_id':pkey]: { $in: values } }); // запрос на получение документов
+
+            return models; // models.map(m => dto(m));
         },
+
+
+        async pagination(filters, user){ //, skip, limit, sort) { // query
+            if (!user) {
+                throw ApiError.ServerError('user is missing')
+            }
+            if(user.role !== 'admin'){
+                throw ApiError.Forbidden('Permission denied. Only for admins.');
+            }
+
+            checkNecessaryFields(filters, ['skip', 'limit']);
+
+            const { skip, limit, sort } = filters;
+            // Все эти значения string, выглядеть будут примерно так -createdAt, потом нужно будет распарсить.
+            // А что если сделать сортировку по несуществующему полю?
+            // Потом нужно удалить из filters эти значения
+
+            delete filters.skip;
+            delete filters.limit;
+
+            const items = await Model.find(filters)
+                .sort({createdAt: -1})
+                .skip(skip)
+                .limit(limit);
+
+            return items.map(item => dto(item));
+        },
+
 
         async updateOne(body, files, user) {
             if(!files){
@@ -112,7 +170,7 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
 
             await modelService.saveWithFiles(model, files, { user });
 
-            return dto(model);
+            return model; // dto(model);
         },
 
 
@@ -142,7 +200,7 @@ module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
 
             await modelService.deleteAttachedFiles(model);
 
-            return dto(model);
+            return model; // dto(model);
         }
 
     });

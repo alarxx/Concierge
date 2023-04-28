@@ -11,6 +11,12 @@ module.exports = function (err, req, res, next){
             errors: errors
         });
     }
+    else if (err instanceof mongoose.Error.CastError){
+        res.status(400).json({
+            message: 'Cast Error',
+            errors: err.message,
+        });
+    }
     else if(err instanceof ApiError){
         res.status(err.status).json({
             message: err.message,
