@@ -27,11 +27,23 @@ function getUrl(skip, limit){
 export default function Orders({}){
 
     const [expanded, setExpanded] = React.useState(false);
+    const [data, setData] = useState([])
 
     const handleChange = (panel) => {
         console.log('onChangeeeeee', panel)
         panel === expanded ? setExpanded(false) : setExpanded(panel)
     };
+
+    useEffect(()=>{
+        fetch('/api/hotel')
+            .then(response => response.json())
+            .catch(error => console.error(error))
+            .then(data => {
+                console.log(data)
+                setData(data)
+            });
+
+    }, [])
 
 
     // skip - это стартовый индекс
@@ -101,27 +113,31 @@ export default function Orders({}){
 
                 {/*<AutoSizer>*/}
                 {/*    {({height, width}) => (*/}
-                        <InfiniteLoader
-                            isItemLoaded={isItemLoaded}
-                            loadMoreItems={loadMoreItems}
-                            itemCount={1000}
-                            minimumBatchSize={3}
-                            threshold={3}
-                        >
-                            {({onItemsRendered, ref}) => (
+                {/*        <InfiniteLoader*/}
+                {/*            isItemLoaded={isItemLoaded}*/}
+                {/*            loadMoreItems={loadMoreItems}*/}
+                {/*            itemCount={1000}*/}
+                {/*            minimumBatchSize={3}*/}
+                {/*            threshold={3}*/}
+                {/*        >*/}
+                {/*            {({onItemsRendered, ref}) => (*/}
                                 <FixedSizeList
                                     className={'List'}
                                     width={1000}
                                     height={770}
-                                    itemCount={1000}
-                                    itemSize={300}
-                                    ref={ref}
-                                    onItemsRendered={onItemsRendered}
+                                    itemCount={data.length}
+                                    itemSize={400}
+                                    // ref={ref}
+                                    // onItemsRendered={onItemsRendered}
                                 >
-                                    {Row}
+                                    {({ index, style }) => {
+                                        return (
+                                            <HotelCard title={data[index].name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} />
+                                        );
+                                    }}
                                 </FixedSizeList>
-                            )}
-                        </InfiniteLoader>
+                        {/*    )}*/}
+                        {/*</InfiniteLoader>*/}
                     {/*)}*/}
                 {/*</AutoSizer>*/}
 
