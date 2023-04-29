@@ -1,0 +1,17 @@
+.buttonPlus {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(30, 38, 47, 0.1);
+    /* карточка */
+    box-shadow: 2px 4px 4px rgba(30, 38, 47, 0.02);
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+}
+.buttonPlus-big {
+    /*width: 200px;*/
+    /*height: 200px;*/
+}

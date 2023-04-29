@@ -5,6 +5,7 @@
     color: #1E262F;
     border-radius: 12px;
     margin-bottom: 12px;
+    cursor: pointer;
 }
 .card-service__header, .card-service__footer {
     padding: 8px 12px;

@@ -15,3 +15,6 @@
 .GroupFlex-jcsb {
     justify-content: space-between;
 }
+.GroupFlex-wrap {
+    flex-wrap: wrap;
+}
