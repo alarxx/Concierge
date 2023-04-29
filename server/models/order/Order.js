@@ -12,7 +12,7 @@ const {Schema, model} = require('mongoose');
 const MetaSchema = new Schema({
     name: {
         type: String,
-        required: true,
+        // required: true,
         default: () => `Order ${Date.now()}`
     },
 
@@ -121,7 +121,7 @@ const OrderSchema = new Schema(
         },*/
         meta: {
             type: MetaSchema,
-            required: true,
+            // required: true,
             // immutable: true,
         },
         bookings: [{
@@ -153,6 +153,8 @@ const OrderSchema = new Schema(
             enum: ['new', 'handling', 'canceled', 'completed'],
             default: 'new'
         },
+
+        accessHolders: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     }
     ,
     {

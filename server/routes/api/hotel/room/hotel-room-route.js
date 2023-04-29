@@ -2,9 +2,9 @@ const express = require('express');
 
 const Router = express.Router();
 
-const controller = require('../../../controllers/api/company/company-controller');
+const controller = require('../../../../controllers/api/hotel/room/hotel-room-controller');
 
-const checkAdminRole = require('../../../middlewares/checkAdminRole');
+const checkAdminRole = require('../../../../middlewares/checkAdminRole');
 
 const { createOne, updateOne, deleteOne, findByQueryParams, pagination } = controller;
 

@@ -33,6 +33,10 @@ const HotelSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'File'
         },
+        main_image: {
+            type: Schema.Types.ObjectId,
+            ref: 'File',
+        },
         images: [{ // Как работать с массивами изображений?
             type: Schema.Types.ObjectId,
             ref: 'File',
