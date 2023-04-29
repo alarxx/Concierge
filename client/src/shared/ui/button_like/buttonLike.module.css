@@ -3,10 +3,10 @@
     border: none;
 }
 .ButtonLike-small {
-    width: 24px;
+    /*width: 24px;*/
 }
 .ButtonLike-big {
-    width: 30px;
+    /*width: 30px;*/
 }
 .ButtonLike-fill svg path {
     fill: white;

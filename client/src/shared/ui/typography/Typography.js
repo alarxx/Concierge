@@ -8,7 +8,7 @@ export default function Typography({children, size="", weight="", bottom=""}){
 
     const fontStyle = {
         fontWeight: weight,
-        fontSyze: size, 
+        fontSize: size,
         paddingBottom: bottom,
     }
 

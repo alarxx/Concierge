@@ -15,6 +15,7 @@ import EmployeeInfo from '../../entities/employee/employee_info/EmployeeInfo'
 import TriangleIcon from '../../assets/icons/drop-down-info.svg';
 import BottomControl from "../../shared/ui/bottom_control/BottomControl";
 import Button from "../../shared/ui/button/Button";
+import HotelCard from "../../widgets/hotel_card/HotelCard";
 
 export default function Orders({}){
 
@@ -31,6 +32,9 @@ export default function Orders({}){
             <Box>
                 <div className="section section-profile">
                     orders
+
+                    <HotelCard title={'Hilton'} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} />
+
                     <Accordion expanded={expanded === 'panel1'}>
                         <AccordionSummary onClick={() => handleChange('panel1')} >
                             <Card variant='info'>
