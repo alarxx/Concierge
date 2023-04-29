@@ -7,7 +7,6 @@ class ModelsManager {
         this.User = require('./user/User');
         this.File = require('./binaries/File');
         this.Mailer = require('./mailer/Mailer');
-        this.Post = require('./post/Post');
 
         this.Company = require('./company/Company')
 
