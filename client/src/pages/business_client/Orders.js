@@ -27,32 +27,20 @@ function getUrl(skip, limit){
 export default function Orders({}){
 
     const [expanded, setExpanded] = React.useState(false);
-    const [data, setData] = useState([])
-
     const handleChange = (panel) => {
         console.log('onChangeeeeee', panel)
         panel === expanded ? setExpanded(false) : setExpanded(panel)
     };
 
-    useEffect(()=>{
-        fetch('/api/hotel')
-            .then(response => response.json())
-            .catch(error => console.error(error))
-            .then(data => {
-                console.log(data)
-                setData(data)
-            });
-
-    }, [])
-
 
     // skip - это стартовый индекс
     // limit - это сколько нужно итемов
     // js queryParam чекнуть
-
     const [items, setItems] = useState({});
     const [requestCache, setRequestCache] = useState({});
+    const [itemCount, setItemCount] = useState(0);
 
+    const [hasMore, setHasMore] = useState(true);
     const isItemLoaded = ({index}) => Boolean(items[index]);
 
     const loadMoreItems = async (startIndex, stopIndex) => {
@@ -82,7 +70,19 @@ export default function Orders({}){
             .then(async response => {
                 const json = await response.json();
 
-                console.log({json}); // json = [{}, {}]
+
+                console.log({json}); // json = [{}, {}] array
+
+                if (json.length === 0) {
+                    setHasMore(false);
+                }
+
+                setItemCount(prev=>{
+                    if(prev >=  startIndex + length){
+                        return prev;
+                    }
+                    return startIndex + (json.length === length ? json.length + 1 : json.length)
+                })
 
                 const add = {};
                 json.forEach((hotel, index) => {
@@ -92,16 +92,6 @@ export default function Orders({}){
             })
             .catch(error => console.error(error))
     }
-
-    const Row = ({index, style}) => {
-        const item = items[index];
-        return (<>
-            {/*{console.log(style)}*/}
-            {item
-                ? <HotelCard title={item.name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} />
-                : "Loading..." }
-        </>)
-    };
 
 
     return (<>
@@ -113,31 +103,36 @@ export default function Orders({}){
 
                 {/*<AutoSizer>*/}
                 {/*    {({height, width}) => (*/}
-                {/*        <InfiniteLoader*/}
-                {/*            isItemLoaded={isItemLoaded}*/}
-                {/*            loadMoreItems={loadMoreItems}*/}
-                {/*            itemCount={1000}*/}
-                {/*            minimumBatchSize={3}*/}
-                {/*            threshold={3}*/}
-                {/*        >*/}
-                {/*            {({onItemsRendered, ref}) => (*/}
+                        <InfiniteLoader
+                            isItemLoaded={isItemLoaded}
+                            loadMoreItems={loadMoreItems}
+                            // hasMoreItems={hasMore}
+                            itemCount={itemCount+1}
+                            // minimumBatchSize={3}
+                            // threshold={3}
+                        >
+                            {({onItemsRendered, ref}) => (
                                 <FixedSizeList
                                     className={'List'}
                                     width={1000}
-                                    height={770}
-                                    itemCount={data.length}
-                                    itemSize={400}
-                                    // ref={ref}
-                                    // onItemsRendered={onItemsRendered}
+                                    height={780}
+                                    itemCount={itemCount}
+                                    itemSize={290}
+                                    ref={ref}
+                                    onItemsRendered={onItemsRendered}
                                 >
-                                    {({ index, style }) => {
-                                        return (
-                                            <HotelCard title={data[index].name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} />
-                                        );
+                                    {({index, style}) => {
+                                        const item = items[index];
+                                        console.log(index, item)
+                                        return (<div style={style}>
+                                            {item
+                                                ? <HotelCard title={item.name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} />
+                                                : <p>"Loading..."</p> }
+                                        </div>);
                                     }}
                                 </FixedSizeList>
-                        {/*    )}*/}
-                        {/*</InfiniteLoader>*/}
+                            )}
+                        </InfiniteLoader>
                     {/*)}*/}
                 {/*</AutoSizer>*/}
 
