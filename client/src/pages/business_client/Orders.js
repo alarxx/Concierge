@@ -21,14 +21,9 @@ import Button from "../../shared/ui/button/Button";
 import HotelCard from "../../widgets/hotel_card/HotelCard";
 import Configurator from "../../widgets/configurator/Configurator";
 import Logger from "../../internal/Logger";
+import useBigList from "../../hooks/useBigList";
 
-function getUrl(skip, limit){
-    // skip - это стартовый индекс
-    // limit - это сколько нужно итемов
-    // sort - поле по которому нужно сортировать (&sort=-createdAt), "-" в начале названия поля - это направление сортировки
-    // js queryParam чекнуть, там можно в виде объекта вписывать параметры запроса
-    return `/api/hotel/pagination?skip=${skip}&limit=${limit}&sort=createdAt`;
-}
+
 export default function Orders({}){
     // Логгер просто будет прописывать из какого модуля вызван лог
     // Плюс в production logger не будет выводить в консоль ничего.
@@ -40,58 +35,13 @@ export default function Orders({}){
         panel === expanded ? setExpanded(false) : setExpanded(panel)
     };
 
-    const [items, setItems] = useState({});
-    const [requestCache, setRequestCache] = useState({});
-    const [hasMore, setHasMore] = useState(true);
-
-    const isItemLoaded = ({index}) => Boolean(items[index]);
-
-    const loadMoreItems = async (startIndex, stopIndex) => {
-        // key - запрос элементов от и до, в виде ключа from:to
-        const key = [startIndex, stopIndex].join(":");
-
-        if (requestCache[key]) {
-            logger.log("retrieve already been -", key);
-            return;
-        }
-
-        const length = stopIndex - startIndex;
-
-        // Проверяем что каждый индекс есть в кэше items
-        const itemsRetrieved = [...Array(length).keys()] // [0, 1, 2, 3,..., length]
-            .map(x => x + startIndex) // [o+startIndex, 1+startIndex, 2+startIndex, 3+startIndex, ..., length + startIndex], где stopIndex = length + startIndex
-            .every(index => Boolean(items[index]))
-
-        if (itemsRetrieved) {
-            logger.log("retrieved are already there -", key);
-            return;
-        }
-        // requestCache[key] = key;
-        setRequestCache({...requestCache, key});
-
-        return await fetch(getUrl(startIndex, length))
-            .then(async response => {
-                const json = await response.json();
-
-
-                logger.log({json}); // json = [{}, {}] array
-
-                // Если вернулось меньше элементов, чем мы запросили, это значит, что больше элементов в БД нет
-                if(json.length < length){
-                    setHasMore(false);
-                }
-
-                // [{}, {}] добавляем items-ы под индексом startIndex + индекс элемента в массиве который нам вернулся
-                const add = {};
-                json.forEach((hotel, index) => {
-                    add[startIndex + index] = hotel;
-                });
-                setItems({...items, ...add});
-
-            })
-            .catch(logger.error)
-    }
-
+    const {
+        items,
+        isItemLoaded,
+        loadMoreItems,
+        itemCountLoader,
+        itemCountList
+    } = useBigList('/api/hotel/pagination/');
 
     return (<>
         <NavbarPanel title={'Заказы'} />
@@ -107,7 +57,7 @@ export default function Orders({}){
                         <InfiniteLoader
                             isItemLoaded={isItemLoaded}
                             loadMoreItems={loadMoreItems}
-                            itemCount={hasMore ? Object.keys(items).length+100000 : Object.keys(items).length}
+                            itemCount={itemCountLoader}
                         >
                             {({onItemsRendered, ref}) => {
                                 {/* +1 позволяет нам показывать loading элемент, если добавим 2 будут 2 loading элемента, что нам не нужно */}
@@ -116,7 +66,7 @@ export default function Orders({}){
                                         className={'List'}
                                         width={1000}
                                         height={600}
-                                        itemCount={hasMore ? Object.keys(items).length + 1 : Object.keys(items).length}
+                                        itemCount={itemCountList}
                                         itemSize={290}
                                         ref={ref}
                                         onItemsRendered={onItemsRendered}
