@@ -4,6 +4,7 @@ import {useAppContext} from "../context/AppContext";
 
 import Logger from '../internal/Logger';
 import {Navigate, useNavigate} from "react-router-dom";
+import Popup from "../shared/ui/popup/Popup";
 const logger = new Logger('ProtectedPage');
 
 /**
@@ -58,7 +59,9 @@ export default function ProtectedPage({ children }){
             return (<Navigate to={'/'} />);
         }
         return (<>
-            <p>offline</p>
+            <Popup variant={'danger'}>
+                <p>offline</p>
+            </Popup>
             {children}
         </>);
     }
@@ -66,7 +69,9 @@ export default function ProtectedPage({ children }){
         console.log("ProtectedPage.js: user loading");
 
         return (<>
-            <p>loading...</p>
+            <Popup>
+                <p>loading...</p>
+            </Popup>
             {wasAuthenticated && children}
         </>);
     }

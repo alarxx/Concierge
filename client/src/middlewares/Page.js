@@ -3,6 +3,7 @@ import React, {Fragment, useEffect, useMemo} from 'react';
 import {useAppContext} from "../context/AppContext";
 
 import Logger from '../internal/Logger';
+import Popup from "../shared/ui/popup/Popup";
 
 /**
  * Скопировано из ProtectedPage.js
@@ -18,7 +19,9 @@ export default function Page({ children }){
     if(isOffline){
         // pop-up окно должно быть
         return (<>
-            <p>offline</p>
+            <Popup variant={'danger'}>
+                <p>offline</p>
+            </Popup>
             {children}
         </>);
     }
@@ -26,7 +29,9 @@ export default function Page({ children }){
         console.log("Page.js: user loading")
         // pop-up
         return (<>
-            <p>loading...</p>
+            <Popup>
+                <p>loading...</p>
+            </Popup>
             {children}
         </>);
     }
