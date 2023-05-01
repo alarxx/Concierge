@@ -22,6 +22,7 @@ import HotelCard from "../../widgets/hotel_card/HotelCard";
 import Configurator from "../../widgets/configurator/Configurator";
 import Logger from "../../internal/Logger";
 import useBigList from "../../hooks/useBigList";
+import HotelMealsChoice from "../../widgets/hotel_meals_choice/HotelMealsChoice";
 
 
 export default function Orders({}){
@@ -49,6 +50,7 @@ export default function Orders({}){
             <div className="section section-profile">
                 orders
 
+                <HotelMealsChoice />
 
                 {/*<AutoSizer>*/}
                 {/*    {({height, width}) => (*/}

@@ -1,3 +1,93 @@
 .CheckboxCustom {
     
 }
+.CheckboxCustom {
+    width: 100%;
+    margin: 0 5px 0 0;
+    user-select: none;
+    position: relative;
+}
+.CheckboxCustom input[type=checkbox] {
+    z-index: -1;
+    opacity: 0;
+    display: block;
+    width: 0;
+    height: 0;
+}
+.CheckboxCustom input[type=radio] {
+    z-index: -1;
+    opacity: 0;
+    display: block;
+    width: 0;
+    height: 0;
+}
+.CheckboxCustom span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    cursor: pointer;
+    padding: 0px 10px;
+    line-height: 30px;
+    border: 1px solid #2086E5;
+    color: #2086E5;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+/* Checked */
+.CheckboxCustom input[type=checkbox]:checked + span {
+    background: #2086E5;
+    color: white;
+}
+
+.CheckboxCustom input[type=radio]:checked + span {
+    background: #2086E5;
+    color: white;
+}
+
+/* Focus */
+.focused span {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Hover */
+.CheckboxCustom:hover {
+    color: #666;
+}
+
+/* Active */
+.CheckboxCustom input[type=checkbox]:active:not(:disabled) + span {
+    background: #2086E5;
+    color: white;
+    outline: 3px solid;
+    outline-color: #4a4a4a;
+}
+
+.CheckboxCustom input[type=radio]:active:not(:disabled) + span {
+    background: #2086E5;
+    color: white;
+    outline: 3px solid;
+    outline-color: #4a4a4a;
+}
+
+/* Disabled */
+.CheckboxCustom input[type=checkbox]:disabled + span {
+    background: #efefef;
+    color: #666;
+    cursor: default;
+}
+.CheckboxCustom input[type=checkbox]:checked:disabled + span {
+    background: #f7efdc;
+}
+
+
+.CheckboxCustom input[type=radio]:disabled + span {
+    background: #efefef;
+    color: #666;
+    cursor: default;
+}
+.CheckboxCustom input[type=radio]:checked:disabled + span {
+    background: #f7efdc;
+}
