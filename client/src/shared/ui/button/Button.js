@@ -14,6 +14,9 @@ export default function Button({children, type='', variant='main', size='', onCl
             case('control'):
                 setBtnVariant('control');
                 break;
+            case('outline'):
+                setBtnVariant('outline');
+                break;
             default:
                 setBtnVariant('main');
                 break;

@@ -44,6 +44,10 @@ export default function Orders({}){
         itemCountList
     } = useBigList('/api/hotel/pagination/');
 
+    const style = {
+        transform: 'rotateX(180deg)',
+    }
+
     return (<>
         <NavbarPanel title={'Заказы'} />
         <Box>
@@ -66,12 +70,13 @@ export default function Orders({}){
                                 return (<>
                                     <FixedSizeList
                                         className={'List'}
-                                        width={1000}
+                                        width={'100%'}
                                         height={600}
                                         itemCount={itemCountList}
                                         itemSize={290}
                                         ref={ref}
                                         onItemsRendered={onItemsRendered}
+                                        style={style}
                                     >
                                         {({index, style}) => {
                                             const item = items[index];
