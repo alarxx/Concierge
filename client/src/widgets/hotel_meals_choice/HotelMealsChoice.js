@@ -12,7 +12,7 @@ import RadioCustom from "../../shared/ui/checkbox_custom/RadioCustom";
 import TextBoxOutlined from "../../shared/ui/text_box_outlined/TextBoxOutlined";
 
 
-export default function HotelMealsChoice({address='',rangeAddress=''}) {
+export default function HotelMealsChoice({}) {
 
     const [tip, setTip] = useState(null);
     const handleChange = (tip) => {

@@ -20,6 +20,10 @@ import New from './pages/business_client/New';
 import Orders from './pages/business_client/Orders';
 import Chat from './pages/business_client/Chat';
 import Profile from './pages/business_client/Profile';
+import HotelList from "./pages/business_client/hotel/HotelList";
+import HotelSingle from "./pages/business_client/hotel/HotelSingle";
+import HotelRoom from "./pages/business_client/hotel/HotelRoom";
+import HotelRoomList from "./pages/business_client/hotel/HotelRoomList";
 
 export default function Router(){
 
@@ -94,6 +98,10 @@ export default function Router(){
 				<Route path='/orders' element={<ProtectedPage><Orders /></ProtectedPage>}/>
 				<Route path='/chat' element={<ProtectedPage><Chat /></ProtectedPage>}/>
 				<Route path='/profile' element={<ProtectedPage><Profile /></ProtectedPage>}/>
+				<Route path='/hotel' element={<ProtectedPage><HotelList /></ProtectedPage>}/>
+				<Route path='/hotel/single' element={<ProtectedPage><HotelSingle /></ProtectedPage>}/>
+				<Route path='/hotel/room' element={<ProtectedPage><HotelRoomList /></ProtectedPage>}/>
+				<Route path='/hotel/room/single' element={<ProtectedPage><HotelRoom /></ProtectedPage>}/>
 
 				<Route path={'*'} element={
 					// Нужна чтобы несуществующие страницы не отличались от существующих защищенных

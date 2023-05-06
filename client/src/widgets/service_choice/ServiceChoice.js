@@ -36,5 +36,8 @@ export default function ServiceChoice() {
                 {activeEl}
             </CardBody>
         </Card>
+
+        <Button variant={'outline'}>Создать составной заказ</Button>
+
     </>)
 }
