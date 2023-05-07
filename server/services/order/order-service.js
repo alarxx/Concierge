@@ -73,7 +73,7 @@ async function createOne(body, files, user) {
 
     // Здесь нужно обработать bookings.
     // Создаем и присваем id-шки
-    await bookingsService.createMany(order, bookings);
+    order.bookings = await bookingsService.createMany(order, bookings);
 
     await modelService.saveWithFiles(order, files, { user });
 

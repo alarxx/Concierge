@@ -92,8 +92,8 @@ if(process.env.NODE_ENV === 'development') {
 }
 
 app.get('/test', (req, res)=>{
-	const ids = req.query.bar.split(','); // разбиваем строку на массив
-	console.log({...req.query, bar: ids});
+	console.log(req.files);
+	res.json({page: 'test'});
 });
 
 /** All Routes */

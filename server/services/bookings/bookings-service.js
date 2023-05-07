@@ -18,7 +18,7 @@ async function createMany(order, bookings=[]) {
             accessHolders: [Schema.Types.ObjectId]?
         }
     */
-    order.bookings = await Promise.all(bookings.map(async booking => {
+    return await Promise.all(bookings.map(async booking => {
         /*
             booking: {
                 type: 'hotel/booking',
@@ -44,8 +44,6 @@ async function createMany(order, bookings=[]) {
 
         return { type, [type]: res.id };
     }));
-
-    return order;
 }
 
 
