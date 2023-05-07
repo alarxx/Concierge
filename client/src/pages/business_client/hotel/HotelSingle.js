@@ -10,11 +10,16 @@ import HotelGeo from "../../../widgets/hotel/hotel_geo/HotelGeo";
 import HotelChoiceRoom from "../../../widgets/hotel/hotel_choice_room/HotelChoiceRoom";
 import HotelPolitics from "../../../widgets/hotel/hotel_politics/HotelPolitics";
 import HotelDetails from "../../../widgets/hotel/hotel_details/HotelDetails";
+import NavbarLeft from "../../../shared/ui/navbar/NavbarLeft";
+import BackIcon from "../../../assets/icons/arrow-left.svg";
 
 export default function HotelSingle() {
     const navigate = useNavigate();
     return(<>
-        <NavbarPanel title={'Hotel Single'} />
+        <NavbarPanel
+            LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => navigate('/hotel', {replace: true,})} />}
+            title={'Отель'}
+        />
 
         <Box>
             <Gallery height={240} />

@@ -12,6 +12,8 @@ import Button from "../../../shared/ui/button/Button";
 import InfiniteLoader from "react-window-infinite-loader";
 import {FixedSizeList} from "react-window";
 import {useNavigate} from "react-router-dom";
+import NavbarLeft from "../../../shared/ui/navbar/NavbarLeft";
+import BackIcon from "../../../assets/icons/arrow-left.svg";
 
 
 export default function HotelList({}){
@@ -31,7 +33,10 @@ export default function HotelList({}){
 
     return (
         <>
-            <NavbarPanel title={'Hotel list'} />
+            <NavbarPanel
+                LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => navigate('/new', {replace: true,})} />}
+                title={'Отели'}
+            />
             <Box>
 
                 {/* +100000 позволяет нам использовать максимально заданное число элементов(по ум. 30+-), которые можно загрузить за раз, если добавим 1 будет грузиться 1 элемент */}
