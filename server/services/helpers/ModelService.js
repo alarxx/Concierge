@@ -153,7 +153,7 @@ module.exports = class ModelService {
         * */
         await model.validate();
 
-        const new_files = await this.#setFiles(model, files, {
+        const new_files = await this.setFiles(model, files, {
             owner: opts.user?.id,
             accessHolders: opts.accessHolders ? opts.accessHolders : []
         });
@@ -169,7 +169,7 @@ module.exports = class ModelService {
     /**
      * Не рассчитан под массив файлов.
      * */
-    async #setFiles(model, files, opts = {
+    async setFiles(model, files, opts = {
         owner: undefined,
         accessHolders: []
     }) {

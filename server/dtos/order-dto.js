@@ -1,7 +1,4 @@
 module.exports = (doc, user) => {
-    if(doc._id){
-        doc.id = doc._id;
-        delete doc._id;
-    }
+    // в зависимости от того, кто спрашивает можно открывать или же закрывать некоторые поля.
     return doc;
 }

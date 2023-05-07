@@ -3,6 +3,13 @@ const {Schema, model} = require('mongoose');
 
 const BookingSchema = new Schema(
     {
+        order: {
+            type: Schema.Types.ObjectId,
+            ref: 'Order',
+            required: true,
+            // immutable: true,
+        },
+
         'hotel/room': {
             type: Schema.Types.ObjectId,
             ref: 'Hotel/Room',
@@ -31,7 +38,7 @@ const BookingSchema = new Schema(
         // Bill
         price: {
             type: Number, // or String?
-            required: true,
+            // required: true,
         },
         discount: {
             type: Number,

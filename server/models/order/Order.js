@@ -86,7 +86,6 @@ const BookingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Hotel/Booking',
         immutable: true,
-        unique: true,
     },
     'flight/booking': {
         type: Schema.Types.ObjectId,
