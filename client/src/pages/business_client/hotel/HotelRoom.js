@@ -10,6 +10,8 @@ import Gallery from "../../../shared/ui/gallery/Gallery";
 import HotelGeo from "../../../widgets/hotel/hotel_geo/HotelGeo";
 import HotelChoiceRoom from "../../../widgets/hotel/hotel_choice_room/HotelChoiceRoom";
 import HotelMealsChoice from "../../../widgets/hotel/hotel_meals_choice/HotelMealsChoice";
+import HotelRoomPrice from "../../../widgets/hotel/hotel_room_price/HotelRoomPrice";
+import HotelRoomDetails from "../../../widgets/hotel/hotel_room_details/HotelRoomDetails";
 
 export default function HotelRoom() {
     const navigate = useNavigate();
@@ -19,7 +21,8 @@ export default function HotelRoom() {
         <Box>
             <Gallery height={240} />
             <HotelMealsChoice />
-
+            <HotelRoomPrice />
+            <HotelRoomDetails />
         </Box>
 
         <BottomControl>
