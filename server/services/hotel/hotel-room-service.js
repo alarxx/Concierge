@@ -3,9 +3,9 @@ const ModelService = require("../helpers/ModelService");
 const AdminService = require('../helpers/AdminService');
 
 const { Hotel_Room } = require('../../models/models-manager');
-const roomDto = require('../../dtos/company-dto');
+const roomDto = require('../../dtos/hotel/hotel-room-dto');
 
-const logger = require('../../log/logger')('company-service');
+const logger = require('../../log/logger')('hotel-room-service');
 
 const adminService = AdminService(Hotel_Room, roomDto, { creatorField: 'creator' });
 

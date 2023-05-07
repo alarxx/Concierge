@@ -16,11 +16,11 @@ const MetaSchema = new Schema({
         default: () => `Order ${Date.now()}`
     },
 
-    type: {
-        type: String,
-        enum: ['business_trip', 'event', 'informal'],
-        default: 'informal',
-    },
+    // type: {
+    //     type: String,
+    //     enum: ['business_trip', 'event', 'informal'],
+    //     default: 'informal',
+    // },
 
     needs: [{
         type: String,
@@ -73,10 +73,6 @@ const MetaSchema = new Schema({
 
     description: String,
 
-    /*preferred_services:[{
-        type: Schema.Types.ObjectId,
-        ref: 'Service'
-    }],*/
 });
 
 const BookingSchema = new Schema({

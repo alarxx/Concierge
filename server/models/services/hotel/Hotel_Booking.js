@@ -3,7 +3,6 @@ const {Schema, model} = require('mongoose');
 
 const BookingSchema = new Schema(
     {
-
         'hotel/room': {
             type: Schema.Types.ObjectId,
             ref: 'Hotel/Room',

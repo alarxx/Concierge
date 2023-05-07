@@ -22,7 +22,8 @@ module.exports = function(Model, dto){
         // Нет pkeys, только какие-то фильтры.
         // При отсутствии фильтров будет выдавать все документы.
         if(pkeys.length < 1){
-            return await Model.find(filters); // запрос на получение документов
+            const models = await Model.find(filters); // запрос на получение документов
+            return models.map(m => dto(m));
         }
 
         // else pkeys.length = 1
@@ -34,7 +35,6 @@ module.exports = function(Model, dto){
         delete filters[pkey];
 
         const models = await Model.find({ ...filters, [pkey==='id'?'_id':pkey]: { $in: values } }); // запрос на получение документов
-
         return models.map(m => dto(m));
     }
 

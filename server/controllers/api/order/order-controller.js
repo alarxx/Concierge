@@ -4,7 +4,7 @@
 
 const ApiError = require("../../../exceptions/ApiError");
 
-const orderService = require('../../../services/order-service');
+const orderService = require('../../../services/order/order-service');
 
 const logger = require('../../../log/logger')('order-controller');
 

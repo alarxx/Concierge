@@ -92,7 +92,7 @@ module.exports = class ModelService {
 
     /**
      * Удаление файлов.
-     * Это способ открепления файлов.
+     * Это способ открепления файлов или прямого вписывания id файла (в prod так делать нельзя).
      * Если в body fileField type != ObjectId -> то мы удаляем этот файл в документе.
      * */
     async deleteInvalidFileFields(body, model=undefined){

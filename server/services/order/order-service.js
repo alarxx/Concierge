@@ -1,14 +1,57 @@
+const ApiError = require("../../exceptions/ApiError");
 
-const { Order: Model } = require('../models/models-manager');
-const orderDto = require('../dtos/order-dto');
+const { Order } = require('../../models/models-manager');
+const orderDto = require('../../dtos/order-dto');
 
-const logger = require('../log/logger')('order-service');
+const logger = require('../../log/logger')('order-service');
 
-const ModelService = require("./helpers/ModelService");
-const ApiError = require("../exceptions/ApiError");
-const checkNecessaryFields = require("./helpers/checkNecessaryFields");
+const ModelService = require("../helpers/ModelService");
+const bookingsService = require('../bookings/bookings-service');
 
-const modelService = new ModelService(Model);
+const checkNecessaryFields = require("../helpers/checkNecessaryFields");
+
+const modelService = new ModelService(Order);
+
+/**
+ * Поиск заказов по параметрам.
+ * Если пользователь клиент, то ему возвращаются только его заказы.
+ * Скорее всего нужно будет добавить какой-нибудь массив accessHolders.
+ * */
+async function findByQueryParams(filters, user) {
+    let _filters = { ...filters };
+
+    if (!user) {
+        throw ApiError.ServerError('user is missing');
+    }
+
+    const pkeys = modelService.get_pkeys(_filters);
+    if(pkeys.length > 1){
+        modelService.moreThanOnePkeyError();
+    }
+
+    if(user.role !== 'admin'){
+        _filters.customer = user.id;
+    }
+
+    // Нет pkeys, только какие-то фильтры.
+    // При отсутствии фильтров будет выдавать все документы.
+    if(pkeys.length < 1){
+        const orders = await Order.find(_filters); // запрос на получение документов
+        return orders.map(o => orderDto(o));
+    }
+
+    // else pkeys.length = 1
+
+    const pkey = pkeys[0];
+
+    const values = _filters[pkey].split(','); // разбиваем строку на массив
+
+    delete _filters[pkey];
+
+    const orders = await Order.find({ ..._filters, [pkey==='id'?'_id':pkey]: { $in: values } }); // запрос на получение документов
+    return orders.map(o => orderDto(o));
+}
+
 
 async function createOne(body, files, user) {
     if (!files) {
@@ -18,63 +61,23 @@ async function createOne(body, files, user) {
         throw ApiError.ServerError('user is missing');
     }
 
-    // Здесь нужно обработать Booking
+    let _body = { ...body };
 
-    await modelService.deleteInvalidFileFields(body);
+    await modelService.deleteInvalidFileFields(_body);
 
-    const model = new Model({...body, customer: user.id});
+    const bookings = _body.bookings;
+    delete _body.bookings;
 
-    // logger.log("createOne", {body, model});
+    // Order не может заказать менеджер за клиента. Всегда должен заказывать клиент, менеджер же может добавлять.
+    const order = new Order({..._body, customer: user.id});
 
-    await modelService.saveWithFiles(model, files, { user });
+    // Здесь нужно обработать bookings.
+    // Создаем и присваем id-шки
+    await bookingsService.createMany(order, bookings);
 
-    return model; // dto(model);
-}
+    await modelService.saveWithFiles(order, files, { user });
 
-
-/**
- * Скорее всего у разных моделей будет разный find.
- * Где-то нужно только одну модель найти, где-то по id-шке, где-то сразу по нескольким id-шкам.
- * Где-то нужно не по отдельности искать, а нужна пагинация массива документов.
- * */
-async function findByQueryParams(filters, user) {
-    if (!user) {
-        throw ApiError.ServerError('user is missing')
-    }
-    if(user.role !== 'admin'){
-        throw ApiError.Forbidden('Permission denied. Only for admins.');
-    }
-
-    if (!filters) {
-        filters = {};
-    }
-
-    // В массиве прилетает запрос
-
-    const pkeys = modelService.get_pkeys(filters);
-    if(pkeys.length > 1){
-        modelService.moreThanOnePkeyError();
-    }
-
-    // Нет pkeys, только какие-то фильтры.
-    // При отсутствии фильтров будет выдавать все документы.
-    if(pkeys.length < 1){
-        return await Model.find(filters); // запрос на получение документов
-    }
-
-    // else pkeys.length = 1
-
-    const pkey = pkeys[0];
-
-    const values = filters[pkey].split(','); // разбиваем строку на массив
-
-    delete filters[pkey];
-
-    const models = await Model.find({ ...filters, [pkey==='id'?'_id':pkey]: { $in: values } }); // запрос на получение документов
-
-    // Здесь нужно раскрыть все букинги
-
-    return models; // models.map(m => dto(m));
+    return orderDto(order);
 }
 
 
