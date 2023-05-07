@@ -1,0 +1,10 @@
+.GroupInput {
+    display: flex;
+    align-items: center;
+}
+.GroupInput input {
+    margin-right: 10px;
+}
+.GroupInput input:last-child {
+    margin-right: 0;
+}

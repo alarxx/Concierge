@@ -1,0 +1,10 @@
+.ServiceChoice {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+.ServiceChoice button {
+    margin-right: 13px;
+}
+.ServiceChoice button:last-child {
+    margin-right: 0;
+}

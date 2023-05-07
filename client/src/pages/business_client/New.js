@@ -22,10 +22,9 @@ export default function New({}){
 
     return (
         <>
-            <NavbarPanel title={'Главная'}/>
-                <Box variant='center'>
-                    <ServiceChoice />
-                </Box>
+            <Box>
+                <ServiceChoice />
+            </Box>
             <NavigationPanel />
         </>
     )

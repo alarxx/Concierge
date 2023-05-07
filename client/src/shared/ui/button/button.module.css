@@ -10,6 +10,10 @@
     /* margin-top: 10px; */
     /* margin-bottom: 10px; */
     cursor: pointer;
+    font-weight: 600;
+}
+.btn svg {
+    margin-right: 10px;
 }
 .btn a {
     color: white;
@@ -36,6 +40,14 @@
     font-weight: 600;
     font-size: 16px;
 
+}
+.btn-outline {
+    background: none;
+    border: 1px solid #1E262F;
+    color: #1E262F;
+}
+.btn-outline svg path {
+    fill: #1E262F;
 }
 .btn-big {
     /*font-weight: 800;*/
