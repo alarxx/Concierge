@@ -18,6 +18,13 @@ const modelService = new ModelService(Order);
  * Скорее всего нужно будет добавить какой-нибудь массив accessHolders.
  * */
 async function findByQueryParams(filters, user) {
+    async function returnOrders(orders){
+        return await Promise.all(orders.map(async o => {
+            await bookingsService.populateBookings(o);
+            return orderDto(o);
+        }));
+    }
+
     let _filters = { ...filters };
 
     if (!user) {
@@ -37,7 +44,7 @@ async function findByQueryParams(filters, user) {
     // При отсутствии фильтров будет выдавать все документы.
     if(pkeys.length < 1){
         const orders = await Order.find(_filters); // запрос на получение документов
-        return orders.map(o => orderDto(o));
+        return await returnOrders(orders);
     }
 
     // else pkeys.length = 1
@@ -49,7 +56,8 @@ async function findByQueryParams(filters, user) {
     delete _filters[pkey];
 
     const orders = await Order.find({ ..._filters, [pkey==='id'?'_id':pkey]: { $in: values } }); // запрос на получение документов
-    return orders.map(o => orderDto(o));
+
+    return await returnOrders(orders);
 }
 
 
@@ -65,15 +73,15 @@ async function createOne(body, files, user) {
 
     await modelService.deleteInvalidFileFields(_body);
 
-    const bookings = _body.bookings;
+    const bookings = _body.bookings ? _body.bookings : [];
     delete _body.bookings;
 
     // Order не может заказать менеджер за клиента. Всегда должен заказывать клиент, менеджер же может добавлять.
-    const order = new Order({..._body, customer: user.id});
+    const order = new Order({ ..._body, customer: user.id });
 
     // Здесь нужно обработать bookings.
     // Создаем и присваем id-шки
-    order.bookings = await bookingsService.createMany(order, bookings);
+    order.bookings = await bookingsService.createMany(bookings, order, files);
 
     await modelService.saveWithFiles(order, files, { user });
 
@@ -83,41 +91,47 @@ async function createOne(body, files, user) {
 
 // Это нужно писать отталкиваясь от createOne
 async function updateOne(body, files, user) {
-    if(!files){
+    if(!body){
+        throw ApiError.ServerError('request body is missing');
+    }
+    if (!user) {
+        throw ApiError.ServerError('user is missing');
+    }
+    if (!files) {
         files = {};
     }
-    if(!body){
-        body = {};
-    }
 
-    if (!user) {
-        throw ApiError.ServerError('user is missing')
-    }
-    if(user.role !== 'admin'){
-        throw ApiError.Forbidden('Permission denied. Only for admins.');
-    }
     if (Object.keys(body).length + Object.keys(files).length < 2) {
         throw ApiError.BadRequest("Empty request body or too few fields");
     }
 
-    const pkey = modelService.get_pkey(body);
+    const _body = { ...body };
 
-    const model = await Model.findOne({[(pkey === 'id' ? '_id' : pkey)]: body[pkey]});
-    if (!model) {
-        throw ApiError.NotFound(`${modelService.modelName} not found`)
+    const pkey = modelService.get_pkey(_body);
+
+    const order = await Order.findOne({[(pkey === 'id' ? '_id' : pkey)]: _body[pkey]});
+    if (!order) {
+        throw ApiError.NotFound(`Order not found`);
     }
+
+
+    const bookings = _body.bookings ? _body.bookings : [];
+    delete _body.bookings;
+
+    order.bookings = await bookingsService.updateMany(bookings, order, files);
 
     /*
     * Здесь нужна проверка есть ли строка файла, но там нет файла
     * Это нужно, чтобы удалять файлы.
     * */
     /* Следующие 2 строчки можно объединить и назвать set */
-    await modelService.deleteInvalidFileFields(body, model);
-    model.set(body);
+    await modelService.deleteInvalidFileFields(_body, order);
+    order.set(_body);
 
-    await modelService.saveWithFiles(model, files, { user });
 
-    return model; // dto(model);
+    await modelService.saveWithFiles(order, files, { user });
+
+    return orderDto(order);
 }
 
 async function deleteOne(body, user) {
@@ -134,21 +148,19 @@ async function deleteOne(body, user) {
     const pkey = modelService.get_pkey(body);
 
     /* нужно удалять все что связанно с моделью и должны быть удалено вместе с пользователем, например аватарку */
-    const model = await Model.findOne({[(pkey === 'id' ? '_id' : pkey)]: body[pkey]});
-    if (!model) {
+    const order = await Order.findOne({[(pkey === 'id' ? '_id' : pkey)]: body[pkey]});
+    if (!order) {
         throw ApiError.NotFound(`${modelService.modelName} not found`);
     }
-    /*if (user.role !== 'admin' && model[opts.creatorField] != user.id) {
-        throw ApiError.Forbidden('Permission denied');
-    }*/
 
     // Нужно сделать проверку и удалить все Booking-и прикрепленные к order.
+    await bookingsService.deleteMany(order.bookings);
 
-    await Model.findOneAndDelete({[(pkey === 'id' ? '_id' : pkey)]: body[pkey]});
+    await Order.findOneAndDelete({[(pkey === 'id' ? '_id' : pkey)]: body[pkey]});
 
-    await modelService.deleteAttachedFiles(model);
+    await modelService.deleteAttachedFiles(order);
 
-    return model; // dto(model);
+    return orderDto(order);
 }
 
 

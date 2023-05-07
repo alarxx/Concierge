@@ -17,4 +17,6 @@ Router.route('/')
 Router.route('/pagination')
     .get(pagination);
 
+Router.use('/room', require('./room/hotel-room-route'));
+
 module.exports = Router;

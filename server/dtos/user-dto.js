@@ -1,4 +1,4 @@
-module.exports = (model) => !model ? null : ({
+module.exports = (model, user) => !model ? null : ({
     id: model.id,
     name: model.name,
     email: model.email,
