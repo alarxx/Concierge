@@ -22,9 +22,9 @@ export default function ServiceChoice() {
 
     return (<>
         <GroupFlex className={styles.ServiceChoice}>
-            <Button variant={activeTab==='NewHotelOrder' ? '' : 'outline'} onClick={()=> {setActiveEl(<NewHotelOrder />); setActiveTab('NewHotelOrder')}}><IconHotel /> отель</Button>
-            <Button variant={activeTab==='NewTransferOrder' ? '' : 'outline'} onClick={()=> {setActiveEl(<NewTransferOrder />); setActiveTab('NewTransferOrder')}}><IconTransfer /> трансфер</Button>
-            <Button variant={activeTab==='NewTicketsOrder' ? '' : 'outline'} onClick={()=> {setActiveEl(null); setActiveTab('NewTicketsOrder')}}><IconTickets /> Билеты</Button>
+            <Button variant={activeTab==='NewHotelOrder' ? '' : 'outline'} onClick={()=> {setActiveEl(<NewHotelOrder />); setActiveTab('NewHotelOrder')}}><IconHotel />Отель</Button>
+            <Button variant={activeTab==='NewTransferOrder' ? '' : 'outline'} onClick={()=> {setActiveEl(<NewTransferOrder />); setActiveTab('NewTransferOrder')}}><IconTransfer />Трансфер</Button>
+            <Button variant={activeTab==='NewTicketsOrder' ? '' : 'outline'} onClick={()=> {setActiveEl(null); setActiveTab('NewTicketsOrder')}}><IconTickets />Билеты</Button>
         </GroupFlex>
 
         <Card>
