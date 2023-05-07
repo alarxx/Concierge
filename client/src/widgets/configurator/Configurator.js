@@ -1,6 +1,6 @@
 import React from "react";
 import GroupFlex from "../../shared/ui/group_flex/GroupFlex";
-import HotelCard from "../hotel_card/HotelCard";
+import HotelCard from "../hotel/hotel_card/HotelCard";
 import ButtonPlus from "../../shared/ui/button_plus/ButtonPlus";
 
 export default function Configurator(){

@@ -15,11 +15,11 @@ import EmployeeInfo from '../../entities/employee/employee_info/EmployeeInfo'
 import TriangleIcon from '../../assets/icons/drop-down-info.svg';
 import BottomControl from "../../shared/ui/bottom_control/BottomControl";
 import Button from "../../shared/ui/button/Button";
-import HotelCard from "../../widgets/hotel_card/HotelCard";
+import HotelCard from "../../widgets/hotel/hotel_card/HotelCard";
 import Configurator from "../../widgets/configurator/Configurator";
 import Logger from "../../internal/Logger";
 import useBigList from "../../hooks/useBigList";
-import HotelMealsChoice from "../../widgets/hotel_meals_choice/HotelMealsChoice";
+import HotelMealsChoice from "../../widgets/hotel/hotel_meals_choice/HotelMealsChoice";
 
 
 export default function Orders({}){

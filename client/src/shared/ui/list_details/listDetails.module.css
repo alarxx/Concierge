@@ -1,0 +1,23 @@
+.ListDetails {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(41, 45, 50, 0.08);
+    padding: 10px 0;
+}
+.ListDetails ul {
+    padding-left: 20px;
+}
+.ListDetails__icon {
+    margin-right: 15px;
+}
+.ListDetails__title {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+.ListDetails__item {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+}

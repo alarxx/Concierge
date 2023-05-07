@@ -1,15 +1,15 @@
 import React, {useState} from 'react'
-import Card from "../../shared/ui/card/Card";
-import CardHeader from "../../shared/ui/card/CardHeader";
-import CardBody from "../../shared/ui/card/CardBody";
-import CardFooter from "../../shared/ui/card/CardFooter";
-import Typography from "../../shared/ui/typography/Typography";
-import GroupFlex from "../../shared/ui/group_flex/GroupFlex";
-import ButtonLike from "../../shared/ui/button_like/ButtonLike";
-import Button from "../../shared/ui/button/Button";
-import CheckboxCustom from "../../shared/ui/checkbox_custom/CheckboxCustom";
-import RadioCustom from "../../shared/ui/checkbox_custom/RadioCustom";
-import TextBoxOutlined from "../../shared/ui/text_box_outlined/TextBoxOutlined";
+import Card from "../../../shared/ui/card/Card";
+import CardHeader from "../../../shared/ui/card/CardHeader";
+import CardBody from "../../../shared/ui/card/CardBody";
+import CardFooter from "../../../shared/ui/card/CardFooter";
+import Typography from "../../../shared/ui/typography/Typography";
+import GroupFlex from "../../../shared/ui/group_flex/GroupFlex";
+import ButtonLike from "../../../shared/ui/button_like/ButtonLike";
+import Button from "../../../shared/ui/button/Button";
+import CheckboxCustom from "../../../shared/ui/checkbox_custom/CheckboxCustom";
+import RadioCustom from "../../../shared/ui/checkbox_custom/RadioCustom";
+import TextBoxOutlined from "../../../shared/ui/text_box_outlined/TextBoxOutlined";
 
 
 export default function HotelMealsChoice({}) {
@@ -20,7 +20,7 @@ export default function HotelMealsChoice({}) {
     }
 
     return(<>
-        <Card variant={'info'}>
+        <Card variant={'info'} top={12} bottom={12}>
             <Typography weight={700} size={18} bottom={20} >Питание</Typography>
             <Typography weight={500} size={16} bottom={20} >Выберите тип питания, который вы хотите включить в бронь</Typography>
             <GroupFlex>

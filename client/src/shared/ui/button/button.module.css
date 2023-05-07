@@ -38,8 +38,8 @@
 }
 .btn-small {
     font-weight: 600;
-    font-size: 16px;
-
+    font-size: 14px;
+    padding: 10px 20px;
 }
 .btn-outline {
     background: none;
