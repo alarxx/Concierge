@@ -7,9 +7,9 @@ import NavigationPanel from "../../../widgets/navigation_panel/NavigationPanel";
 import {useNavigate} from "react-router-dom";
 import Box from "../../../shared/ui/box/Box";
 import Gallery from "../../../shared/ui/gallery/Gallery";
-import HotelGeo from "../../../widgets/hotel_geo/HotelGeo";
-import HotelChoiceRoom from "../../../widgets/hotel_choice_room/HotelChoiceRoom";
-import HotelMealsChoice from "../../../widgets/hotel_meals_choice/HotelMealsChoice";
+import HotelGeo from "../../../widgets/hotel/hotel_geo/HotelGeo";
+import HotelChoiceRoom from "../../../widgets/hotel/hotel_choice_room/HotelChoiceRoom";
+import HotelMealsChoice from "../../../widgets/hotel/hotel_meals_choice/HotelMealsChoice";
 
 export default function HotelRoom() {
     const navigate = useNavigate();

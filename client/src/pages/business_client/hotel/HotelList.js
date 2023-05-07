@@ -6,7 +6,7 @@ import NavigationPanel from '../../../widgets/navigation_panel/NavigationPanel';
 import Logger from "../../../internal/Logger";
 import useBigList from "../../../hooks/useBigList";
 import AutoSizer from "react-virtualized-auto-sizer";
-import HotelCard from "../../../widgets/hotel_card/HotelCard";
+import HotelCard from "../../../widgets/hotel/hotel_card/HotelCard";
 import BottomControl from "../../../shared/ui/bottom_control/BottomControl";
 import Button from "../../../shared/ui/button/Button";
 import InfiniteLoader from "react-window-infinite-loader";
@@ -19,12 +19,6 @@ export default function HotelList({}){
     // Логгер просто будет прописывать из какого модуля вызван лог
     // Плюс в production logger не будет выводить в консоль ничего.
     const logger = useMemo(()=>new Logger('Orders'), []);
-
-    const [expanded, setExpanded] = React.useState(false);
-    const handleChange = (panel) => {
-        logger.log('onChangeeeeee', panel)
-        panel === expanded ? setExpanded(false) : setExpanded(panel)
-    };
 
     const {
         items,
@@ -40,9 +34,6 @@ export default function HotelList({}){
             <NavbarPanel title={'Hotel list'} />
             <Box>
 
-                {/*<AutoSizer>*/}
-                {/*    {({height, width}) => (*/}
-
                 {/* +100000 позволяет нам использовать максимально заданное число элементов(по ум. 30+-), которые можно загрузить за раз, если добавим 1 будет грузиться 1 элемент */}
                 <InfiniteLoader
                     isItemLoaded={isItemLoaded}
@@ -52,10 +43,12 @@ export default function HotelList({}){
                     {({onItemsRendered, ref}) => {
                         {/* +1 позволяет нам показывать loading элемент, если добавим 2 будут 2 loading элемента, что нам не нужно */}
                         return (<>
+                        <AutoSizer ref={ref}>
+                            {({ height, width }) => (
                             <FixedSizeList
                                 className={'List'}
-                                width={'100%'}
-                                height={600}
+                                width={width}
+                                height={height}
                                 itemCount={itemCountList}
                                 itemSize={290}
                                 ref={ref}
@@ -63,19 +56,27 @@ export default function HotelList({}){
                             >
                                 {({index, style}) => {
                                     const item = items[index];
+
+                                    console.log("ITEM",item)
+
+                                    const queryParams = {
+                                        param1: 'value1',
+                                        param2: 'value2',
+                                    };
                                     // logger.log(index, item)
                                     return (<div style={style}>
                                         {item
-                                            ? <HotelCard title={item.name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} onClick={e => navigate('/hotel/single', {replace: true,})} />
+                                            ? <HotelCard title={item.name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} onClick={e => navigate('/hotel/single', {search: `?${new URLSearchParams(queryParams).toString()}`, replace: true,})} />
                                             : <p>"Loading..."</p> }
                                     </div>);
                                 }}
                             </FixedSizeList>
+                        )}
+                        </AutoSizer>
                         </>);
                     }}
                 </InfiniteLoader>
-                {/*)}*/}
-                {/*</AutoSizer>*/}
+
             </Box>
             <BottomControl>
                 <Button variant={'outline'} onClick={f=>f}>Оставить на усмотрение менеджеру</Button>

@@ -6,8 +6,10 @@ import NavigationPanel from "../../../widgets/navigation_panel/NavigationPanel";
 import {useNavigate} from "react-router-dom";
 import Box from "../../../shared/ui/box/Box";
 import Gallery from "../../../shared/ui/gallery/Gallery";
-import HotelGeo from "../../../widgets/hotel_geo/HotelGeo";
-import HotelChoiceRoom from "../../../widgets/hotel_choice_room/HotelChoiceRoom";
+import HotelGeo from "../../../widgets/hotel/hotel_geo/HotelGeo";
+import HotelChoiceRoom from "../../../widgets/hotel/hotel_choice_room/HotelChoiceRoom";
+import HotelPolitics from "../../../widgets/hotel/hotel_politics/HotelPolitics";
+import HotelDetails from "../../../widgets/hotel/hotel_details/HotelDetails";
 
 export default function HotelSingle() {
     const navigate = useNavigate();
@@ -18,6 +20,8 @@ export default function HotelSingle() {
             <Gallery height={240} />
             <HotelGeo />
             <HotelChoiceRoom />
+            <HotelPolitics />
+            <HotelDetails />
         </Box>
 
         <BottomControl>
