@@ -49,5 +49,5 @@ export default function useTimer(callback=f=>f, seconds=0){
         }
     }, [timer]);
 
-    return ({ timer, startTimer, stopTimer, resetTimer });
+    return ({ timer, startTimer, stopTimer, resetTimer, setTimer });
 }

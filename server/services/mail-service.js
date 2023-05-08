@@ -29,7 +29,7 @@ async function antispam(email){
     const deltaTime = Date.now() - updatedAt;
     if (deltaTime < (60 * 1000)) {
         const timeLeftToSend = Math.floor(((60 * 1000) - deltaTime) / 1000);
-        throw ApiError.BadRequest(`Not enough time has passed since the last letter was sent. Try again after ${timeLeftToSend} seconds`)
+        throw ApiError.BadRequest(`Not enough time has passed since the last letter was sent. Try again after ${timeLeftToSend} seconds`, [{timeLeftToSend: timeLeftToSend}]);
     }
 
     mailer.updatedAt = Date.now();
