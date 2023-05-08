@@ -10,8 +10,16 @@ export default function useBigList(api, sort='createdAt'){
      * sort - поле по которому нужно сортировать (&sort=-createdAt), "-" в начале названия поля - это направление сортировки
      * js queryParam чекнуть, там можно в виде объекта вписывать параметры запроса
      * */
-    function getUrl(skip, limit){
+    /*function getUrl(skip, limit){
         return `${api}?skip=${skip}&limit=${limit}&sort=${sort}`;
+    }*/
+    function getUrl(skip, limit, opts={}){
+        return `${api}/?` + new URLSearchParams({
+            skip,
+            limit,
+            sort: 'createdAt',
+            ...opts,
+        });
     }
 
     /**

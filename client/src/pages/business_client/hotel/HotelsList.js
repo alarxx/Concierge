@@ -4,53 +4,65 @@ import NavbarPanel from '../../../widgets/navbar_panel/NavbarPanel';
 import Box from '../../../shared/ui/box/Box'
 import NavigationPanel from '../../../widgets/navigation_panel/NavigationPanel';
 import Logger from "../../../internal/Logger";
-import useBigList from "../../../hooks/useBigList";
-import AutoSizer from "react-virtualized-auto-sizer";
 import HotelCard from "../../../widgets/hotel/hotel_card/HotelCard";
 import BottomControl from "../../../shared/ui/bottom_control/BottomControl";
 import Button from "../../../shared/ui/button/Button";
-import InfiniteLoader from "react-window-infinite-loader";
-import {FixedSizeList} from "react-window";
 import {useLocation, useNavigate} from "react-router-dom";
 import NavbarLeft from "../../../shared/ui/navbar/NavbarLeft";
 import BackIcon from "../../../assets/icons/arrow-left.svg";
 
 import InfiniteScroll from "react-infinite-scroller";
-import styles from './hotel.module.css'
 
-function getUrl(skip, limit){
-    return `/api/hotel/pagination/?skip=${skip}&limit=${limit}&sort=createdAt`;
+import styles from './hotel.module.css';
+
+function getUrl(skip, limit, filter={}){
+    return `/api/hotel/pagination/?` + new URLSearchParams({
+        skip,
+        limit,
+        sort: 'createdAt',
+        ...filter,
+    });
 }
 
 export default function HotelsList(){
-    const logger = useMemo(()=>new Logger('HotelsList'), []);
-
-    const navigate = useNavigate();
-
-    const location = useLocation();
-
     // Логгер просто будет прописывать из какого модуля вызван лог
     // Плюс в production logger не будет выводить в консоль ничего.
+    const logger = useMemo(()=>new Logger('HotelsList'), []);
+
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const [items, setItems] = useState([]);
-    const [skip, setSkip] = useState(0);
-    const [isLoadMore, setIsLoadMore] = useState(true)
 
-    const fetchData = async (__skip) => {
-        console.log(__skip)
+    const [skip, setSkip] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
+
+    const loadMore = async (__skip) => {
+        logger.log("__skip:", __skip);
+
         const limit = 5;
+
+        logger.log(getUrl(skip, limit));
+
+
         const response = await fetch(getUrl(skip, limit));
-        console.log(getUrl(skip, limit))
-        const data = await response.json()
+
+        const data = await response.json();
+
         // console.log(data); // Logging the data to the console
         // Do something with the data
         if (data.length < limit) {
-            setIsLoadMore(false)
+            setHasMore(false);
         }
-        console.log('isLoadMore',isLoadMore)
-        // setItems([...items, ...data]);
-        setItems([...(data.reverse()), ...items]);
-        console.log(items)
+        logger.log('isLoadMore',hasMore);
+
+        setItems(() => [
+            ...data.reverse(),
+            ...items
+        ]);
+
+        logger.log(items);
+
         setSkip(skip + limit);
     };
 
@@ -66,8 +78,8 @@ export default function HotelsList(){
                 <div className={styles.hotel__list} style={{ height: "100%", overflow: 'auto' }}>
                     <InfiniteScroll
                         pageStart={0}
-                        loadMore={fetchData}
-                        hasMore={true}
+                        loadMore={loadMore}
+                        hasMore={hasMore}
                         loader={
                             <div className="loader" key={0}>
                                 Loading ...
