@@ -1,7 +1,7 @@
 import React from 'react'
 import {useNavigate} from "react-router-dom";
 
-import SendResetPasswordMailForm from '../../../features/reset_password/SendResetPasswordMail';
+import SendResetPasswordMailForm from '../../../features/auth/password_send_reset/SendResetPasswordMail';
 
 import Box from '../../../shared/ui/box/Box'
 import Card from '../../../shared/ui/card/Card'

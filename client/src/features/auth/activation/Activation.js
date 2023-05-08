@@ -1,14 +1,14 @@
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {useLocation, useNavigate} from "react-router-dom";
-import {isExpired} from "react-jwt";
-import {useAppContext} from "../../context/AppContext";
+import {useLocation, useNavigate} from 'react-router-dom';
+import {isExpired} from 'react-jwt';
+import {useAppContext} from '../../../context/AppContext';
 
-import Logger from '../../internal/Logger';
-import useTimer from "../../hooks/useTimer";
+import Logger from '../../../internal/Logger';
+import useTimer from "../../../hooks/useTimer";
 
-import Input from '../../shared/ui/input/Input';
-import Button from '../../shared/ui/button/Button'
+import Input from '../../../shared/ui/input/Input';
+import Button from '../../../shared/ui/button/Button';
 
 /**
  * Страница активации аккаунта.

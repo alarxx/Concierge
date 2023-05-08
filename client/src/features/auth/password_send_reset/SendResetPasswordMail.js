@@ -1,12 +1,12 @@
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {useLocation, useNavigate} from "react-router-dom";
-import useTimer from "../../hooks/useTimer";
-import Logger from "../../internal/Logger";
-import {useAppContext} from "../../context/AppContext";
+import useTimer from "../../../hooks/useTimer";
+import Logger from "../../../internal/Logger";
+import {useAppContext} from "../../../context/AppContext";
 
-import Input from '../../shared/ui/input/Input'
-import Button from '../../shared/ui/button/Button'
+import Input from '../../../shared/ui/input/Input'
+import Button from '../../../shared/ui/button/Button'
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
  * SignUp не должен перенаправлять, а только возвращать json о том, получилось ли создать нового пользователя или нет.

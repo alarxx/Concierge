@@ -2,20 +2,21 @@ import React, {useEffect, useState} from 'react';
 
 import {Link, Routes, Route, Navigate, useSearchParams, useNavigate, useLocation} from "react-router-dom";
 
+import {AppContextProvider, useAppContext} from './context/AppContext';
+
+import ProtectedPage from "./middlewares/ProtectedPage";
 import Page from "./middlewares/Page";
 
 import Landing from "./pages/Landing"
 import Authentication from "./pages/auth/main/Authentication";
+import Activation from "./pages/auth/activation/Activation";
+import SendResetPasswordMail from "./pages/auth/password_send_reset/SendResetPasswordMail";
+import ResetPassword from "./pages/auth/password_reset/ResetPassword";
 import Logout from "./pages/auth/logout/Logout";
 
-import {AppContextProvider, useAppContext} from './context/AppContext'
-import ProtectedPage from "./middlewares/ProtectedPage";
-import Banned from "./features/auth/status/Banned";
-import Activation from "./pages/auth/activation/Activation";
-import NoName from "./features/auth/status/NoName";
-import SendResetPasswordMail from "./pages/auth/password/SendResetPasswordMail";
-import ResetPassword from "./pages/auth/password/ResetPassword";
-import ServiceOrder from "./pages/service_order/ServiceOrder";
+import Banned from "./pages/auth/status/Banned";
+import NoName from "./pages/auth/status/NoName";
+
 import New from './pages/business_client/New';
 import Orders from './pages/business_client/Orders';
 import Chat from './pages/business_client/Chat';
@@ -85,17 +86,10 @@ export default function Router(){
 					</ProtectedPage>
 				}/>
 
-				<Route path={'/service-order'} element={
-					<Page>
-						<ServiceOrder />
-					</Page>
-				}/>
-
-				
 				<Route path='/new' element={
 					<ProtectedPage> <New /></ProtectedPage>
-				
 				}/>
+
 				<Route path='/orders' element={<ProtectedPage><Orders /></ProtectedPage>}/>
 				<Route path='/chat' element={<ProtectedPage><Chat /></ProtectedPage>}/>
 				<Route path='/profile' element={<ProtectedPage><Profile /></ProtectedPage>}/>
