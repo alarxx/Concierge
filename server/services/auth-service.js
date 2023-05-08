@@ -17,18 +17,23 @@ const userService = require('./user-service');
 async function signin({ email, password }){
     const user = await User.findOne({ email });
 
-    logger.log("found user:", user)
+    logger.log("found user:", user);
 
     if(!user){
         logger.log("No such user", email);
-        throw ApiError.BadRequest("No such user", [{email: 'No such user'}])
+        throw ApiError.BadRequest("No such user", [{email: 'No such user'}]);
     }
     else if(user.identity_provider !== 'local' && !user.password) {
         // Если не local мы должны проверить наличие пароля, если его нет, дать ошибку и предложить пользователю поставить пароль. По сути тот же роут что и на /setpassword
-        throw ApiError.Conflict(`You tried signing in as "${email}" via local authentication, which is not the authentication method you used during sign up. Try again using the authentication method you used during sign up. You can try assigning a password.`, [{email: "identity_provider_mismatch"}])
+        throw ApiError.Conflict(
+            `You tried signing in as "${email}" via local authentication, which is not the authentication method you used during sign up. Try again using the authentication method you used during sign up. You can try assigning a password.`,
+            [
+                {identity_provider_mismatch: 'identity_provider_mismatch'},
+                {email: "identity provider mismatch"}
+            ]);
     }
     else if(!await bcrypt.compare(password, user.password)){
-        throw ApiError.BadRequest("Passwords do not match", [{password: 'Passwords do not match'}])
+        throw ApiError.BadRequest("Passwords do not match", [{password: 'Passwords do not match'}]);
     }
 
     return userDto(user);
