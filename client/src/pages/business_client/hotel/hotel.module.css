@@ -1,0 +1,5 @@
+.hotel__list::-webkit-scrollbar {
+    display: none;
+}
+.hotel__list {
+}

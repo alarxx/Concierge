@@ -4,7 +4,7 @@ import Button from '../../../shared/ui/button/Button';
 import GroupInput from "../../../shared/ui/group_input/GroupInput";
 import {useLocation, useNavigate} from "react-router-dom";
 
-export default function Signin({}){
+export default function NewHotelOrder({}){
 
     const navigate = useNavigate();
     const { pathname } = useLocation();
