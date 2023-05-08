@@ -51,6 +51,8 @@ export default function SendActivationMail({ sendActivationMail=f=>f }){
         {loading && <p>loading...</p>}
         {error && <p>{error.message}</p>}
 
+        {success && <p>We can send again {timer > 0 ? `after ${timer} seconds`:''}</p>}
+
         <form onSubmit={onSubmit}>
             <div>
                 <label>Email</label>

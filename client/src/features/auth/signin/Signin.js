@@ -1,17 +1,22 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import Input from '../../../shared/ui/input/Input';
 import Button from '../../../shared/ui/button/Button';
 
 import {useAppContext} from "../../../context/AppContext";
 import {useNavigate} from "react-router-dom";
+import Logger from "../../../internal/Logger";
 
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
  * SignUp не должен перенаправлять, а только возвращать json о том, получилось ли создать нового пользователя или нет.
  * */
 export default function SignIn({ signin=f=>f }){
+    const logger = useMemo(()=>new Logger('Authentication'), []);
+
     const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
 
     const [email, setEmail] = useState('');
@@ -19,34 +24,54 @@ export default function SignIn({ signin=f=>f }){
 
     async function onSubmit(e){
         e.preventDefault();
-        console.log('SUUUBBBMIT')
+        logger.log('submit:', { email, password });
 
-        const json = await signin({ email, password });
-        // console.log({json})
-        setResponse(json);
+        setResponse(null);
+        setError(null);
+        setLoading(true);
+
+        signin({ email, password })
+            .then((json) => {
+                logger.log(json);
+
+                if(!json) {
+                    return;
+                }
+
+                if(json.status < 200 || json.status >= 300){
+                    setError(json);
+                }
+                else {
+                    setResponse(json);
+                }
+            })
+            .catch((e) => setError(e))
+            .finally(() => setLoading(false));
     }
 
     useEffect(()=>{
-        if(response){
-            setResponse(null);
+        if(!error){
+            return;
         }
-    }, [email, password])
 
-    useEffect(()=>{
-        // Эту проверку response лучше занести в функцию signin
-        if(response?.status === 409 && response?.errors[0].identity_provider_mismatch){
+        // Эту проверку error лучше занести в функцию signin? Хотя это ухудшит понимание кода
+        if(error.status === 409 && error.errors.some(err => Boolean(err.identity_provider_mismatch))){
             navigate('/authn/send-reset', {
                 state: {
-                    message: response.message,
+                    message: error.message,
                     email: email
                 }
             });
         }
-    }, [response])
+
+    }, [error])
 
     return (
         <div className="">
+            {loading && <p>loading...</p>}
             {response && <p>{response.message}</p>}
+            {error && <p>{error.message}</p>}
+
             <form onSubmit={onSubmit}>
                 <Input 
                     value={email}
