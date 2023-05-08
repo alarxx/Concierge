@@ -1,11 +1,11 @@
 .CheckboxCustom {
-    
-}
-.CheckboxCustom {
     width: 100%;
     margin: 0 5px 0 0;
     user-select: none;
     position: relative;
+}
+.CheckboxCustom-fixed {
+    width: fit-content;
 }
 .CheckboxCustom input[type=checkbox] {
     z-index: -1;
@@ -42,7 +42,7 @@
     color: white;
 }
 
-.CheckboxCustom input[type=radio]:checked + span {
+.CheckboxCustom input[type=radio]:checked + label {
     background: #2086E5;
     color: white;
 }

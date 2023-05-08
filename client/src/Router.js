@@ -24,6 +24,7 @@ import HotelList from "./pages/business_client/hotel/HotelList";
 import HotelSingle from "./pages/business_client/hotel/HotelSingle";
 import HotelRoom from "./pages/business_client/hotel/HotelRoom";
 import HotelRoomList from "./pages/business_client/hotel/HotelRoomList";
+import HotelConfirm from "./pages/business_client/hotel/HotelConfirm";
 
 export default function Router(){
 
@@ -102,6 +103,7 @@ export default function Router(){
 				<Route path='/hotel/single' element={<ProtectedPage><HotelSingle /></ProtectedPage>}/>
 				<Route path='/hotel/room' element={<ProtectedPage><HotelRoomList /></ProtectedPage>}/>
 				<Route path='/hotel/room/single' element={<ProtectedPage><HotelRoom /></ProtectedPage>}/>
+				<Route path='/hotel/room/single/booking' element={<ProtectedPage><HotelConfirm /></ProtectedPage>}/>
 
 				<Route path={'*'} element={
 					// Нужна чтобы несуществующие страницы не отличались от существующих защищенных
