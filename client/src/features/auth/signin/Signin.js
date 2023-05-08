@@ -11,10 +11,13 @@ import Alert from "../../../shared/ui/alert/Alert";
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
  * SignUp не должен перенаправлять, а только возвращать json о том, получилось ли создать нового пользователя или нет.
  * */
-export default function SignIn({ signin=f=>f }){
+export default function SignIn({ }){
     const logger = useMemo(()=>new Logger('Authentication'), []);
 
     const navigate = useNavigate();
+
+    const { authHandler } = useAppContext();
+    const { signin } = authHandler;
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
