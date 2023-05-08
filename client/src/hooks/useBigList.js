@@ -79,7 +79,10 @@ export default function useBigList(api, sort='createdAt'){
             .catch(logger.error)
     }
 
-    const itemCountLoader = (() => hasMore ? Object.keys(items).length+100000 : Object.keys(items).length)();
+    // +Number.MAX_SAFE_INTEGER позволяет нам использовать максимально заданное число элементов(по ум. 30+-), которые можно загрузить за раз, если добавим 1 будет грузиться максимум 1 элемент */}
+    const itemCountLoader = (() => hasMore ? Object.keys(items).length + Number.MAX_SAFE_INTEGER : Object.keys(items).length)();
+
+    // +1 позволяет показать только один (loading...) элемент
     const itemCountList = (() => hasMore ? Object.keys(items).length + 1 : Object.keys(items).length)();
 
     return ({

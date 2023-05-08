@@ -1,98 +1,86 @@
 import React, {useState, useEffect, useMemo, useRef} from 'react';
 
-import NavbarPanel from '../../../widgets/navbar_panel/NavbarPanel';
-import Box from '../../../shared/ui/box/Box'
-import NavigationPanel from '../../../widgets/navigation_panel/NavigationPanel';
-import Logger from "../../../internal/Logger";
-import HotelCard from "../../../widgets/hotel/hotel_card/HotelCard";
-import BottomControl from "../../../shared/ui/bottom_control/BottomControl";
-import Button from "../../../shared/ui/button/Button";
 import {useLocation, useNavigate} from "react-router-dom";
-import NavbarLeft from "../../../shared/ui/navbar/NavbarLeft";
-import BackIcon from "../../../assets/icons/arrow-left.svg";
+
+import Logger from "../../../internal/Logger";
 
 import InfiniteScroll from "react-infinite-scroller";
 
+import InfiniteLoader from "react-window-infinite-loader";
+import AutoSizer from "react-virtualized-auto-sizer";
+import {FixedSizeList} from "react-window";
+
+import useBigList from "../../../hooks/useBigList";
+
+import NavbarPanel from '../../../widgets/navbar_panel/NavbarPanel';
+import Box from '../../../shared/ui/box/Box'
+import NavigationPanel from '../../../widgets/navigation_panel/NavigationPanel';
+import HotelCard from "../../../widgets/hotel/hotel_card/HotelCard";
+import BottomControl from "../../../shared/ui/bottom_control/BottomControl";
+import Button from "../../../shared/ui/button/Button";
+import NavbarLeft from "../../../shared/ui/navbar/NavbarLeft";
+import BackIcon from "../../../assets/icons/arrow-left.svg";
+import HotelRoomCard from "../../../widgets/hotel/hotel_room_card/HotelRoomCard";
+
 import styles from './hotel.module.css';
 
-function getUrl(skip, limit, filter={}){
-    return `/api/hotel/pagination/?` + new URLSearchParams({
-        skip,
-        limit,
-        sort: 'createdAt',
-        ...filter,
-    });
-}
 
 export default function HotelsList(){
     // Логгер просто будет прописывать из какого модуля вызван лог
     // Плюс в production logger не будет выводить в консоль ничего.
     const logger = useMemo(()=>new Logger('HotelsList'), []);
 
-    const location = useLocation();
     const navigate = useNavigate();
 
-    const [items, setItems] = useState([]);
+    const {
+        items,
+        isItemLoaded,
+        loadMoreItems,
+        itemCountLoader,
+        itemCountList
+    } = useBigList('/api/hotel/pagination/');
 
-    const [skip, setSkip] = useState(0);
-    const [hasMore, setHasMore] = useState(true);
-
-    const loadMore = async (__skip) => {
-        logger.log("__skip:", __skip);
-
-        const limit = 5;
-
-        logger.log(getUrl(skip, limit));
-
-
-        const response = await fetch(getUrl(skip, limit));
-
-        const data = await response.json();
-
-        // console.log(data); // Logging the data to the console
-        // Do something with the data
-        if (data.length < limit) {
-            setHasMore(false);
-        }
-        logger.log('isLoadMore',hasMore);
-
-        setItems(() => [
-            ...data.reverse(),
-            ...items
-        ]);
-
-        logger.log(items);
-
-        setSkip(skip + limit);
-    };
 
     return (
         <>
             <NavbarPanel
-                LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => navigate('/new', {replace: true,})} />}
-                title={'Отели'}
+                LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => navigate('/hotel/single', {replace: true,})} />}
+                title={'Номера'}
             />
-            <Box>
-                <h1>Infinite Scroll</h1>
 
-                <div className={styles.hotel__list} style={{ height: "100%", overflow: 'auto' }}>
-                    <InfiniteScroll
-                        pageStart={0}
-                        loadMore={loadMore}
-                        hasMore={hasMore}
-                        loader={
-                            <div className="loader" key={0}>
-                                Loading ...
-                            </div>
-                        }
-                        isReverse={true}
-                        useWindow={false}
-                    >
-                        {items.map((item, i) => (
-                            <HotelCard key={i} title={item.name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} onClick={e => navigate('/hotel/single', {replace: true,})} />
-                        ))}
-                    </InfiniteScroll>
-                </div>
+            <Box>
+                <InfiniteLoader
+                    isItemLoaded={isItemLoaded}
+                    loadMoreItems={loadMoreItems}
+                    itemCount={itemCountLoader}
+                >
+                    {({onItemsRendered, ref}) => (<>
+                        <AutoSizer ref={ref}>
+                            {({ height, width }) => (
+                                <FixedSizeList
+                                    className={'List'}
+                                    width={width}
+                                    height={height}
+                                    itemCount={itemCountList}
+                                    itemSize={290}
+                                    ref={ref}
+                                    onItemsRendered={onItemsRendered}
+                                >
+                                    {({index, style}) => {
+                                        const item = items[index];
+                                        // logger.log(index, item)
+                                        return (<div style={style}>
+                                            {item
+                                                ? <HotelRoomCard title={item.name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} onClick={e => navigate('/hotel/room/single', {replace: true,})} />
+                                                : <p>"Loading..."</p> }
+                                        </div>);
+                                    }}
+                                </FixedSizeList>
+                            )}
+                        </AutoSizer>
+                    </>)}
+                </InfiniteLoader>
+
             </Box>
 
             <BottomControl>
@@ -100,6 +88,5 @@ export default function HotelsList(){
             </BottomControl>
 
             <NavigationPanel />
-        </>
-    )
+        </>);
 }
