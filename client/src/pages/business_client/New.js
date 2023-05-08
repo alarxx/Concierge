@@ -17,8 +17,7 @@ import NewHotelOrder from '../../entities/order/new_hotel_order/NewHotelOrder'
 import NewTransferOrder from '../../entities/order/new_transfer_order/NewTransferOrder'
 import ServiceChoice from "../../widgets/service_choice/ServiceChoice";
 
-export default function New({}){
-
+export default function New(){
 
     return (
         <>

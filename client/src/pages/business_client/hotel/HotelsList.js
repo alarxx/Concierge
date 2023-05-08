@@ -11,22 +11,26 @@ import BottomControl from "../../../shared/ui/bottom_control/BottomControl";
 import Button from "../../../shared/ui/button/Button";
 import InfiniteLoader from "react-window-infinite-loader";
 import {FixedSizeList} from "react-window";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import NavbarLeft from "../../../shared/ui/navbar/NavbarLeft";
 import BackIcon from "../../../assets/icons/arrow-left.svg";
 
 import InfiniteScroll from "react-infinite-scroller";
 import styles from './hotel.module.css'
+
 function getUrl(skip, limit){
-    // return `/api/hotel/pagination/?skip=${skip}&limit=${limit}&sort=createdAt`;
-    return `/api/hotel/pagination/?skip=${skip}&limit=${limit}`;
+    return `/api/hotel/pagination/?skip=${skip}&limit=${limit}&sort=createdAt`;
 }
-export default function HotelList({}){
+
+export default function HotelsList(){
+    const logger = useMemo(()=>new Logger('HotelsList'), []);
+
     const navigate = useNavigate();
+
+    const location = useLocation();
+
     // Логгер просто будет прописывать из какого модуля вызван лог
     // Плюс в production logger не будет выводить в консоль ничего.
-    const logger = useMemo(()=>new Logger('Orders'), []);
-
 
     const [items, setItems] = useState([]);
     const [skip, setSkip] = useState(0);
@@ -72,8 +76,8 @@ export default function HotelList({}){
                         isReverse={true}
                         useWindow={false}
                     >
-                        {items.map((item) => (
-                            <HotelCard title={item.name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} onClick={e => navigate('/hotel/single', {replace: true,})} />
+                        {items.map((item, i) => (
+                            <HotelCard key={i} title={item.name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} onClick={e => navigate('/hotel/single', {replace: true,})} />
                         ))}
                     </InfiniteScroll>
                 </div>
