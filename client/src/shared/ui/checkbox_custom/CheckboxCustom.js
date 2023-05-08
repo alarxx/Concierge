@@ -7,7 +7,7 @@ export default function CheckboxCustom({ name='_', label='', isChecked=false, is
     return (
         <label className={styles.CheckboxCustom}>
             <input name={name} type="checkbox"  />
-                <span>{label}</span>
+            <span>{label}</span>
         </label>
     );
 }

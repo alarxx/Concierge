@@ -5,7 +5,7 @@ import Logger from "../../../internal/Logger";
 
 import Input from '../../../shared/ui/input/Input';
 import Button from '../../../shared/ui/button/Button'
-import Popup from "../../../shared/ui/popup/Popup";
+import Alert from "../../../shared/ui/alert/Alert";
 
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
@@ -48,7 +48,7 @@ export default function SendActivationMail({ sendActivationMail=f=>f }){
     return (<>
         <h1>Send activation e-mail</h1>
 
-        {loading && <Popup><p>sending email...</p></Popup>}
+        {loading && <Alert><p>sending email...</p></Alert>}
         {success && <><p>{success.message}</p></>}
         {error && <p>{error.message}</p>}
 

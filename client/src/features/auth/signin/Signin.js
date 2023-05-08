@@ -5,7 +5,7 @@ import Button from '../../../shared/ui/button/Button';
 import {useAppContext} from "../../../context/AppContext";
 import {useNavigate} from "react-router-dom";
 import Logger from "../../../internal/Logger";
-import Popup from "../../../shared/ui/popup/Popup";
+import Alert from "../../../shared/ui/alert/Alert";
 
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
@@ -70,7 +70,7 @@ export default function SignIn({ signin=f=>f }){
 
     return (
         <div className="">
-            {loading && <Popup><p>loading...</p></Popup>}
+            {loading && <Alert><p>loading...</p></Alert>}
             {error && <p>{error.message}</p>}
 
             <form onSubmit={onSubmit}>

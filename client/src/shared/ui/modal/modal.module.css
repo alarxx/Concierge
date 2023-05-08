@@ -1,0 +1,19 @@
+.Modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #fff;
+    z-index: 1111;
+    padding: 20px;
+}
+
+.Modal__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+}
+
+.Modal__content {
+    height: 100%;
+}

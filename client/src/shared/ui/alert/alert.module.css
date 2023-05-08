@@ -1,4 +1,4 @@
-.Popup {
+.Alert {
     width: 95%;
     position: absolute;
     top: 20px;
@@ -12,6 +12,6 @@
     border-radius: 10px;
     z-index: 1111111111;
 }
-.Popup-danger {
+.Alert-danger {
     background-color: #dc3545;
 }
