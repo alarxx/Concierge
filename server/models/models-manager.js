@@ -25,10 +25,10 @@ class ModelsManager {
         // this.Flight_Service = require('./services/flight/Flight_Service');
         // this.Flight_Booking = require('./services/flight/Flight_Booking');
 
-        // this.Message = require('./chat/Message')
-        // this.Conversation = require('./chat/Conversation')
-        // this.Participant = require('./chat/Participant')
-        // this.Notification = require('./chat/Notification')
+        this.Message = require('./chat/Message')
+        this.Conversation = require('./chat/Conversation')
+        this.Participant = require('./chat/Participant')
+        this.Notification = require('./chat/Notification')
     }
 }
 

@@ -1,23 +1,28 @@
 const {Schema, model} = require('mongoose');
 
 
-const NotificationSchema = new Schema({
-    type: {
-        type: String,
-        enum: ['message']
+const NotificationSchema = new Schema(
+    {
+        type: {
+            type: String,
+            enum: ['message']
+        },
+        message: {
+            type: Schema.Types.ObjectId,
+            ref: 'Message',
+            required: true,
+        },
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        },
     },
-    message: {
-        type: Schema.Types.ObjectId,
-        ref: 'Message',
-        required: true,
-    },
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    },
-
-});
+    {
+        timestamps: true,
+        strict: true,
+    }
+);
 
 NotificationSchema.plugin(require('mongoose-unique-validator'));
 NotificationSchema.plugin(require('../log-plugin'))

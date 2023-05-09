@@ -1,66 +1,63 @@
 const {Schema, model} = require("mongoose");
 
 
-const MessageSchema = new Schema({
-    conversation: {
-        type: Schema.Types.ObjectId,
-        ref: 'Conversation',
-        immutable: true,
-        required: true,
-    },
-    sender: { // Здесь мы можем указывать user, а не participant,
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        immutable: true,
-        required: true,
-    },
-    type: {
-        type: String,
-        enum: ['service?', 'text', 'file', 'choice'],
-        immutable: true,
-        required: true,
-    },
-    // action: {type: String, enum: ['invite_members', 'join_group_by_link']},
-    text: {
-        type: String,
-    },
-    file: {
-        type: Schema.Types.ObjectId,
-        ref: 'File'
-    },
-    description: {
-      type: String,
-    },
-    choice: {
-        services: [{
+const MessageSchema = new Schema(
+    {
+        conversation: {
             type: Schema.Types.ObjectId,
-            ref: 'Service',
+            ref: 'Conversation',
             immutable: true,
-        }],
-        selectedServices: [{
+            required: true,
+        },
+        sender: { // Здесь мы можем указывать user, а не participant,
             type: Schema.Types.ObjectId,
-            default: []
-        }],
-        submitted: {
-            type: Boolean,
-            default: false,
-        },
-        multiple_choice: {
-            type: Boolean,
-            default: false,
+            ref: 'User',
             immutable: true,
+            required: true,
+        },
+        type: {
+            type: String,
+            enum: ['service?', 'text', 'file', 'choice'],
+            immutable: true,
+            required: true,
+        },
+        // action: {type: String, enum: ['invite_members', 'join_group_by_link']},
+        text: {
+            type: String,
+        },
+        file: {
+            type: Schema.Types.ObjectId,
+            ref: 'File'
+        },
+        description: {
+          type: String,
+        },
+        choice: {
+            services: [{
+                type: Schema.Types.ObjectId,
+                ref: 'Service',
+                immutable: true,
+            }],
+            selectedServices: [{
+                type: Schema.Types.ObjectId,
+                default: []
+            }],
+            submitted: {
+                type: Boolean,
+                default: false,
+            },
+            multiple_choice: {
+                type: Boolean,
+                default: false,
+                immutable: true,
+            },
         },
     },
-    createdDate: {
-        type: Date,
-        immutable: true,
-        default: () => new Date(),
-    },
-    updatedDate: {
-        type: Date,
-        default: () => new Date(),
+    {
+        timestamps: true,
+        strict: true,
     }
-});
+);
 
 MessageSchema.plugin(require('mongoose-unique-validator'));
 MessageSchema.plugin(require('../log-plugin'))

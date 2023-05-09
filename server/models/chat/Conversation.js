@@ -1,33 +1,30 @@
 const {Schema, model} = require('mongoose');
 
 
-const ConversationSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        default: ()=>`Conversation ${Date.now()}`
+const ConversationSchema = new Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+            default: ()=>`Conversation ${Date.now()}`
+        },
+        type: {
+            type: String,
+            enum: ['private_group', 'public_group'],
+            required: true,
+            default: 'private_group'
+        },
+        // endTime: {},
+        isArchived: {
+            type: Boolean,
+            default: false
+        },
     },
-    type: {
-        type: String,
-        enum: ['private_group', 'public_group'],
-        required: true,
-        default: 'private_group'
-    },
-    // endTime: {},
-    isArchived: {
-        type: Boolean,
-        default: false
-    },
-    createdDate: {
-        type: Date,
-        immutable: true,
-        default: () => new Date(),
-    },
-    updatedDate: {
-        type: Date,
-        default: () => new Date(),
+    {
+        timestamps: true,
+        strict: true,
     }
-});
+);
 
 
 ConversationSchema.plugin(require('mongoose-unique-validator'));

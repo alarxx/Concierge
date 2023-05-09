@@ -20,7 +20,7 @@ const checkNecessaryFields = require('../helpers/checkNecessaryFields');
  * dto - data transfer object модели.
  * creatorField - поле куда вписываем id создателя: для постов это author, для заказов это customer и так далее.
  * */
-module.exports = (Model, dto=f=>f, opts={ creatorField: 'creator' }) => {
+module.exports = (Model, dto=(f, u)=>f, opts={ creatorField: 'creator' }) => {
 
     const modelService = new ModelService(Model);
 

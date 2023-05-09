@@ -5,35 +5,34 @@
 
 const {Schema, model} = require("mongoose");
 
-
-const ParticipantSchema = new Schema({
-    conversation: {
-        type: Schema.Types.ObjectId,
-        ref: 'Conversation',
-        immutable: true,
-        required: true,
+/**
+ * Нужен, чтобы определять, кто является участником беседы
+ * */
+const ParticipantSchema = new Schema(
+    {
+        conversation: {
+            type: Schema.Types.ObjectId,
+            ref: 'Conversation',
+            immutable: true,
+            required: true,
+        },
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            immutable: true,
+            required: true,
+        },
+        role: {
+            type: String,
+            enum: ['participant', 'admin'],
+            default: 'participant'
+        },
     },
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        immutable: true,
-        required: true,
-    },
-    role: {
-        type: String,
-        enum: ['participant', 'admin'],
-        default: 'participant'
-    },
-    createdDate: {
-        type: Date,
-        immutable: true,
-        default: () => new Date(),
-    },
-    updatedDate: {
-        type: Date,
-        default: () => new Date(),
+    {
+        timestamps: true,
+        strict: true,
     }
-});
+);
 
 
 ParticipantSchema.plugin(require('mongoose-unique-validator'));
