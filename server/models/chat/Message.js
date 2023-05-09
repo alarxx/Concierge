@@ -1,5 +1,26 @@
 const {Schema, model} = require("mongoose");
 
+const ServiceSchema = require('../services/ServiceSchema');
+
+const ChoiceSchema = new Schema({
+    services: [{
+        type: ServiceSchema,
+    }],
+    selectedServices: [{
+        type: Schema.Types.ObjectId,
+        default: []
+    }],
+    submitted: {
+        type: Boolean,
+        default: false,
+    },
+    multiple_choice: {
+        type: Boolean,
+        default: false,
+        immutable: true,
+    },
+});
+
 
 const MessageSchema = new Schema(
     {
@@ -17,7 +38,7 @@ const MessageSchema = new Schema(
         },
         type: {
             type: String,
-            enum: ['service?', 'text', 'file', 'choice'],
+            enum: ['service?', 'text', 'file', 'choice', 'notice', 'payment'],
             immutable: true,
             required: true,
         },
@@ -29,28 +50,18 @@ const MessageSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'File'
         },
-        description: {
-          type: String,
-        },
         choice: {
-            services: [{
-                type: Schema.Types.ObjectId,
-                ref: 'Service',
-                immutable: true,
-            }],
-            selectedServices: [{
-                type: Schema.Types.ObjectId,
-                default: []
-            }],
-            submitted: {
-                type: Boolean,
-                default: false,
-            },
-            multiple_choice: {
-                type: Boolean,
-                default: false,
-                immutable: true,
-            },
+            type: ChoiceSchema,
+        },
+        notice: {
+            type: String,
+        },
+        payment: {
+          type: String, // здесь должна быть форма
+        },
+
+        description: {
+            type: String,
         },
     },
     {
