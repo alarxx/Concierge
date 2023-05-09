@@ -8,7 +8,7 @@ module.exports = (module_name) => {
     const _module_name = module_name.endsWith('.js') ? module_name : `${module_name}.js`;
 
     if(process.env.NODE_ENV === 'development') {
-        console.log(colors.cyan(`${_module_name}:`), 'Initialize logger.');
+        // console.log(colors.cyan(`${_module_name}:`), 'Initialize logger.');
     }
 
     return ({

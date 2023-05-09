@@ -8,9 +8,9 @@ class ModelsManager {
         this.File = require('./binaries/File');
         this.Mailer = require('./mailer/Mailer');
 
-        this.Company = require('./company/Company')
+        this.Company = require('./company/Company');
 
-        this.Order = require('./order/Order')
+        this.Order = require('./order/Order');
         // this.Order_Meta = require('./order/Order_Meta')
 
         // this.Office = require('./services/Office');
@@ -25,10 +25,12 @@ class ModelsManager {
         // this.Flight_Service = require('./services/flight/Flight_Service');
         // this.Flight_Booking = require('./services/flight/Flight_Booking');
 
-        this.Message = require('./chat/Message')
-        this.Conversation = require('./chat/Conversation')
-        this.Participant = require('./chat/Participant')
-        this.Notification = require('./chat/Notification')
+        this.Message = require('./chat/Message');
+        this.Conversation = require('./chat/Conversation');
+        this.Participant = require('./chat/Participant');
+        this.Notification = require('./chat/Notification');
+
+        this.City = require('./city/City');
     }
 }
 

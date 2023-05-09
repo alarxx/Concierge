@@ -16,7 +16,7 @@ module.exports = class ModelService {
         this.Model = Model;
         this.modelName = Model.collection.modelName;
 
-        this.#logger = require('../../log/logger')('model-service');
+        this.#logger = require('../../log/logger')(`ModelService(${Model.collection.modelName})`);
         this.#fileService = require("../../services/file-service");
 
         this.fileFields = this.#getFileFields();
