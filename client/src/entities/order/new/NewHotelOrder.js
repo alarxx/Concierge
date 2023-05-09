@@ -11,10 +11,14 @@ import MyInput from './_MyInput'
 export default function NewHotelOrder({ data={}, upsertFields=f=>f }){
     const navigate = useNavigate();
 
+    function findHotels(){
+        return navigate('/new/hotel', { replace: false, state: { data } })
+    }
+
     return (
         <div className="">
-            <form>
-                <MyInput placeHolder='Город' type='text' name='city' data={data} upsertFields={upsertFields}/>
+            <form onSubmit={findHotels}>
+                <MyInput required={true} placeHolder='Город' type='text' name='city' data={data} upsertFields={upsertFields}/>
                 <GroupInput>
                     <MyInput placeHolder='Дата прилета' type='date' name='arrival_date' data={data} upsertFields={upsertFields} />
                     <MyInput placeHolder='Дата отлета' type='date' name='departure_date' data={data} upsertFields={upsertFields} />
@@ -23,7 +27,7 @@ export default function NewHotelOrder({ data={}, upsertFields=f=>f }){
                 <MyInput placeHolder='Питание' type='text' name='meals' data={data} upsertFields={upsertFields} />
                 {/*<MyInput placeHolder='Гражданство' type='text' name='citizenship' data={data} upsertFields={upsertFields} />*/}
 
-                <Button onClick={e => navigate('/new/hotel', { replace: false, state: { data } })}>Поиск отеля</Button>
+                <Button type={'submit'}>Поиск отеля</Button>
             </form>
         </div>
     );

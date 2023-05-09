@@ -21,6 +21,9 @@ const HotelSchema = new Schema(
             type: String,
             // ref: 'Address'
         },
+
+        city: String,
+
         rate: {
             type: Number,
         },

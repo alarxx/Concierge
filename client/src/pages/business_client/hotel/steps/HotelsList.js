@@ -15,17 +15,23 @@ import Button from "../../../../shared/ui/button/Button";
 import NavigationPanel from "../../../../widgets/navigation_panel/NavigationPanel";
 
 function MyList({
-                  items,
-                  isItemLoaded,
-                  loadMoreItems,
-                  itemCountLoader,
-                  itemCountList,
+                    items,
+                    isItemLoaded,
+                    loadMoreItems,
+                    itemCountLoader,
+                    itemCountList,
+                    notFound=false,
 
-                  itemSize=290,
+                    itemSize=290,
 
-                  children
+                    children
               }){
 
+    if(notFound){
+        return (<>
+            <p>Not found</p>
+        </>);
+    }
 
     return (<>
         <InfiniteLoader
@@ -61,7 +67,7 @@ export default function HotelsList({ city='', hotel={}, upsertData=f=>f, next=f=
 
     const navigate = useNavigate();
 
-    const bigList = useBigList('/api/hotel/pagination/'); // , { city });
+    const bigList = useBigList('/api/hotel/pagination/', { city });
     const { items } = bigList;
 
     function onHotelClick(item){

@@ -1,5 +1,6 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Logger from "../internal/Logger";
+
 
 export default function useBigList(api, opts={}){
     const logger = useMemo(()=>new Logger('useBigList'), []);
@@ -13,12 +14,12 @@ export default function useBigList(api, opts={}){
     /*function getUrl(skip, limit){
         return `${api}?skip=${skip}&limit=${limit}&sort=${sort}`;
     }*/
-    function getUrl(skip, limit, opts={}){
+    function getUrl(skip, limit, _opts={}){
         return `${api}/?` + new URLSearchParams({
             skip,
             limit,
             sort:'createdAt',
-            ...opts,
+            ..._opts,
         });
     }
 
@@ -29,6 +30,16 @@ export default function useBigList(api, opts={}){
 
     const [requestCache, setRequestCache] = useState({});
     const [hasMore, setHasMore] = useState(true);
+
+    const [notFound, setNotFound] = useState(false);
+    useEffect(()=>{
+        logger.log(`Has more ${hasMore}. Not found ${Object.keys(items)}.`);
+        if(!hasMore && Object.keys(items).length === 0){
+            setNotFound(true);
+            logger.log("Has not more. Not found.");
+        }
+
+    }, [hasMore])
 
     function isItemLoaded({index}){
         return Boolean(items[index]);
@@ -61,10 +72,10 @@ export default function useBigList(api, opts={}){
             .then(async response => {
                 const json = await response.json();
 
-                logger.log({json}); // json = [{}, {}] array
+                logger.log({ json }); // json = [{}, {}] array
 
                 // Если вернулось меньше элементов, чем мы запросили, это значит, что больше элементов в БД нет
-                if(json.length < length){
+                if(!json.length || json.length < length){
                     setHasMore(false);
                 }
 
@@ -73,7 +84,7 @@ export default function useBigList(api, opts={}){
                 json.forEach((hotel, index) => {
                     add[startIndex + index] = hotel;
                 });
-                setItems({...items, ...add});
+                setItems({ ...items, ...add });
 
             })
             .catch(logger.error)
@@ -91,5 +102,6 @@ export default function useBigList(api, opts={}){
         loadMoreItems,
         itemCountLoader,
         itemCountList,
+        notFound,
     });
 }
