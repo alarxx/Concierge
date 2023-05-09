@@ -16,7 +16,7 @@ const participant_modelService = new ModelService(Participant);
 
 async function firstLoad(user){
     if(!user){
-        throw ApiError.ServerError('user is not provided');
+        throw ApiError.BadRequest('user is not provided');
     }
 
     // Загрузить все participant-ы и conversation-ы
@@ -42,6 +42,42 @@ async function firstLoad(user){
         participants: participants.map(c => participant_dto(c, user)),
         notifications: notifications.map(c => notification_dto(c, user)),
         messages: messages.map(c => message_dto(c, user)),
+    });
+}
+
+async function startConversation(user, users=[], name=`Conversation ${Date.now()}`, type='private_group'){
+    if(!user){
+        throw ApiError.BadRequest('user is not provided');
+    }
+    if(!users || users.length === 0){
+        throw ApiError.BadRequest('users are not provided. Cannot create conversation without participants');
+    }
+
+    const conversation = new Conversation({
+        name,
+        type
+    });
+
+    const participants = users.map(_user => new Participant({
+        conversation: conversation.id,
+        user: _user.id,
+        role: 'participant'
+    }));
+
+    participants.push(new Participant({
+        conversation: conversation.id,
+        user: user.id,
+        role: 'admin'
+    }))
+
+    await conversation.save();
+    await Promise.all(participants.map(async p => await p.save()));
+
+    // Наверное стоит еще скидывать какое-нибудь init сообщение и добавлять уведомление, типа беседа создана.
+
+    return ({
+        conversation: conversation_dto(conversation, user),
+        participants: participants.map(p => participant_dto(p, user))
     });
 }
 
