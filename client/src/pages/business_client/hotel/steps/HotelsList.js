@@ -16,6 +16,7 @@ import Button from "../../../../shared/ui/button/Button";
 import BackIcon from "../../../../assets/icons/arrow-left.svg";
 
 import MyList from "../../list/MyList";
+import Alert from "../../../../shared/ui/alert/Alert";
 
 
 export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields=f=>f, next=f=>f, close=f=>f }){
@@ -24,7 +25,7 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
     const logger = useMemo(()=>new Logger('HotelsList'), []);
 
     const { city, hotel } = data;
-    const { items: hotels } = hotelsListHandler;
+    const { items: hotels, notFound } = hotelsListHandler;
 
     function onHotelClick(item){
         logger.log("onHotelClick:", item);
@@ -66,9 +67,15 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
             />
 
             <Box>
+
+                {!notFound && Object.keys(hotels).length === 0 && <Alert>
+                    <p>loading...</p>
+                </Alert>}
+
                 <MyList {...hotelsListHandler} itemSize={290}>
                     {Row}
                 </MyList>
+
             </Box>
 
             <BottomControl>

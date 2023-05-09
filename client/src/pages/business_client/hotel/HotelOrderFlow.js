@@ -102,6 +102,75 @@ export default function HotelOrderFlow(){
     async function submit(){
         // do something with data
         logger.log('submit:', { data });
+        /*
+        // Order example
+        {
+            "customer": "6456c01fb8cb17462973c384",
+            "discount": 0, // В общем на заказе, еще есть по отдельности на каждую услугу
+            "status": "new",
+            "accessHolders": [],
+            "bookings": [{
+                "type": "hotel/booking",
+                "hotel/booking": {
+                    "hotel/room": "64571f7499180de50f1bb787",
+                    checkInDate,
+                    checkOutDate,
+                    price,
+                    discount,
+                    isPaid,
+                }
+            }],
+        }
+        * */
+        /*
+        // Hotel/Booking Schema
+
+            order: id, auto
+            customer: id, auto
+
+            'hotel/room': {
+                type: Schema.Types.ObjectId,
+                ref: 'Hotel/Room',
+            },
+
+            checkInDate: {
+                type: Date,
+                default: () => new Date(), // Просто хз как из postman-a ставить
+                required: true,
+            },
+            checkOutDate: {
+                type: Date,
+                default: () => new Date(), // Просто хз как из postman-a ставить
+                required: true,
+            },
+
+            // Bill
+            price: {
+                type: Number, // or String?
+                // required: true,
+            },
+            discount: {
+                type: Number,
+                min: 0,
+                max: 100,
+                default: 0
+            },
+            bill_file: { // Счет выставленный нам и оплачиваемый Concierge
+                type: Schema.Types.ObjectId,
+                ref: 'File',
+            },
+            isPaid: {
+                type: Boolean,
+                default: false
+            },
+            file: { // Подтверждающий документ, не знаю
+                type: Schema.Types.ObjectId,
+                ref: 'File'
+            },
+
+            timestamps: true,
+        },
+    */
     }
 
     async function close(){

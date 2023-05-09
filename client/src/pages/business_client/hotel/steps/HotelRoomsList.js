@@ -18,13 +18,14 @@ import BackIcon from "../../../../assets/icons/arrow-left.svg";
 import styles from "../hotel.module.css";
 import HotelRoomCard from "../../../../widgets/hotel/hotel_room_card/HotelRoomCard";
 import MyList from "../../list/MyList";
+import Alert from "../../../../shared/ui/alert/Alert";
 
 
 export default function HotelRoomsList({ data={}, roomsListHandler={}, upsertFields=f=>f, next=f=>f, back=f=>f }){
     const logger = useMemo(()=>new Logger('HotelRoomsList'), []);
 
     const {hotel} = data;
-    const {items: rooms} = roomsListHandler;
+    const {items: rooms, notFound} = roomsListHandler;
 
     function onRoomClick(item){
         logger.log("onHotelClick:", item);
@@ -63,9 +64,15 @@ export default function HotelRoomsList({ data={}, roomsListHandler={}, upsertFie
                 title={'Номера'}
             />
             <Box>
+
+                {notFound && Object.keys(rooms).length === 0 && <Alert>
+                    <p>loading...</p>
+                </Alert>}
+
                 <MyList {...roomsListHandler} itemSize={290}>
                     {Row}
                 </MyList>
+
             </Box>
 
             <BottomControl>

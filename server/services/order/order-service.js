@@ -85,11 +85,12 @@ async function createOne(body, files, user) {
 
     await modelService.saveWithFiles(order, files, { user });
 
+    // Здесь я должен создать чат
+
     return orderDto(order, user);
 }
 
 
-// Это нужно писать отталкиваясь от createOne
 async function updateOne(body, files, user) {
     if(!body){
         throw ApiError.ServerError('request body is missing');
