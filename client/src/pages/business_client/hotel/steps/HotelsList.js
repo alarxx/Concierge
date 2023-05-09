@@ -61,7 +61,7 @@ export default function HotelsList({ city='', hotel={}, upsertData=f=>f, next=f=
 
     const navigate = useNavigate();
 
-    const bigList = useBigList('/api/steps/pagination/'); // , { city });
+    const bigList = useBigList('/api/hotel/pagination/'); // , { city });
     const { items } = bigList;
 
     function onHotelClick(item){
