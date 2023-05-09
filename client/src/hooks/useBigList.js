@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import Logger from "../internal/Logger";
 
-export default function useBigList(api, sort='createdAt'){
+export default function useBigList(api, opts={}){
     const logger = useMemo(()=>new Logger('useBigList'), []);
 
     /**
@@ -17,7 +17,7 @@ export default function useBigList(api, sort='createdAt'){
         return `${api}/?` + new URLSearchParams({
             skip,
             limit,
-            sort: 'createdAt',
+            sort:'createdAt',
             ...opts,
         });
     }
@@ -57,7 +57,7 @@ export default function useBigList(api, sort='createdAt'){
         // requestCache[key] = key;
         setRequestCache({...requestCache, key});
 
-        return await fetch(getUrl(startIndex, length))
+        return await fetch(getUrl(startIndex, length, opts))
             .then(async response => {
                 const json = await response.json();
 
@@ -80,10 +80,10 @@ export default function useBigList(api, sort='createdAt'){
     }
 
     // +Number.MAX_SAFE_INTEGER позволяет нам использовать максимально заданное число элементов(по ум. 30+-), которые можно загрузить за раз, если добавим 1 будет грузиться максимум 1 элемент */}
-    const itemCountLoader = (() => hasMore ? Object.keys(items).length + Number.MAX_SAFE_INTEGER : Object.keys(items).length)();
+    const itemCountLoader = (() => Object.keys(items).length + (hasMore ? Number.MAX_SAFE_INTEGER : 0))();
 
     // +1 позволяет показать только один (loading...) элемент
-    const itemCountList = (() => hasMore ? Object.keys(items).length + 1 : Object.keys(items).length)();
+    const itemCountList = (() => Object.keys(items).length + (hasMore ? 1 : 0))();
 
     return ({
         items,

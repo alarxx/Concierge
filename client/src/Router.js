@@ -21,11 +21,7 @@ import New from './pages/business_client/New';
 import Orders from './pages/business_client/Orders';
 import Chat from './pages/business_client/Chat';
 import Profile from './pages/business_client/Profile';
-import HotelsList from "./pages/business_client/hotel/HotelsList";
-import HotelSingle from "./pages/business_client/hotel/HotelSingle";
-import HotelRoom from "./pages/business_client/hotel/HotelRoom";
-import HotelRoomList from "./pages/business_client/hotel/HotelRoomList";
-import HotelConfirm from "./pages/business_client/hotel/HotelConfirm";
+import HotelOrderFlow from "./pages/business_client/hotel/HotelOrderFlow";
 
 export default function Router(){
 
@@ -74,30 +70,15 @@ export default function Router(){
 
 				</Route>
 
-
-				<Route path='/offline' element={
-					<h1>[Offline page]</h1>
-				} />
-
-
-				<Route path='/main' element={
-					<ProtectedPage>
-						{/* <Main /> */}
-					</ProtectedPage>
-				}/>
-
-				<Route path='/new' element={
-					<ProtectedPage> <New /></ProtectedPage>
-				}/>
+				<Route path='/new'>
+					<Route index element={<ProtectedPage><New /></ProtectedPage>}/>
+					<Route path='hotel' element={<ProtectedPage><HotelOrderFlow /></ProtectedPage>}/>
+				</Route>
 
 				<Route path='/orders' element={<ProtectedPage><Orders /></ProtectedPage>}/>
 				<Route path='/chat' element={<ProtectedPage><Chat /></ProtectedPage>}/>
 				<Route path='/profile' element={<ProtectedPage><Profile /></ProtectedPage>}/>
-				<Route path='/hotel' element={<ProtectedPage><HotelsList /></ProtectedPage>}/>
-				<Route path='/hotel/single' element={<ProtectedPage><HotelSingle /></ProtectedPage>}/>
-				<Route path='/hotel/room' element={<ProtectedPage><HotelRoomList /></ProtectedPage>}/>
-				<Route path='/hotel/room/single' element={<ProtectedPage><HotelRoom /></ProtectedPage>}/>
-				<Route path='/hotel/room/single/booking' element={<ProtectedPage><HotelConfirm /></ProtectedPage>}/>
+
 
 				<Route path={'*'} element={
 					// Нужна чтобы несуществующие страницы не отличались от существующих защищенных
