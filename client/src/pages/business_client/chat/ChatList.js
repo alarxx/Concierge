@@ -16,9 +16,9 @@ export default function ChatList({}){
         <>
             <NavbarPanel title={'Чат'}/>
                 <Box>
-                    <ChatItem onClick={e => navigate('/chat/single', {replace: true,})} />
-                    <ChatItem onClick={e => navigate('/chat/single', {replace: true,})} />
-                    <ChatItem onClick={e => navigate('/chat/single', {replace: true,})} />
+                    <ChatItem onClick={e => navigate('/chat/single', {replace: false,})} />
+                    <ChatItem onClick={e => navigate('/chat/single', {replace: false,})} />
+                    <ChatItem onClick={e => navigate('/chat/single', {replace: false,})} />
                 </Box>
             <NavigationPanel />
         </>
