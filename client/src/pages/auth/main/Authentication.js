@@ -22,12 +22,9 @@ import Button from '../../../shared/ui/button/Button'
 /**
  * type: [signin, sendActivationMail]
  * */
-export default function Authentication({ }){
+export default function Authentication(){
 
     const navigate = useNavigate();
-
-    const { authHandler } = useAppContext();
-    const { signin, sendActivationMail } = authHandler;
 
     const logger = useMemo(()=>new Logger('Authentication'), []);
 
@@ -43,8 +40,8 @@ export default function Authentication({ }){
                 </CardHeader>
 
                 <CardBody>
-                    {tabType === 'signup' && <SendActivationMail sendActivationMail={sendActivationMail} />}
-                    {tabType === 'signin' && <SignIn signin={signin} />}
+                    {tabType === 'signup' && <SendActivationMail />}
+                    {tabType === 'signin' && <SignIn />}
                     <br />
                     <Button variant='second'><a href={"/auth/azure"}>OpenID Connect</a></Button>
                 </CardBody>

@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import Logger from "../internal/Logger";
 
-export default function useBigList(api, sort='createdAt'){
+export default function useBigList(api, opts={}){
     const logger = useMemo(()=>new Logger('useBigList'), []);
 
     /**
@@ -10,8 +10,16 @@ export default function useBigList(api, sort='createdAt'){
      * sort - поле по которому нужно сортировать (&sort=-createdAt), "-" в начале названия поля - это направление сортировки
      * js queryParam чекнуть, там можно в виде объекта вписывать параметры запроса
      * */
-    function getUrl(skip, limit){
+    /*function getUrl(skip, limit){
         return `${api}?skip=${skip}&limit=${limit}&sort=${sort}`;
+    }*/
+    function getUrl(skip, limit, opts={}){
+        return `${api}/?` + new URLSearchParams({
+            skip,
+            limit,
+            sort:'createdAt',
+            ...opts,
+        });
     }
 
     /**
@@ -49,7 +57,7 @@ export default function useBigList(api, sort='createdAt'){
         // requestCache[key] = key;
         setRequestCache({...requestCache, key});
 
-        return await fetch(getUrl(startIndex, length))
+        return await fetch(getUrl(startIndex, length, opts))
             .then(async response => {
                 const json = await response.json();
 
@@ -71,8 +79,11 @@ export default function useBigList(api, sort='createdAt'){
             .catch(logger.error)
     }
 
-    const itemCountLoader = (() => hasMore ? Object.keys(items).length+100000 : Object.keys(items).length)();
-    const itemCountList = (() => hasMore ? Object.keys(items).length + 1 : Object.keys(items).length)();
+    // +Number.MAX_SAFE_INTEGER позволяет нам использовать максимально заданное число элементов(по ум. 30+-), которые можно загрузить за раз, если добавим 1 будет грузиться максимум 1 элемент */}
+    const itemCountLoader = (() => Object.keys(items).length + (hasMore ? Number.MAX_SAFE_INTEGER : 0))();
+
+    // +1 позволяет показать только один (loading...) элемент
+    const itemCountList = (() => Object.keys(items).length + (hasMore ? 1 : 0))();
 
     return ({
         items,

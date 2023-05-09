@@ -6,14 +6,18 @@ import Logger from "../../../internal/Logger";
 import Input from '../../../shared/ui/input/Input';
 import Button from '../../../shared/ui/button/Button'
 import Alert from "../../../shared/ui/alert/Alert";
+import {useAppContext} from "../../../context/AppContext";
 
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
  * SignUp не должен перенаправлять, а только возвращать json о том, получилось ли создать нового пользователя или нет.
  * */
-export default function SendActivationMail({ sendActivationMail=f=>f }){
+export default function SendActivationMail({ }){
 
     const logger = useMemo(()=>new Logger('SendActivationMail'), []);
+
+    const { authHandler } = useAppContext();
+    const { sendActivationMail } = authHandler;
 
     const [email, setEmail] = useState('');
 

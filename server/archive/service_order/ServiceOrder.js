@@ -1,22 +1,23 @@
+/*
 import React, {useMemo, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import F1 from "./steps/F1";
-import F2 from "./steps/F2";
-import Logger from "../../../internal/Logger";
-import {useAppContext} from "../../../context/AppContext";
-import MultistepForm from "../../../components/multistep_form/MultistepForm";
+import {useAppContext} from "../../context/AppContext";
+import MultistepForm from "../../components/multistep_form/MultistepForm";
+import F1 from "./forms/F1";
+import F2 from "./forms/F2";
+import Logger from "../../internal/Logger";
 
-const STEPS = [
+const FORMS = [
     F1,
     F2,
 ];
 
-export default function HotelOrderFlow(){
-    /*
+export default function ServiceOrder(){
+    /!*
      * useMemo(): мемоизирует значение.
      * useCallback(): мемоизирует функцию.
      * memo(): мемоизирует компонент.
-     * */
+     * *!/
     const logger = useMemo(()=>new Logger('ServiceOrder'), []);
 
     const navigate = useNavigate();
@@ -48,22 +49,22 @@ export default function HotelOrderFlow(){
     }
 
     return (<>
-        {/* Это тоже лучше занести в MultistepForm */}
-        {loading && <p>loading...</p>}
+            {/!* Это тоже лучше занести в MultistepForm *!/}
+            {loading && <p>loading...</p>}
 
-        {!loading &&
-            <MultistepForm
-                forms={STEPS}
-                data={data}
-                setData={setData}
-                errors={errors}
-                setErrors={setErrors}
-                loading={loading}
-                setLoading={setLoading}
-                onSubmit={onSubmit}
-                onClose={() => logger.log('close button clicked')}
-                submitButtonName={"Оставить заявку"}
-            />
-        }
+            {!loading &&
+                <MultistepForm
+                    forms={FORMS}
+                    data={data}
+                    setData={setData}
+                    errors={errors}
+                    setErrors={setErrors}
+                    loading={loading}
+                    setLoading={setLoading}
+                    onSubmit={onSubmit}
+                    onClose={() => logger.log('close button clicked')}
+                    submitButtonName={"Оставить заявку"}
+                />
+            }
     </>);
-}
+}*/
