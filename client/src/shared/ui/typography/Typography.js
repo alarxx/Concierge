@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './typography.module.css' 
 
-export default function Typography({children, size, weight, bottom}){
+export default function Typography({children, size, weight, bottom, color}){
 
     // в children передаем только текст
 
@@ -10,6 +10,7 @@ export default function Typography({children, size, weight, bottom}){
         fontWeight: weight,
         fontSize: size,
         marginBottom: bottom,
+        color: color,
     }
 
     return (

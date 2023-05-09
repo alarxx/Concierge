@@ -20,6 +20,7 @@ import Configurator from "../../widgets/configurator/Configurator";
 import Logger from "../../internal/Logger";
 import useBigList from "../../hooks/useBigList";
 import HotelMealsChoice from "../../widgets/hotel/hotel_meals_choice/HotelMealsChoice";
+import OrderCard from "../../widgets/order/order_card/OrderCard";
 
 
 export default function Orders({}){
@@ -31,7 +32,9 @@ export default function Orders({}){
             <div className="section section-profile">
                 orders
 
-                <HotelMealsChoice />
+                <OrderCard />
+                <OrderCard />
+                <OrderCard />
 
 
                 {/*<Accordion expanded={expanded === 'panel1'}>*/}
@@ -91,6 +94,9 @@ export default function Orders({}){
 
             </div>
         </Box>
+        <BottomControl>
+            <Button variant={'control'}>Добавить заказ</Button>
+        </BottomControl>
         <NavigationPanel />
     </>)
 }
