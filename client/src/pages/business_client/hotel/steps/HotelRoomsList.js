@@ -21,13 +21,10 @@ import MyList from "../../list/MyList";
 
 
 export default function HotelRoomsList({ data={}, roomsListHandler={}, upsertFields=f=>f, next=f=>f, back=f=>f }){
-
-    // Логгер просто будет прописывать из какого модуля вызван лог
-    // Плюс в production logger не будет выводить в консоль ничего.
     const logger = useMemo(()=>new Logger('HotelRoomsList'), []);
 
     const {hotel} = data;
-    const {items} = roomsListHandler;
+    const {items: rooms} = roomsListHandler;
 
     function onRoomClick(item){
         logger.log("onHotelClick:", item);
@@ -36,7 +33,7 @@ export default function HotelRoomsList({ data={}, roomsListHandler={}, upsertFie
     }
 
     function Row({ index, style }){
-        const item = items[index];
+        const item = rooms[index];
 
         // logger.log(index, item);
         if(!item){

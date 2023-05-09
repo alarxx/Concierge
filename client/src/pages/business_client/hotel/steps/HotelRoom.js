@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useMemo} from "react";
 
 import NavbarPanel from "../../../../widgets/navbar_panel/NavbarPanel";
 import NavigationPanel from "../../../../widgets/navigation_panel/NavigationPanel";
@@ -14,9 +14,13 @@ import Gallery from "../../../../shared/ui/gallery/Gallery";
 import NavbarLeft from "../../../../shared/ui/navbar/NavbarLeft";
 
 import BackIcon from "../../../../assets/icons/arrow-left.svg";
+import Logger from "../../../../internal/Logger";
 
 export default function HotelRoom({ data={}, back=f=>f, next=f=>f }) {
+    const logger = useMemo(()=>new Logger('HotelRoom'), []);
+
     const {room} = data;
+
     return(<>
         <NavbarPanel
             LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => back()} />}

@@ -18,16 +18,13 @@ import BackIcon from "../../../../assets/icons/arrow-left.svg";
 import MyList from "../../list/MyList";
 
 
-export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields=f=>f, next=f=>f }){
-    const { city, hotel } = data;
-
+export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields=f=>f, next=f=>f, close=f=>f }){
     // Логгер просто будет прописывать из какого модуля вызван лог
     // Плюс в production logger не будет выводить в консоль ничего.
     const logger = useMemo(()=>new Logger('HotelsList'), []);
 
-    const navigate = useNavigate();
-
-    const { items } = hotelsListHandler;
+    const { city, hotel } = data;
+    const { items: hotels } = hotelsListHandler;
 
     function onHotelClick(item){
         logger.log("onHotelClick:", item);
@@ -36,7 +33,7 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
     }
 
     function Row({ index, style }){
-        const item = items[index];
+        const item = hotels[index];
 
         // logger.log(index, item);
         if(!item){
@@ -63,10 +60,7 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
     return (
         <>
             <NavbarPanel
-                LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => navigate('/new', {
-                    replace: true,
-                    state: { data }
-                })} />}
+                LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => close()} />}
 
                 title={'Отели'}
             />

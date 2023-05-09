@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 
 import {useNavigate} from "react-router-dom";
 
@@ -16,6 +16,7 @@ import HotelPolitics from "../../../../widgets/hotel/hotel_politics/HotelPolitic
 import HotelDetails from "../../../../widgets/hotel/hotel_details/HotelDetails";
 import NavbarLeft from "../../../../shared/ui/navbar/NavbarLeft";
 import useBigList from "../../../../hooks/useBigList";
+import Logger from "../../../../internal/Logger";
 
 function getUrl(skip, limit, filter={}){
     return `/api/hotel/room/pagination/?` + new URLSearchParams({
@@ -26,11 +27,11 @@ function getUrl(skip, limit, filter={}){
     });
 }
 
-export default function HotelSingle({ data={}, roomsListHandler={}, upsertFields=f=>f, next=f=>f, back=f=>f, }) {
+export default function HotelSingle({ data={}, roomsListHandler={}, next=f=>f, back=f=>f, }) {
+    const logger = useMemo(() => new Logger('HotelSingle'), []);
 
     const { hotel } = data;
-
-    const navigate = useNavigate();
+    const {items: rooms} = roomsListHandler;
 
     return(<>
         <NavbarPanel

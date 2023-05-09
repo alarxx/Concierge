@@ -66,6 +66,7 @@ export default function HotelOrderFlow(){
     const logger = useMemo(() => new Logger('HotelOrderFlow'), []);
 
     const location = useLocation();
+    const navigate = useNavigate();
 
     const [data, setData] = useState(() => location.state?.data ? location.state.data : {});
 
@@ -100,18 +101,29 @@ export default function HotelOrderFlow(){
 
     async function submit(){
         // do something with data
+        logger.log('submit:', { data });
+    }
+
+    async function close(){
+        navigate('/new', {
+            replace: true,
+            state: { data }
+        })
     }
 
     return (<>
         {<Step
             data={data}
             upsertFields={upsertFields}
+
             next={next}
             back={back}
 
+            submit={submit}
+            close={close}
+
             hotelsListHandler={hotelsListHandler}
             roomsListHandler={roomsListHandler}
-
         />}
     </>);
 }
