@@ -2,8 +2,11 @@ const {Schema, model} = require('mongoose');
 
 const CitySchema = new Schema(
     {
+        country: {
+            type: String, // `State`
+        },
         name: {
-            type: String, // `State, City`
+            type: String, // `State, City` or `City`
             unique: true,
             required: true,
         },
