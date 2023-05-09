@@ -1,7 +1,7 @@
 const {Schema, model} = require('mongoose');
 
 
-const ServiceSchema = new Schema({
+const TicketSchema = new Schema({
     flight: {
         type: Schema.Types.ObjectId,
         ref: 'Flight',
@@ -36,11 +36,11 @@ const ServiceSchema = new Schema({
 });
 
 
-ServiceSchema.plugin(require('mongoose-unique-validator'));
-ServiceSchema.plugin(require('../../log-plugin'))
+TicketSchema.plugin(require('mongoose-unique-validator'));
+TicketSchema.plugin(require('../../log-plugin'))
 
 
-ServiceSchema.statics.privateFiles = function(){
+TicketSchema.statics.privateFiles = function(){
     return [];
 }
 
@@ -88,4 +88,4 @@ ServiceSchema.statics.privateFiles = function(){
     return this;
 }*/
 
-module.exports = model('Flight/Service', ServiceSchema);
+module.exports = model('Flight/Ticket', TicketSchema);

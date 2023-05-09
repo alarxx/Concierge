@@ -2,9 +2,9 @@ const {Schema, model} = require('mongoose');
 
 
 const BookingSchema = new Schema({
-    'flight/service': {
+    'flight/ticket': {
         type: Schema.Types.ObjectId,
-        ref: 'Flight/Service',
+        ref: 'Flight/Ticket',
         required: true,
         immutable: true,
     },
