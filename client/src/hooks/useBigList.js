@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import Logger from "../internal/Logger";
-
+import setIds from '../internal/setIds';
 
 export default function useBigList(api, opts={}){
     const logger = useMemo(()=>new Logger('useBigList'), []);
@@ -30,6 +30,10 @@ export default function useBigList(api, opts={}){
 
     const [requestCache, setRequestCache] = useState({});
     const [hasMore, setHasMore] = useState(true);
+
+    // Нужно учитывать, что есть прошлый выбранный элемент
+    // Лучшим решением будет хранить состояние листа где-то наверху, чтобы не терять состояние.
+    // const [firstLoading, setFirstLoading] = useState(true);
 
     const [notFound, setNotFound] = useState(false);
     useEffect(()=>{
@@ -72,6 +76,8 @@ export default function useBigList(api, opts={}){
             .then(async response => {
                 const json = await response.json();
 
+                setIds(json);
+
                 logger.log({ json }); // json = [{}, {}] array
 
                 // Если вернулось меньше элементов, чем мы запросили, это значит, что больше элементов в БД нет
@@ -81,6 +87,7 @@ export default function useBigList(api, opts={}){
 
                 // [{}, {}] добавляем items-ы под индексом startIndex + индекс элемента в массиве который нам вернулся
                 const add = {};
+
                 json.forEach((hotel, index) => {
                     add[startIndex + index] = hotel;
                 });

@@ -49,6 +49,6 @@ export default function HotelOrderFlow(){
     const {Step, back, next} = useMultistep(Steps);
 
     return (<>
-        {<Step { ...data} upsertFields={upsertFields} next={next} back={back} />}
+        {<Step { ...data} data={data} upsertFields={upsertFields} next={next} back={back} />}
     </>);
 }

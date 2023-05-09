@@ -19,7 +19,7 @@ import styles from "../hotel.module.css";
 
 
 function getUrl(skip, limit, filter={}){
-    return `/api/hotel/pagination/?` + new URLSearchParams({
+    return `/api/hotel/room/pagination/?` + new URLSearchParams({
         skip,
         limit,
         sort: 'createdAt',
@@ -27,13 +27,11 @@ function getUrl(skip, limit, filter={}){
     });
 }
 
-export default function HotelRoomsList({ hotel={}, upsertData= f=>f, next= f=>f, back= f=>f }){
+
+export default function HotelRoomsList({ hotel={}, upsertFields=f=>f, next= f=>f, back= f=>f }){
     // Логгер просто будет прописывать из какого модуля вызван лог
     // Плюс в production logger не будет выводить в консоль ничего.
     const logger = useMemo(()=>new Logger('HotelRoomsList'), []);
-
-    const location = useLocation();
-    const navigate = useNavigate();
 
     const [items, setItems] = useState([]);
 
@@ -42,7 +40,7 @@ export default function HotelRoomsList({ hotel={}, upsertData= f=>f, next= f=>f,
 
     function onRoomClick(item){
         logger.log("onHotelClick:", item);
-        upsertData({ room: item });
+        upsertFields({ room: item });
         next();
     }
 
@@ -54,7 +52,7 @@ export default function HotelRoomsList({ hotel={}, upsertData= f=>f, next= f=>f,
         logger.log(getUrl(skip, limit));
 
 
-        const response = await fetch(getUrl(skip, limit));
+        const response = await fetch(getUrl(skip, limit, {hotel: hotel.id}));
 
         const data = await response.json();
 

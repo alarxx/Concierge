@@ -15,7 +15,7 @@ import Box from "../../../../shared/ui/box/Box";
 
 import BackIcon from '../../../../assets/icons/arrow-left.svg';
 
-export default function HotelConfirm({next=f=>f, back=f=>f}) {
+export default function HotelConfirm({ hotel={}, room={}, next=f=>f, back=f=>f}) {
     return(<>
         <NavbarPanel
             LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => back()} />}

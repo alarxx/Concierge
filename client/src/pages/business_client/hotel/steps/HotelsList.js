@@ -1,18 +1,24 @@
 import React, {useMemo} from 'react';
+import {useNavigate} from "react-router-dom";
+
 import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
 import {FixedSizeList} from "react-window";
+
 import Logger from "../../../../internal/Logger";
-import {useNavigate} from "react-router-dom";
+
 import useBigList from "../../../../hooks/useBigList";
+
 import HotelRoomCard from "../../../../widgets/hotel/hotel_room_card/HotelRoomCard";
 import NavbarPanel from "../../../../widgets/navbar_panel/NavbarPanel";
+import NavigationPanel from "../../../../widgets/navigation_panel/NavigationPanel";
+
 import NavbarLeft from "../../../../shared/ui/navbar/NavbarLeft";
-import BackIcon from "../../../../assets/icons/arrow-left.svg";
 import Box from "../../../../shared/ui/box/Box";
 import BottomControl from "../../../../shared/ui/bottom_control/BottomControl";
 import Button from "../../../../shared/ui/button/Button";
-import NavigationPanel from "../../../../widgets/navigation_panel/NavigationPanel";
+
+import BackIcon from "../../../../assets/icons/arrow-left.svg";
 
 function MyList({
                     items,
@@ -60,7 +66,7 @@ function MyList({
     </>);
 }
 
-export default function HotelsList({ city='', hotel={}, upsertData=f=>f, next=f=>f }){
+export default function HotelsList({ data={}, city='', hotel={}, upsertFields=f=>f, next=f=>f }){
     // Логгер просто будет прописывать из какого модуля вызван лог
     // Плюс в production logger не будет выводить в консоль ничего.
     const logger = useMemo(()=>new Logger('HotelsList'), []);
@@ -72,7 +78,7 @@ export default function HotelsList({ city='', hotel={}, upsertData=f=>f, next=f=
 
     function onHotelClick(item){
         logger.log("onHotelClick:", item);
-        upsertData({ hotel: item });
+        upsertFields({ hotel: item });
         next();
     }
 
@@ -106,7 +112,7 @@ export default function HotelsList({ city='', hotel={}, upsertData=f=>f, next=f=
             <NavbarPanel
                 LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => navigate('/new', {
                     replace: true,
-                    state: { data: { city } }
+                    state: { data }
                 })} />}
 
                 title={'Отели'}

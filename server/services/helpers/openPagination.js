@@ -1,7 +1,5 @@
 const ApiError = require("../../exceptions/ApiError");
 const checkNecessaryFields = require("./checkNecessaryFields");
-const ModelService = require("./ModelService");
-const {Company} = require("../../models/models-manager");
 
 module.exports = function(Model, dto) {
 

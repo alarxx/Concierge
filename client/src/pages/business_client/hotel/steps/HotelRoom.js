@@ -15,7 +15,7 @@ import NavbarLeft from "../../../../shared/ui/navbar/NavbarLeft";
 
 import BackIcon from "../../../../assets/icons/arrow-left.svg";
 
-export default function HotelRoom({ back=f=>f, next=f=>f }) {
+export default function HotelRoom({ room={}, back=f=>f, next=f=>f }) {
     return(<>
         <NavbarPanel
             LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => back()} />}
