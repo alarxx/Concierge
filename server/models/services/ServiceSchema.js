@@ -1,4 +1,4 @@
-import {Schema} from "mongoose";
+const {Schema} = require("mongoose");
 
 /**
  * По умолчанию еще будет иметь _id
