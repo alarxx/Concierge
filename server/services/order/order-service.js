@@ -21,7 +21,7 @@ async function findByQueryParams(filters, user) {
     async function returnOrders(orders){
         return await Promise.all(orders.map(async o => {
             await bookingsService.populateBookings(o);
-            return orderDto(o);
+            return orderDto(o, user);
         }));
     }
 
@@ -85,7 +85,7 @@ async function createOne(body, files, user) {
 
     await modelService.saveWithFiles(order, files, { user });
 
-    return orderDto(order);
+    return orderDto(order, user);
 }
 
 
@@ -131,7 +131,7 @@ async function updateOne(body, files, user) {
 
     await modelService.saveWithFiles(order, files, { user });
 
-    return orderDto(order);
+    return orderDto(order, user);
 }
 
 async function deleteOne(body, user) {
@@ -160,7 +160,7 @@ async function deleteOne(body, user) {
 
     await modelService.deleteAttachedFiles(order);
 
-    return orderDto(order);
+    return orderDto(order, user);
 }
 
 
