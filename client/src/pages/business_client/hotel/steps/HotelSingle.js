@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 import {useNavigate} from "react-router-dom";
 
@@ -15,8 +15,20 @@ import HotelChoiceRoom from "../../../../widgets/hotel/hotel_choice_room/HotelCh
 import HotelPolitics from "../../../../widgets/hotel/hotel_politics/HotelPolitics";
 import HotelDetails from "../../../../widgets/hotel/hotel_details/HotelDetails";
 import NavbarLeft from "../../../../shared/ui/navbar/NavbarLeft";
+import useBigList from "../../../../hooks/useBigList";
 
-export default function HotelSingle({ hotel={}, next=f=>f, back=f=>f, }) {
+function getUrl(skip, limit, filter={}){
+    return `/api/hotel/room/pagination/?` + new URLSearchParams({
+        skip,
+        limit,
+        sort: 'createdAt',
+        ...filter,
+    });
+}
+
+export default function HotelSingle({ data={}, roomsListHandler={}, upsertFields=f=>f, next=f=>f, back=f=>f, }) {
+
+    const { hotel } = data;
 
     const navigate = useNavigate();
 

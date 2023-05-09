@@ -1,14 +1,9 @@
 import React, {useMemo} from 'react';
 import {useNavigate} from "react-router-dom";
 
-import InfiniteLoader from "react-window-infinite-loader";
-import AutoSizer from "react-virtualized-auto-sizer";
-import {FixedSizeList} from "react-window";
-
 import Logger from "../../../../internal/Logger";
 
-import useBigList from "../../../../hooks/useBigList";
-
+import HotelCard from "../../../../widgets/hotel/hotel_card/HotelCard";
 import HotelRoomCard from "../../../../widgets/hotel/hotel_room_card/HotelRoomCard";
 import NavbarPanel from "../../../../widgets/navbar_panel/NavbarPanel";
 import NavigationPanel from "../../../../widgets/navigation_panel/NavigationPanel";
@@ -20,61 +15,19 @@ import Button from "../../../../shared/ui/button/Button";
 
 import BackIcon from "../../../../assets/icons/arrow-left.svg";
 
-function MyList({
-                    items,
-                    isItemLoaded,
-                    loadMoreItems,
-                    itemCountLoader,
-                    itemCountList,
-                    notFound=false,
+import MyList from "../../list/MyList";
 
-                    itemSize=290,
 
-                    children
-              }){
+export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields=f=>f, next=f=>f }){
+    const { city, hotel } = data;
 
-    if(notFound){
-        return (<>
-            <p>Not found</p>
-        </>);
-    }
-
-    return (<>
-        <InfiniteLoader
-            isItemLoaded={isItemLoaded}
-            loadMoreItems={loadMoreItems}
-            itemCount={itemCountLoader}
-        >
-            {({onItemsRendered, ref}) => (<>
-                <AutoSizer ref={ref}>
-                    {({ height, width }) => (
-                        <FixedSizeList
-                            className={'List'}
-                            width={width}
-                            height={height}
-                            itemCount={itemCountList}
-                            itemSize={itemSize}
-                            ref={ref}
-                            onItemsRendered={onItemsRendered}
-                        >
-                            {children}
-                        </FixedSizeList>
-                    )}
-                </AutoSizer>
-            </>)}
-        </InfiniteLoader>
-    </>);
-}
-
-export default function HotelsList({ data={}, city='', hotel={}, upsertFields=f=>f, next=f=>f }){
     // Логгер просто будет прописывать из какого модуля вызван лог
     // Плюс в production logger не будет выводить в консоль ничего.
     const logger = useMemo(()=>new Logger('HotelsList'), []);
 
     const navigate = useNavigate();
 
-    const bigList = useBigList('/api/hotel/pagination/', { city });
-    const { items } = bigList;
+    const { items } = hotelsListHandler;
 
     function onHotelClick(item){
         logger.log("onHotelClick:", item);
@@ -96,7 +49,7 @@ export default function HotelsList({ data={}, city='', hotel={}, upsertFields=f=
 
         return (<>
             <div style={style}>
-                <HotelRoomCard
+                <HotelCard
                     title={item.name}
                     price={item.price ? item.price : 'от 50,000 KZT'}
                     addInfo={'2 взрослых, 2 ночи'}
@@ -119,7 +72,7 @@ export default function HotelsList({ data={}, city='', hotel={}, upsertFields=f=
             />
 
             <Box>
-                <MyList {...bigList} itemSize={290}>
+                <MyList {...hotelsListHandler} itemSize={290}>
                     {Row}
                 </MyList>
             </Box>

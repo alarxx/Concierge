@@ -2,6 +2,9 @@ import React, {useEffect, useMemo, useState} from 'react';
 import Logger from "../internal/Logger";
 import setIds from '../internal/setIds';
 
+/**
+ * Пока что в реализации требует мемоизации opts
+ * */
 export default function useBigList(api, opts={}){
     const logger = useMemo(()=>new Logger('useBigList'), []);
 
@@ -36,14 +39,23 @@ export default function useBigList(api, opts={}){
     // const [firstLoading, setFirstLoading] = useState(true);
 
     const [notFound, setNotFound] = useState(false);
+
     useEffect(()=>{
         logger.log(`Has more ${hasMore}. Not found ${Object.keys(items)}.`);
         if(!hasMore && Object.keys(items).length === 0){
             setNotFound(true);
             logger.log("Has not more. Not found.");
         }
-
     }, [hasMore])
+
+
+    useEffect(()=>{
+        logger.log(api, opts);
+        setItems({});
+        setRequestCache({});
+        setHasMore(true);
+        setNotFound(false);
+    }, [api, opts])
 
     function isItemLoaded({index}){
         return Boolean(items[index]);
@@ -74,6 +86,11 @@ export default function useBigList(api, opts={}){
 
         return await fetch(getUrl(startIndex, length, opts))
             .then(async response => {
+                logger.log(response);
+                if(response.status < 200 || response.status >= 300){
+                    return;
+                }
+
                 const json = await response.json();
 
                 setIds(json);
@@ -110,5 +127,6 @@ export default function useBigList(api, opts={}){
         itemCountLoader,
         itemCountList,
         notFound,
+        opts,
     });
 }

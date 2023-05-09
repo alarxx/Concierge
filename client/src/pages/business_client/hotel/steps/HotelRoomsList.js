@@ -16,27 +16,18 @@ import NavbarLeft from "../../../../shared/ui/navbar/NavbarLeft";
 import BackIcon from "../../../../assets/icons/arrow-left.svg";
 
 import styles from "../hotel.module.css";
+import HotelRoomCard from "../../../../widgets/hotel/hotel_room_card/HotelRoomCard";
+import MyList from "../../list/MyList";
 
 
-function getUrl(skip, limit, filter={}){
-    return `/api/hotel/room/pagination/?` + new URLSearchParams({
-        skip,
-        limit,
-        sort: 'createdAt',
-        ...filter,
-    });
-}
+export default function HotelRoomsList({ data={}, roomsListHandler={}, upsertFields=f=>f, next=f=>f, back=f=>f }){
 
-
-export default function HotelRoomsList({ hotel={}, upsertFields=f=>f, next= f=>f, back= f=>f }){
     // Логгер просто будет прописывать из какого модуля вызван лог
     // Плюс в production logger не будет выводить в консоль ничего.
     const logger = useMemo(()=>new Logger('HotelRoomsList'), []);
 
-    const [items, setItems] = useState([]);
-
-    const [skip, setSkip] = useState(0);
-    const [hasMore, setHasMore] = useState(true);
+    const {hotel} = data;
+    const {items} = roomsListHandler;
 
     function onRoomClick(item){
         logger.log("onHotelClick:", item);
@@ -44,62 +35,40 @@ export default function HotelRoomsList({ hotel={}, upsertFields=f=>f, next= f=>f
         next();
     }
 
-    const loadMore = async (__skip) => {
-        logger.log("__skip:", __skip);
+    function Row({ index, style }){
+        const item = items[index];
 
-        const limit = 5;
-
-        logger.log(getUrl(skip, limit));
-
-
-        const response = await fetch(getUrl(skip, limit, {hotel: hotel.id}));
-
-        const data = await response.json();
-
-        // console.log(data); // Logging the data to the console
-        // Do something with the data
-        if (data.length < limit) {
-            setHasMore(false);
+        // logger.log(index, item);
+        if(!item){
+            return (<>
+                <div style={style}>
+                    <p>Loading...</p>
+                </div>
+            </>);
         }
-        logger.log('isLoadMore',hasMore);
 
-        setItems(() => [
-            ...data.reverse(),
-            ...items
-        ]);
-
-        logger.log(items);
-
-        setSkip(skip + limit);
-    };
+        return (<>
+            <div style={style}>
+                <HotelRoomCard
+                    title={item.name}
+                    price={item.price ? item.price : 'от 50,000 KZT'}
+                    addInfo={'2 взрослых, 2 ночи'}
+                    onClick={e => onRoomClick(item)}
+                />
+            </div>
+        </>);
+    }
 
     return (
         <>
             <NavbarPanel
                 LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => back()} />}
-                title={'Отели'}
+                title={'Номера'}
             />
             <Box>
-                <h1>Infinite Scroll</h1>
-
-                <div className={styles.hotel__list} style={{ height: "100%", overflow: 'auto' }}>
-                    <InfiniteScroll
-                        pageStart={0}
-                        loadMore={loadMore}
-                        hasMore={hasMore}
-                        loader={
-                            <div className="loader" key={0}>
-                                Loading ...
-                            </div>
-                        }
-                        isReverse={true}
-                        useWindow={false}
-                    >
-                        {items.map((item, i) => (
-                            <HotelCard key={i} title={item.name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} onClick={e => onRoomClick(item)} />
-                        ))}
-                    </InfiniteScroll>
-                </div>
+                <MyList {...roomsListHandler} itemSize={290}>
+                    {Row}
+                </MyList>
             </Box>
 
             <BottomControl>

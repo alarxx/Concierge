@@ -15,7 +15,8 @@ import Box from "../../../../shared/ui/box/Box";
 
 import BackIcon from '../../../../assets/icons/arrow-left.svg';
 
-export default function HotelConfirm({ hotel={}, room={}, next=f=>f, back=f=>f}) {
+export default function HotelConfirm({ data={}, submit=f=>f, next=f=>f, back=f=>f}) {
+    const {hotel, room} = data;
     return(<>
         <NavbarPanel
             LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => back()} />}
@@ -32,7 +33,7 @@ export default function HotelConfirm({ hotel={}, room={}, next=f=>f, back=f=>f})
         <BottomControl>
             <Button variant={'control'} onClick={e => {
                 console.log("HotelConfirm.js: submit");
-                next();
+                submit();
             }}>Подтвердить заявку</Button>
         </BottomControl>
 

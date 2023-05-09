@@ -11,6 +11,7 @@ import HotelSingle from "./steps/HotelSingle";
 import HotelRoomsList from "./steps/HotelRoomsList";
 import HotelRoom from "./steps/HotelRoom";
 import HotelConfirm from "./steps/HotelConfirm";
+import useBigList from "../../../hooks/useBigList";
 
 const Steps = [
     HotelsList,
@@ -19,6 +20,45 @@ const Steps = [
     HotelRoom,
     HotelConfirm,
 ];
+
+function useRoomsListHandler(hotel){
+    // const [hotelRooms, setHotelRooms] = useState({});
+
+    const opts = useMemo(()=>{
+        return { hotel: hotel?.id ? hotel.id : '123' };
+    }, [hotel])
+
+    const roomsListHandler = useBigList('/api/hotel/room/pagination/', opts);
+
+    // Оптимизация загрузки ? Не грузить уже загруженное
+    // useEffect(()=>{
+    //     setHotelRooms(prev => {
+    //         return ({...prev, hotelsListHandler});
+    //     })
+    // }, [hotel]);
+
+    const { items, loadMoreItems } = roomsListHandler;
+
+    useEffect(()=>{
+        if(!loadMoreItems){
+            return;
+        }
+
+        loadMoreItems(0, 5);
+    }, [hotel]);
+
+    return roomsListHandler; // [hotel.id];
+}
+function useHotelsListHandler(city){
+
+    const opts = useMemo(()=>{
+        return { city };
+    }, [city])
+
+    const roomsListHandler = useBigList('/api/hotel/pagination/', opts);
+
+    return roomsListHandler; // [hotel.id];
+}
 
 export default function HotelOrderFlow(){
     // Логгер просто будет прописывать из какого модуля вызван лог
@@ -48,7 +88,30 @@ export default function HotelOrderFlow(){
 
     const {Step, back, next} = useMultistep(Steps);
 
+    /* *
+    * city всегда должен быть определен,
+    * hotel может быть null,
+    * */
+    const { city, hotel } = data;
+
+    const hotelsListHandler = useHotelsListHandler(city);
+
+    const roomsListHandler = useRoomsListHandler(hotel);
+
+    async function submit(){
+        // do something with data
+    }
+
     return (<>
-        {<Step { ...data} data={data} upsertFields={upsertFields} next={next} back={back} />}
+        {<Step
+            data={data}
+            upsertFields={upsertFields}
+            next={next}
+            back={back}
+
+            hotelsListHandler={hotelsListHandler}
+            roomsListHandler={roomsListHandler}
+
+        />}
     </>);
 }
