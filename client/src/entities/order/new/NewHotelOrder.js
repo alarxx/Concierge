@@ -23,9 +23,8 @@ export default function NewHotelOrder({ data={}, upsertFields=f=>f }){
                     <MyInput placeHolder='Дата прилета' type='date' name='arrival_date' data={data} upsertFields={upsertFields} />
                     <MyInput placeHolder='Дата отлета' type='date' name='departure_date' data={data} upsertFields={upsertFields} />
                 </GroupInput>
-                <MyInput placeHolder='1 Номер для' type='text' name='number_of_adults' data={data} upsertFields={upsertFields} />
-                <MyInput placeHolder='Питание' type='text' name='meals' data={data} upsertFields={upsertFields} />
-                {/*<MyInput placeHolder='Гражданство' type='text' name='citizenship' data={data} upsertFields={upsertFields} />*/}
+                <MyInput placeHolder='1 Номер для' type='number' name='number_of_adults' data={data} upsertFields={upsertFields} />
+                <MyInput placeHolder='Дети' type='number' name='number_of_children' data={data} upsertFields={upsertFields} />
 
                 <Button type={'submit'}>Поиск отеля</Button>
             </form>
