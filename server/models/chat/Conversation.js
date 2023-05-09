@@ -10,7 +10,7 @@ const ConversationSchema = new Schema(
         },
         type: {
             type: String,
-            enum: ['private_group', 'public_group'],
+            enum: ['direct', 'private_group', 'public_group'],
             required: true,
             default: 'private_group'
         },
