@@ -1,0 +1,16 @@
+.chatDay {
+    width:fit-content;
+    padding: 8px 16px;
+    background: rgba(30, 38, 47, 0.08);
+    border-radius: 20px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #1E262F;
+    /* margin-top: 14px; */
+    margin-bottom: 14px;
+}
+.chatDay__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
