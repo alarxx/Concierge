@@ -6,11 +6,11 @@ import Logger from "../../../internal/Logger";
 
 import useMultistep from "../../../hooks/useMultistep";
 
-import HotelsList from "../../../features/hotel/HotelsList";
-import HotelSingle from "../../../features/hotel/HotelSingle";
-import HotelRoomsList from "../../../features/hotel/HotelRoomsList";
-import HotelRoom from "../../../features/hotel/HotelRoom";
-import HotelConfirm from "../../../features/hotel/HotelConfirm";
+import HotelsList from "./steps/HotelsList";
+import HotelSingle from "./steps/HotelSingle";
+import HotelRoomsList from "./steps/HotelRoomsList";
+import HotelRoom from "./steps/HotelRoom";
+import HotelConfirm from "./steps/HotelConfirm";
 
 const Steps = [
     HotelsList,
@@ -46,7 +46,7 @@ export default function HotelOrderFlow(){
         setData(prev => ({...prev, ...fields}));
     }
 
-    const {currentStepIndex, Step, isFirstStep, isLastStep, back, next, goTo} = useMultistep(Steps);
+    const {Step, back, next} = useMultistep(Steps);
 
     return (<>
         {<Step { ...data} upsertFields={upsertFields} next={next} back={back} />}

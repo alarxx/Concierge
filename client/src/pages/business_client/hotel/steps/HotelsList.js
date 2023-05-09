@@ -2,17 +2,17 @@ import React, {useMemo} from 'react';
 import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
 import {FixedSizeList} from "react-window";
-import Logger from "../../internal/Logger";
+import Logger from "../../../../internal/Logger";
 import {useNavigate} from "react-router-dom";
-import useBigList from "../../hooks/useBigList";
-import HotelRoomCard from "../../widgets/hotel/hotel_room_card/HotelRoomCard";
-import NavbarPanel from "../../widgets/navbar_panel/NavbarPanel";
-import NavbarLeft from "../../shared/ui/navbar/NavbarLeft";
-import BackIcon from "../../assets/icons/arrow-left.svg";
-import Box from "../../shared/ui/box/Box";
-import BottomControl from "../../shared/ui/bottom_control/BottomControl";
-import Button from "../../shared/ui/button/Button";
-import NavigationPanel from "../../widgets/navigation_panel/NavigationPanel";
+import useBigList from "../../../../hooks/useBigList";
+import HotelRoomCard from "../../../../widgets/hotel/hotel_room_card/HotelRoomCard";
+import NavbarPanel from "../../../../widgets/navbar_panel/NavbarPanel";
+import NavbarLeft from "../../../../shared/ui/navbar/NavbarLeft";
+import BackIcon from "../../../../assets/icons/arrow-left.svg";
+import Box from "../../../../shared/ui/box/Box";
+import BottomControl from "../../../../shared/ui/bottom_control/BottomControl";
+import Button from "../../../../shared/ui/button/Button";
+import NavigationPanel from "../../../../widgets/navigation_panel/NavigationPanel";
 
 function MyList({
                   items,
@@ -61,7 +61,7 @@ export default function HotelsList({ city='', hotel={}, upsertData=f=>f, next=f=
 
     const navigate = useNavigate();
 
-    const bigList = useBigList('/api/hotel/pagination/'); // , { city });
+    const bigList = useBigList('/api/steps/pagination/'); // , { city });
     const { items } = bigList;
 
     function onHotelClick(item){

@@ -23,7 +23,7 @@ export default function NewHotelOrder({ data={}, upsertFields=f=>f }){
                 <MyInput placeHolder='Питание' type='text' name='meals' data={data} upsertFields={upsertFields} />
                 {/*<MyInput placeHolder='Гражданство' type='text' name='citizenship' data={data} upsertFields={upsertFields} />*/}
 
-                <Button onClick={e => navigate('/new/hotel', { replace: false, state: { data } })}>Поиск отеля</Button>
+                <Button onClick={e => navigate('/new/steps', { replace: false, state: { data } })}>Поиск отеля</Button>
             </form>
         </div>
     );

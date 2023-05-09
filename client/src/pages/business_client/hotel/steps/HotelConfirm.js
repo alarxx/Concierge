@@ -2,10 +2,10 @@ import React from "react";
 
 import NavbarPanel from "../../widgets/navbar_panel/NavbarPanel";
 import NavigationPanel from "../../widgets/navigation_panel/NavigationPanel";
-import HotelPolitics from "../../widgets/hotel/hotel_politics/HotelPolitics";
-import HotelRoomPrice from "../../widgets/hotel/hotel_room_price/HotelRoomPrice";
-import HotelRoomDetails from "../../widgets/hotel/hotel_room_details/HotelRoomDetails";
-import HotelOrderDetails from "../../widgets/hotel/hotel_order_details/HotelOrderDetails";
+import HotelPolitics from "../../widgets/steps/hotel_politics/HotelPolitics";
+import HotelRoomPrice from "../../widgets/steps/hotel_room_price/HotelRoomPrice";
+import HotelRoomDetails from "../../widgets/steps/hotel_room_details/HotelRoomDetails";
+import HotelOrderDetails from "../../widgets/steps/hotel_order_details/HotelOrderDetails";
 
 import NavbarLeft from "../../shared/ui/navbar/NavbarLeft";
 import BottomControl from "../../shared/ui/bottom_control/BottomControl";

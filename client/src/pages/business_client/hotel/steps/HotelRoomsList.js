@@ -1,22 +1,22 @@
 import React, {useState, useEffect, useMemo} from 'react';
-
-import NavbarPanel from '../../widgets/navbar_panel/NavbarPanel';
-import Box from '../../shared/ui/box/Box'
-import NavigationPanel from '../../widgets/navigation_panel/NavigationPanel';
-import Logger from "../../internal/Logger";
-import useBigList from "../../hooks/useBigList";
-import AutoSizer from "react-virtualized-auto-sizer";
-import HotelCard from "../../widgets/hotel/hotel_card/HotelCard";
-import BottomControl from "../../shared/ui/bottom_control/BottomControl";
-import Button from "../../shared/ui/button/Button";
-import InfiniteLoader from "react-window-infinite-loader";
-import {FixedSizeList} from "react-window";
 import {useLocation, useNavigate} from "react-router-dom";
-import NavbarLeft from "../../shared/ui/navbar/NavbarLeft";
-import BackIcon from "../../assets/icons/arrow-left.svg";
-import HotelRoomCard from "../../widgets/hotel/hotel_room_card/HotelRoomCard";
-import styles from "./hotel.module.css";
 import InfiniteScroll from "react-infinite-scroller";
+
+import Logger from "../../../../internal/Logger";
+
+import NavbarPanel from '../../../../widgets/navbar_panel/NavbarPanel';
+import NavigationPanel from '../../../../widgets/navigation_panel/NavigationPanel';
+import HotelCard from "../../../../widgets/hotel/hotel_card/HotelCard";
+
+import Box from '../../../../shared/ui/box/Box'
+import BottomControl from "../../../../shared/ui/bottom_control/BottomControl";
+import Button from "../../../../shared/ui/button/Button";
+import NavbarLeft from "../../../../shared/ui/navbar/NavbarLeft";
+
+import BackIcon from "../../../../assets/icons/arrow-left.svg";
+
+import styles from "../hotel.module.css";
+
 
 function getUrl(skip, limit, filter={}){
     return `/api/hotel/pagination/?` + new URLSearchParams({
