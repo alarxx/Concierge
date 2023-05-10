@@ -1,0 +1,12 @@
+.Badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 8px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 12px;
+    text-align: center;
+    background: #2086E5;
+    color: #FFFFFF;
+}

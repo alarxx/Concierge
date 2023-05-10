@@ -12,6 +12,7 @@ import Stars from "../../../shared/ui/stars/Stars";
 import Chip from "../../../shared/ui/chip/Chip";
 import CardHeader from "../../../shared/ui/card/CardHeader";
 import CardBody from "../../../shared/ui/card/CardBody";
+import Badge from "../../../shared/ui/badge/Badge";
 
 
 export default function ChatItem({title='', onClick=f=>f}) {
@@ -25,7 +26,7 @@ export default function ChatItem({title='', onClick=f=>f}) {
                         <div><Typography size={16} weight={600} bottom={2}>Астана, Hilton</Typography></div>
                         <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>Заказ #6723</Typography></div>
                     </div>
-                    <Chip text={'22'} variant={'blue'} />
+                    <Badge text={'22'} />
                 </GroupFlex>
             </CardBody>
             <CardBody>
