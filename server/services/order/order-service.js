@@ -7,6 +7,7 @@ const logger = require('../../log/logger')('order-service');
 
 const ModelService = require("../helpers/ModelService");
 const bookingsService = require('../bookings/bookings-service');
+const chatService = require('../chat/chat-service');
 
 const checkNecessaryFields = require("../helpers/checkNecessaryFields");
 
@@ -86,8 +87,12 @@ async function createOne(body, files, user) {
     await modelService.saveWithFiles(order, files, { user });
 
     // Здесь я должен создать чат
+    const chat = await chatService.createConversationWithParticipants([user.id]);
 
-    return orderDto(order, user);
+    return ({
+        order: orderDto(order, user),
+        ...chat
+    });
 }
 
 

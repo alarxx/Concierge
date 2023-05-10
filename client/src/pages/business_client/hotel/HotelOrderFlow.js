@@ -102,6 +102,32 @@ export default function HotelOrderFlow(){
     async function submit(){
         // do something with data
         logger.log('submit:', { data });
+
+        const type = 'hotel/booking';
+        const order = ({
+            bookings: [
+                {
+                    type,
+                    [type]: {
+                        'hotel/room': data.room.id,
+                    }
+                }
+            ]
+        });
+
+        const response = await fetch('/api/order', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(order)
+        });
+
+        const json = await response.json();
+
+        logger.log('response', response)
+        logger.log({json});
+        navigate('/orders');
         /*
         // Order example
         {

@@ -91,11 +91,12 @@ async function startConversation(user, users=[], name=`Conversation ${Date.now()
 }
 
 /**
+ * Здесь не должно быть ошибок.
  * При создании заказа нужно будет создать пустую беседу с одним участником - заказчиком.
  * */
-async function createConversationWithParticipants(users=[], name=`Conversation ${Date.now()}`, type='private_group'){
-    if(!users || users.length === 0){
-        throw ApiError.BadRequest('users are not provided. Cannot create conversation without participants');
+async function createConversationWithParticipants(userIds=[], name=`Conversation ${Date.now()}`, type='private_group'){
+    if(!userIds || userIds.length === 0){
+        throw ApiError.ServerError('users are not provided. Cannot create conversation without participants');
     }
 
     const conversation = new Conversation({
@@ -103,9 +104,9 @@ async function createConversationWithParticipants(users=[], name=`Conversation $
         type
     });
 
-    const participants = users.map(_user => new Participant({
+    const participants = userIds.map(_userId => new Participant({
         conversation: conversation.id,
-        user: _user.id,
+        user: _userId,
         role: 'participant'
     }));
 
