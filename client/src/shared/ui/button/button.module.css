@@ -22,33 +22,36 @@
 .btn:hover {
     opacity: 95%;
 }
-.btn-main {
+.btn--main {
     background-color: #1E262F;
     color: white;
 }
-.btn-second {
+.btn--second {
     background-color: #2086E5;
     color: white;
 }
-.btn-control {
+.btn--control {
     background-color: #1E262F;
     border-radius: 40px;
     color: white;
     font-weight: 600;
 }
-.btn-small {
+.btn--small {
     font-weight: 600;
     font-size: 14px;
     padding: 10px 20px;
 }
-.btn-outline {
+.btn--outline {
     background: none;
     border: 1px solid #1E262F;
     color: #1E262F;
 }
-.btn-outline svg path {
+.btn--outline svg path {
     fill: #1E262F;
 }
-.btn-big {
+.btn--big {
     /*font-weight: 800;*/
+}
+.btn--badge {
+    position: relative;
 }

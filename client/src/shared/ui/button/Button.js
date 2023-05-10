@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import styles from './button.module.css' 
 
-export default function Button({children, type='', variant='main', size='', top, bottom, onClick=f=>f}){
+export default function Button({children, type='', variant='main', size='', top, bottom, badge=false, onClick=f=>f}){
 
     const style = {
         marginTop: top,
@@ -34,8 +34,9 @@ export default function Button({children, type='', variant='main', size='', top,
             className={`
                 ${styles.btn} ${
                     // variant === 'main' ? styles['btn-main'] : 
-                    styles['btn-'+btnVariant]}
-                ${styles['btn-'+ size] }
+                    styles['btn--'+btnVariant]}
+                ${styles['btn--'+ size] }
+                ${badge ? styles['btn--badge'] : ''}
             `} 
             onClick={onClick}
             type={type}
