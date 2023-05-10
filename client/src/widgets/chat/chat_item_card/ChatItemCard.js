@@ -13,25 +13,33 @@ import Chip from "../../../shared/ui/chip/Chip";
 import CardHeader from "../../../shared/ui/card/CardHeader";
 import CardBody from "../../../shared/ui/card/CardBody";
 import Badge from "../../../shared/ui/badge/Badge";
+import Avatar from "../../../shared/ui/avatar/Avatar";
 
+export default function ChatItemCard({title='', onClick= f=>f}) {
 
-export default function ChatItem({title='', onClick=f=>f}) {
+    const style = {
+        width: '100%',
+        display: 'flex',
 
+    }
 
     return(<>
         <CardService onClick={onClick}>
             <CardBody>
-                <GroupFlex align={'ais'} justify={'jcsb'}>
-                    <div>
-                        <div><Typography size={16} weight={600} bottom={2}>Астана, Hilton</Typography></div>
-                        <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>Заказ #6723</Typography></div>
+                <div style={style}>
+                    <Avatar right={12} />
+                    <div style={{width: '100%'}}>
+                        <GroupFlex align={'ais'} justify={'jcsb'}>
+                            <div>
+                                <div><Typography size={16} weight={600} bottom={2}>Астана, Hilton</Typography></div>
+                                <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>Заказ #6723</Typography></div>
+                            </div>
+                            <Badge text={'22'} />
+                        </GroupFlex>
+                        <div>
+                            <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>Последнее сообщение</Typography>
+                        </div>
                     </div>
-                    <Badge text={'22'} />
-                </GroupFlex>
-            </CardBody>
-            <CardBody>
-                <div>
-                    <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>Последнее сообщение</Typography>
                 </div>
             </CardBody>
         </CardService>
