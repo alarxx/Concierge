@@ -1,0 +1,33 @@
+.arrows {
+    color: white;
+    display: flex;
+    font-size: 30px;
+    justify-content: space-between;
+    height: 100%;
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    z-index: 1;
+}
+
+.arrow {
+    height: 30px;
+    width: 30px;
+}
+.arrow:hover {
+    cursor: pointer;
+}
+
+.left {
+    background-image: url('../../../../assets/icons/arrow-left.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-left: 5px;
+}
+
+.right {
+    background-image: url('../../../../assets/icons/arrow-right.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-right: 5px;
+}

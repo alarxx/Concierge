@@ -1,0 +1,20 @@
+.dots {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+.dot {
+    background-color: #e7e7e7;
+    border-radius: 5px;
+    height: 10px;
+    margin: 5px;
+    width: 10px;
+}
+.selected {
+    background-color: green;
+}

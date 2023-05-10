@@ -1,6 +1,7 @@
 import React from 'react';
 
-import styles from './gallery.module.css' 
+import styles from './gallery.module.css'
+import Slider from "../../slider/Slider";
 
 export default function Gallery({height}){
 
@@ -9,8 +10,8 @@ export default function Gallery({height}){
     }
 
     return (
-        <div className={styles.Gallery} style={style}>
-            Gallery
+        <div className={styles.gallery} style={style}>
+            <Slider />
         </div>
     );
 }
