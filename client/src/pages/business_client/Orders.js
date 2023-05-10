@@ -21,6 +21,7 @@ import Logger from "../../internal/Logger";
 import useBigList from "../../hooks/useBigList";
 import HotelMealsChoice from "../../widgets/hotel/hotel_meals_choice/HotelMealsChoice";
 import OrderCard from "../../widgets/order/order_card/OrderCard";
+import Container from "../../shared/ui/box/Container";
 
 
 export default function Orders({}){
@@ -28,15 +29,14 @@ export default function Orders({}){
 
     return (<>
         <NavbarPanel title={'Заказы'} />
-        <Box>
-            <div className="section section-profile">
-                orders
+        <Box navbar={true} menu={true} yummy={true}>
+            <Container>
 
                 <OrderCard />
                 <OrderCard />
                 <OrderCard />
 
-
+            </Container>
                 {/*<Accordion expanded={expanded === 'panel1'}>*/}
                 {/*    <AccordionSummary onClick={() => handleChange('panel1')} >*/}
                 {/*        <Card variant='info'>*/}
@@ -92,7 +92,6 @@ export default function Orders({}){
                 {/*    </AccordionDetails>*/}
                 {/*</Accordion>*/}
 
-            </div>
         </Box>
         <BottomControl>
             <Button variant={'control'}>Добавить заказ</Button>

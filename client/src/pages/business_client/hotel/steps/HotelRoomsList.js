@@ -13,12 +13,13 @@ import BottomControl from "../../../../shared/ui/bottom_control/BottomControl";
 import Button from "../../../../shared/ui/button/Button";
 import NavbarLeft from "../../../../shared/ui/navbar/NavbarLeft";
 
-import BackIcon from "../../../../assets/icons/arrow-left.svg";
+import BackIcon from "../../../../assets/icons/backbtn_icon.svg";
 
 import styles from "../hotel.module.css";
 import HotelRoomCard from "../../../../widgets/hotel/hotel_room_card/HotelRoomCard";
 import MyList from "../../list/MyList";
 import Alert from "../../../../shared/ui/alert/Alert";
+import Container from "../../../../shared/ui/box/Container";
 
 
 export default function HotelRoomsList({ data={}, roomsListHandler={}, upsertFields=f=>f, next=f=>f, back=f=>f }){
@@ -63,16 +64,18 @@ export default function HotelRoomsList({ data={}, roomsListHandler={}, upsertFie
                 LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => back()} />}
                 title={'Номера'}
             />
-            <Box>
+            <Box navbar={true} menu={true} yummy={true}>
+                <Container>
 
-                {notFound && Object.keys(rooms).length === 0 && <Alert>
-                    <p>loading...</p>
-                </Alert>}
+                    {notFound && Object.keys(rooms).length === 0 && <Alert>
+                        <p>loading...</p>
+                    </Alert>}
 
-                <MyList {...roomsListHandler} itemSize={290}>
-                    {Row}
-                </MyList>
+                    <MyList {...roomsListHandler} itemSize={290}>
+                        {Row}
+                    </MyList>
 
+                </Container>
             </Box>
 
             <BottomControl>

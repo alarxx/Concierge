@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import styles from './button.module.css' 
 
-export default function Button({children, type='', variant='main', size='', onClick=f=>f}){
+export default function Button({children, type='', variant='main', size='', top, bottom, onClick=f=>f}){
+
+    const style = {
+        marginTop: top,
+        marginBottom: bottom,
+    }
 
     const [btnVariant, setBtnVariant] = useState('main')
 
@@ -34,6 +39,7 @@ export default function Button({children, type='', variant='main', size='', onCl
             `} 
             onClick={onClick}
             type={type}
+            style={style}
         >
             {children}
         </button>

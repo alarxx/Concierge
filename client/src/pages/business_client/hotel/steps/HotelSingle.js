@@ -2,7 +2,7 @@ import React, {useEffect, useMemo} from "react";
 
 import {useNavigate} from "react-router-dom";
 
-import BackIcon from "../../../../assets/icons/arrow-left.svg";
+import BackIcon from "../../../../assets/icons/backbtn_icon.svg";
 
 import NavbarPanel from "../../../../widgets/navbar_panel/NavbarPanel";
 import BottomControl from "../../../../shared/ui/bottom_control/BottomControl";
@@ -17,6 +17,7 @@ import HotelDetails from "../../../../widgets/hotel/hotel_details/HotelDetails";
 import NavbarLeft from "../../../../shared/ui/navbar/NavbarLeft";
 import useBigList from "../../../../hooks/useBigList";
 import Logger from "../../../../internal/Logger";
+import Container from "../../../../shared/ui/box/Container";
 
 function getUrl(skip, limit, filter={}){
     return `/api/hotel/room/pagination/?` + new URLSearchParams({
@@ -39,12 +40,14 @@ export default function HotelSingle({ data={}, roomsListHandler={}, next=f=>f, b
             title={'Отель'}
         />
 
-        <Box>
-            <Gallery height={240} />
-            <HotelGeo />
-            <HotelChoiceRoom />
-            <HotelPolitics />
-            <HotelDetails />
+        <Box navbar={true} menu={true} yummy={true}>
+            <Container>
+                <Gallery height={240} />
+                <HotelGeo />
+                <HotelChoiceRoom />
+                <HotelPolitics />
+                <HotelDetails />
+            </Container>
         </Box>
 
         <BottomControl>

@@ -13,8 +13,9 @@ import Box from "../../../../shared/ui/box/Box";
 import Gallery from "../../../../shared/ui/gallery/Gallery";
 import NavbarLeft from "../../../../shared/ui/navbar/NavbarLeft";
 
-import BackIcon from "../../../../assets/icons/arrow-left.svg";
+import BackIcon from "../../../../assets/icons/backbtn_icon.svg";
 import Logger from "../../../../internal/Logger";
+import Container from "../../../../shared/ui/box/Container";
 
 export default function HotelRoom({ data={}, back=f=>f, next=f=>f }) {
     const logger = useMemo(()=>new Logger('HotelRoom'), []);
@@ -27,11 +28,13 @@ export default function HotelRoom({ data={}, back=f=>f, next=f=>f }) {
             title={'Номер'}
         />
 
-        <Box>
-            <Gallery height={240} />
-            <HotelMealsChoice />
-            <HotelRoomPrice />
-            <HotelRoomDetails />
+        <Box navbar={true} menu={true} yummy={true}>
+            <Container>
+                <Gallery height={240} />
+                <HotelMealsChoice />
+                <HotelRoomPrice />
+                <HotelRoomDetails />
+            </Container>
         </Box>
 
         <BottomControl>

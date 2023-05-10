@@ -7,6 +7,7 @@ import Button from "../../../shared/ui/button/Button";
 import Input from "../../../shared/ui/input/Input";
 import ChatItem from "../../../widgets/chat/chat_item/ChatItem";
 import {useNavigate} from "react-router-dom";
+import Container from "../../../shared/ui/box/Container";
 
 export default function ChatList({}){
 
@@ -15,11 +16,13 @@ export default function ChatList({}){
     return (
         <>
             <NavbarPanel title={'Чат'}/>
-                <Box>
+            <Box navbar={true} menu={true}>
+                <Container>
                     <ChatItem onClick={e => navigate('/chat/single', {replace: false,})} />
                     <ChatItem onClick={e => navigate('/chat/single', {replace: false,})} />
                     <ChatItem onClick={e => navigate('/chat/single', {replace: false,})} />
-                </Box>
+                </Container>
+            </Box>
             <NavigationPanel />
         </>
     )

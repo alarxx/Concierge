@@ -60,7 +60,7 @@ export default function ServiceChoice() {
             </CardBody>
         </Card>
 
-        <Button variant={'outline'}>Создать составной заказ</Button>
+        <Button top={20} variant={'outline'}>Создать составной заказ</Button>
 
     </>)
 }

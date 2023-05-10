@@ -13,10 +13,11 @@ import Box from "../../../../shared/ui/box/Box";
 import BottomControl from "../../../../shared/ui/bottom_control/BottomControl";
 import Button from "../../../../shared/ui/button/Button";
 
-import BackIcon from "../../../../assets/icons/arrow-left.svg";
+import BackIcon from "../../../../assets/icons/backbtn_icon.svg";
 
 import MyList from "../../list/MyList";
 import Alert from "../../../../shared/ui/alert/Alert";
+import Container from "../../../../shared/ui/box/Container";
 
 
 export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields=f=>f, next=f=>f, close=f=>f }){
@@ -62,20 +63,21 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
         <>
             <NavbarPanel
                 LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => close()} />}
-
                 title={'Отели'}
             />
 
-            <Box>
+            <Box navbar={true} menu={true} yummy={true}>
+                <Container>
 
-                {!notFound && Object.keys(hotels).length === 0 && <Alert>
-                    <p>loading...</p>
-                </Alert>}
+                    {!notFound && Object.keys(hotels).length === 0 && <Alert>
+                        <p>loading...</p>
+                    </Alert>}
 
-                <MyList {...hotelsListHandler} itemSize={290}>
-                    {Row}
-                </MyList>
+                    <MyList {...hotelsListHandler} itemSize={290}>
+                        {Row}
+                    </MyList>
 
+                </Container>
             </Box>
 
             <BottomControl>

@@ -13,8 +13,9 @@ import BottomControl from "../../../../shared/ui/bottom_control/BottomControl";
 import Button from "../../../../shared/ui/button/Button";
 import Box from "../../../../shared/ui/box/Box";
 
-import BackIcon from '../../../../assets/icons/arrow-left.svg';
+import BackIcon from "../../../../assets/icons/backbtn_icon.svg";
 import Logger from "../../../../internal/Logger";
+import Container from "../../../../shared/ui/box/Container";
 
 export default function HotelConfirm({ data={}, submit=f=>f, back=f=>f}) {
     const logger = useMemo(()=>new Logger('HotelConfirm'), []);
@@ -27,11 +28,13 @@ export default function HotelConfirm({ data={}, submit=f=>f, back=f=>f}) {
             title={'Заявка'}
         />
 
-        <Box>
-            <HotelOrderDetails />
-            <HotelPolitics />
-            <HotelRoomPrice />
-            <HotelRoomDetails />
+        <Box navbar={true} menu={true} yummy={true}>
+            <Container>
+                <HotelOrderDetails />
+                <HotelPolitics />
+                <HotelRoomPrice />
+                <HotelRoomDetails />
+            </Container>
         </Box>
 
         <BottomControl>

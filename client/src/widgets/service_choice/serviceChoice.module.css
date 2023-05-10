@@ -1,9 +1,18 @@
 .ServiceChoice {
-    margin-top: 40px;
+    /*margin-top: 40px;*/
+    margin-bottom: 20px;
+}
+.ServiceChoice .card {
+    /*margin-top: 40px;*/
     margin-bottom: 20px;
 }
 .ServiceChoice button {
-    margin-right: 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin-right: 10px;
 }
 .ServiceChoice button:last-child {
     margin-right: 0;
