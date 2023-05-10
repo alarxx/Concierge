@@ -10,3 +10,7 @@
     background: #2086E5;
     color: #FFFFFF;
 }
+
+.Badge--air {
+    position: absolute;
+}

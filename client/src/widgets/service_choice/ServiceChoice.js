@@ -18,6 +18,7 @@ import GroupFlex from "../../shared/ui/group_flex/GroupFlex";
 import IconHotel from '../../assets/icons/service_hotel.svg'
 import IconTransfer from '../../assets/icons/service_trancsfer.svg'
 import IconTickets from '../../assets/icons/service_tickets.svg'
+import Badge from "../../shared/ui/badge/Badge";
 
 export default function ServiceChoice() {
     const location = useLocation();
@@ -38,12 +39,14 @@ export default function ServiceChoice() {
                 <IconHotel />Отель
             </Button>
 
-            <Button variant={activeTab==='NewTicketsOrder' ? '' : 'outline'} onClick={()=>setActiveTab('NewTicketsOrder')}>
-                <IconTickets />Билеты
+            <Button badge={true} variant={activeTab==='NewTransferOrder' ? '' : 'outline'} onClick={()=>setActiveTab('NewTransferOrder')}>
+                <IconTransfer />Трансфер
+                <Badge air={true} bottom={-15} text={'Скоро'}/>
             </Button>
 
-            <Button variant={activeTab==='NewTransferOrder' ? '' : 'outline'} onClick={()=>setActiveTab('NewTransferOrder')}>
-                <IconTransfer />Трансфер
+            <Button badge={true} variant={activeTab==='NewTicketsOrder' ? '' : 'outline'} onClick={()=>setActiveTab('NewTicketsOrder')}>
+                <IconTickets />Авиабилеты
+                <Badge air={true} bottom={-15} text={'Скоро'}/>
             </Button>
 
         </GroupFlex>
