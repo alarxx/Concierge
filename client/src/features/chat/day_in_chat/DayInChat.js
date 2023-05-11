@@ -6,17 +6,17 @@ export default function DayInChat({ date }){
 
     const [str, setStr] = useState('')
 
-    // useEffect(()=>{
-    //     if(date.getDate() == new Date().getDate())
-    //         setStr(`Сегодня`)
-    //     else setStr(`${monthName(date.getMonth())} ${date.getDate()}`)
-    // }, [date])
+    useEffect(()=>{
+        if(date.getDate() == new Date().getDate())
+            setStr(`Сегодня`)
+        else setStr(`${monthName(date.getMonth())} ${date.getDate()}`)
+    }, [date])
 
     return (
         <>
             <div className={styles.chatDay__wrapper}>
                 <div className={styles.chatDay}>
-                    {date}
+                    {str}
                 </div>
             </div>
         </>

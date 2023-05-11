@@ -20,6 +20,7 @@ import HotelRoomCard from "../../../../widgets/hotel/hotel_room_card/HotelRoomCa
 import MyList from "../../list/MyList";
 import Alert from "../../../../shared/ui/alert/Alert";
 import Container from "../../../../shared/ui/box/Container";
+import ConciergeAction from "../../../../widgets/order/concierge_action/ConciergeAction";
 
 
 export default function HotelRoomsList({ data={}, roomsListHandler={}, upsertFields=f=>f, next=f=>f, back=f=>f }){
@@ -79,7 +80,7 @@ export default function HotelRoomsList({ data={}, roomsListHandler={}, upsertFie
             </Box>
 
             <BottomControl>
-                <Button variant={'outline'} onClick={f=>f}>Оставить на усмотрение менеджеру</Button>
+                <ConciergeAction/>
             </BottomControl>
 
             <NavigationPanel />
