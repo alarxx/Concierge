@@ -12,7 +12,7 @@ export default function ConciergeAction() {
     }
 
     return(<>
-        {isModalActive && <Modal width={'80%'} onClose={e => setIsModalActive(false)}>
+        {isModalActive && <Modal minWidth={360} maxWidth={400} onClose={e => setIsModalActive(false)}>
             <ConciergeServiceForm cancelClick={e => setIsModalActive(false)} />
         </Modal>}
         <Button variant={'outline'} onClick={onClick}>Оставить на усмотрение менеджеру</Button>
