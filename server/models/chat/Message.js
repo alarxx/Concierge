@@ -74,7 +74,7 @@ MessageSchema.index({ createdAt: -1 }); // сначала новые
 
 MessageSchema.plugin(require('mongoose-unique-validator'));
 MessageSchema.plugin(require('../log-plugin'))
-// MessageSchema.plugin(require('../../websocket/observer/chat/message'))
+MessageSchema.plugin(require('../../websocket/observer/chat/message-observer'));
 
 
 /*MessageSchema.methods.onCreate = async function({req, res, body, user}){

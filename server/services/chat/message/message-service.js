@@ -7,7 +7,7 @@ const messageDto = require('../../../dtos/chat/message-dto');
 
 const logger = require('../../../log/logger')('message-service');
 
-const adminService = AdminService(Message, messageDto, { creatorField: 'creator' });
+const adminService = AdminService(Message, messageDto, { creatorField: 'sender' });
 
 const modelService = new ModelService(Message);
 

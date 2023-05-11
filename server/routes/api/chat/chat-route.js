@@ -14,7 +14,8 @@ const checkAdminRole = require('../../../middlewares/checkAdminRole');
 
 const { firstLoad } = controller;
 
-Router.route('/')
+// пагинация нужна именно на сообщениях
+Router.route('/first-load')
     .get(checkAuthenticated, firstLoad)
 
 module.exports = Router;

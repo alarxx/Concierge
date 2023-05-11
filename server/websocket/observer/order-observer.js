@@ -9,14 +9,14 @@ const ApiError = require("../../exceptions/ApiError");
 const logger = require('../../log/logger')('order-observer');
 
 
-async function notify(method, modelName, order){
+async function notify(method, modelName, orderDoc){
     const io = require('../../websocket/socket-io').io;
 
-    const { User, Order } = require('../../models/models-manager');
+    const { User } = require('../../models/models-manager');
 
-    const user = order.customer;
+    const user = orderDoc.customer;
     if(!user){
-        throw ApiError.ServerError('order-observer.js: Order must have a customer');
+        throw ApiError.ServerError('Order Observer Error. Order must have a customer');
     }
 
     // Должны отправить уведомление о создании или удалении админам и пользователям, имеющим отношение к order
@@ -25,9 +25,9 @@ async function notify(method, modelName, order){
         if(admin.id == user.id){
             return;
         }
-        io.to(String(admin.id)).emit(`/${method}/${modelName}`, orderDto(order, admin));
+        io.to(String(admin.id)).emit(`/${method}/${modelName}`, orderDto(orderDoc, admin));
     });
-    io.to(String(user.id)).emit(`/${method}/${modelName}`, orderDto(order, user));
+    io.to(String(user.id)).emit(`/${method}/${modelName}`, orderDto(orderDoc, user));
 }
 
 

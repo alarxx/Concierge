@@ -8,7 +8,7 @@ const userDto = require('../../dtos/user-dto');
 const logger = require('../../log/logger')('user-observer');
 
 async function notify(method, user){
-    const io = require('../../websocket/socket-io').io;
+    const io = require('../socket-io').io;
 
     const { User } = require('../../models/models-manager');
 

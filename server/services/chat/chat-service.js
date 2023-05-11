@@ -32,11 +32,13 @@ async function firstLoad(user){
     // Здесь тоже нужна пагинация 1000 бесед по 1000 участников = 1mln
     // const participants = await Participant.find({ conversation: { $in: userConversationIds } });
 
-    const messages = await Promise.all(conversations.map(async conversation => {
+    const __messages = (await Promise.all(conversations.map(async conversation => {
         return await Message.find({ conversation: conversation.id })
             .sort({ 'createdAt': -1 }) // .allowDiskUse(true)
             .limit(5);
-    }));
+    })));
+
+    const messages = __messages.flatMap(arr=>arr);
 
     const notifications = await Notification.find({ user: user.id });
 
