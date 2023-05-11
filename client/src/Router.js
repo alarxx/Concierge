@@ -19,7 +19,7 @@ import NoName from "./pages/auth/status/NoName";
 
 import New from './pages/business_client/New';
 import Orders from './pages/business_client/Orders';
-import Profile from './pages/business_client/Profile';
+import Profile from './pages/business_client/profile/Profile';
 import HotelOrderFlow from "./pages/business_client/hotel/HotelOrderFlow";
 import Messenger from "./pages/business_client/chat/Messenger";
 import Chat from "./pages/business_client/chat/Chat";
