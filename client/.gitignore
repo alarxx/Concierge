@@ -1,8 +1,6 @@
 # Alar
 .idea/
 config/
-data/
-tmp/
 
 # Logs
 *.log
