@@ -24,7 +24,9 @@
 .Modal__content {
     /*height: 100%;*/
 }
-
+.Modal__close {
+    cursor: pointer;
+}
 .overlay {
     position: absolute;
     top: 0;

@@ -1,6 +1,6 @@
 import React from "react";
+
 import Typography from "../../../shared/ui/typography/Typography";
-import CardServiceBody from "../../../shared/ui/card_service/CardServiceBody";
 import GroupButtons from "../../../shared/ui/group_buttons/GroupButtons";
 import Button from "../../../shared/ui/button/Button";
 import Block from "../../../shared/ui/block/Block";

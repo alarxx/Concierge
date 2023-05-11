@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useAppContext} from "../../../context/AppContext";
-import {useNavigate} from "react-router-dom";
 
-import Logger from '../../../internal/Logger';
-const logger = new Logger('Logout');
+import {useNavigate} from "react-router-dom";
 
 import NavbarPanel from '../../../widgets/navbar_panel/NavbarPanel';
 import Box from '../../../shared/ui/box/Box'
@@ -16,14 +13,12 @@ import Accordion from "../../../shared/ui/accordion/Accordion";
 import Block from "../../../shared/ui/block/Block";
 import ProfileSet from "./ProfileSet";
 import Button from "../../../shared/ui/button/Button";
+import LogoutAction from "../../../widgets/logout_action/LogoutAction";
 
 
 export default function Profile({}){
 
     const navigate = useNavigate();
-
-    const { authHandler } = useAppContext();
-    const { logout } = authHandler;
 
     return (
         <>
@@ -43,10 +38,7 @@ export default function Profile({}){
                         <ProfileSet />
                     </Block>
 
-                    <Button onClick={async e => {
-                        logger.log(await logout());
-                        // navigate('/');
-                    }}>Выйти из аккаунта</Button>
+                    <LogoutAction />
 
                 </Container>
             </Box>
