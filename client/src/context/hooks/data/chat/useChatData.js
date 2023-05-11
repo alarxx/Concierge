@@ -204,6 +204,16 @@ export default function useChat({ socketHandler, authHandler }){
         }
     }
 
+    async function loadMessages(conversation, skip, limit){
+        const loadedMessages = await fetch('/api/chat/message/pagination/?'
+            + new URLSearchParams({
+                conversation,
+                skip,
+                limit
+            })
+        );
+    }
+
     return {
         chatLoading,
         chatError,
