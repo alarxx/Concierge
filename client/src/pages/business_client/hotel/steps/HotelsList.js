@@ -18,6 +18,7 @@ import BackIcon from "../../../../assets/icons/backbtn_icon.svg";
 import MyList from "../../list/MyList";
 import Alert from "../../../../shared/ui/alert/Alert";
 import Container from "../../../../shared/ui/box/Container";
+import ConciergeAction from "../../../../widgets/order/concierge_action/ConciergeAction";
 
 
 export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields=f=>f, next=f=>f, close=f=>f }){
@@ -81,7 +82,7 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
             </Box>
 
             <BottomControl>
-                <Button variant={'outline'} onClick={f=>f}>Оставить на усмотрение менеджеру</Button>
+                <ConciergeAction/>
             </BottomControl>
 
             <NavigationPanel />

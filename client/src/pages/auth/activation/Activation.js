@@ -24,7 +24,7 @@ import Logo from '../../../shared/ui/logo/Logo'
 export default function Activation(){
 
     return (
-        <Box>
+        <Box center={true}>
             <Card>
                 <CardHeader>
                     <Logo />

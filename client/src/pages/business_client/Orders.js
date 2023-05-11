@@ -30,6 +30,7 @@ export default function Orders({}){
     return (<>
         <NavbarPanel title={'Заказы'} />
         <Box navbar={true} menu={true} yummy={true}>
+
             <Container>
 
                 <OrderCard />
@@ -37,60 +38,6 @@ export default function Orders({}){
                 <OrderCard />
 
             </Container>
-                {/*<Accordion expanded={expanded === 'panel1'}>*/}
-                {/*    <AccordionSummary onClick={() => handleChange('panel1')} >*/}
-                {/*        <Card variant='info'>*/}
-                {/*            <CardBody>*/}
-                {/*                <GroupFlex align='aic' justify='jcsb'>*/}
-                {/*                    AccordionSummary11111*/}
-                {/*                    <TriangleIcon/>*/}
-                {/*                </GroupFlex>*/}
-                {/*            </CardBody>*/}
-                {/*        </Card>*/}
-                {/*    </AccordionSummary>*/}
-                {/*    <AccordionDetails>*/}
-                {/*        <Card variant='info'>*/}
-                {/*            <CardBody>*/}
-                {/*                <EmployeeInfo />*/}
-                {/*            </CardBody>*/}
-                {/*        </Card>*/}
-                {/*    </AccordionDetails>*/}
-                {/*</Accordion>*/}
-                {/*<Accordion expanded={expanded === 'panel12'}>*/}
-                {/*    <AccordionSummary onClick={() => handleChange('panel12')} >*/}
-                {/*        <Card variant='info'>*/}
-                {/*            <CardBody>*/}
-                {/*                <GroupFlex align='aic' justify='jcsb'>*/}
-                {/*                    Командировка #000421*/}
-                {/*                    <TriangleIcon/>*/}
-                {/*                </GroupFlex>*/}
-                {/*            </CardBody>*/}
-                {/*        </Card>*/}
-                {/*    </AccordionSummary>*/}
-                {/*    <AccordionDetails>*/}
-                {/*        <Configurator />*/}
-                {/*    </AccordionDetails>*/}
-                {/*</Accordion>*/}
-
-                {/*<Accordion expanded={expanded === 'panel13'} >*/}
-                {/*    <AccordionSummary onClick={() => handleChange('panel13')} >*/}
-                {/*        <Card variant='info'>*/}
-                {/*            <CardBody>*/}
-                {/*                <GroupFlex align='aic' justify='jcsb'>*/}
-                {/*                    AccordionSummary11111*/}
-                {/*                    <TriangleIcon/>*/}
-                {/*                </GroupFlex>*/}
-                {/*            </CardBody>*/}
-                {/*        </Card>*/}
-                {/*    </AccordionSummary>*/}
-                {/*    <AccordionDetails>*/}
-                {/*        <Card variant='info'>*/}
-                {/*            <CardBody>*/}
-                {/*                AccordionDetails1111*/}
-                {/*            </CardBody>*/}
-                {/*        </Card>*/}
-                {/*    </AccordionDetails>*/}
-                {/*</Accordion>*/}
 
         </Box>
         <BottomControl>

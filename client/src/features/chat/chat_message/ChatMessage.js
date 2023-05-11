@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react'
 
 import styles from './chatMessage.module.css'
+
 function zero(time){
     return `${time<10?'0':''}`
 }
@@ -14,15 +15,14 @@ export default function ChatMessage({
                                     user,
                                 }){
 
-    // const mymssg = message.sender === user.id;
-    const mymssg = false;
+    const mymssg = message.sender == user.id;
 
     return (
         <div className={`${mymssg? styles['chat-message__wrapper'] :''}  ${mymssg? styles['mymssg']:''}`}>
+
             <div className={styles[`chat-message`]}>
                 <div className={styles["chat-message__text"]}>
-                    {/*{message.text}*/}
-                    {message}
+                    {message.text}
                 </div>
                 <div className={styles["chat-message__time"]}>
                     {messageTime(message)}

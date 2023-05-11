@@ -15,7 +15,14 @@ import CardBody from "../../../shared/ui/card/CardBody";
 import Badge from "../../../shared/ui/badge/Badge";
 import Avatar from "../../../shared/ui/avatar/Avatar";
 
-export default function ChatItemCard({title='', onClick= f=>f}) {
+export default function ChatItemCard({
+     key,
+     name='Название чата',
+     unread_num,
+     last_message,
+     onClick=f=>f,
+}) {
+
 
     const style = {
         width: '100%',
@@ -31,13 +38,13 @@ export default function ChatItemCard({title='', onClick= f=>f}) {
                     <div style={{width: '100%'}}>
                         <GroupFlex align={'ais'} justify={'jcsb'}>
                             <div>
-                                <div><Typography size={16} weight={600} bottom={2}>Астана, Hilton</Typography></div>
-                                <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>Заказ #6723</Typography></div>
+                                <div><Typography size={16} weight={600} bottom={2}>{name}</Typography></div>
+                                <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>{`Заказ #${key}`}</Typography></div>
                             </div>
-                            <Badge text={'22'} />
+                            {unread_num > 0 && <Badge text={unread_num.toString()} />}
                         </GroupFlex>
                         <div>
-                            <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>Последнее сообщение</Typography>
+                            <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>{last_message}</Typography>
                         </div>
                     </div>
                 </div>

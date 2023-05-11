@@ -32,7 +32,7 @@ export default function Authentication(){
 
     // SignUp/SignIn должны быть в одном компоненте и OAuth тоже, все должно быть в одном Authentication page
     return (
-        <Box>
+        <Box center={true}>
 
             <Card>
                 <CardHeader>

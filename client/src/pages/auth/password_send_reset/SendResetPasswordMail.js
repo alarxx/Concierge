@@ -16,7 +16,7 @@ export default function SendResetPasswordMail(){
     const navigate = useNavigate();
 
     return (<>
-        <Box>
+        <Box center={true}>
             <Card>
                 <CardHeader>
                     <Logo />

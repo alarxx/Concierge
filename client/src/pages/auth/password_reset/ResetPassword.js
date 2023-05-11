@@ -15,7 +15,7 @@ import Logo from '../../../shared/ui/logo/Logo'
 export default function ResetPassword(){
 
     return (<>
-        <Box>
+        <Box center={true}>
             <Card>
                 <CardHeader>
                     <Logo />
