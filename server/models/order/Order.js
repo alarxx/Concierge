@@ -138,7 +138,7 @@ const OrderSchema = new Schema(
 );
 
 OrderSchema.plugin(require('mongoose-unique-validator'));
-OrderSchema.plugin(require('../log-plugin'))
+OrderSchema.plugin(require('../log-plugin'));
 OrderSchema.plugin(require('../../websocket/observer/order-observer'))
 
 /*OrderSchema.methods.deepDelete = async function (){

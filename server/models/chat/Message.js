@@ -70,10 +70,12 @@ const MessageSchema = new Schema(
     }
 );
 
+
 MessageSchema.index({ createdAt: -1 }); // сначала новые
 
+
 MessageSchema.plugin(require('mongoose-unique-validator'));
-MessageSchema.plugin(require('../log-plugin'))
+MessageSchema.plugin(require('../log-plugin'));
 MessageSchema.plugin(require('../../websocket/observer/chat/message-observer'));
 
 

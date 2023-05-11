@@ -3,8 +3,6 @@
  * Нужно админам и возможно менеджерам Concierge и партнерам об их клиентах.
  * */
 
-const ApiError = require("../../../exceptions/ApiError");
-
 const messageDto = require('../../../dtos/chat/message-dto');
 
 const logger = require('../../../log/logger')('message-observer');

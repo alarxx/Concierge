@@ -28,8 +28,8 @@ const ConversationSchema = new Schema(
 
 
 ConversationSchema.plugin(require('mongoose-unique-validator'));
-ConversationSchema.plugin(require('../log-plugin'))
-// ConversationSchema.plugin(require('../../websocket/observer/chat/conversation'))
+ConversationSchema.plugin(require('../log-plugin'));
+ConversationSchema.plugin(require('../../websocket/observer/chat/conversation-observer'));
 
 
 /* Срабатывает только на REST API */

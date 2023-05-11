@@ -112,8 +112,10 @@ async function createConversationWithParticipants(userIds=[], name=`Conversation
         role: 'participant'
     }));
 
-    await conversation.save();
+    // Важно создать сначала participant-ов и уже потом беседу, чтобы можно было понять кто должен увидеть добавление беседы
     await Promise.all(participants.map(async p => await p.save()));
+
+    await conversation.save();
 
     // Наверное стоит еще скидывать какое-нибудь init сообщение и добавлять уведомление, типа беседа создана.
 

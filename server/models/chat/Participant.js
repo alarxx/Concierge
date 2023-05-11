@@ -36,8 +36,8 @@ const ParticipantSchema = new Schema(
 
 
 ParticipantSchema.plugin(require('mongoose-unique-validator'));
-ParticipantSchema.plugin(require('../log-plugin'))
-// ParticipantSchema.plugin(require('../../websocket/observer/chat/participant'))
+ParticipantSchema.plugin(require('../log-plugin'));
+ParticipantSchema.plugin(require('../../websocket/observer/chat/participant-observer'));
 
 
 /*ParticipantSchema.methods.onCreate = async function({body, user}){

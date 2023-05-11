@@ -24,9 +24,10 @@ const NotificationSchema = new Schema(
     }
 );
 
+
 NotificationSchema.plugin(require('mongoose-unique-validator'));
-NotificationSchema.plugin(require('../log-plugin'))
-// NotificationSchema.plugin(require('../../websocket/observer/chat/notification'))
+NotificationSchema.plugin(require('../log-plugin'));
+NotificationSchema.plugin(require('../../websocket/observer/chat/notification-observer'));
 
 /*NotificationSchema.methods.onCreate = async function({body, user}){
     this.user = user.id;
