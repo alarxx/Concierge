@@ -2,6 +2,7 @@
     overflow: hidden;
     position: relative;
     background-color: #666666;
+    border-radius: 12px;
 }
 .slide-list {
     display: flex;
