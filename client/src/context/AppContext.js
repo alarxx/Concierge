@@ -24,7 +24,7 @@ function AppContextProvider({ children }){
             adaptiveHandler,
             socketHandler,
             authHandler,
-            // ...dataHandler
+            ...dataHandler
         }}>
             {children}
         </Context.Provider>

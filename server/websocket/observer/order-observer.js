@@ -8,7 +8,8 @@ const ApiError = require("../../exceptions/ApiError");
 
 const logger = require('../../log/logger')('order-observer');
 
-async function notify(method, order){
+
+async function notify(method, modelName, order){
     const io = require('../../websocket/socket-io').io;
 
     const { User, Order } = require('../../models/models-manager');
@@ -24,28 +25,34 @@ async function notify(method, order){
         if(admin.id == user.id){
             return;
         }
-        io.to(String(admin.id)).emit(`/${method}/user`, orderDto(order, admin));
+        io.to(String(admin.id)).emit(`/${method}/${modelName}`, orderDto(order, admin));
     });
-    io.to(String(user.id)).emit(`/${method}/user`, orderDto(order, user));
+    io.to(String(user.id)).emit(`/${method}/${modelName}`, orderDto(order, user));
 }
 
+
 module.exports = function(schema) {
+
     schema.post('save', async function(orderDoc, next){
+        const modelName = (this.constructor.modelName).toLowerCase(); // Можно было бы и просто 'order' написать, а не так
         try{
-            await notify('save', orderDoc);
+            await notify('save', modelName, orderDoc);
             next();
         }
         catch(e){
             logger.log(e);
         }
     });
+
     schema.post('findOneAndDelete', async function(orderDoc, next){
+        const modelName = (document.constructor.modelName).toLowerCase(); // Можно было бы и просто 'order' написать, а не так
         try{
-            await notify('delete', orderDoc);
+            await notify('delete', modelName, orderDoc);
             next();
         }
         catch(e){
             logger.log(e);
         }
     });
+
 };
