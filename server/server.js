@@ -81,7 +81,7 @@ app.use(morgan('combined', { stream }));
 
 /** What to do only in a development environment */
 if(process.env.NODE_ENV === 'development') {
-	logger.log("cors 9000")
+	logger.log("cors 9000");
 	/*Используем CORS в окружении разработки */
 	app.use(require('cors')({
 		origin: ['*']
@@ -91,13 +91,13 @@ if(process.env.NODE_ENV === 'development') {
 	app.use(require('./middlewares/dev-log-middleware'));
 }
 
-app.get('/test', (req, res)=>{
-	console.log(req.files);
-	res.json({page: 'test'});
-});
-
 /** All Routes */
 app.use(require('./routes/index'));
+
+/** React Build-Client */
+app.get('/*', (req, res) => {
+	res.sendFile(path.resolve(__dirname, '../build-client/index.html'));
+});
 
 /** Error handling */
 app.use(require('./middlewares/error-middleware'));
