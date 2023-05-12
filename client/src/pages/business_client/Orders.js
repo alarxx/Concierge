@@ -29,7 +29,7 @@ import Container from "../../shared/ui/box/Container";
 export default function Orders({}){
 
     const { orderHandler, } = useAppContext();
-    const { takeOrder } = orderHandler;
+    const { orders, ordersLoading, takeOrder } = orderHandler;
 
     return (<>
         <NavbarPanel title={'Заказы'} />
