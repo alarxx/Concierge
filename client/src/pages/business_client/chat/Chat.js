@@ -90,7 +90,7 @@ export default function Chat(){
                 </Container>
             </Box>
 
-            <NavigationPanel />
+            {!conversation && <NavigationPanel />}
         </>
     );
 };

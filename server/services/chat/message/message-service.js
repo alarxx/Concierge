@@ -2,7 +2,7 @@ const ApiError = require("../../../exceptions/ApiError");
 const ModelService = require("../../helpers/ModelService");
 const AdminService = require('../../helpers/AdminService');
 
-const { Message, Conversation, Participant } = require('../../../models/models-manager');
+const { Message, Conversation, Participant, Notification } = require('../../../models/models-manager');
 const messageDto = require('../../../dtos/chat/message-dto');
 const checkNecessaryFields = require("../../helpers/checkNecessaryFields");
 
