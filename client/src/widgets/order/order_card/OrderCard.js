@@ -14,7 +14,7 @@ import CardHeader from "../../../shared/ui/card/CardHeader";
 import CardBody from "../../../shared/ui/card/CardBody";
 
 
-export default function OrderCard({title='', price='', addInfo='', onClick=f=>f}) {
+export default function OrderCard({ title='', price='', addInfo='', onClick=f=>f }) {
 
 
     return(<>

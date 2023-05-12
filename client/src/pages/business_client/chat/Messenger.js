@@ -1,7 +1,7 @@
 /**
  * Messenger отображает все сообщения и еще должен отвечать за контроль панель
  * */
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useMemo, useRef, useState} from 'react'
 import {useNavigate} from "react-router-dom";
 import ChatInputForm from "../../../features/chat/chat_input_form/ChatInputForm";
 import ChatMessage from "../../../features/chat/chat_message/ChatMessage";
@@ -18,6 +18,7 @@ import ChatChoicePanel from "./ChatChoicePanel";
 // import ChatAttachPanel from "./ChatAttachPanel";
 import ChatActionButtons from "./ChatActionButtons";
 import ChatServicePanel from "./ChatServicePanel";
+import Logger from "../../../internal/Logger";
 
 function findIndexById (array, id) {
     return array.findIndex(obj => obj.id === id);
@@ -34,8 +35,9 @@ export default function Messenger({
                                       closeConversation=f=>f,
                                       sendMessage=f=>f,
                                   }){
+    const logger = useMemo(()=>new Logger('Messenger'), []);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     /**
      * Всегда когда меняется состояние сообщений мы пересчитываем messagesSelected для choice form,

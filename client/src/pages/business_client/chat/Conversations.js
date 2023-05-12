@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {useNavigate} from "react-router-dom";
 
 import ChatItemCard from "../../../widgets/chat/chat_item_card/ChatItemCard";
-function log(...str){
-    console.log(...str);
-}
+import Logger from "../../../internal/Logger";
+
 function findIndexByKey({array, key, id}) {
     return array.findIndex(obj => obj[key] === id);
 }
@@ -25,6 +24,8 @@ export default function Conversations({
                                           chatLoading=true,
                                           openConversation=f=>f
                                       }){
+    const logger = useMemo(()=>new Logger('Conversations'), []);
+
     const navigate = useNavigate();
 
     /** Не думаю что этот поиск последнего сообщения должен быть здесь */
@@ -68,13 +69,14 @@ export default function Conversations({
             const i = lastMessage.conversationIndex;
             const conversation = conversations[i];
 
-            return <ChatItemCard
-                key={key}
-                name={conversation.name}
-                unread_num={conversationNotifications[i] ? conversationNotifications[i] : 0}
-                last_message={lastMessage.text ? truncateString(lastMessage.text) : lastMessage.type}
-                onClick={e => openConversation(conversation)}
-            />
+            return (<div key={key}>
+                <ChatItemCard
+                    name={conversation.name}
+                    unread_num={conversationNotifications[i] ? conversationNotifications[i] : 0}
+                    last_message={lastMessage.text ? truncateString(lastMessage.text) : lastMessage.type}
+                    onClick={e => openConversation(conversation)}
+                />
+            </div>);
         })}
     </>);
 }

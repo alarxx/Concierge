@@ -77,9 +77,22 @@ export default function Router(){
 				</Route>
 
 				<Route path='/orders' element={<ProtectedPage><Orders /></ProtectedPage>}/>
-				<Route path='/chat' element={<ProtectedPage><Chat /></ProtectedPage>}/>
-				<Route path='/chat/single' element={<ProtectedPage><Messenger /></ProtectedPage>}/>
+				{/*<Route path='/chat' element={<ProtectedPage><Chat /></ProtectedPage>}/>*/}
+				{/*<Route path='/chat/single' element={<ProtectedPage><Messenger /></ProtectedPage>}/>*/}
 				<Route path='/profile' element={<ProtectedPage><Profile /></ProtectedPage>}/>
+
+				<Route path={'/chat'}>
+					<Route index element={
+						<ProtectedPage>
+							<Chat />
+						</ProtectedPage>
+					}/>
+					<Route path={':id'} element={
+						<ProtectedPage>
+							<Chat />
+						</ProtectedPage>
+					}/>
+				</Route>
 
 
 				<Route path={'*'} element={

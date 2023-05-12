@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 /**
  * Придется писать хук для отправки и получения сообщений
  * */
@@ -10,15 +10,14 @@ import NavbarPanel from "../../../widgets/navbar_panel/NavbarPanel";
 import Box from "../../../shared/ui/box/Box";
 import Container from "../../../shared/ui/box/Container";
 import NavigationPanel from "../../../widgets/navigation_panel/NavigationPanel";
-
-function log(...str){
-    console.log("Chat\n", ...str);
-}
+import Logger from "../../../internal/Logger";
 
 /**
  * Должен показывать компонент Conversations на desktop-e, на мобилке же нет.
  * */
 export default function Chat(){
+    const logger = useMemo(()=>new Logger('Chat'), []);
+
     const navigate = useNavigate();
     const { id } = useParams()
 

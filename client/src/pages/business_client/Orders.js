@@ -36,14 +36,14 @@ export default function Orders({}){
         <Box navbar={true} menu={true} yummy={true}>
 
             <Container>
-                {orders.map(order => {
-                    return (<>
+                {orders.map((order, i) => {
+                    return (<div key={i}>
                         <OrderCard
                             onClick={e => {
                                 takeOrder()
                             }}
                         />
-                    </>);
+                    </div>);
                 }
 
                 )}
