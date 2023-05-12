@@ -84,6 +84,7 @@ async function createOne(body, files, user) {
 
     // logger.log("createOne", {body, model});
 
+    // validate city
     await model.validate();
     await cityService.checkCityExists(model.city);
 
@@ -92,9 +93,53 @@ async function createOne(body, files, user) {
     return model; // dto(model);
 }
 
+async function updateOne(body, files, user) {
+    if(!files){
+        files = {};
+    }
+    if(!body){
+        body = {};
+    }
+
+    if (!user) {
+        throw ApiError.ServerError('user is missing')
+    }
+    if(user.role !== 'admin'){
+        throw ApiError.Forbidden('Permission denied. Only for admins.');
+    }
+    if (Object.keys(body).length + Object.keys(files).length < 2) {
+        throw ApiError.BadRequest("Empty request body or too few fields");
+    }
+
+    const pkey = modelService.get_pkey(body);
+
+    const model = await Hotel.findOne({[(pkey === 'id' ? '_id' : pkey)]: body[pkey]});
+    if (!model) {
+        throw ApiError.NotFound(`${modelService.modelName} not found`)
+    }
+
+    /*
+    * Здесь нужна проверка есть ли строка файла, но там нет файла
+    * Это нужно, чтобы удалять файлы.
+    * */
+    /* Следующие 2 строчки можно объединить и назвать set */
+    await modelService.deleteInvalidFileFields(body, model);
+    model.set(body);
+
+    // validate city
+    await model.validate();
+    await cityService.checkCityExists(model.city);
+
+    await modelService.saveWithFiles(model, files, { user });
+
+    return model; // dto(model);
+}
+
+
 module.exports = ({
     ...adminService,
     pagination,
     findByQueryParams,
-    createOne
+    createOne,
+    updateOne
 });
