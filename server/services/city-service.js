@@ -13,8 +13,16 @@ const modelService = new ModelService(City);
 
 const findByQueryParams = require('./helpers/openFindByQueryParams')(City, cityDto);
 
+async function checkCityExists(cityName){
+    const exist = await City.findOne({ name: cityName });
+    if(!exist){
+        throw ApiError.BadRequest('City not found');
+    }
+}
+
 module.exports = ({
     createOne: adminService.createOne,
     deleteOne: adminService.deleteOne,
     findByQueryParams,
+    checkCityExists
 });

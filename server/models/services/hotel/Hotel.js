@@ -1,6 +1,5 @@
 const {Schema, model} = require('mongoose');
 
-
 const HotelSchema = new Schema(
     {
         company: {
@@ -22,7 +21,10 @@ const HotelSchema = new Schema(
             // ref: 'Address'
         },
 
-        city: String,
+        city: {
+            type: String,
+            required: true,
+        },
 
         rate: {
             type: Number,
@@ -52,6 +54,16 @@ const HotelSchema = new Schema(
 );
 
 HotelSchema.index({ createdAt: -1 });
+
+HotelSchema.path('city').validate({
+    isAsync: true,
+    validator: async (city) => {
+        const {City} = require('../../models-manager');
+        const exist = await City.find({ name: city });
+        return Boolean(exist);
+    },
+    message: "This city is not included in the database"
+});
 
 HotelSchema.plugin(require('mongoose-unique-validator'));
 HotelSchema.plugin(require('../../log-plugin'));

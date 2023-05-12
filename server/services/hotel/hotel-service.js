@@ -1,6 +1,7 @@
 const ApiError = require("../../exceptions/ApiError");
 const ModelService = require("./../helpers/ModelService");
 const AdminService = require('./../helpers/AdminService');
+const cityService = require('./../city-service');
 
 const { Hotel, Hotel_Room } = require('../../models/models-manager');
 const hotelDto = require('../../dtos/hotel/hotel-dto');
@@ -64,8 +65,36 @@ async function pagination(filters, user) {
     return returnHotels(hotels);
 }
 
+async function createOne(body, files, user) {
+    if (!files) {
+        files = {};
+    }
+    if (!user) {
+        throw ApiError.ServerError('user is missing');
+    }
+    if(user.role !== 'admin'){
+        throw ApiError.Forbidden('Permission denied. Only for admins.');
+    }
+
+    // Нужно найти unique поля?
+    // Можно просто засетить полностью и попытаться сохранить с файлами
+    await modelService.deleteInvalidFileFields(body);
+
+    const model = new Hotel({...body, creator: user.id});
+
+    // logger.log("createOne", {body, model});
+
+    await model.validate();
+    await cityService.checkCityExists(model.city);
+
+    await modelService.saveWithFiles(model, files, { user });
+
+    return model; // dto(model);
+}
+
 module.exports = ({
     ...adminService,
     pagination,
     findByQueryParams,
+    createOne
 });
