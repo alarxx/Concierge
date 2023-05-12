@@ -77,7 +77,6 @@ export default function Router(){
 					<Route path='hotel' element={<ProtectedPage><HotelOrderFlow /></ProtectedPage>}/>
 				</Route>
 
-				<Route path='/orders' />
 				<Route path='/orders'>
 					<Route index element={
 						<ProtectedPage>
@@ -91,6 +90,7 @@ export default function Router(){
 						</ProtectedPage>
 					}/>
 				</Route>
+				
 				{/*<Route path='/chat' element={<ProtectedPage><Chat /></ProtectedPage>}/>*/}
 				{/*<Route path='/chat/single' element={<ProtectedPage><Messenger /></ProtectedPage>}/>*/}
 				<Route path='/profile' element={<ProtectedPage><Profile /></ProtectedPage>}/>
