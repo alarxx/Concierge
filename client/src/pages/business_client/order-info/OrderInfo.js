@@ -39,8 +39,11 @@ export default function OrderInfo({}){
     const navigate = useNavigate();
     const { id } = useParams();
 
-    const { orderHandler, } = useAppContext();
+    const { orderHandler, authHandler } = useAppContext();
     const { orders, ordersLoading, takeOrder } = orderHandler;
+    const { user } = authHandler;
+
+    const order = orders.find(order => order.id == id);
 
     return (<>
         <NavbarPanel
@@ -94,7 +97,8 @@ export default function OrderInfo({}){
         </Box>
 
         <BottomControl>
-            <Button variant={'control'}>Перейти в чат</Button>
+            {(user.role === 'client' || order.status !== 'new') && <Button variant={'control'} onClick={e=>navigate(`/chat/${order.conversation}`)}>Перейти в чат</Button>}
+            {(user.role === 'admin' && order.status === 'new') && <Button variant={'control'} onClick={e => takeOrder(order)}>Принять заказ</Button>}
         </BottomControl>
         <NavigationPanel/>
     </>)
