@@ -24,9 +24,12 @@ import useBigList from "../../hooks/useBigList";
 import HotelMealsChoice from "../../widgets/hotel/hotel_meals_choice/HotelMealsChoice";
 import OrderCard from "../../widgets/order/order_card/OrderCard";
 import Container from "../../shared/ui/box/Container";
+import {useNavigate} from "react-router-dom";
 
 
 export default function Orders({}){
+
+    const navigate = useNavigate();
 
     const { orderHandler, } = useAppContext();
     const { orders, ordersLoading, takeOrder } = orderHandler;
@@ -40,7 +43,7 @@ export default function Orders({}){
                     return (<div key={i}>
                         <OrderCard
                             onClick={e => {
-                                takeOrder()
+                                navigate(`/orders/${order.id}`);
                             }}
                         />
                     </div>);

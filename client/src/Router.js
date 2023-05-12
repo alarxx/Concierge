@@ -19,6 +19,7 @@ import NoName from "./pages/auth/status/NoName";
 
 import New from './pages/business_client/New';
 import Orders from './pages/business_client/Orders';
+import OrderInfo from './pages/business_client/order-info/OrderInfo';
 import Profile from './pages/business_client/profile/Profile';
 import HotelOrderFlow from "./pages/business_client/hotel/HotelOrderFlow";
 import Messenger from "./pages/business_client/chat/Messenger";
@@ -76,7 +77,20 @@ export default function Router(){
 					<Route path='hotel' element={<ProtectedPage><HotelOrderFlow /></ProtectedPage>}/>
 				</Route>
 
-				<Route path='/orders' element={<ProtectedPage><Orders /></ProtectedPage>}/>
+				<Route path='/orders' />
+				<Route path='/orders'>
+					<Route index element={
+						<ProtectedPage>
+							<Orders />
+						</ProtectedPage>
+					}/>
+
+					<Route path={':id'} element={
+						<ProtectedPage>
+							<OrderInfo />
+						</ProtectedPage>
+					}/>
+				</Route>
 				{/*<Route path='/chat' element={<ProtectedPage><Chat /></ProtectedPage>}/>*/}
 				{/*<Route path='/chat/single' element={<ProtectedPage><Messenger /></ProtectedPage>}/>*/}
 				<Route path='/profile' element={<ProtectedPage><Profile /></ProtectedPage>}/>
