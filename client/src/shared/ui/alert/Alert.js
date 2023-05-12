@@ -6,7 +6,7 @@ export default function Alert({variant='', children}) {
 
     return (<>
         {children &&
-            <div className={`${styles.Alert} ${variant ? styles['Alert-'+variant] : ''}`}>
+            <div className={`${styles.Alert} ${variant ? styles['Alert--'+variant] : ''}`}>
                 {children}
             </div>}
     </>)

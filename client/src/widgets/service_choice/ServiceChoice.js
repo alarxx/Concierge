@@ -19,6 +19,9 @@ import IconHotel from '../../assets/icons/service_hotel.svg'
 import IconTransfer from '../../assets/icons/service_trancsfer.svg'
 import IconTickets from '../../assets/icons/service_tickets.svg'
 import Badge from "../../shared/ui/badge/Badge";
+import Modal from "../../shared/ui/modal/Modal";
+import ConciergeServiceForm from "../../features/order/concierge_service_form/ConciergeServiceForm";
+import ComingSoon from "../../features/order/coming_soon/ComingSoon";
 
 export default function ServiceChoice() {
     const location = useLocation();
@@ -31,6 +34,7 @@ export default function ServiceChoice() {
 
     const [activeTab, setActiveTab] = useState('NewHotelOrder');
 
+    const [isModalActive, setIsModalActive] = useState(false);
 
     return (<>
         <GroupFlex className={styles.ServiceChoice}>
@@ -54,8 +58,23 @@ export default function ServiceChoice() {
         <Card>
             <CardBody>
                 {activeTab==='NewHotelOrder' && <NewHotelOrder data={data} upsertFields={upsertFields} />}
-                {activeTab==='NewTicketsOrder' && <NewTicketsOrder data={data} upsertFields={upsertFields} />}
-                {/*{activeTab==='NewTransferOrder' && <NewTransferOrder data={data} upsertFields={upsertFields} />}*/}
+
+                {activeTab==='NewTicketsOrder' && <>
+                    <NewHotelOrder data={data} upsertFields={upsertFields} />
+
+                    <Modal minWidth={360} maxWidth={400} onClose={e => setActiveTab('NewHotelOrder')}>
+                        <ComingSoon cancelClick={e => setActiveTab('NewHotelOrder')} />
+                    </Modal>
+                </>}
+
+                {activeTab==='NewTransferOrder' && <>
+                    <NewHotelOrder data={data} upsertFields={upsertFields} />
+
+                    <Modal minWidth={360} maxWidth={400} onClose={e => setActiveTab('NewHotelOrder')}>
+                        <ComingSoon cancelClick={e => setActiveTab('NewHotelOrder')} />
+                    </Modal>
+                </>}
+
             </CardBody>
         </Card>
 

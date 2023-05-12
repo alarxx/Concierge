@@ -4,6 +4,9 @@ import {useAppContext} from "../context/AppContext";
 
 import Logger from '../internal/Logger';
 import Alert from "../shared/ui/alert/Alert";
+import Loader from "../shared/ui/loader/Loader";
+import Block from "../shared/ui/block/Block";
+import Overlay from "../shared/ui/overlay/Overlay";
 
 /**
  * Скопировано из ProtectedPage.js
@@ -29,9 +32,11 @@ export default function Page({ children }){
         console.log("Page.js: user loading")
         // pop-up
         return (<>
-            <Alert>
-                <p>loading...</p>
-            </Alert>
+            <Overlay>
+                <Block isAlignCenter={true}>
+                    <Loader color={'white'}/>
+                </Block>
+            </Overlay>
             {children}
         </>);
     }

@@ -12,6 +12,9 @@
     border-radius: 10px;
     z-index: 1111111111;
 }
-.Alert-danger {
-    background-color: #dc3545;
+.Alert--danger {
+    background-color: #8e0000;
+}
+.Alert--loader {
+    background: none;
 }

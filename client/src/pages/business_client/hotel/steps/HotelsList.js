@@ -19,6 +19,7 @@ import MyList from "../../list/MyList";
 import Alert from "../../../../shared/ui/alert/Alert";
 import Container from "../../../../shared/ui/box/Container";
 import ConciergeAction from "../../../../widgets/order/concierge_action/ConciergeAction";
+import Loader from "../../../../shared/ui/loader/Loader";
 
 
 export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields=f=>f, next=f=>f, close=f=>f }){
@@ -41,8 +42,8 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
         // logger.log(index, item);
         if(!item){ // loading item in list
             return (<>
-                <div style={style}>
-                    <p>Loading...</p>
+                <div style={{display:"flex",alignItems:"center",justifyContent:"center",}}>
+                    <Loader color={'black'}/>
                 </div>
             </>);
         }
