@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './select.module.css' 
 
-export default function Select({title, options, onChange=f=>f}){
+export default function Select({title, options,selectedValue, onChange=f=>f}){
 
     return (
         <div className={styles['custom-select']}>

@@ -19,6 +19,9 @@ import OrderHotelCard from "../../../widgets/order/order_hotel_card/OrderHotelCa
 import Block from "../../../shared/ui/block/Block";
 import NavbarLeft from "../../../shared/ui/navbar/NavbarLeft";
 import BackIcon from "../../../assets/icons/backbtn_icon.svg";
+import BottomControl from "../../../shared/ui/bottom_control/BottomControl";
+import ConciergeAction from "../../../widgets/order/concierge_action/ConciergeAction";
+import Button from "../../../shared/ui/button/Button";
 
 
 export default function OrderInfo({}){
@@ -44,7 +47,7 @@ export default function OrderInfo({}){
             LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={f=>f} />}
             title={`Заказ #${id}`}
         />
-        <Box navbar={true} menu={true}>
+        <Box navbar={true} menu={true} yummy={true}>
             <Container>
 
                 <Accordion expanded={expanded === 'personal-data'}>
@@ -89,6 +92,10 @@ export default function OrderInfo({}){
 
             </Container>
         </Box>
+
+        <BottomControl>
+            <Button variant={'control'}>Перейти в чат</Button>
+        </BottomControl>
         <NavigationPanel/>
     </>)
 }
