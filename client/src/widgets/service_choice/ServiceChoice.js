@@ -52,10 +52,6 @@ export default function ServiceChoice() {
         </GroupFlex>
 
         <Card>
-            <CardHeader>
-                <Logo />
-            </CardHeader>
-
             <CardBody>
                 {activeTab==='NewHotelOrder' && <NewHotelOrder data={data} upsertFields={upsertFields} />}
                 {activeTab==='NewTicketsOrder' && <NewTicketsOrder data={data} upsertFields={upsertFields} />}

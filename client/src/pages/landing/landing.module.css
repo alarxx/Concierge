@@ -15,11 +15,10 @@
     justify-content: center;
 }
 .promoland__logo {
-    width: 200px;
     margin-bottom: 50px;
 }
-.promoland__logo img {
-    width: 100%;
+.promoland__logo svg {
+    scale: 2;
 }
 .promoland h1 {
     font-size: 40px;

@@ -5,6 +5,8 @@ import NavigationPanel from '../../widgets/navigation_panel/NavigationPanel';
 
 import ServiceChoice from "../../widgets/service_choice/ServiceChoice";
 import Container from "../../shared/ui/box/Container";
+import Logo from "../../shared/ui/logo/Logo";
+import Block from "../../shared/ui/block/Block";
 
 export default function New(){
 
@@ -12,6 +14,9 @@ export default function New(){
         <>
             <Box menu={true}>
                 <Container>
+                    <Block top={50} bottom={30}>
+                        <Logo />
+                    </Block>
                     <ServiceChoice />
                 </Container>
             </Box>
