@@ -86,13 +86,13 @@ const OrderSchema = new Schema(
             immutable: true,
             required: true
         },
-        /*conversation: {
+        conversation: {
             type: Schema.Types.ObjectId,
             ref: 'Conversation',
             immutable: true,
             required: true,
             unique: true,
-        },*/
+        },
         meta: {
             type: MetaSchema,
             // required: true,

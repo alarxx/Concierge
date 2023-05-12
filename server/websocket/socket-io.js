@@ -2,6 +2,8 @@ const passport = require('passport');
 const { Server } = require("socket.io");
 
 const auth_listener = require('./listener/auth-listener');
+const order_listener = require('./listener/order-listener');
+const chat_listener = require('./listener/chat-listener');
 
 const logger = require('../log/logger')('socket-io')
 
@@ -41,6 +43,8 @@ socket_io.initialize = function({ server, sessionMiddleware }){
     /* запускается только если пользователь авторизован */
     io.on('connection', socket => {
         // auth_listener(socket);
+        order_listener(socket);
+        chat_listener(socket);
     });
 
     socket_io.io = io;

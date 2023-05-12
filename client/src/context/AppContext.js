@@ -4,7 +4,8 @@ import useAdaptive from "./hooks/adaptive/useAdaptive";
 import useSocket from "./hooks/socket/useSocket";
 import useAuth from "./hooks/auth/useAuth";
 import useURLState from "./hooks/url_state/useURLState";
-import useData from "./hooks/data/useData";
+import useChat from "./hooks/chat/useChat";
+import useOrder from "./hooks/order/useOrder";
 
 const Context = createContext();
 
@@ -16,7 +17,9 @@ function AppContextProvider({ children }){
     const adaptiveHandler = useAdaptive();
     const socketHandler = useSocket();
     const authHandler = useAuth({socketHandler});
-    const dataHandler = useData({ socketHandler, authHandler });
+
+    const chatHandler = useChat({socketHandler, authHandler});
+    const orderHandler = useOrder({socketHandler, authHandler});
 
     return (
         <Context.Provider value={{
@@ -24,7 +27,8 @@ function AppContextProvider({ children }){
             adaptiveHandler,
             socketHandler,
             authHandler,
-            ...dataHandler
+            chatHandler,
+            orderHandler,
         }}>
             {children}
         </Context.Provider>

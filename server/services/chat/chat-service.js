@@ -125,84 +125,28 @@ async function createConversationWithParticipants(userIds=[], name=`Conversation
     });
 }
 
-async function sendMessage(message={type:'', conversation:'', sender:{}, /*[type]:{}*/}){
-    /*const { user } = socket.request;
 
-    const Messages = require('../../models/modelsManager').models.Message;
-    const Notifications = require('../../models/modelsManager').models.Notification;
-    const Participants = require('../../models/modelsManager').models.Participant;
-
-    //Нужно не только тупое сохранение сделать, но и изменение
-
-    let m = message.id ?
-        await Messages.findById(message.id) :
-        new Messages({
-            sender: user.id,
-            ...message
-        });
-
-    if(!m) return; // Если id есть, но сообщение не найдено
-
-    try {
-        if(m.type === 'text'){
-            m.text = message.text;
-        }
-        else if(m.type === 'choice'){
-            m.choice.selectedServices = message.choice.selectedServices;
-            if(message.id)
-                m.choice.submitted = true;
-        }
-        // А когда файл? Нужно сохранить file и установить его id в message.file
-        else if(m.type === 'file'){
-            console.log(m);
-        }
-        else return; // ничего не делаем при других type пока
-        await m.save();
-    }catch(e){
-        console.log(e);
+async function joinConversation(conversationId, user){
+    if(!conversationId || !user){
+        throw ApiError.ServerError('users are not provided. Cannot create conversation without participants');
     }
 
-    const ps = await Participants.find({conversation: message.conversation});
-
-    try {
-        await Promise.all(ps.map(async p => {
-            return await new Notifications({
-                type: 'message',
-                message: m.id,
-                user: p.user,
-            }).save();
-        }))
-    } catch (e) {
-        console.log(e);
-    }*/
-}
-
-async function joinConversation(user, conversation){
-    /*const Participants = require('../../models/modelsManager').models.Participant;
-    const Conversations = require('../../models/modelsManager').models.Conversation;
-
-    const { user } = socket.request;
-
-    console.log(`join socket(${socket.id}) to room`, conversation)
-
-    const conversationDoc = await Conversations.findById(conversation.id);
-    if(!conversationDoc){
-        return console.log(`Conversation does not exist`, conversation)
+    const conversationModel = await Conversation.findById(conversationId);
+    if(!conversationModel){
+        return console.log(`Conversation does not exist`, conversationId)
     }
 
-    const participant_info = {conversation: conversation.id, user: user.id};
+    const participant_info = {conversation: conversationId, user: user.id};
 
-    const exist_participant = await Participants.findOne(participant_info);
+    const exist_participant = await Participant.findOne(participant_info);
     if(exist_participant){
         return console.log(`Participant already exists `, exist_participant)
     }
 
-    const p = new Participants(participant_info);
-    try{
-        await p.save();
-    }catch(e){
-        return console.log(e)
-    }*/
+    const p = new Participant(participant_info);
+
+    await p.save();
+    await conversationModel.save(); // тот кто вошел должен получить беседу.
 
     /*
     // script messages on first Manager join
@@ -240,7 +184,6 @@ async function deleteNotifications(notifications){
 module.exports = ({
     firstLoad,
     createConversationWithParticipants,
-    sendMessage,
     joinConversation,
     messagesPaginate,
     participantsPaginate,

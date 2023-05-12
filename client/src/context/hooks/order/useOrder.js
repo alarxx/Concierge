@@ -1,13 +1,13 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import useFreshData from "../useFreshData";
 import {useNavigate} from "react-router-dom";
 
-import setIds from '../../../../internal/setIds';
-import Logger from "../../../../internal/Logger";
+import useFreshData from "../useFreshData";
 
-export default function useOrderData({ socketHandler, authHandler }){
+import Logger from "../../../internal/Logger";
 
-    const logger = useMemo(()=>new Logger('useOrderData'), [])
+export default function useOrder({ socketHandler, authHandler }){
+
+    const logger = useMemo(()=>new Logger('useOrder'), [])
 
     const navigate = useNavigate();
 
@@ -114,11 +114,21 @@ export default function useOrderData({ socketHandler, authHandler }){
         setOrdersLoading(false);
     }
 
+    async function takeOrder(order){
+        logger.log({order})
+        if(!order || !order.id){
+            logger.log("orders is null or not an object", { order })
+        }
+
+        socket.emit('take-order', order);
+    }
 
     return ({
         orders,
         ordersLoading,
         ordersError,
+
+        takeOrder,
 
         createOrder,
         updateOrder,

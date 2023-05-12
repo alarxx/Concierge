@@ -1,5 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {useAppContext} from "../../context/AppContext";
+
 import NavbarPanel from '../../widgets/navbar_panel/NavbarPanel';
 import Box from '../../shared/ui/box/Box'
 import NavigationPanel from '../../widgets/navigation_panel/NavigationPanel';
@@ -26,6 +28,8 @@ import Container from "../../shared/ui/box/Container";
 
 export default function Orders({}){
 
+    const { orderHandler, } = useAppContext();
+    const { takeOrder } = orderHandler;
 
     return (<>
         <NavbarPanel title={'Заказы'} />
@@ -33,7 +37,10 @@ export default function Orders({}){
 
             <Container>
 
-                <OrderCard />
+                <OrderCard onClick={e => {
+                    takeOrder()
+                }
+                }/>
                 <OrderCard />
                 <OrderCard />
 

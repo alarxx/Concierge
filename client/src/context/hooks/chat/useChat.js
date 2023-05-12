@@ -1,10 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react'
-import {useNavigate} from "react-router-dom";
 
-import findIndexById from "../../../../internal/findIndexById";
-import setIds from '../../../../internal/setIds'
 import useFreshData from "../useFreshData";
-import Logger from "../../../../internal/Logger";
+import Logger from "../../../internal/Logger";
 
 /*const conversationsDefault = [
     {
@@ -187,13 +184,20 @@ export default function useChat({ socketHandler, authHandler }){
         setChatLoading(false)
     }
 
+    /**
+     * message - объект, который содержит {
+     *     conversation: ObjectId,
+     *     type: 'text',
+     *     text: 'Hello, World!'
+     * }
+     * */
     function sendMessage(message){
         socket.emit("send-message", message);
     }
 
-    function joinConversation(conversation){
+    /*function joinConversation(conversation){
         socket.emit('join-conversation', conversation);
-    }
+    }*/
 
     function deleteNotifications(messages){
         // const ms = messages.filter(m => m.conversation == conversation.id);
@@ -224,7 +228,7 @@ export default function useChat({ socketHandler, authHandler }){
         notifications,
 
         sendMessage,
-        joinConversation,
+        // joinConversation,
         deleteNotifications,
     }
 }

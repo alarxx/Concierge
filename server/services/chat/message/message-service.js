@@ -2,7 +2,7 @@ const ApiError = require("../../../exceptions/ApiError");
 const ModelService = require("../../helpers/ModelService");
 const AdminService = require('../../helpers/AdminService');
 
-const { Message, Participant } = require('../../../models/models-manager');
+const { Message, Conversation, Participant } = require('../../../models/models-manager');
 const messageDto = require('../../../dtos/chat/message-dto');
 const checkNecessaryFields = require("../../helpers/checkNecessaryFields");
 
@@ -55,7 +55,79 @@ async function pagination(filters, user){ //, skip, limit, sort) { // query
     return items.map(item => messageDto(item));
 }
 
+async function sendMessage(message, files, user) {
+    if (!files) {
+        files = {};
+    }
+    if (!user) {
+        throw ApiError.ServerError('user is missing');
+    }
+
+    // Нужно найти unique поля?
+    // Можно просто засетить полностью и попытаться сохранить с файлами
+    await modelService.deleteInvalidFileFields(message);
+
+    // Проверить состоит ли пользователь в conversation
+
+    //Нужно не только тупое сохранение сделать, но и изменение
+    let m = message.id ?
+        await Message.findById(message.id) :
+        new Message({
+            sender: user.id,
+            ...message
+        });
+
+    if(!m) {
+        // Если id есть, но сообщение не найдено
+        throw ApiError.NotFound('Message not found');
+    }
+
+    // logger.log("sendMessage", {message, model});
+
+    if(m.type === 'text'){
+        m.text = message.text;
+    }
+    else if(m.type === 'choice'){
+        m.choice.selectedServices = message.choice.selectedServices;
+        if(message.id){
+            m.choice.submitted = true;
+        }
+    }
+    // А когда файл? Нужно сохранить file и установить его id в message.file
+    else if(m.type === 'file'){
+        console.log(m);
+    }
+    else {
+        throw ApiError.BadRequest('Bad message type');
+    } // ничего не делаем при других type пока
+
+    await m.validate();
+    // Нужно прикреплять файлы
+    // await modelService.saveWithFiles(m, files, { user });
+
+    await m.save();
+
+
+    // Отправить всем уведомление
+    const participants = await Participant.find({ conversation: message.conversation });
+
+    await Promise.all(participants.map(async p => {
+        const notification = new Notification({
+            type: 'message',
+            message: m.id,
+            user: p.user,
+        })
+
+        await notification.save();
+
+        return notification;
+    }))
+
+    return messageDto(m, user);
+}
+
 module.exports = ({
     ...adminService,
     pagination,
+    sendMessage,
 });

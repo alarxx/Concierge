@@ -1,8 +1,8 @@
 import React, {useEffect, useMemo, useState} from "react";
 
-import setIds from "../../../internal/setIds";
-import findIndexById from "../../../internal/findIndexById";
-import Logger from "../../../internal/Logger";
+import setIds from "../../internal/setIds";
+import findIndexById from "../../internal/findIndexById";
+import Logger from "../../internal/Logger";
 
 export default function useFreshData({ socket, modelName }){
     const logger = useMemo(()=>new Logger('useFreshData'),[])

@@ -84,14 +84,22 @@ async function createOne(body, files, user) {
     // Создаем и присваем id-шки
     order.bookings = await bookingsService.createMany(bookings, order, files);
 
-    await modelService.saveWithFiles(order, files, { user });
+    // await order.validate();
 
     // Здесь я должен создать чат
-    const chat = await chatService.createConversationWithParticipants([user.id]);
+    const {conversation, participants} = await chatService.createConversationWithParticipants([user.id]);
+
+
+    order.conversation = conversation.id;
+
+    logger.log({order, conversation, participants});
+
+    await modelService.saveWithFiles(order, files, { user });
 
     return ({
         order: orderDto(order, user),
-        ...chat
+        conversation,
+        participants
     });
 }
 
@@ -170,9 +178,30 @@ async function deleteOne(body, user) {
 }
 
 
+async function takeOrder(order, user){
+    if(!order || !user){
+        throw ApiError.ServerError('Some required arguments are missing');
+    }
+    if(user.role !== 'admin'){
+        throw ApiError.Forbidden('Permission denied, only for admins');
+    }
+    // change status of order.
+    const orderModel = await Order.findById(order.id);
+    if(!orderModel){
+        throw ApiError.NotFound(`Order not found`);
+    }
+    logger.log("takeOrder:", {orderModel})
+    orderModel.status = 'handling';
+    await orderModel.save();
+    // join conversation,
+    await chatService.joinConversation(order.conversation, user);
+}
+
+
 module.exports = ({
     createOne,
     findByQueryParams,
     updateOne,
-    deleteOne
+    deleteOne,
+    takeOrder
 });
