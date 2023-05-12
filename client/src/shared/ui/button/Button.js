@@ -22,6 +22,9 @@ export default function Button({children, type='', variant='main', size='', top,
             case('outline'):
                 setBtnVariant('outline');
                 break;
+            case('landing'):
+                setBtnVariant('landing');
+                break;
             default:
                 setBtnVariant('main');
                 break;

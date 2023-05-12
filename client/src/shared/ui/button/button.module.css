@@ -36,6 +36,11 @@
     color: white;
     font-weight: 600;
 }
+.btn--landing {
+    background-color: #ffffff;
+    color: #1c1c1c;
+    font-weight: 600;
+}
 .btn--small {
     font-weight: 600;
     font-size: 14px;

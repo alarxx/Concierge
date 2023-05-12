@@ -7,7 +7,7 @@ import {AppContextProvider, useAppContext} from './context/AppContext';
 import ProtectedPage from "./middlewares/ProtectedPage";
 import Page from "./middlewares/Page";
 
-import Landing from "./pages/Landing"
+import Landing from "./pages/landing/Landing"
 import Authentication from "./pages/auth/main/Authentication";
 import Activation from "./pages/auth/activation/Activation";
 import SendResetPasswordMail from "./pages/auth/password_send_reset/SendResetPasswordMail";
