@@ -23,40 +23,16 @@ import Container from "../../../../shared/ui/box/Container";
 import ConciergeAction from "../../../../widgets/order/concierge_action/ConciergeAction";
 
 
-export default function HotelRoomsList({ data={}, roomsListHandler={}, upsertFields=f=>f, next=f=>f, back=f=>f }){
+export default function HotelRoomsList({ data={}, upsertFields=f=>f, next=f=>f, back=f=>f }){
     const logger = useMemo(()=>new Logger('HotelRoomsList'), []);
 
-    const {hotel} = data;
-    const {items: rooms, notFound} = roomsListHandler;
+    const { hotel } = data;
+    const { rooms } = hotel;
 
     function onRoomClick(item){
         logger.log("onHotelClick:", item);
         upsertFields({ room: item });
         next();
-    }
-
-    function Row({ index, style }){
-        const item = rooms[index];
-
-        // logger.log(index, item);
-        if(!item){
-            return (<>
-                <div style={style}>
-                    <p>Loading...</p>
-                </div>
-            </>);
-        }
-
-        return (<>
-            <div style={style}>
-                <HotelRoomCard
-                    title={item.name}
-                    price={item.price ? item.price : 'от 50,000 KZT'}
-                    addInfo={'2 взрослых, 2 ночи'}
-                    onClick={e => onRoomClick(item)}
-                />
-            </div>
-        </>);
     }
 
     return (
@@ -68,13 +44,24 @@ export default function HotelRoomsList({ data={}, roomsListHandler={}, upsertFie
             <Box navbar={true} menu={true} yummy={true}>
                 <Container>
 
-                    {notFound && Object.keys(rooms).length === 0 && <Alert>
-                        <p>loading...</p>
-                    </Alert>}
+                    {rooms.length === 0 &&
+                        <Alert>
+                            <p>Not found</p>
+                        </Alert>
+                    }
 
-                    <MyList {...roomsListHandler} itemSize={290}>
-                        {Row}
-                    </MyList>
+                    {rooms.map((room, i)=>{
+                        return (<>
+                            <div key={i}>
+                                <HotelRoomCard
+                                    title={room.name}
+                                    price={room.price ? room.price : 'от 50,000 KZT'}
+                                    addInfo={'2 взрослых, 2 ночи'}
+                                    onClick={e => onRoomClick(room)}
+                                />
+                            </div>
+                        </>);
+                    })}
 
                 </Container>
             </Box>

@@ -28,11 +28,11 @@ function getUrl(skip, limit, filter={}){
     });
 }
 
-export default function HotelSingle({ data={}, roomsListHandler={}, next=f=>f, back=f=>f, }) {
+export default function HotelSingle({ data={}, next=f=>f, back=f=>f, }) {
     const logger = useMemo(() => new Logger('HotelSingle'), []);
 
     const { hotel } = data;
-    const {items: rooms} = roomsListHandler;
+    const { rooms } = hotel;
 
     return(<>
         <NavbarPanel

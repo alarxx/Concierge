@@ -97,7 +97,7 @@ export default function HotelOrderFlow(){
 
     const hotelsListHandler = useHotelsListHandler(city);
 
-    const roomsListHandler = useRoomsListHandler(hotel);
+    // const roomsListHandler = useRoomsListHandler(hotel);
 
     async function submit(){
         // do something with data
@@ -126,7 +126,7 @@ export default function HotelOrderFlow(){
         const json = await response.json();
 
         logger.log('response', response)
-        logger.log({json});
+        logger.log({ json });
         navigate('/orders');
         /*
         // Order example
@@ -218,7 +218,7 @@ export default function HotelOrderFlow(){
             close={close}
 
             hotelsListHandler={hotelsListHandler}
-            roomsListHandler={roomsListHandler}
+            // roomsListHandler={roomsListHandler}
         />}
     </>);
 }

@@ -90,9 +90,7 @@ export default function Router(){
 						</ProtectedPage>
 					}/>
 				</Route>
-				
-				{/*<Route path='/chat' element={<ProtectedPage><Chat /></ProtectedPage>}/>*/}
-				{/*<Route path='/chat/single' element={<ProtectedPage><Messenger /></ProtectedPage>}/>*/}
+
 				<Route path='/profile' element={<ProtectedPage><Profile /></ProtectedPage>}/>
 
 				<Route path={'/chat'}>

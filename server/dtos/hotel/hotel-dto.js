@@ -1,7 +1,13 @@
+const mongoose = require("mongoose");
+
+const Logger = require('../../log/logger');
+const logger = Logger('hotel-dto');
+
 module.exports = (doc, user) => {
-    if(doc._id){
-        doc.id = doc._id;
-        delete doc._id;
+    logger.log("doc instanceof mongoose.Model", doc instanceof mongoose.Model);
+    const _doc = doc instanceof mongoose.Model ? doc.toObject() : doc;
+    if(_doc._id){
+        _doc.id = _doc._id;
     }
-    return doc;
+    return _doc;
 }
