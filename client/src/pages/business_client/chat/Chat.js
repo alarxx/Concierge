@@ -19,52 +19,52 @@ export default function Chat(){
     const logger = useMemo(()=>new Logger('Chat'), []);
 
     const navigate = useNavigate();
-    const { id } = useParams()
+    const { id } = useParams();
 
-    const {chatHandler, authHandler} = useAppContext()
+    const { chatHandler, authHandler } = useAppContext();
 
-    const {messages, conversations, notifications, sendMessage, deleteNotifications, _upsertMessage, chatLoading} = chatHandler;
-    const {user} = authHandler;
+    const { messages, conversations, notifications, sendMessage, deleteNotifications, _upsertMessage, chatLoading } = chatHandler;
+    const { user } = authHandler;
 
-    const [conversation, setConversation] = useState()
-    const [conversationMessages, setConversationMessages] = useState([])
+    const [conversation, setConversation] = useState();
+    const [conversationMessages, setConversationMessages] = useState([]);
 
     function openConversation(conversation){
         // Мы должны проверить состоит ли пользователь в этом conversation
-        navigate(`/chat/${conversation.id}`)
+        navigate(`/chat/${conversation.id}`);
     }
     function closeConversation(){
-        navigate(-1)
+        navigate(-1);
     }
 
     useEffect(()=>{
         if(id){
-            const c = conversations.find(conversation => conversation.id === id);
-            setConversation(c)
-            setConversationMessages(messages.filter(m => m.conversation == c.id))
+            setConversation(conversations.find(conversation => conversation.id === id));
+            setConversationMessages(messages.filter(m => m.conversation === id));
         }
         else {
-            setConversation(null)
-            setConversationMessages([])
+            setConversation(null);
+            setConversationMessages([]);
         }
 
     }, [id]);
 
     useEffect(()=>{
-        if(conversation){
-            setConversationMessages(messages.filter(m => m.conversation == conversation.id))
+        if(id){
+            setConversationMessages(messages.filter(m => m.conversation === id));
         }
     }, [messages]);
 
     useEffect(()=>{
-        if(conversation){
+        if(id){
             deleteNotifications(conversationMessages);
         }
-    })
+    }, [id, messages]);
 
     return (
         <>
             <NavbarPanel title={'Чат'}/>
+
             <Box navbar={true} menu={true}>
                 <Container>
                     {!conversation &&
@@ -89,6 +89,7 @@ export default function Chat(){
                     }
                 </Container>
             </Box>
+
             <NavigationPanel />
         </>
     );

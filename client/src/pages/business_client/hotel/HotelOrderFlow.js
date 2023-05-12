@@ -21,34 +21,6 @@ const Steps = [
     HotelConfirm,
 ];
 
-function useRoomsListHandler(hotel){
-    // const [hotelRooms, setHotelRooms] = useState({});
-
-    const opts = useMemo(()=>{
-        return { hotel: hotel?.id ? hotel.id : '123' };
-    }, [hotel])
-
-    const roomsListHandler = useBigList('/api/hotel/room/pagination/', opts);
-
-    // Оптимизация загрузки ? Не грузить уже загруженное
-    // useEffect(()=>{
-    //     setHotelRooms(prev => {
-    //         return ({...prev, hotelsListHandler});
-    //     })
-    // }, [hotel]);
-
-    const { items, loadMoreItems } = roomsListHandler;
-
-    useEffect(()=>{
-        if(!loadMoreItems){
-            return;
-        }
-
-        loadMoreItems(0, 5);
-    }, [hotel]);
-
-    return roomsListHandler; // [hotel.id];
-}
 function useHotelsListHandler(city){
 
     const opts = useMemo(()=>{
@@ -93,7 +65,7 @@ export default function HotelOrderFlow(){
     * city всегда должен быть определен,
     * hotel может быть null,
     * */
-    const { city, hotel } = data;
+    const { city } = data;
 
     const hotelsListHandler = useHotelsListHandler(city);
 
@@ -125,7 +97,7 @@ export default function HotelOrderFlow(){
 
         const json = await response.json();
 
-        logger.log('response', response)
+        logger.log('response', response);
         logger.log({ json });
         navigate('/orders');
         /*

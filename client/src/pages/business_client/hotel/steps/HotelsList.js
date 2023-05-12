@@ -39,7 +39,7 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
         const item = hotels[index];
 
         // logger.log(index, item);
-        if(!item){
+        if(!item){ // loading item in list
             return (<>
                 <div style={style}>
                     <p>Loading...</p>
@@ -70,13 +70,21 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
             <Box navbar={true} menu={true} yummy={true}>
                 <Container>
 
-                    {!notFound && Object.keys(hotels).length === 0 && <Alert>
-                        <p>loading...</p>
-                    </Alert>}
+                    {!notFound && hotels.length === 0 &&
+                        <Alert>
+                            <p>loading...</p>
+                        </Alert>
+                    }
 
-                    <MyList {...hotelsListHandler} itemSize={290}>
-                        {Row}
-                    </MyList>
+                    {notFound &&
+                        <p>Not found</p>
+                    }
+
+                    {!notFound &&
+                        <MyList {...hotelsListHandler} itemSize={290}>
+                            {Row}
+                        </MyList>
+                    }
 
                 </Container>
             </Box>

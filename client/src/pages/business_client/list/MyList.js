@@ -5,23 +5,15 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import {FixedSizeList} from "react-window";
 
 export default function MyList({
-                    items,
                     isItemLoaded,
                     loadMoreItems,
                     itemCountLoader,
                     itemCountList,
-                    notFound=false,
 
                     itemSize=290,
 
                     children
                 }){
-
-    if(notFound){
-        return (<>
-            <p>Not found</p>
-        </>);
-    }
 
     return (<>
         <InfiniteLoader
