@@ -117,7 +117,7 @@ export default function useOrder({ socketHandler, authHandler }){
     async function takeOrder(order){
         logger.log({order})
         if(!order || !order.id){
-            logger.log("orders is null or not an object", { order })
+            return logger.log("orders is null or not an object", { order })
         }
 
         socket.emit('take-order', order);
