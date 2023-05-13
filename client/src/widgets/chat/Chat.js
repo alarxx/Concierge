@@ -11,11 +11,8 @@ import Logger from "../../internal/Logger";
 /**
  * Должен показывать компонент Conversations на desktop-e, на мобилке же нет.
  * */
-export default function Chat({onMessengerActive=f=>f}){
+export default function Chat({ activeConversationId='', openConversation=f=>f, closeConversation=f=>f }){
     const logger = useMemo(()=>new Logger('Chat'), []);
-
-    const navigate = useNavigate();
-    const { id } = useParams();
 
     const { chatHandler, authHandler } = useAppContext();
 
@@ -23,45 +20,33 @@ export default function Chat({onMessengerActive=f=>f}){
     const { user } = authHandler;
 
     const [conversation, setConversation] = useState();
+
     const [conversationMessages, setConversationMessages] = useState([]);
 
-    function openConversation(conversation){
-        // Мы должны проверить состоит ли пользователь в этом conversation
-        navigate(`/chat/${conversation.id}`);
-    }
-    function closeConversation(){
-        navigate(-1);
-    }
+    useEffect(()=>{
+        if(activeConversationId){
+            deleteNotifications(conversationMessages);
+        }
+    }, [activeConversationId, messages]);
 
     useEffect(()=>{
-        if(id){
-            setConversation(conversations.find(conversation => conversation.id === id));
-            setConversationMessages(messages.filter(m => m.conversation === id));
-            onMessengerActive(true)
+        if(activeConversationId){
+            setConversation(conversations.find(conversation => conversation.id === activeConversationId));
+            setConversationMessages(messages.filter(m => m.conversation === activeConversationId));
         }
         else {
             setConversation(null);
             setConversationMessages([]);
-            onMessengerActive(false)
         }
-
-    }, [id]);
+    }, [activeConversationId, messages]);
 
     useEffect(()=>{
-        if(id){
-            setConversationMessages(messages.filter(m => m.conversation === id));
-        }
-    }, [messages]);
-
-    useEffect(()=>{
-        if(id){
-            deleteNotifications(conversationMessages);
-        }
-    }, [id, messages]);
+        logger.log({conversation})
+    }, [conversation, messages])
 
     return (
         <>
-            {!conversation &&
+            {!activeConversationId &&
                 <Conversations
                     chatLoading={chatLoading}
                     conversations={conversations}
@@ -71,7 +56,7 @@ export default function Chat({onMessengerActive=f=>f}){
                 />
             }
 
-            {conversation &&
+            {activeConversationId &&
                 <Messenger
                     conversation={conversation}
                     user={user}
