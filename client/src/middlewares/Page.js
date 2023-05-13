@@ -23,10 +23,10 @@ export default function Page({ children }){
     const logger = useMemo(()=>new Logger('ProtectedPage'), []);
 
     const { authHandler, adaptiveHandler } = useAppContext();
-    const { userLoading, isOffline } = authHandler;
+    const { user, isAuthenticated, userLoading, isOffline } = authHandler;
     const { device } = adaptiveHandler;
 
-    if(device !== 'mobile'){
+    if(device !== 'mobile' && (!isAuthenticated || isAuthenticated && user.role !== 'admin')){
         return <>
             <Modal minWidth={360} maxWidth={400}>
                 <Block isAlignCenter={true}>

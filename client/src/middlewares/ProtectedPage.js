@@ -60,7 +60,7 @@ export default function ProtectedPage({ children }){
 
     const { device } = adaptiveHandler;
 
-    if(device !== 'mobile'){
+    if(device !== 'mobile' && (!isAuthenticated || isAuthenticated && user.role !== 'admin')){
         return <>
             <Modal minWidth={360} maxWidth={400}>
                 <Block isAlignCenter={true}>
