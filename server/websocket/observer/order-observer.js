@@ -18,7 +18,10 @@ async function notify(method, modelName, orderDoc){
     if(!userId){
         throw ApiError.ServerError('Order Observer Error. Order must have a customer');
     }
-
+    await Promise.all(orderDoc.bookings.map(async (booking, index) => {
+        // logger.log('booking', booking);
+        return await orderDoc.populate(`bookings.${index}.${booking.type}`);
+    }));
     // Должны отправить уведомление о создании или удалении админам и пользователям, имеющим отношение к order
     const admins = await User.find({ role: 'admin' });
     admins.map(admin => {
