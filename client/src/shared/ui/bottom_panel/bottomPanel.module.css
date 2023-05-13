@@ -1,0 +1,9 @@
+.BottomPanel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #FFFFFF;
+    box-shadow: 0 8px 16px rgba(30, 38, 47, 0.04);
+    padding: 14px 20px 14px 20px;
+}

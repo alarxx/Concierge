@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
-import MenuIcon from "../../../assets/icons/menu.svg";
-import SendIcon from "../../../assets/icons/send.svg";
-
 
 import styles from './chatInputForm.module.css'
+
 import ChatActions from "../../../widgets/chat/chat_actions/ChatActions";
+import Block from "../../../shared/ui/block/Block";
+import GroupFlex from "../../../shared/ui/group_flex/GroupFlex";
+import ButtonIconic from "../../../shared/ui/button_iconic/ButtonIconic";
+import SendIcon from "../../../assets/icons/send.svg";
 export default function ChatInputForm({
                                        initInput="",
                                        onSend=console.log,
@@ -20,30 +22,26 @@ export default function ChatInputForm({
     }
 
     return (
-        <div className={styles["chat__controlpanel"]}>
-            <div className={styles["chat-controls-panel"]}>
-                <ChatActions setAction={onLeftClick} />
-                {/*<div className={`${styles["chat-controls-panel__left"]} ${styles['attach']}`} onClick={onLeftClick}>*/}
-                {/*    <MenuIcon />*/}
-                {/*</div>*/}
-                <div className={styles["chat-controls-panel__input"]}>
-                    <input
-                        type="text"
-                        className={styles["chat__input"]}
-                        placeholder="Введите сообщение"
-                        value={input}
-                        onChange={ e => setInput(e.target.value) }
-                        onKeyDown={ e => {
-                            if(e.key==='Enter')
-                                send(e)
-                        }}
-                    />
-                </div>
-                <div className={`${styles["chat-controls-panel__right"]} ${styles['send']}`} onClick={send}>
-                    <SendIcon />
-                </div>
-            </div>
+        <GroupFlex>
 
-        </div>
+            <ChatActions setAction={onLeftClick} />
+
+            <Block left={15} right={15}>
+                <input
+                    type="text"
+                    className={styles["chat__input"]}
+                    placeholder="Введите сообщение"
+                    value={input}
+                    onChange={ e => setInput(e.target.value) }
+                    onKeyDown={ e => {
+                        if(e.key==='Enter')
+                            send(e)
+                    }}
+                />
+            </Block>
+
+            <ButtonIconic onClick={send}><SendIcon /></ButtonIconic>
+
+        </GroupFlex>
     );
 }

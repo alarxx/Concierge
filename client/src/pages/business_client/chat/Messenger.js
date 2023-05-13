@@ -13,11 +13,12 @@ import Container from "../../../shared/ui/box/Container";
 
 import BackIcon from "../../../assets/icons/backbtn_icon.svg";
 import ChatChoiceForm from "./ChatChoiceForm";
-import ChatChoicePanel from "./ChatChoicePanel";
 // import ChatAttachPanel from "./ChatAttachPanel";
 import ChatServicePanel from "./ChatServicePanel";
 import Logger from "../../../internal/Logger";
 import FileInChat from "../../../features/chat/file_in_chat/FileInChat";
+import BottomPanel from "../../../shared/ui/bottom_panel/BottomPanel";
+import Button from "../../../shared/ui/button/Button";
 
 function findIndexById (array, id) {
     return array.findIndex(obj => obj.id === id);
@@ -217,19 +218,20 @@ export default function Messenger({
 
 
 
-            {control ==='text' &&
-                <ChatInputForm
-                    onLeftClick={e => {
-                        setAction('actions')
-                    }}
-                    onSend={text => onTextSend(text)}
-                />
-            }
-            {control === 'choice' &&
-                <ChatChoicePanel
-                    onClick={e => onChoiceSend()}
-                />
-            }
+            <BottomPanel>
+                {control ==='text' &&
+                    <ChatInputForm
+                        onLeftClick={e => {
+                            setAction('actions')
+                        }}
+                        onSend={text => onTextSend(text)}
+                    />
+                }
+                {control === 'choice' &&
+                    <Button onClick={e => onChoiceSend()}>Сделать выбор</Button>
+                }
+            </BottomPanel>
+
             {/*{control === 'attach' &&*/}
             {/*    <ChatAttachPanel*/}
             {/*        title="Выберите паттерн"*/}
