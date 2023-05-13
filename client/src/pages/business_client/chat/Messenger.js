@@ -215,9 +215,6 @@ export default function Messenger({
                 // }
             })}
 
-            {/*<NavigationPanel />*/}
-
-
 
 
             {control ==='text' &&

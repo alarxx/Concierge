@@ -13,7 +13,7 @@ export default function ChatActionsForm({setAction =f=>f, cancelClick=f=>f}) {
 
     return(<>
         <Block isAlignCenter={true}>
-            <Typography weight={700} size={24} bottom={12}>Что вы хотите сделать?</Typography>
+            <Typography weight={700} size={24}>Что вы хотите сделать?</Typography>
         </Block>
 
         <GroupButtons top={20}>

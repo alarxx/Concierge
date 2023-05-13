@@ -26,6 +26,9 @@
     background-color: #1E262F;
     color: white;
 }
+.btn--main svg path {
+    stroke: #cbcbcb;
+}
 .btn--second {
     background-color: #2086E5;
     color: white;
