@@ -5,10 +5,12 @@ export default function NavLink({text, onClick=f=>f, active}){
 
     return (
         <li className={`
-            ${styles["nav-link"]}
-            ${active && styles['nav-link--active']}    
-        `}>
-            <span onClick={onClick}>{text}</span>
+                ${styles["nav-link"]}
+                ${active && styles['nav-link--active']}    
+            `}
+            onClick={onClick}
+        >
+            <span>{text}</span>
         </li>
     );
 }
