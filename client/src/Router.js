@@ -22,11 +22,10 @@ import Orders from './pages/business_client/Orders';
 import OrderInfo from './pages/business_client/order-info/OrderInfo';
 import Profile from './pages/business_client/profile/Profile';
 import HotelOrderFlow from "./pages/business_client/hotel/HotelOrderFlow";
-import Messenger from "./pages/business_client/chat/Messenger";
-import Chat from "./widgets/chat/Chat";
 import NotFound404 from "./pages/NotFound404";
 import AdminPage from "./middlewares/AdminPage";
 import AdminDashboard from "./pages/manager/AdminDashboard";
+import ChatPage from "./pages/business_client/chat/ChatPage";
 
 
 export default function Router(){
@@ -119,12 +118,12 @@ export default function Router(){
 				<Route path={'/chat'}>
 					<Route index element={
 						<ProtectedPage>
-							<Chat />
+							<ChatPage />
 						</ProtectedPage>
 					}/>
 					<Route path={':id'} element={
 						<ProtectedPage>
-							<Chat />
+							<ChatPage />
 						</ProtectedPage>
 					}/>
 				</Route>
