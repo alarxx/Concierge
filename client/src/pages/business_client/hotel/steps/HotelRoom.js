@@ -20,7 +20,7 @@ import Container from "../../../../shared/ui/box/Container";
 export default function HotelRoom({ data={}, back=f=>f, next=f=>f }) {
     const logger = useMemo(()=>new Logger('HotelRoom'), []);
 
-    const {room} = data;
+    const { room } = data;
 
     return(<>
         <NavbarPanel

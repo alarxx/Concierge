@@ -32,7 +32,8 @@ export default function HotelSingle({ data={}, next=f=>f, back=f=>f, }) {
     const logger = useMemo(() => new Logger('HotelSingle'), []);
 
     const { hotel } = data;
-    const { rooms } = hotel;
+    const rooms = hotel['hotel/rooms'];
+
 
     return(<>
         <NavbarPanel
