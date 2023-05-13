@@ -7,7 +7,7 @@ const controller = require('../../../../controllers/api/hotel/room/hotel-room-co
 const checkAuthenticated = require('../../../../middlewares/checkAuthenticated');
 const checkAdminRole = require('../../../../middlewares/checkAdminRole');
 
-const { createOne, updateOne, deleteOne, findByQueryParams, pagination } = controller;
+const { createOne, updateOne, deleteOne, findByQueryParams, pagination, findById } = controller;
 
 Router.route('/')
     .post(checkAdminRole, createOne)
@@ -16,6 +16,9 @@ Router.route('/')
     .delete(checkAdminRole, deleteOne)
 
 Router.route('/pagination')
-    .get(pagination);
+    .get(checkAuthenticated, pagination);
+
+Router.route('/:id')
+    .get(checkAuthenticated, findById)
 
 module.exports = Router;

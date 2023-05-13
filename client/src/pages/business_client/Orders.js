@@ -28,7 +28,7 @@ import {useNavigate} from "react-router-dom";
 
 
 export default function Orders({}){
-
+    const logger = useMemo(()=>new Logger('Orders'), [])
     const navigate = useNavigate();
 
     const { orderHandler, } = useAppContext();
@@ -44,6 +44,7 @@ export default function Orders({}){
                         <OrderCard
                             order={order}
                             onClick={e => {
+                                logger.log({order})
                                 navigate(`/orders/${order.id}`);
                             }}
                         />
