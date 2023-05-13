@@ -15,15 +15,19 @@ const modelService = new ModelService(Hotel_Room);
 
 const pagination = require('../helpers/openPagination')(Hotel_Room, roomDto);
 
+async function returnRoom(room_model){
+    const hotel_model = await Hotel.findById(room_model.hotel);
+    return ({
+        'hotel': hotelDto(hotel_model),
+        'hotel/room': roomDto(room_model)
+    });
+}
+
 async function returnRooms(room_models){
     // нужно вместе с комнатами вернуть отели.
     // return room_models.map(m => roomDto(m));
     return await Promise.all(room_models.map(async room_model => {
-        const hotel_model = await Hotel.findById(room_model.hotel);
-        return ({
-            'hotel': hotelDto(hotel_model),
-            'hotel/room': roomDto(room_model)
-        });
+        return await returnRoom(room_model);
     }))
 }
 
@@ -59,8 +63,26 @@ async function findByQueryParams(filters, user) {
     return returnRooms(models);
 }
 
+async function findById(id, user){
+    if (!user) {
+        throw ApiError.ServerError('user is missing')
+    }
+    if (!id) {
+        throw ApiError.ServerError('id is missing')
+    }
+
+    const room = await Hotel_Room.findById(id);
+
+    if(!room){
+        throw ApiError.BadRequest('room not found')
+    }
+
+    return returnRoom(room);
+}
+
 module.exports = ({
     ...adminService,
     findByQueryParams,
     pagination,
+    findById
 });

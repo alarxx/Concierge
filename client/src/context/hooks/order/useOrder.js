@@ -4,6 +4,40 @@ import {useNavigate} from "react-router-dom";
 import useFreshData from "../useFreshData";
 
 import Logger from "../../../internal/Logger";
+import setIds from "../../../internal/setIds";
+
+
+async function extendOrders(orders, setOrders, stop={ signal: false }){
+
+    const extendedOrders = await Promise.all(orders.map(async order => {
+
+        const bookings = await Promise.all(order.bookings.map(async booking => {
+            const { type } = booking;
+            if(type === 'hotel/booking'){
+                const { hotel, 'hotel/room': room } = booking;
+                if(!hotel || !room){
+                    // Дополнить прикрепленную услугу заказа вызвав /api/hotel/room
+                    const response = await fetch('/api/hotel/room/' + booking['hotel/booking']['hotel/room']);
+                    const json = await response.json();
+                    setIds(json);
+                    // console.log(`extendOrders:`, {booking, json});
+                    // console.log(`extendOrders: api response`, response);
+                    return ({...booking, ...json});
+                }
+            }
+            return booking;
+        }));
+
+        return ({...order, bookings});
+
+    }));
+
+    if(!stop.signal){
+        setOrders(extendedOrders);
+    }
+
+}
+
 
 export default function useOrder({ socketHandler, authHandler }){
 
@@ -14,6 +48,7 @@ export default function useOrder({ socketHandler, authHandler }){
     const { socket } = socketHandler;
 
     const { data:orders, upsertData:upsertOrders } = useFreshData({ socket, modelName:'order' });
+    const [extendedOrders, setExtendedOrders] = useState([])
 
     const [ordersLoading, setOrdersLoading] = useState(true);
     const [ordersError, setOrdersError] = useState();
@@ -29,6 +64,13 @@ export default function useOrder({ socketHandler, authHandler }){
         });
     }, []);
 
+    useEffect(()=>{
+        const stop = { signal: false };
+        extendOrders(orders, setExtendedOrders, stop);
+        return () => {
+            stop.signal = true;
+        }
+    }, [orders])
 
     async function createOrder(order={bookings:[], accessHolders:[]}, opts={signal: undefined}){
         // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
@@ -122,7 +164,7 @@ export default function useOrder({ socketHandler, authHandler }){
     }
 
     return ({
-        orders,
+        orders:extendedOrders,
         ordersLoading,
         ordersError,
 
