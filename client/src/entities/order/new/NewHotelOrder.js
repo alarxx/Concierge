@@ -55,8 +55,8 @@ export default function NewHotelOrder({ data={}, upsertFields=f=>f }){
         fetch('/api/city')
             .then(res=> res.json())
             .then( json => {
-                console.log(json)
-                console.log(json.map(obj => ({label: obj.name, value: obj.name,})))
+                // console.log(json)
+                // console.log(json.map(obj => ({label: obj.name, value: obj.name,})))
                 setCityOptions(json.map(obj => ({label: obj.name, value: obj.name,})))
             }
         )

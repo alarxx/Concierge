@@ -68,7 +68,7 @@ export default function ServiceChoice() {
                 </>}
 
                 {activeTab==='NewTransferOrder' && <>
-                    <NewTransferOrder data={data} upsertFields={upsertFields} />
+                    <NewTransferOrder    data={data} upsertFields={upsertFields} />
 
                     <Modal minWidth={360} maxWidth={400} onClose={e => setActiveTab('NewHotelOrder')}>
                         <ComingSoon cancelClick={e => setActiveTab('NewHotelOrder')} />

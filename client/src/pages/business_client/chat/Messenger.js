@@ -160,66 +160,64 @@ export default function Messenger({
                 LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={closeConversation} />}
                 title={conversation.name}
             />
-            <Box navbar={true} menu={true}>
-                <Container>
-                    {/*<div className={styles.hotel__list} style={{ height: "100%", overflow: 'auto' }}>*/}
-                    {/*    <InfiniteScroll*/}
-                    {/*        pageStart={0}*/}
-                    {/*        loadMore={loadMore}*/}
-                    {/*        hasMore={hasMore}*/}
-                    {/*        loader={*/}
-                    {/*            <div className="loader" key={0}>*/}
-                    {/*                Loading ...*/}
-                    {/*            </div>*/}
-                    {/*        }*/}
-                    {/*        isReverse={true}*/}
-                    {/*        useWindow={false}*/}
-                    {/*    >*/}
-                    {/*        {items.map((item, i) => (*/}
-                    {/*            <HotelCard key={i} title={item.name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} onClick={e => onRoomClick(item)} />*/}
-                    {/*        ))}*/}
-                    {/*    </InfiniteScroll>*/}
-                    {/*</div>*/}
-                    {messages.map((message, messageIndex) => {
-                        if(message.type==='text'){
-                            return (
-                                <div key={messageIndex}>
-                                    {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdDate)}/>}
-                                    <ChatMessage
-                                        message={message}
-                                        user={user}
-                                    />
-                                </div>
-                            );
-                        }
-                        else if(message.type==='file') {
-                            return (
-                                <div key={messageIndex}>
-                                    {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdDate)}/>}
-                                    <ChatDocument message={message} user={user} onFileLoad={onFileLoad}/>
-                                </div>
-                            );
-                        }
-                        // else if(message.type==='choice'){
-                        //     // В messageForm должно отличаться только selected,
-                        //     // Как еще можно решить проблему куда именно вставлять selected? Чувствую что можно подругому
-                        //     /**/
-                        //     return (
-                        //         <div key={messageIndex}>
-                        //             {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdDate)}/>}
-                        //             <ChatChoiceForm
-                        //                 user={user}
-                        //                 message={message}
-                        //                 onServiceSelect={service => selectService(message, service)}
-                        //                 onAnother={message => console.log("another", message)}
-                        //             />
-                        //         </div>
-                        //     );
-                        // }
-                    })}
+            {/*<div className={styles.hotel__list} style={{ height: "100%", overflow: 'auto' }}>*/}
+            {/*    <InfiniteScroll*/}
+            {/*        pageStart={0}*/}
+            {/*        loadMore={loadMore}*/}
+            {/*        hasMore={hasMore}*/}
+            {/*        loader={*/}
+            {/*            <div className="loader" key={0}>*/}
+            {/*                Loading ...*/}
+            {/*            </div>*/}
+            {/*        }*/}
+            {/*        isReverse={true}*/}
+            {/*        useWindow={false}*/}
+            {/*    >*/}
+            {/*        {items.map((item, i) => (*/}
+            {/*            <HotelCard key={i} title={item.name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} onClick={e => onRoomClick(item)} />*/}
+            {/*        ))}*/}
+            {/*    </InfiniteScroll>*/}
+            {/*</div>*/}
+            {messages.map((message, messageIndex) => {
+                if(message.type==='text'){
+                    console.log(message)
 
-                </Container>
-            </Box>
+                    return (
+                        <div key={messageIndex}>
+                            {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
+                            <ChatMessage
+                                message={message}
+                                user={user}
+                            />
+                        </div>
+                    );
+                }
+                else if(message.type==='file') {
+                    return (
+                        <div key={messageIndex}>
+                            {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdDate)}/>}
+                            <ChatDocument message={message} user={user} onFileLoad={onFileLoad}/>
+                        </div>
+                    );
+                }
+                // else if(message.type==='choice'){
+                //     // В messageForm должно отличаться только selected,
+                //     // Как еще можно решить проблему куда именно вставлять selected? Чувствую что можно подругому
+                //     /**/
+                //     return (
+                //         <div key={messageIndex}>
+                //             {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdDate)}/>}
+                //             <ChatChoiceForm
+                //                 user={user}
+                //                 message={message}
+                //                 onServiceSelect={service => selectService(message, service)}
+                //                 onAnother={message => console.log("another", message)}
+                //             />
+                //         </div>
+                //     );
+                // }
+            })}
+
             {/*<NavigationPanel />*/}
 
 

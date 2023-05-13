@@ -6,7 +6,7 @@ function zero(time){
     return `${time<10?'0':''}`
 }
 function messageTime(message){
-    const date = new Date(message.createdDate);
+    const date = new Date(message.createdAt);
     return `${zero(date.getHours())}${date.getHours()} : ${zero(date.getMinutes())}${date.getMinutes()}`
 }
 
