@@ -42,6 +42,7 @@ export default function Orders({}){
                 {orders.map((order, i) => {
                     return (<div key={i}>
                         <OrderCard
+                            order={order}
                             onClick={e => {
                                 navigate(`/orders/${order.id}`);
                             }}
