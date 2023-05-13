@@ -46,7 +46,7 @@ export default function Chat({ activeConversationId='', openConversation=f=>f, c
 
     return (
         <>
-            {!activeConversationId &&
+            {!conversation &&
                 <Conversations
                     chatLoading={chatLoading}
                     conversations={conversations}
@@ -56,7 +56,7 @@ export default function Chat({ activeConversationId='', openConversation=f=>f, c
                 />
             }
 
-            {activeConversationId &&
+            {conversation &&
                 <Messenger
                     conversation={conversation}
                     user={user}
