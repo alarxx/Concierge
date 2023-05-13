@@ -13,6 +13,7 @@ import Block from "../../shared/ui/block/Block";
 import LogoutAction from "../../widgets/logout_action/LogoutAction";
 import Table from "../../shared/ui/table/Table";
 import Chat from "../business_client/chat/Chat";
+import HotelCrud from "../../widgets/manager/hotel_crud/HotelCrud";
 
 export default function AdminDashboard() {
 
@@ -48,7 +49,7 @@ export default function AdminDashboard() {
             <Box>
                 <Container padding={'20px 0'}>
                     {activeTab === 'orders' && <>orders</>}
-                    {activeTab === 'hotels' && <Table/>}
+                    {activeTab === 'hotels' && <HotelCrud />}
                     {activeTab === 'messenger' && <Chat />}
                     {activeTab === 'employees' && <>employees</>}
                 </Container>
