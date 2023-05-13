@@ -88,11 +88,11 @@ export default function OrderInfo({}){
 
                     {expanded === 'order' && <>
                         <AccordionDetails>
-                            {order.bookings.map(booking => {
+                            {order.bookings.map((booking, i) => {
                                 if(booking.type === 'hotel/booking') {
-                                    return (<>
+                                    return (<div key={i}>
                                         <OrderHotelCard hotel_booking={booking['hotel/booking']}/>
-                                    </>);
+                                    </div>);
                                 }
                                 else {
                                     return (<p>unknown service type</p>);
