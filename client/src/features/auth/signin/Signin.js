@@ -6,6 +6,7 @@ import {useAppContext} from "../../../context/AppContext";
 import {useNavigate} from "react-router-dom";
 import Logger from "../../../internal/Logger";
 import Alert from "../../../shared/ui/alert/Alert";
+import Loading from "../../../shared/loading/Loading";
 
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
@@ -73,7 +74,7 @@ export default function SignIn({ }){
 
     return (
         <div className="">
-            {loading && <Alert><p>loading...</p></Alert>}
+            {loading && <Loading />}
             {error && <p>{error.message}</p>}
 
             <form onSubmit={onSubmit}>

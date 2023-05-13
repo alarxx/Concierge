@@ -7,6 +7,7 @@ import Alert from "../shared/ui/alert/Alert";
 import Loader from "../shared/ui/loader/Loader";
 import Block from "../shared/ui/block/Block";
 import Overlay from "../shared/ui/overlay/Overlay";
+import Loading from "../shared/loading/Loading";
 
 /**
  * Скопировано из ProtectedPage.js
@@ -32,11 +33,7 @@ export default function Page({ children }){
         console.log("Page.js: user loading")
         // pop-up
         return (<>
-            <Overlay>
-                <Block isAlignCenter={true}>
-                    <Loader color={'white'}/>
-                </Block>
-            </Overlay>
+            <Loading />
             {children}
         </>);
     }

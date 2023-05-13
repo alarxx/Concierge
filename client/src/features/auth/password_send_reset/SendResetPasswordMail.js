@@ -7,6 +7,7 @@ import {useAppContext} from "../../../context/AppContext";
 
 import Input from '../../../shared/ui/input/Input'
 import Button from '../../../shared/ui/button/Button'
+import Loading from "../../../shared/loading/Loading";
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
  * SignUp не должен перенаправлять, а только возвращать json о том, получилось ли создать нового пользователя или нет.
@@ -68,7 +69,7 @@ export default function SendResetPasswordMail() {
     return (<>
         <h1>Отправить письмо со сбросом пароля</h1>
         {success && <p>{success.message}</p>}
-        {loading && <p>loading...</p>}
+        {loading && <Loading />}
         {error && <p>{error.message}</p>}
         {(!loading && !success) && <form onSubmit={onSubmit}>
             

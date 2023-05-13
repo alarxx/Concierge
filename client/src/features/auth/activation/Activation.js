@@ -9,6 +9,7 @@ import useTimer from "../../../hooks/useTimer";
 
 import Input from '../../../shared/ui/input/Input';
 import Button from '../../../shared/ui/button/Button';
+import Loading from "../../../shared/loading/Loading";
 
 /**
  * Страница активации аккаунта.
@@ -85,7 +86,7 @@ export default function Activation(){
 
         {success && <p>{success.message}. This tab will automatically close after {timer} second{timer>=2?'s':''}</p>}
 
-        {loading && <p>loading...</p>}
+        {loading && <Loading />}
         {error && <p>{error.message}</p>}
 
         {/* Если токен просрочен, то это показывать нельзя, простую проверку наличия error ставить нельзя, может выйти ошибка "слабый пароль" */}

@@ -7,6 +7,7 @@ import Input from '../../../shared/ui/input/Input';
 import Button from '../../../shared/ui/button/Button'
 import Alert from "../../../shared/ui/alert/Alert";
 import {useAppContext} from "../../../context/AppContext";
+import Loading from "../../../shared/loading/Loading";
 
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
@@ -52,7 +53,7 @@ export default function SendActivationMail({ }){
     return (<>
         <h1>Send activation e-mail</h1>
 
-        {loading && <Alert><p>sending email...</p></Alert>}
+        {loading && <Loading />}
         {success && <><p>{success.message}</p></>}
         {error && <p>{error.message}</p>}
 

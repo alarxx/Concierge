@@ -8,6 +8,7 @@ import Alert from "../shared/ui/alert/Alert";
 import Block from "../shared/ui/block/Block";
 import Loader from "../shared/ui/loader/Loader";
 import Overlay from "../shared/ui/overlay/Overlay";
+import Loading from "../shared/loading/Loading";
 const logger = new Logger('ProtectedPage');
 
 /**
@@ -72,11 +73,7 @@ export default function ProtectedPage({ children }){
         console.log("ProtectedPage.js: user loading");
 
         return (<>
-            <Overlay>
-                <Block isAlignCenter={true}>
-                    <Loader color={'white'}/>
-                </Block>
-            </Overlay>
+            <Loading />
             {wasAuthenticated && children}
         </>);
     }
