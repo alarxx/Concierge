@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from './nav.module.css'
-export default function Nav({children, left, right}){
+export default function Nav({children, left, right, block}){
 
     const style = {
         marginRight: right,
@@ -9,8 +9,11 @@ export default function Nav({children, left, right}){
     }
 
     return (
-        <nav style={style}>
-            <ul className={styles.nav}>
+        <nav style={style} className={styles.nav}>
+            <ul className={`
+                ${styles['nav-ul']}
+                ${block && styles['nav--block']}
+            `}>
                 {children}
             </ul>
         </nav>

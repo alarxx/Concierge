@@ -9,6 +9,8 @@ import Avatar from "../../shared/ui/avatar/Avatar";
 import Typography from "../../shared/ui/typography/Typography";
 import {useAppContext} from "../../context/AppContext";
 import GroupInline from "../../shared/ui/group_inline/GroupInline";
+import Block from "../../shared/ui/block/Block";
+import LogoutAction from "../../widgets/logout_action/LogoutAction";
 
 export default function AdminDashboard() {
 
@@ -16,29 +18,34 @@ export default function AdminDashboard() {
     const {user} = authHandler;
 
     return(<>
-        <AppBar padding={'20px 0'}>
-            <Container padding={'0 40px'}>
-                <GroupInline width={'100%'} >
-                    <GroupInline width={'100%'} >
-                        <Logo/>
-                        <Nav left={60}>
-                            <NavLink text={'Заявки'} onClick={f=>f}/>
+        <GroupInline width={'100%'} height={'100%'}>
+            <AppBar padding={'20px 10px'} left={true}>
+                <Block top={40}>
+                    <Logo/>
+                    <Block top={80} isAlignCenter={true}>
+                        <Nav block={true}>
+                            <NavLink active={true} text={'Заявки'} onClick={f=>f}/>
                             <NavLink text={'Отели'} onClick={f=>f}/>
                             <NavLink text={'Номера'} onClick={f=>f}/>
                             <NavLink text={'Сотрудники'} onClick={f=>f}/>
                         </Nav>
-                    </GroupInline>
+                    </Block>
+                </Block>
+                <Block>
                     <GroupInline width={'auto'}>
                         <Avatar right={10}/>
                         <div><Typography>{user.name}</Typography></div>
                     </GroupInline>
-                </GroupInline>
-            </Container>
-        </AppBar>
-        <Box>
-            <Container padding={'40px'}>
-
-            </Container>
-        </Box>
+                    <Block top={20}>
+                        <LogoutAction inverseColor={true} />
+                    </Block>
+                </Block>
+            </AppBar>
+            <Box>
+                <Container padding={'20px 0'}>
+                    Content
+                </Container>
+            </Box>
+        </GroupInline>
     </>)
 }

@@ -51,6 +51,11 @@
     border: 1px solid #1E262F;
     color: #1E262F;
 }
+.btn--outline-inverse {
+    background: none;
+    border: 1px solid white;
+    color: white;
+}
 .btn--outline svg path {
     fill: #1E262F;
 }

@@ -1,5 +1,8 @@
 .nav {
     width: 100%;
+}
+.nav-ul {
+    width: 100%;
     display: flex;
     align-items: center;
 }
@@ -13,4 +16,24 @@
 }
 .nav-link:last-child {
     margin-right: 0;
+}
+.nav--block {
+    flex-direction: column;
+    /*align-items: flex-start;*/
+}
+.nav--block .nav-link {
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    margin-right: 0;
+    margin-bottom: 20px;
+}
+.nav-link--active {
+    background-color: white;
+    border-radius: 8px;
+    color: #1E262F;
+    font-weight: 600;
+}
+.nav--block .nav-link:last-child {
+    margin-bottom: 0;
 }
