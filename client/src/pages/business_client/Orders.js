@@ -55,7 +55,7 @@ export default function Orders({}){
 
         </Box>
         <BottomControl>
-            <Button variant={'control'}>Добавить заказ</Button>
+            <Button variant={'control'} onClick={e => navigate('/new')}>Добавить заказ</Button>
         </BottomControl>
         <NavigationPanel />
     </>)
