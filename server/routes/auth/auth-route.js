@@ -2,6 +2,8 @@ const Router = require('express').Router();
 
 const authController = require('../../controllers/auth/auth-controller');
 
+Router.get('/logout', authController.logout);
+Router.post('/logout', authController.logout);
 Router.delete('/logout', authController.logout);
 
 Router.get('/failure', authController.failureRedirect);

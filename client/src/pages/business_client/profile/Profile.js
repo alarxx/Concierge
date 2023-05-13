@@ -14,11 +14,14 @@ import Block from "../../../shared/ui/block/Block";
 import ProfileSet from "./ProfileSet";
 import Button from "../../../shared/ui/button/Button";
 import LogoutAction from "../../../widgets/logout_action/LogoutAction";
+import {useAppContext} from "../../../context/AppContext";
 
 
 export default function Profile({}){
 
     const navigate = useNavigate();
+    const { authHandler } = useAppContext();
+    const { user } = authHandler;
 
     return (
         <>
@@ -28,9 +31,10 @@ export default function Profile({}){
 
                     <Card variant={'info'} >
                         <CardServiceHeader>
-                            <Typography>KazMunayGaz</Typography>
-                            <Typography>БИН: </Typography>
-                            <Typography>Level: </Typography>
+                            <Typography>email: {user.email}</Typography>
+                            {/*<Typography>KazMunayGaz</Typography>*/}
+                            {/*<Typography>БИН: </Typography>*/}
+                            {/*<Typography>Level: </Typography>*/}
                         </CardServiceHeader>
                     </Card>
 

@@ -5,6 +5,9 @@ import {useAppContext} from "../context/AppContext";
 import Logger from '../internal/Logger';
 import {Navigate, useNavigate} from "react-router-dom";
 import Alert from "../shared/ui/alert/Alert";
+import Block from "../shared/ui/block/Block";
+import Loader from "../shared/ui/loader/Loader";
+import Overlay from "../shared/ui/overlay/Overlay";
 const logger = new Logger('ProtectedPage');
 
 /**
@@ -69,9 +72,11 @@ export default function ProtectedPage({ children }){
         console.log("ProtectedPage.js: user loading");
 
         return (<>
-            <Alert>
-                <p>loading...</p>
-            </Alert>
+            <Overlay>
+                <Block isAlignCenter={true}>
+                    <Loader color={'white'}/>
+                </Block>
+            </Overlay>
             {wasAuthenticated && children}
         </>);
     }

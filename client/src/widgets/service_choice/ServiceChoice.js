@@ -22,6 +22,7 @@ import Badge from "../../shared/ui/badge/Badge";
 import Modal from "../../shared/ui/modal/Modal";
 import ConciergeServiceForm from "../../features/order/concierge_service_form/ConciergeServiceForm";
 import ComingSoon from "../../features/order/coming_soon/ComingSoon";
+import LogoutForm from "../../features/auth/logout/LogoutForm";
 
 export default function ServiceChoice() {
     const location = useLocation();
@@ -55,6 +56,12 @@ export default function ServiceChoice() {
 
         </GroupFlex>
 
+        {isModalActive &&
+            <Modal minWidth={360} maxWidth={400} onClose={e => setIsModalActive(false)}>
+                <ComingSoon cancelClick={e => setIsModalActive(false)} />
+            </Modal>
+        }
+
         <Card>
             <CardBody>
                 {activeTab==='NewHotelOrder' && <NewHotelOrder data={data} upsertFields={upsertFields} />}
@@ -78,7 +85,7 @@ export default function ServiceChoice() {
             </CardBody>
         </Card>
 
-        <Button top={20} variant={'outline'}>Создать составной заказ</Button>
+        <Button top={20} variant={'outline'} onClick={e => setIsModalActive(true)}>Создать составной заказ</Button>
 
     </>)
 }

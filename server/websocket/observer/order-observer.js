@@ -14,20 +14,20 @@ async function notify(method, modelName, orderDoc){
 
     const { User } = require('../../models/models-manager');
 
-    const user = orderDoc.customer;
-    if(!user){
+    const userId = orderDoc.customer;
+    if(!userId){
         throw ApiError.ServerError('Order Observer Error. Order must have a customer');
     }
 
     // Должны отправить уведомление о создании или удалении админам и пользователям, имеющим отношение к order
     const admins = await User.find({ role: 'admin' });
     admins.map(admin => {
-        if(admin.id == user.id){
+        if(admin.id == userId){
             return;
         }
         io.to(String(admin.id)).emit(`/${method}/${modelName}`, orderDto(orderDoc, admin));
     });
-    io.to(String(user.id)).emit(`/${method}/${modelName}`, orderDto(orderDoc, user));
+    io.to(String(userId)).emit(`/${method}/${modelName}`, orderDto(orderDoc, {id:userId}));
 }
 
 
