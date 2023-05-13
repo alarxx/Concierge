@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useMemo, useState} from "react";
 
 import NavbarPanel from "../../../../widgets/navbar_panel/NavbarPanel";
 import NavigationPanel from "../../../../widgets/navigation_panel/NavigationPanel";
@@ -16,13 +16,24 @@ import Box from "../../../../shared/ui/box/Box";
 import BackIcon from "../../../../assets/icons/backbtn_icon.svg";
 import Logger from "../../../../internal/Logger";
 import Container from "../../../../shared/ui/box/Container";
+import Loading from "../../../../shared/loading/Loading";
 
 export default function HotelConfirm({ data={}, submit=f=>f, back=f=>f}) {
     const logger = useMemo(()=>new Logger('HotelConfirm'), []);
 
     const {hotel, room} = data;
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+
+    function onSubmit(e){
+        setLoading(true);
+        submit();
+    }
+
     return(<>
+        {loading && <Loading />}
+
         <NavbarPanel
             LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => back()} />}
             title={'Заявка'}
@@ -38,7 +49,7 @@ export default function HotelConfirm({ data={}, submit=f=>f, back=f=>f}) {
         </Box>
 
         <BottomControl>
-            <Button variant={'control'} onClick={e => submit()}>Подтвердить заявку</Button>
+            <Button variant={'control'} onClick={onSubmit}>Подтвердить заявку</Button>
         </BottomControl>
 
         <NavigationPanel />
