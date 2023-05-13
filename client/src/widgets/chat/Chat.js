@@ -2,20 +2,16 @@ import React, {useEffect, useMemo, useState} from 'react'
 /**
  * Придется писать хук для отправки и получения сообщений
  * */
-import Conversations from "./Conversations";
-import Messenger from "./Messenger";
-import {useAppContext} from '../../../context/AppContext';
+import Conversations from "../../pages/business_client/chat/Conversations";
+import Messenger from "../../pages/business_client/chat/Messenger";
+import {useAppContext} from '../../context/AppContext';
 import {useNavigate, useParams} from "react-router-dom";
-import NavbarPanel from "../../../widgets/navbar_panel/NavbarPanel";
-import Box from "../../../shared/ui/box/Box";
-import Container from "../../../shared/ui/box/Container";
-import NavigationPanel from "../../../widgets/navigation_panel/NavigationPanel";
-import Logger from "../../../internal/Logger";
+import Logger from "../../internal/Logger";
 
 /**
  * Должен показывать компонент Conversations на desktop-e, на мобилке же нет.
  * */
-export default function Chat(){
+export default function Chat({onMessengerActive=f=>f}){
     const logger = useMemo(()=>new Logger('Chat'), []);
 
     const navigate = useNavigate();
@@ -41,10 +37,12 @@ export default function Chat(){
         if(id){
             setConversation(conversations.find(conversation => conversation.id === id));
             setConversationMessages(messages.filter(m => m.conversation === id));
+            onMessengerActive(true)
         }
         else {
             setConversation(null);
             setConversationMessages([]);
+            onMessengerActive(false)
         }
 
     }, [id]);
@@ -63,34 +61,26 @@ export default function Chat(){
 
     return (
         <>
-            <NavbarPanel title={'Чат'}/>
+            {!conversation &&
+                <Conversations
+                    chatLoading={chatLoading}
+                    conversations={conversations}
+                    notifications={notifications}
+                    messages={messages}
+                    openConversation={openConversation}
+                />
+            }
 
-            <Box navbar={true} menu={true}>
-                <Container>
-                    {!conversation &&
-                        <Conversations
-                            chatLoading={chatLoading}
-                            conversations={conversations}
-                            notifications={notifications}
-                            messages={messages}
-                            openConversation={openConversation}
-                        />
-                    }
-
-                    {conversation &&
-                        <Messenger
-                            conversation={conversation}
-                            user={user}
-                            messages={conversationMessages}
-                            sendMessage={sendMessage}
-                            closeConversation={closeConversation}
-                            _upsertMessage={_upsertMessage}
-                        />
-                    }
-                </Container>
-            </Box>
-
-            {!conversation && <NavigationPanel />}
+            {conversation &&
+                <Messenger
+                    conversation={conversation}
+                    user={user}
+                    messages={conversationMessages}
+                    sendMessage={sendMessage}
+                    closeConversation={closeConversation}
+                    _upsertMessage={_upsertMessage}
+                />
+            }
         </>
     );
 };

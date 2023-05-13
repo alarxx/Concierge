@@ -23,7 +23,7 @@ import OrderInfo from './pages/business_client/order-info/OrderInfo';
 import Profile from './pages/business_client/profile/Profile';
 import HotelOrderFlow from "./pages/business_client/hotel/HotelOrderFlow";
 import Messenger from "./pages/business_client/chat/Messenger";
-import Chat from "./pages/business_client/chat/Chat";
+import Chat from "./widgets/chat/Chat";
 import NotFound404 from "./pages/NotFound404";
 import AdminPage from "./middlewares/AdminPage";
 import AdminDashboard from "./pages/manager/AdminDashboard";
