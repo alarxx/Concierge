@@ -17,8 +17,6 @@ import BackIcon from "../../../../assets/icons/backbtn_icon.svg";
 
 import styles from "../hotel.module.css";
 import HotelRoomCard from "../../../../widgets/hotel/hotel_room_card/HotelRoomCard";
-import MyList from "../../list/MyList";
-import Alert from "../../../../shared/ui/alert/Alert";
 import Container from "../../../../shared/ui/box/Container";
 import ConciergeAction from "../../../../widgets/order/concierge_action/ConciergeAction";
 
@@ -45,9 +43,7 @@ export default function HotelRoomsList({ data={}, upsertFields=f=>f, next=f=>f, 
                 <Container>
 
                     {rooms.length === 0 &&
-                        <Alert>
-                            <p>Not found</p>
-                        </Alert>
+                        <p>Not found</p>
                     }
 
                     {rooms.map((room, i)=>{

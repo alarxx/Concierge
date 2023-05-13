@@ -5,7 +5,6 @@ import Logger from "../../../internal/Logger";
 
 import Input from '../../../shared/ui/input/Input';
 import Button from '../../../shared/ui/button/Button'
-import Alert from "../../../shared/ui/alert/Alert";
 import {useAppContext} from "../../../context/AppContext";
 import Loading from "../../../shared/loading/Loading";
 

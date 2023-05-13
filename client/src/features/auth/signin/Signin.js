@@ -5,7 +5,6 @@ import Button from '../../../shared/ui/button/Button';
 import {useAppContext} from "../../../context/AppContext";
 import {useNavigate} from "react-router-dom";
 import Logger from "../../../internal/Logger";
-import Alert from "../../../shared/ui/alert/Alert";
 import Loading from "../../../shared/loading/Loading";
 
 /**

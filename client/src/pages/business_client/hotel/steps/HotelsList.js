@@ -16,7 +16,6 @@ import Button from "../../../../shared/ui/button/Button";
 import BackIcon from "../../../../assets/icons/backbtn_icon.svg";
 
 import MyList from "../../list/MyList";
-import Alert from "../../../../shared/ui/alert/Alert";
 import Container from "../../../../shared/ui/box/Container";
 import ConciergeAction from "../../../../widgets/order/concierge_action/ConciergeAction";
 import Loader from "../../../../shared/ui/loader/Loader";
@@ -72,9 +71,7 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
                 <Container>
 
                     {!notFound && hotels.length === 0 &&
-                        <Alert>
-                            <p>loading...</p>
-                        </Alert>
+                        <p>loading...</p>
                     }
 
                     {notFound &&
