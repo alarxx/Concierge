@@ -34,7 +34,7 @@ async function firstLoad(user){
 
     const __messages = (await Promise.all(conversations.map(async conversation => {
         return await Message.find({ conversation: conversation.id })
-            .sort({ 'createdAt': -1 }) // .allowDiskUse(true)
+            .sort({ 'createdAt': 1 }) // .allowDiskUse(true)
             .limit(5);
     })));
 
