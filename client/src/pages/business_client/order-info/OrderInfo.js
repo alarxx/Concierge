@@ -40,7 +40,7 @@ export default function OrderInfo({}){
     const { id } = useParams();
 
     const { orderHandler, authHandler } = useAppContext();
-    const { orders, ordersLoading, takeOrder } = orderHandler;
+    const { orders, takeOrder } = orderHandler;
     const { user } = authHandler;
 
     const order = orders.find(order => order.id == id);
@@ -86,10 +86,20 @@ export default function OrderInfo({}){
                         </Card>
                     </AccordionSummary>
 
-                    {expanded === 'order' && <AccordionDetails>
-                        <OrderHotelCard/>
-                        <OrderHotelCard/>
-                    </AccordionDetails>}
+                    {expanded === 'order' && <>
+                        <AccordionDetails>
+                            {order.bookings.map(booking => {
+                                if(booking.type === 'hotel/booking') {
+                                    return (<>
+                                        <OrderHotelCard hotel_booking={booking['hotel/booking']}/>
+                                    </>);
+                                }
+                                else {
+                                    return (<p>unknown service type</p>);
+                                }
+                            })}
+                        </AccordionDetails>
+                    </>}
                 </Accordion>
 
 

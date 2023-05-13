@@ -18,16 +18,14 @@ const findByQueryParams = require('../helpers/openFindByQueryParams')(Hotel, hot
 async function attachHotelRooms(hotels){
     return await Promise.all(hotels.map(async hotel => {
         const rooms = await Hotel_Room.find({ hotel: hotel._id });
-        logger.log("found:", {rooms})
-        hotel.rooms = rooms;
+        // logger.log("found:", {rooms})
+        hotel['hotel/rooms'] = rooms;
         return hotel;
     }));
 }
 
 async function returnHotels(hotels){
-    logger.log("Before attachHotelRooms:", {hotels})
     const res = await attachHotelRooms(hotels.map(hotel => hotelDto(hotel)));
-    logger.log("After attachHotelRooms:", {hotels:res})
     return res;
 }
 

@@ -13,9 +13,12 @@ import Chip from "../../../shared/ui/chip/Chip";
 import CardHeader from "../../../shared/ui/card/CardHeader";
 import CardBody from "../../../shared/ui/card/CardBody";
 import Block from "../../../shared/ui/block/Block";
+import statusEnum from "../../../internal/statusEnum";
 
 
-export default function OrderHotelCard({title='', price='', addInfo='', onClick=f=>f}) {
+export default function OrderHotelCard({ hotel_booking={}, onClick=f=>f }) {
+
+    const status = statusEnum[hotel_booking.status];
 
     return(<>
         <CardService onClick={onClick}>
@@ -29,7 +32,7 @@ export default function OrderHotelCard({title='', price='', addInfo='', onClick=
                         <div><Typography size={16} weight={600} bottom={2}>Астана, Hilton</Typography></div>
                         <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>Заказ #6723</Typography></div>
                     </div>
-                    <Chip text={'Заявка'} variant={'blue'} />
+                    <Chip text={status.text} variant={status.variant} />
                 </GroupFlex>
             </CardBody>
             <CardBody>

@@ -25,7 +25,7 @@ export default function HotelRoomsList({ data={}, upsertFields=f=>f, next=f=>f, 
     const logger = useMemo(()=>new Logger('HotelRoomsList'), []);
 
     const { hotel } = data;
-    const { rooms } = hotel;
+    const rooms = hotel['hotel/rooms'];
 
     function onRoomClick(item){
         logger.log("onHotelClick:", item);

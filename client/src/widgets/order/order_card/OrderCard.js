@@ -13,20 +13,12 @@ import Chip from "../../../shared/ui/chip/Chip";
 import CardHeader from "../../../shared/ui/card/CardHeader";
 import CardBody from "../../../shared/ui/card/CardBody";
 import Logger from "../../../internal/Logger";
-
-const statusEnum = ({
-    new: { text:'новый', variant: 'green' },
-    handling: { text:'В обработке', variant: 'blue' },
-});
+import statusEnum from "../../../internal/statusEnum";
 
 export default function OrderCard({ order={}, onClick=f=>f }) {
-    const logger = useMemo(()=>new Logger('OrderCard'), [])
+    const logger = useMemo(()=>new Logger('OrderCard'), []);
 
     const status = statusEnum[order.status];
-
-    useEffect(()=>{
-        logger.log({ order });
-    }, [])
 
     return(<>
         <CardService onClick={onClick}>

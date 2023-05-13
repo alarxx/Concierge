@@ -9,7 +9,12 @@ const BookingSchema = new Schema(
             required: true,
             // immutable: true,
         },
-
+        hotel: {
+            type: Schema.Types.ObjectId,
+            ref: 'Hotel',
+            required: true,
+            immutable: true,
+        },
         'hotel/room': {
             type: Schema.Types.ObjectId,
             ref: 'Hotel/Room',
@@ -57,6 +62,11 @@ const BookingSchema = new Schema(
         file: { // Подтверждающий документ, не знаю
             type: Schema.Types.ObjectId,
             ref: 'File'
+        },
+        status: {
+            type: String,
+            enum: ['new', 'handling', 'canceled', 'completed'],
+            default: 'new'
         },
     },
     {
