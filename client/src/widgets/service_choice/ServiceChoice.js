@@ -60,7 +60,7 @@ export default function ServiceChoice() {
                 {activeTab==='NewHotelOrder' && <NewHotelOrder data={data} upsertFields={upsertFields} />}
 
                 {activeTab==='NewTicketsOrder' && <>
-                    <NewHotelOrder data={data} upsertFields={upsertFields} />
+                    <NewTicketsOrder data={data} upsertFields={upsertFields} />
 
                     <Modal minWidth={360} maxWidth={400} onClose={e => setActiveTab('NewHotelOrder')}>
                         <ComingSoon cancelClick={e => setActiveTab('NewHotelOrder')} />
@@ -68,7 +68,7 @@ export default function ServiceChoice() {
                 </>}
 
                 {activeTab==='NewTransferOrder' && <>
-                    <NewHotelOrder data={data} upsertFields={upsertFields} />
+                    <NewTransferOrder data={data} upsertFields={upsertFields} />
 
                     <Modal minWidth={360} maxWidth={400} onClose={e => setActiveTab('NewHotelOrder')}>
                         <ComingSoon cancelClick={e => setActiveTab('NewHotelOrder')} />
