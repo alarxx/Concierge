@@ -14,7 +14,7 @@ export default function New(){
         <>
             <Box menu={true}>
                 <Container>
-                    <Block top={50} bottom={30}>
+                    <Block top={40} bottom={30}>
                         <Logo />
                     </Block>
                     <ServiceChoice />
