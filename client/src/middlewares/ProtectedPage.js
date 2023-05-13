@@ -9,6 +9,8 @@ import Block from "../shared/ui/block/Block";
 import Loader from "../shared/ui/loader/Loader";
 import Overlay from "../shared/ui/overlay/Overlay";
 import Loading from "../shared/loading/Loading";
+import Modal from "../shared/ui/modal/Modal";
+import Typography from "../shared/ui/typography/Typography";
 const logger = new Logger('ProtectedPage');
 
 /**
@@ -37,7 +39,7 @@ const logger = new Logger('ProtectedPage');
  * */
 export default function ProtectedPage({ children }){
 
-    const { authHandler } = useAppContext();
+    const { authHandler, adaptiveHandler } = useAppContext();
     const { user, userLoading, userError, isAuthenticated, wasAuthenticated, isOffline, authenticate } = authHandler;
 
     // Что вообще должно происходить здесь?
@@ -56,6 +58,18 @@ export default function ProtectedPage({ children }){
 
     }, [userLoading, userError])
 
+    const { device } = adaptiveHandler;
+
+    if(device !== 'mobile'){
+        return <>
+            <Modal minWidth={360} maxWidth={400}>
+                <Block isAlignCenter={true}>
+                    <Typography weight={700} size={24} bottom={12}>Адаптация в разработке</Typography>
+                    <Typography weight={500} size={16} color={'#65727D'} align={'center'}>Пожалуйста, перейдите на ваше мобильное устройство, чтобы воспользоваться всеми функциями.</Typography>
+                </Block>
+            </Modal>
+        </>
+    }
 
     // Если был залогинен, то мы не дергаем страницу.
     if(isOffline){
