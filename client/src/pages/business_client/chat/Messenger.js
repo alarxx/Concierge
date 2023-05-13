@@ -12,13 +12,12 @@ import Box from "../../../shared/ui/box/Box";
 import Container from "../../../shared/ui/box/Container";
 
 import BackIcon from "../../../assets/icons/backbtn_icon.svg";
-import ChatDocument from "./ChatDocument";
 import ChatChoiceForm from "./ChatChoiceForm";
 import ChatChoicePanel from "./ChatChoicePanel";
 // import ChatAttachPanel from "./ChatAttachPanel";
-import ChatActionButtons from "./ChatActionButtons";
 import ChatServicePanel from "./ChatServicePanel";
 import Logger from "../../../internal/Logger";
+import FileInChat from "../../../features/chat/file_in_chat/FileInChat";
 
 function findIndexById (array, id) {
     return array.findIndex(obj => obj.id === id);
@@ -194,7 +193,7 @@ export default function Messenger({
                     return (
                         <div key={messageIndex}>
                             {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
-                            <ChatDocument message={message} user={user} onFileLoad={onFileLoad}/>
+                            <FileInChat message={message} user={user} onFileLoad={onFileLoad}/>
                         </div>
                     );
                 }
@@ -224,7 +223,6 @@ export default function Messenger({
             {control ==='text' &&
                 <ChatInputForm
                     onLeftClick={e => {
-                        setIsAttach(true)
                         setAction('actions')
                     }}
                     onSend={text => onTextSend(text)}
@@ -243,9 +241,9 @@ export default function Messenger({
             {/*        }}*/}
             {/*    >*/}
 
-            {/*        {action === 'actions' &&*/}
-            {/*            <ChatActionButtons setAction={action => setAction(action)}/>*/}
-            {/*        }*/}
+            {/*        /!*{action === 'actions' &&*!/*/}
+            {/*        /!*    <ChatActionButtons setAction={action => setAction(action)}/>*!/*/}
+            {/*        /!*}*!/*/}
             {/*        {action === 'offer services' &&*/}
             {/*            <ChatServicePanel*/}
             {/*                onSubmit={services => onChoiceRequest(services)}*/}

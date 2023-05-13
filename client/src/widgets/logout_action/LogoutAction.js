@@ -15,6 +15,6 @@ export default function LogoutAction({inverseColor}) {
         {isModalActive && <Modal minWidth={360} maxWidth={400} onClose={e => setIsModalActive(false)}>
             <LogoutForm cancelClick={e => setIsModalActive(false)} />
         </Modal>}
-        <Button variant={inverseColor && 'outline-inverse'} onClick={onClick}>Выйти из аккаунта</Button>
+        <Button variant={inverseColor ? 'outline-inverse' : 'outline'} onClick={onClick}>Выйти из аккаунта</Button>
     </>)
 }

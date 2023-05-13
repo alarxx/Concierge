@@ -4,6 +4,7 @@ import SendIcon from "../../../assets/icons/send.svg";
 
 
 import styles from './chatInputForm.module.css'
+import ChatActions from "../../../widgets/chat/chat_actions/ChatActions";
 export default function ChatInputForm({
                                        initInput="",
                                        onSend=console.log,
@@ -21,9 +22,10 @@ export default function ChatInputForm({
     return (
         <div className={styles["chat__controlpanel"]}>
             <div className={styles["chat-controls-panel"]}>
-                <div className={`${styles["chat-controls-panel__left"]} ${styles['attach']}`} onClick={onLeftClick}>
-                    <MenuIcon />
-                </div>
+                <ChatActions setAction={onLeftClick} />
+                {/*<div className={`${styles["chat-controls-panel__left"]} ${styles['attach']}`} onClick={onLeftClick}>*/}
+                {/*    <MenuIcon />*/}
+                {/*</div>*/}
                 <div className={styles["chat-controls-panel__input"]}>
                     <input
                         type="text"

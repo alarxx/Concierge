@@ -1,15 +1,22 @@
-import React from 'react'
+import React from "react";
 
+import Typography from "../../../shared/ui/typography/Typography";
+import GroupButtons from "../../../shared/ui/group_buttons/GroupButtons";
+import Button from "../../../shared/ui/button/Button";
+import Block from "../../../shared/ui/block/Block";
 import HouseIcon from "../../../assets/icons/house.svg";
 import PersonalCardIcon from "../../../assets/icons/personalcard.svg";
+import GalleryIcon from "../../../assets/icons/gallery.svg";
 import ArchiveIcon from "../../../assets/icons/direct-normal.svg";
-import GalleryIcon from "../../../assets/icons/gallery.svg"
-import Button from "../../../shared/ui/button/Button";
 
-export default function ChatActionButtons({ setAction=f=>f }){
+export default function ChatActionsForm({setAction =f=>f, cancelClick=f=>f}) {
 
-    return (
-        <div className="chat-controls-attach__actions">
+    return(<>
+        <Block isAlignCenter={true}>
+            <Typography weight={700} size={24} bottom={12}>Что вы хотите сделать?</Typography>
+        </Block>
+
+        <GroupButtons top={20}>
 
             <Button onClick={e => setAction('offer services')}>
                 <HouseIcon viewBox="0 0 24 24"/>
@@ -36,6 +43,9 @@ export default function ChatActionButtons({ setAction=f=>f }){
                 Отправить в архив
             </Button>
 
-        </div>
-    );
+
+            <Button variant={'cancel'} onClick={cancelClick}>Отмена</Button>
+
+        </GroupButtons>
+    </>)
 }

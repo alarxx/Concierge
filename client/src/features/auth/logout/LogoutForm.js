@@ -24,7 +24,7 @@ export default function LogoutForm({cancelClick=f=>f}) {
                 logger.log(await logout());
                 // navigate('/');
             }}>Выйти</Button>
-            <Button onClick={cancelClick}>Отмена</Button>
+            <Button variant={'cancel'} onClick={cancelClick}>Отмена</Button>
         </GroupButtons>
     </>)
 }

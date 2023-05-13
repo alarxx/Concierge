@@ -51,6 +51,10 @@
     border: 1px solid #1E262F;
     color: #1E262F;
 }
+.btn--cancel {
+    background: #EBEDF0;
+    color: #1c1c1c;
+}
 .btn--outline-inverse {
     background: none;
     border: 1px solid white;

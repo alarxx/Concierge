@@ -28,6 +28,9 @@ export default function Button({children, type='', variant='main', size='', top,
             case('landing'):
                 setBtnVariant('landing');
                 break;
+            case('cancel'):
+                setBtnVariant('cancel');
+                break;
             default:
                 setBtnVariant('main');
                 break;

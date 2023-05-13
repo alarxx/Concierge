@@ -15,7 +15,7 @@ export default function ConciergeServiceForm({positiveClick =f=>f, cancelClick=f
 
         <GroupButtons top={40}>
             <Button onClick={positiveClick}>Воспользоваться услугами менеджера</Button>
-            <Button onClick={cancelClick}>Отмена</Button>
+            <Button variant={'cancel'} onClick={cancelClick}>Отмена</Button>
         </GroupButtons>
     </>)
 }
