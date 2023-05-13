@@ -4,7 +4,7 @@ import styles from "./modal.module.css"
 import {createPortal} from "react-dom";
 
 const appRoot = document.getElementById('root');
-export default function Modal({children, onClose, minWidth,maxWidth, height}){
+export default function Modal({children, onClose=f=>f, minWidth,maxWidth, height}){
 
     const style = {
         minWidth: minWidth,
