@@ -95,8 +95,6 @@ export default function useOrder({ socketHandler, authHandler }){
 
             const json = await res.json();
 
-            setOrdersLoading(false);
-
             if(res.status === 200){
                 logger.log("success", json);
                 upsertOrders(json);

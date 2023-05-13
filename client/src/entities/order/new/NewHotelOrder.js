@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {useLocation, useNavigate} from "react-router-dom";
 
@@ -8,12 +8,15 @@ import Button from '../../../shared/ui/button/Button';
 import GroupInput from "../../../shared/ui/group_input/GroupInput";
 
 import MyInput from './_MyInput'
+import Logger from "../../../internal/Logger";
 // import Select from "../../../shared/ui/select/Select";
 
-export default function NewHotelOrder({ data={}, upsertFields=f=>f }){
+export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f }){
+    const logger = useMemo(()=>new Logger('NewHotelOrder'), [])
     const navigate = useNavigate();
 
-    function findHotels(){
+    function submit_findHotels(e){
+        e.preventDefault();
         return navigate('/new/hotel', { replace: false, state: { data } })
     }
 
@@ -42,6 +45,7 @@ export default function NewHotelOrder({ data={}, upsertFields=f=>f }){
             />
         </svg>
     )
+
     const [inputText, setInputText] = useState('')
 
     const handleInputChange = (inputText, meta) => {
@@ -50,33 +54,27 @@ export default function NewHotelOrder({ data={}, upsertFields=f=>f }){
         }
     }
 
-    const [cityOptions, setCityOptions] = useState([])
+    const [cityOptions, setCityOptions] = useState([]);
     useEffect(()=>{
-        fetch('/api/city')
-            .then(async res=>{
-                console.log("fetch /api/city:", {response: res})
-                const json = await res.json()
-                console.log("fetch /api/city json:", {json})
-                // console.log(json)
-                // console.log(json.map(obj => ({label: obj.name, value: obj.name,})))
-                setCityOptions(json.map(obj => ({label: obj.name, value: obj.name,})))
-            }
-        )
-    },[])
+        const c = cities.map(obj => ({label: obj.name, value: obj.name,}));
+        logger.log({cities, cityOptions: c});
+        setCityOptions(c);
+    },[cities])
 
     const [selectOption, setSelectOption] = useState(null)
+
     const handleOnSelect = (e) => {
         setSelectOption(e.value)
     }
-    useEffect(()=>{
 
+    useEffect(()=>{
         upsertFields({city: selectOption});
         console.log(selectOption)
     }, [selectOption])
 
     return (
         <div className="">
-            <form onSubmit={findHotels}>
+            <form onSubmit={submit_findHotels}>
                 <Select
                     placeholder={'Введите город'}
                     options={cityOptions}

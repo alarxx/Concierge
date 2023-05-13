@@ -6,6 +6,7 @@ import useAuth from "./hooks/auth/useAuth";
 import useURLState from "./hooks/url_state/useURLState";
 import useChat from "./hooks/chat/useChat";
 import useOrder from "./hooks/order/useOrder";
+import useData from "./hooks/data/useData";
 
 const Context = createContext();
 
@@ -21,6 +22,8 @@ function AppContextProvider({ children }){
     const chatHandler = useChat({socketHandler, authHandler});
     const orderHandler = useOrder({socketHandler, authHandler});
 
+    const dataHandler = useData({ socketHandler });
+
     return (
         <Context.Provider value={{
             URLStateHandler,
@@ -29,11 +32,12 @@ function AppContextProvider({ children }){
             authHandler,
             chatHandler,
             orderHandler,
+            dataHandler,
         }}>
             {children}
         </Context.Provider>
     );
-};
+}
 
 export {AppContextProvider, useAppContext};
 

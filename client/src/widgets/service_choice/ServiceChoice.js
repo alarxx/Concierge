@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 import styles from './serviceChoice.module.css';
 
@@ -23,9 +23,14 @@ import Modal from "../../shared/ui/modal/Modal";
 import ConciergeServiceForm from "../../features/order/concierge_service_form/ConciergeServiceForm";
 import ComingSoon from "../../features/order/coming_soon/ComingSoon";
 import LogoutForm from "../../features/auth/logout/LogoutForm";
+import {useAppContext} from "../../context/AppContext";
 
 export default function ServiceChoice() {
     const location = useLocation();
+    const navigate = useNavigate();
+
+    const { dataHandler } = useAppContext();
+    const { cities } = dataHandler;
 
     const [data, setData] = useState(() => location.state?.data ? location.state.data : {});
 
@@ -64,7 +69,13 @@ export default function ServiceChoice() {
 
         <Card>
             <CardBody>
-                {activeTab==='NewHotelOrder' && <NewHotelOrder data={data} upsertFields={upsertFields} />}
+                {activeTab==='NewHotelOrder' && <>
+                    <NewHotelOrder
+                        cities={cities}
+                        data={data}
+                        upsertFields={upsertFields}
+                    />
+                </>}
 
                 {activeTab==='NewTicketsOrder' && <>
                     <NewTicketsOrder data={data} upsertFields={upsertFields} />
@@ -75,7 +86,7 @@ export default function ServiceChoice() {
                 </>}
 
                 {activeTab==='NewTransferOrder' && <>
-                    <NewTransferOrder    data={data} upsertFields={upsertFields} />
+                    <NewTransferOrder data={data} upsertFields={upsertFields} />
 
                     <Modal minWidth={360} maxWidth={400} onClose={e => setActiveTab('NewHotelOrder')}>
                         <ComingSoon cancelClick={e => setActiveTab('NewHotelOrder')} />
