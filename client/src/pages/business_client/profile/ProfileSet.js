@@ -16,7 +16,7 @@ import EmployeeInfo from "../../../entities/employee/employee_info/EmployeeInfo"
 import SendResetPasswordMail from "../../../features/auth/password_send_reset/SendResetPasswordMail";
 
 import TriangleIcon from '../../../assets/icons/arrow-down.svg'
-export default function ProfileSet({}){
+export default function ProfileSet({ user }){
 
     const [expanded, setExpanded] = useState(null);
 
@@ -30,66 +30,75 @@ export default function ProfileSet({}){
 
     return (
         <>
-            <Accordion expanded={expanded === 'travel-policy'}>
-                <AccordionSummary onClick={() => handleChange('travel-policy')} >
-                    <Card variant='info'>
-                        <CardBody>
-                            <GroupFlex align='aic' justify='jcsb'>
-                                Травел-политики
-                                <TriangleIcon/>
-                            </GroupFlex>
-                        </CardBody>
-                    </Card>
-                </AccordionSummary>
+            {user.role === 'admin' && <>
+                <Accordion expanded={expanded === 'travel-policy'}>
+                    <AccordionSummary onClick={() => handleChange('travel-policy')} >
+                        <Card variant='info'>
+                            <CardBody>
+                                <GroupFlex align='aic' justify='jcsb'>
+                                    Travel-политики
+                                    <TriangleIcon/>
+                                </GroupFlex>
+                            </CardBody>
+                        </Card>
+                    </AccordionSummary>
 
-                {expanded === 'travel-policy' && <AccordionDetails>
-                    <Card variant='info'>
-                        <CardBody>
-                            Травел-политика
-                        </CardBody>
-                    </Card>
-                </AccordionDetails>}
-            </Accordion>
+                    {expanded === 'travel-policy' && <>
+                        <AccordionDetails>
+                            <Card variant='info'>
+                                <CardBody>
+                                    Travel-политика
+                                </CardBody>
+                            </Card>
+                        </AccordionDetails>
+                    </>}
+                </Accordion>
 
-            <Accordion expanded={expanded === 'employees'}>
-                <AccordionSummary onClick={() => handleChange('employees')} >
-                    <Card variant='info'>
-                        <CardBody>
-                            <GroupFlex align='aic' justify='jcsb'>
-                                Сотрудники
-                                <TriangleIcon/>
-                            </GroupFlex>
-                        </CardBody>
-                    </Card>
-                </AccordionSummary>
+                <Accordion expanded={expanded === 'employees'}>
+                    <AccordionSummary onClick={() => handleChange('employees')} >
+                        <Card variant='info'>
+                            <CardBody>
+                                <GroupFlex align='aic' justify='jcsb'>
+                                    Сотрудники
+                                    <TriangleIcon/>
+                                </GroupFlex>
+                            </CardBody>
+                        </Card>
+                    </AccordionSummary>
 
-                {expanded === 'employees' && <AccordionDetails>
-                    <Card variant='info'>
-                        <CardBody>
-                            <EmployeeInfo />
-                        </CardBody>
-                    </Card>
-                </AccordionDetails>}
-            </Accordion>
+                    {expanded === 'employees' && <>
+                        <AccordionDetails>
+                            <Card variant='info'>
+                                <CardBody>
+                                    <EmployeeInfo />
+                                </CardBody>
+                            </Card>
+                        </AccordionDetails>
+                    </>}
+                </Accordion>
+            </>}
 
             <Accordion expanded={expanded === 'change-password'}>
                 <AccordionSummary onClick={() => handleChange('change-password')} >
                     <Card variant='info'>
                         <CardBody>
                             <GroupFlex align='aic' justify='jcsb'>
-                                Изменить пароль
+                                Сменить пароль
                                 <TriangleIcon/>
                             </GroupFlex>
                         </CardBody>
                     </Card>
                 </AccordionSummary>
-                {expanded === 'change-password' && <AccordionDetails>
+
+                {expanded === 'change-password' &&
+                    <AccordionDetails>
                         <Card variant='info'>
                             <CardBody>
                                 <SendResetPasswordMail />
                             </CardBody>
                         </Card>
-                    </AccordionDetails>}
+                    </AccordionDetails>
+                }
             </Accordion>
         </>
     )

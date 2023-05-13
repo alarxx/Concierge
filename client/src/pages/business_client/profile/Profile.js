@@ -39,7 +39,7 @@ export default function Profile({}){
                     </Card>
 
                     <Block top={20}>
-                        <ProfileSet />
+                        <ProfileSet user={user}/>
                     </Block>
 
                     <LogoutAction />
