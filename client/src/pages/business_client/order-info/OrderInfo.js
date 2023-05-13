@@ -47,7 +47,7 @@ export default function OrderInfo({}){
 
     return (<>
         <NavbarPanel
-            LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={f=>f} />}
+            LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => navigate('/orders')} />}
             title={`Заказ #${id}`}
         />
         <Box navbar={true} menu={true} yummy={true}>
