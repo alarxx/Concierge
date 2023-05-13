@@ -12,7 +12,7 @@ import styles from './landing.module.css'
 export default function Landing({}){
 
     const { authHandler } = useAppContext();
-    const { authenticate, isAuthenticated } = authHandler;
+    const { user, authenticate, isAuthenticated } = authHandler;
     const navigate = useNavigate();
 
     /*
@@ -52,7 +52,8 @@ export default function Landing({}){
                         Позвольте себе не думать об организационных моментах
                     </h2>
                     <div className={styles["promoland__btns"]}>
-                        { isAuthenticated && <Button variant={'landing'} onClick={e => navigate('/new')}>Заказать услугу</Button>}
+                        {isAuthenticated && <Button variant={'landing'} onClick={e => navigate('/new')}>Заказать услугу</Button>}
+                        {isAuthenticated && user.role === 'admin' && <Button variant={'landing'} onClick={e => navigate('/admin')}>Admin</Button>}
                         {!isAuthenticated && <Button variant={'landing'} onClick={e => authenticate({replace: false})}>Войти в систему</Button>}
                     </div>
                 </div>

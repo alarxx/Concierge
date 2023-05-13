@@ -24,6 +24,10 @@ import Profile from './pages/business_client/profile/Profile';
 import HotelOrderFlow from "./pages/business_client/hotel/HotelOrderFlow";
 import Messenger from "./pages/business_client/chat/Messenger";
 import Chat from "./pages/business_client/chat/Chat";
+import NotFound404 from "./pages/NotFound404";
+import AdminPage from "./middlewares/AdminPage";
+import AdminDashboard from "./pages/manager/AdminDashboard";
+
 
 export default function Router(){
 
@@ -39,6 +43,17 @@ export default function Router(){
 						<Landing />
 					</Page>
 				}/>
+
+
+
+				{/** Admin:  */}
+				<Route path={'/admin'}>
+					<Route index element={
+						<AdminPage>
+							<AdminDashboard />
+						</AdminPage>
+					}/>
+				</Route>
 
 				{/** Authentication Pages */}
 				<Route path='/authn'>
@@ -118,7 +133,7 @@ export default function Router(){
 				<Route path={'*'} element={
 					// Нужна чтобы несуществующие страницы не отличались от существующих защищенных
 					// Хотя какая разница, наверное, здесь можно указывать 404 Not Found
-					<Page><h1>[404 Not Found]</h1></Page>
+					<Page><NotFound404/></Page>
 				}/>
 			</Routes>
 		</AppContextProvider>
