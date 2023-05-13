@@ -30,7 +30,7 @@ export default function Router(){
 	return (
 		<AppContextProvider>
 			<Routes>
-
+				{/** Landing Page */}
 				<Route path="/" element={
 					//почему при жестком переходе через url на "/" выбрасывает {"message":"Unauthorized","errors":[]} (до этого выбрасывал чето с proxy, пока сервер на запустил) с редиректом обратно. приходится стопить клинт и npm start прописывать
 					// Можно оставить для проверки Middleware
@@ -40,7 +40,7 @@ export default function Router(){
 					</Page>
 				}/>
 
-
+				{/** Authentication Pages */}
 				<Route path='/authn'>
 					<Route index element={
 						<Page>
@@ -72,11 +72,13 @@ export default function Router(){
 
 				</Route>
 
+				{/** Order-Flow */}
 				<Route path='/new'>
 					<Route index element={<ProtectedPage><New /></ProtectedPage>}/>
 					<Route path='hotel' element={<ProtectedPage><HotelOrderFlow /></ProtectedPage>}/>
 				</Route>
 
+				{/** Orders Views */}
 				<Route path='/orders'>
 					<Route index element={
 						<ProtectedPage>
@@ -91,8 +93,14 @@ export default function Router(){
 					}/>
 				</Route>
 
-				<Route path='/profile' element={<ProtectedPage><Profile /></ProtectedPage>}/>
+				{/** Profile Page */}
+				<Route path='/profile' element={
+					<ProtectedPage>
+						<Profile />
+					</ProtectedPage>
+				}/>
 
+				{/** Chat: Conversations and Messenger */}
 				<Route path={'/chat'}>
 					<Route index element={
 						<ProtectedPage>
