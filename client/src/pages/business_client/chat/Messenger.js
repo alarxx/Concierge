@@ -37,8 +37,6 @@ export default function Messenger({
                                   }){
     const logger = useMemo(()=>new Logger('Messenger'), []);
 
-    const navigate = useNavigate();
-
     /**
      * Всегда когда меняется состояние сообщений мы пересчитываем messagesSelected для choice form,
      * В них хранятся именно message.id, потом мы должны будем найти сам message из массива, зная его id
@@ -145,7 +143,7 @@ export default function Messenger({
         const indexes = [];
         let lastDate = null;
         messages.map((message, i)=>{
-            const date = new Date(message.createdDate);
+            const date = new Date(message.createdAt);
             if(!lastDate || date.getDate() != lastDate.getDate()){
                 lastDate = date
                 indexes.push(i)
@@ -195,7 +193,7 @@ export default function Messenger({
                 else if(message.type==='file') {
                     return (
                         <div key={messageIndex}>
-                            {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdDate)}/>}
+                            {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
                             <ChatDocument message={message} user={user} onFileLoad={onFileLoad}/>
                         </div>
                     );
@@ -206,7 +204,7 @@ export default function Messenger({
                 //     /**/
                 //     return (
                 //         <div key={messageIndex}>
-                //             {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdDate)}/>}
+                //             {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
                 //             <ChatChoiceForm
                 //                 user={user}
                 //                 message={message}
