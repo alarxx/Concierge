@@ -149,17 +149,20 @@ export default function useOrder({ socketHandler, authHandler }){
 
             const extendedOrder = extendedOrders.find(eo => eo.id === order.id);
 
+
             const bookings = await Promise.all(order.bookings.map(async (booking, i) => {
 
                 // Если extendedOrders уже содержит order и нужные данные в booking, то продолжаем.
                 if(extendedOrder) {
                     const eo_booking = extendedOrder.bookings.find(b => b.id === booking.id);
+                    logger.log({order, extendedOrder, booking, eo_booking})
+
                     if(eo_booking){
                         const {type} = eo_booking;
                         if (type === 'hotel/booking') {
                             const {hotel, 'hotel/room': room} = eo_booking;
                             if (hotel && room) {
-                                return booking;
+                                return eo_booking;
                             }
                         }
                     }
