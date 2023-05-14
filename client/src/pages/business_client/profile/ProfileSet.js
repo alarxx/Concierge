@@ -30,54 +30,6 @@ export default function ProfileSet({ user }){
 
     return (
         <>
-            {user.role === 'admin' && <>
-                <Accordion expanded={expanded === 'travel-policy'}>
-                    <AccordionSummary onClick={() => handleChange('travel-policy')} >
-                        <Card variant='info'>
-                            <CardBody>
-                                <GroupFlex align='aic' justify='jcsb'>
-                                    Travel-политики
-                                    <TriangleIcon/>
-                                </GroupFlex>
-                            </CardBody>
-                        </Card>
-                    </AccordionSummary>
-
-                    {expanded === 'travel-policy' && <>
-                        <AccordionDetails>
-                            <Card variant='info'>
-                                <CardBody>
-                                    Travel-политика
-                                </CardBody>
-                            </Card>
-                        </AccordionDetails>
-                    </>}
-                </Accordion>
-
-                <Accordion expanded={expanded === 'employees'}>
-                    <AccordionSummary onClick={() => handleChange('employees')} >
-                        <Card variant='info'>
-                            <CardBody>
-                                <GroupFlex align='aic' justify='jcsb'>
-                                    Сотрудники
-                                    <TriangleIcon/>
-                                </GroupFlex>
-                            </CardBody>
-                        </Card>
-                    </AccordionSummary>
-
-                    {expanded === 'employees' && <>
-                        <AccordionDetails>
-                            <Card variant='info'>
-                                <CardBody>
-                                    <EmployeeInfo />
-                                </CardBody>
-                            </Card>
-                        </AccordionDetails>
-                    </>}
-                </Accordion>
-            </>}
-
             <Accordion expanded={expanded === 'change-password'}>
                 <AccordionSummary onClick={() => handleChange('change-password')} >
                     <Card variant='info'>

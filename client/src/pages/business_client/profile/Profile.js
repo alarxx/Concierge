@@ -15,6 +15,10 @@ import ProfileSet from "./ProfileSet";
 import Button from "../../../shared/ui/button/Button";
 import LogoutAction from "../../../widgets/logout_action/LogoutAction";
 import {useAppContext} from "../../../context/AppContext";
+import CardBody from "../../../shared/ui/card/CardBody";
+import GroupFlex from "../../../shared/ui/group_flex/GroupFlex";
+import Modal from "../../../shared/ui/modal/Modal";
+import LogoutForm from "../../../features/auth/logout/LogoutForm";
 
 
 export default function Profile({}){
@@ -41,6 +45,12 @@ export default function Profile({}){
                     <Block top={20}>
                         <ProfileSet user={user}/>
                     </Block>
+
+                    {user.role === 'admin' && <>
+                        <Block bottom={10}>
+                            <Button onClick={e=>navigate('/admin')}>Админ панель</Button>
+                        </Block>
+                    </>}
 
                     <LogoutAction />
 
