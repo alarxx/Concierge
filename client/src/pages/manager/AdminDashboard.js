@@ -13,6 +13,7 @@ import Block from "../../shared/ui/block/Block";
 import LogoutAction from "../../widgets/logout_action/LogoutAction";
 import Chat from "../../widgets/chat/Chat";
 import HotelCrud from "../../widgets/manager/hotel_crud/HotelCrud";
+import OrderList from "../../widgets/order/order_list/OrderList";
 
 export default function AdminDashboard() {
 
@@ -47,7 +48,7 @@ export default function AdminDashboard() {
             </AppBar>
             <Box>
                 <Container padding={'20px 0'}>
-                    {activeTab === 'orders' && <>orders</>}
+                    {activeTab === 'orders' && <OrderList />}
                     {activeTab === 'hotels' && <HotelCrud />}
                     {activeTab === 'messenger' && <Chat />}
                     {activeTab === 'employees' && <>employees</>}
