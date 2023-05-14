@@ -45,7 +45,6 @@ export default function OrderList({}) {
                 <OrderCard
                     order={order}
                     onClick={e => {
-                        logger.log({order})
                         navigate(`/orders/${order.id}`);
                     }}
                 />
