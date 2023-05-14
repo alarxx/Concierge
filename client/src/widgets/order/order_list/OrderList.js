@@ -17,10 +17,17 @@ export default function OrderList({}) {
     /* It is not guaranteed that orders sorted!!! (not guaranteed, but now the old ones are first) */
     const [sortedOrders, setSortedOrders] = useState([]);
 
+    useEffect(()=>{logger.log({ordersLoading})}, [ordersLoading])
+
     useEffect(()=>{
-        setSortedOrders(orders.sort((a, b) => {
+        const sorted = [...orders].sort((a/*2013; 2002*/, b/*2002; 2013*/) => {
+            // - a идет первым
+            // + b идет первым
+            // новый - значит значение будет больше, значит мне нужно по убыванию 2013,2012,2000
+            // logger.log({a: new Date(a.createdAt), b: new Date(b.createdAt), value: new Date(b.createdAt) - new Date(a.createdAt)});
             return new Date(b.createdAt) - new Date(a.createdAt);
-        }));
+        })
+        setSortedOrders(sorted);
     }, [orders])
 
 
