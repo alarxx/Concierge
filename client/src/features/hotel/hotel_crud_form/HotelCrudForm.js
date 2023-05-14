@@ -7,7 +7,7 @@ import Input from "../../../shared/ui/input/Input";
 import GroupInput from "../../../shared/ui/group_input/GroupInput";
 import GroupButtons from "../../../shared/ui/group_buttons/GroupButtons";
 
-export default function HotelCrudForm({setAction =f=>f, cancelClick}) {
+export default function HotelCrudForm({setAction =f=>f, cancelClick, item}) {
 
     function onSubmit() {
         console.log('hotel create submit')
@@ -25,7 +25,7 @@ export default function HotelCrudForm({setAction =f=>f, cancelClick}) {
                     <Input
                         type={'text'}
                         name={'name'}
-                        value={''}
+                        value={item ? item.name : ''}
                         placeHolder={'Название *'}
                         onChange={f=>f}
                         required
