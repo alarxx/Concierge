@@ -71,7 +71,7 @@ const MessageSchema = new Schema(
 );
 
 
-MessageSchema.index({ createdAt: 1 }); // сначала новые
+MessageSchema.index({ createdAt: 1 }); // сначала старые, сверху вниз, внизу новейшие сообщения
 
 
 MessageSchema.plugin(require('mongoose-unique-validator'));

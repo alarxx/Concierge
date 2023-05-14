@@ -53,7 +53,7 @@ const HotelSchema = new Schema(
     }
 );
 
-HotelSchema.index({ createdAt: -1 });
+HotelSchema.index({ createdAt: 1 });
 
 HotelSchema.path('city').validate({
     isAsync: true,

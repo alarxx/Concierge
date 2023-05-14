@@ -18,7 +18,7 @@ module.exports = function(Model, dto) {
 
         let sort;
         if (!filters.sort) {
-            sort = {createdAt: -1}; // сначала новые?
+            sort = {createdAt: 1}; // сначала старые
         } else {
             const _sort = filters.sort;
             const fieldName = _sort.startsWith('-') ? _sort.slice(1) : _sort;

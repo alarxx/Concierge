@@ -55,7 +55,7 @@ const RoomSchema = new Schema(
     }
 );
 
-RoomSchema.index({ createdAt: -1 });
+RoomSchema.index({ createdAt: 1 });
 
 RoomSchema.plugin(require('mongoose-unique-validator'));
 RoomSchema.plugin(require('../../log-plugin'))

@@ -69,7 +69,7 @@ const BookingSchema = new Schema(
     }
 );
 
-// BookingSchema.index({ createdAt: -1 });
+// BookingSchema.index({ createdAt: 1 });
 
 BookingSchema.plugin(require('mongoose-unique-validator'));
 BookingSchema.plugin(require('../../log-plugin'));
