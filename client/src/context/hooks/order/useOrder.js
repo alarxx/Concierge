@@ -50,7 +50,7 @@ export default function useOrder({ socketHandler, authHandler }){
 
     useEffect(()=>{
         const stop = { signal: false };
-        extendOrders(orders, setExtendedOrders, stop);
+        extendOrders(stop);
         return () => {
             stop.signal = true;
         }
@@ -143,24 +143,39 @@ export default function useOrder({ socketHandler, authHandler }){
     }
 
 
-    async function extendOrders(orders, setExtendedOrders, stop={ signal: false }){
+    async function extendOrders(stop={ signal: false }){
         setOrdersLoading(true);
-        const extendedOrders = await Promise.all(orders.map(async order => {
+        const _extendedOrders = await Promise.all(orders.map(async order => {
 
-            const bookings = await Promise.all(order.bookings.map(async booking => {
-                const { type } = booking;
-                if(type === 'hotel/booking'){
-                    const { hotel, 'hotel/room': room } = booking;
-                    if(!hotel || !room){
-                        // Дополнить прикрепленную услугу заказа вызвав /api/hotel/room
-                        const response = await fetch('/api/hotel/room/' + booking['hotel/booking']['hotel/room']);
-                        const json = await response.json();
-                        setIds(json);
-                        // console.log(`extendOrders:`, {booking, json});
-                        // console.log(`extendOrders: api response`, response);
-                        return ({...booking, ...json});
+            const extendedOrder = extendedOrders.find(eo => eo.id === order.id);
+
+            const bookings = await Promise.all(order.bookings.map(async (booking, i) => {
+
+                // Если extendedOrders уже содержит order и нужные данные в booking, то продолжаем.
+                if(extendedOrder) {
+                    const eo_booking = extendedOrder.bookings.find(b => b.id === booking.id);
+                    if(eo_booking){
+                        const {type} = eo_booking;
+                        if (type === 'hotel/booking') {
+                            const {hotel, 'hotel/room': room} = eo_booking;
+                            if (hotel && room) {
+                                return booking;
+                            }
+                        }
                     }
                 }
+
+                const {type} = booking;
+                if (type === 'hotel/booking') {
+                    // Дополнить прикрепленную услугу заказа вызвав /api/hotel/room
+                    const response = await fetch('/api/hotel/room/' + booking['hotel/booking']['hotel/room']);
+                    const json = await response.json();
+                    setIds(json);
+                    // console.log(`extendOrders:`, {booking, json});
+                    // console.log(`extendOrders: api response`, response);
+                    return ({...booking, ...json});
+                }
+
                 return booking;
             }));
 
@@ -169,7 +184,7 @@ export default function useOrder({ socketHandler, authHandler }){
         }));
 
         if(!stop.signal){
-            setExtendedOrders(extendedOrders);
+            setExtendedOrders(_extendedOrders);
             setOrdersLoading(false);
         }
 
