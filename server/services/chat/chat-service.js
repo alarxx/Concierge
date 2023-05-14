@@ -8,6 +8,7 @@ const conversation_dto = require('../../dtos/chat/conversation-dto');
 const message_dto = require('../../dtos/chat/message-dto');
 const notification_dto = require('../../dtos/chat/notification-dto');
 const participant_dto = require('../../dtos/chat/participant-dto');
+const async_participant_dto = require('../../dtos/async/chat/participant-dto');
 
 const conversation_modelService = new ModelService(Conversation);
 const message_modelService = new ModelService(Message);
@@ -42,9 +43,10 @@ async function firstLoad(user){
 
     const notifications = await Notification.find({ user: user.id });
 
+    const participants = await Promise.all(userParticipation.map(async c => await async_participant_dto(c, user)));
     return ({
         conversations: conversations.map(c => conversation_dto(c, user)),
-        participants: userParticipation.map(c => participant_dto(c, user)),
+        participants,
         notifications: notifications.map(c => notification_dto(c, user)),
         messages: messages.map(c => message_dto(c, user)),
     });

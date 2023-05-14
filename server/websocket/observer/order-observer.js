@@ -4,7 +4,9 @@
  * */
 
 const orderDto = require('../../dtos/order-dto');
+const asyncOrderDto = require('../../dtos/async/order-dto');
 const ApiError = require("../../exceptions/ApiError");
+const {User} = require("../../models/models-manager");
 
 const logger = require('../../log/logger')('order-observer');
 
@@ -18,19 +20,20 @@ async function notify(method, modelName, orderDoc){
     if(!userId){
         throw ApiError.ServerError('Order Observer Error. Order must have a customer');
     }
-    await Promise.all(orderDoc.bookings.map(async (booking, index) => {
-        // logger.log('booking', booking);
-        return await orderDoc.populate(`bookings.${index}.${booking.type}`);
-    }));
+
+    const dto = await asyncOrderDto(orderDoc);
+
     // Должны отправить уведомление о создании или удалении админам и пользователям, имеющим отношение к order
     const admins = await User.find({ role: 'admin' });
     admins.map(admin => {
         if(admin.id == userId){
             return;
         }
-        io.to(String(admin.id)).emit(`/${method}/${modelName}`, orderDto(orderDoc, admin));
+        io.to(String(admin.id)).emit(`/${method}/${modelName}`, dto);
     });
-    io.to(String(userId)).emit(`/${method}/${modelName}`, orderDto(orderDoc, {id:userId}));
+
+    // самому заказчику отправляем
+    io.to(String(userId)).emit(`/${method}/${modelName}`, dto);
 }
 
 
