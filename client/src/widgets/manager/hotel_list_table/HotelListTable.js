@@ -26,6 +26,7 @@ export default function HotelListTable({children, active}) {
             <TableHead>
                 <TableRow isHead={true}>id</TableRow>
                 <TableRow isHead={true}>Название</TableRow>
+                <TableRow isHead={true}>Местоположение</TableRow>
                 <TableRow isHead={true}>Действие</TableRow>
                 {/*<TableRow isHead={true}>Звездность</TableRow>*/}
                 {/*<TableRow isHead={true}>Контакты</TableRow>*/}
@@ -39,6 +40,7 @@ export default function HotelListTable({children, active}) {
                         <TableRow key={item.id}>
                             <td>{item.id}</td>
                             <td>{item.name}</td>
+                            <td>{item.city}</td>
                             <td><HotelCrudAction item={item}/></td>
                         </TableRow>
                     </>
