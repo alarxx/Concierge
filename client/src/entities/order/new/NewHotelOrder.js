@@ -2,6 +2,9 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {useLocation, useNavigate} from "react-router-dom";
 
+import DatePicker from "react-datepicker";
+import './datepicker.css'
+
 import Select, {components} from 'react-select'
 import Input from '../../../shared/ui/input/Input';
 import Button from '../../../shared/ui/button/Button';
@@ -72,6 +75,9 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
         console.log(selectOption)
     }, [selectOption])
 
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+
     return (
         <div className="">
             <form onSubmit={submit_findHotels}>
@@ -108,7 +114,19 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                     required
                 />
                 <GroupInput>
-                    <MyInput placeHolder='Дата прилета' type='date' name='arrival_date' data={data} upsertFields={upsertFields} />
+                    <DatePicker
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                        monthsShown={2}
+                    />
+                    <DatePicker
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                        selectsEnd
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={startDate}
+                    />
                     <MyInput placeHolder='Дата отлета' type='date' name='departure_date' data={data} upsertFields={upsertFields} />
                 </GroupInput>
                 <MyInput placeHolder='1 Номер для' type='number' name='number_of_adults' data={data} upsertFields={upsertFields} />
