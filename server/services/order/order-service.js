@@ -11,6 +11,8 @@ const bookingsService = require('../bookings/bookings-service');
 const chatService = require('../chat/chat-service');
 
 const checkNecessaryFields = require("../helpers/checkNecessaryFields");
+const conversation_dto = require("../../dtos/chat/conversation-dto");
+const participant_dto = require("../../dtos/chat/participant-dto");
 
 const modelService = new ModelService(Order);
 
@@ -68,36 +70,54 @@ async function createOne(body, files, user) {
         throw ApiError.ServerError('user is missing');
     }
 
-    let _body = { ...body };
+    /** Define. Определяем. */
 
-    await modelService.deleteInvalidFileFields(_body);
+    let _body = { ...body };
 
     const bookings = _body.bookings ? _body.bookings : [];
     delete _body.bookings;
 
+    await modelService.deleteInvalidFileFields(_body);
+
+    /** define order */
     // Order не может заказать менеджер за клиента. Всегда должен заказывать клиент, менеджер же может добавлять.
     const order = new Order({ ..._body, customer: user.id });
 
-    // Здесь нужно обработать bookings.
+    /** define bookings */
     // Создаем и присваем id-шки
-    order.bookings = await bookingsService.createMany(bookings, order, files);
+    const extended_bookings = await bookingsService.defineMany(bookings, order, files);
 
-    // await order.validate();
+    order.bookings = extended_bookings.map(booking => {
+        const type = booking.type;
+        const model = booking[booking.type];
+        return ({
+            type: type,
+            [type]: model.id
+        })
+    });
 
+    /** define conversation with participants(customer user itself) */
     // Здесь я должен создать чат
-    const {conversation, participants} = await chatService.createConversationWithParticipants([user.id]);
-
+    const {conversation, participants} = await chatService.defineConversationWithParticipant([user.id]);
 
     order.conversation = conversation.id;
 
-    logger.log({order, conversation, participants});
+    logger.log("createOne:", {order, extended_bookings, conversation, participants});
+
+    /** Validate. Валидируем. */
+    await order.validate();
+
+    await bookingsService.saveMany(extended_bookings, files);
+
+    /* Сохраняем */
+    await chatService.saveConversationWithParticipants(conversation, participants);
 
     await modelService.saveWithFiles(order, files, { user });
 
     return ({
         order: orderDto(order, user),
-        conversation,
-        participants
+        conversation: conversation_dto(conversation),
+        participants: participants.map(p => participant_dto(p))
     });
 }
 

@@ -12,11 +12,11 @@ const {Schema, model} = require('mongoose');
 const BookingSchema = require('../services/BookingSchema');
 
 const MetaSchema = new Schema({
-    name: {
+    /*name: {
         type: String,
         // required: true,
         default: () => `Order ${Date.now()}`
-    },
+    },*/
 
     // type: {
     //     type: String,
@@ -26,8 +26,8 @@ const MetaSchema = new Schema({
 
     needs: [{
         type: String,
-        enum: ['housing', 'transport', 'travel', 'informal'],
-        // required: true,
+        enum: ['hotel', 'airfare', 'housing', 'transport', 'travel', 'informal'],
+        required: true,
     }],
 
     num_of_people: {
@@ -95,7 +95,7 @@ const OrderSchema = new Schema(
         },
         meta: {
             type: MetaSchema,
-            // required: true,
+            required: true,
             // immutable: true,
         },
         bookings: [{
