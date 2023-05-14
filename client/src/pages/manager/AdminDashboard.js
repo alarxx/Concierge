@@ -12,8 +12,9 @@ import GroupInline from "../../shared/ui/group_inline/GroupInline";
 import Block from "../../shared/ui/block/Block";
 import LogoutAction from "../../widgets/logout_action/LogoutAction";
 import Chat from "../../widgets/chat/Chat";
-import HotelCrud from "../../widgets/manager/hotel_crud/HotelCrud";
+import HotelCrudAction from "../../widgets/manager/hotel_crud_action/HotelCrudAction";
 import OrderList from "../../widgets/order/order_list/OrderList";
+import HotelAdminPage from "./HotelAdminPage";
 
 export default function AdminDashboard() {
 
@@ -49,7 +50,7 @@ export default function AdminDashboard() {
             <Box>
                 <Container padding={'20px 0'}>
                     {activeTab === 'orders' && <OrderList />}
-                    {activeTab === 'hotels' && <HotelCrud />}
+                    {activeTab === 'hotels' && <HotelAdminPage />}
                     {activeTab === 'messenger' && <Chat />}
                     {activeTab === 'employees' && <>employees</>}
                 </Container>
