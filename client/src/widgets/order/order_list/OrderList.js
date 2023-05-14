@@ -4,13 +4,16 @@ import Loader from "../../../shared/ui/loader/Loader";
 import {useAppContext} from "../../../context/AppContext";
 import Block from "../../../shared/ui/block/Block";
 import Logger from "../../../internal/Logger";
+import {useNavigate} from "react-router-dom";
 
 export default function OrderList({}) {
 
     const logger = useMemo(()=>new Logger('Orders'), [])
-    
+
     const { orderHandler, } = useAppContext();
     const { orders, ordersLoading, takeOrder } = orderHandler;
+
+    const navigate = useNavigate();
 
     useEffect(()=>{
         console.log('orderLoadingg = ',ordersLoading)
