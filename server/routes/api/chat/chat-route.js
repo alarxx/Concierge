@@ -15,6 +15,11 @@ const checkAdminRole = require('../../../middlewares/checkAdminRole');
 const { firstLoad } = controller;
 
 // пагинация нужна именно на сообщениях
+/**
+ * Возвращает сообщения, беседы, уведомления и участников, дополненных информацией о user.
+ * Самое простое решение было бы сделать participant.populate('user'), но нельзя populate-ить пользователя без dto.
+ * Решил просто дополнить {...participant, name: user.name}
+ * */
 Router.route('/first-load')
     .get(checkAuthenticated, firstLoad)
 
