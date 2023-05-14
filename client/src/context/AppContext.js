@@ -7,6 +7,7 @@ import useURLState from "./hooks/url_state/useURLState";
 import useChat from "./hooks/chat/useChat";
 import useOrder from "./hooks/order/useOrder";
 import useData from "./hooks/data/useData";
+import useNotifications from "./hooks/notifications/useNotifications";
 
 const Context = createContext();
 
@@ -24,6 +25,8 @@ function AppContextProvider({ children }){
 
     const dataHandler = useData({ socketHandler });
 
+    const notificationsHandler = useNotifications();
+
     return (
         <Context.Provider value={{
             URLStateHandler,
@@ -33,6 +36,7 @@ function AppContextProvider({ children }){
             chatHandler,
             orderHandler,
             dataHandler,
+            notificationsHandler
         }}>
             {children}
         </Context.Provider>

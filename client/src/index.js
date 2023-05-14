@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom/client';
 
 import {BrowserRouter} from "react-router-dom";
 
-import Router from "./Router.js"
+import {AppContextProvider} from "./context/AppContext";
+import Main from "./Main";
 
 import './assets/css/global.css';
 
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(<BrowserRouter><Router/></BrowserRouter>);
+root.render(<BrowserRouter><AppContextProvider><Main /></AppContextProvider></BrowserRouter>);
 
 /*
 ▄───▄

@@ -62,3 +62,7 @@
 .table tr:last-child td:last-child {
     border-radius: 0 0 20px 0;
 }
+.table tbody tr:hover {
+    opacity: 70%;
+    cursor: pointer;
+}

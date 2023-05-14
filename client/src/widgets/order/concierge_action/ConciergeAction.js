@@ -7,7 +7,6 @@ export default function ConciergeAction() {
 
     const [isModalActive, setIsModalActive] = useState(false);
     function onClick() {
-        console.log('concierge service click')
         setIsModalActive(true)
     }
 
