@@ -98,7 +98,21 @@ async function startConversation(user, users=[], name=`Conversation ${Date.now()
  * Здесь не должно быть ошибок.
  * При создании заказа нужно будет создать пустую беседу с одним участником - заказчиком.
  * */
-async function createConversationWithParticipants(userIds=[], name=`Conversation ${Date.now()}`, type='private_group'){
+async function saveConversationWithParticipants(conversation, participants){
+    // Важно создать сначала participant-ов и уже потом беседу, чтобы можно было понять кто должен увидеть добавление беседы
+    await Promise.all(participants.map(async p => await p.save()));
+
+    await conversation.save();
+
+    // Наверное стоит еще скидывать какое-нибудь init сообщение и добавлять уведомление, типа беседа создана.
+
+    return ({
+        conversation,
+        participants
+    });
+}
+
+async function defineConversationWithParticipant(userIds=[], name=`Conversation ${Date.now()}`, type='private_group'){
     if(!userIds || userIds.length === 0){
         throw ApiError.ServerError('users are not provided. Cannot create conversation without participants');
     }
@@ -114,16 +128,13 @@ async function createConversationWithParticipants(userIds=[], name=`Conversation
         role: 'participant'
     }));
 
-    // Важно создать сначала participant-ов и уже потом беседу, чтобы можно было понять кто должен увидеть добавление беседы
-    await Promise.all(participants.map(async p => await p.save()));
-
-    await conversation.save();
-
-    // Наверное стоит еще скидывать какое-нибудь init сообщение и добавлять уведомление, типа беседа создана.
+    // нужна валидация получившихся моделей
+    await Promise.all(participants.map(async p => await p.validate()));
+    await conversation.validate();
 
     return ({
-        conversation: conversation_dto(conversation),
-        participants: participants.map(p => participant_dto(p))
+        conversation,
+        participants
     });
 }
 
@@ -185,7 +196,8 @@ async function deleteNotifications(notifications){
 
 module.exports = ({
     firstLoad,
-    createConversationWithParticipants,
+    defineConversationWithParticipant,
+    saveConversationWithParticipants,
     joinConversation,
     messagesPaginate,
     participantsPaginate,

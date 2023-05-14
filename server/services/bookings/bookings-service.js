@@ -22,12 +22,8 @@ async function _createWithoutSave(booking, orderId, customerId, files){
     }
 
     return ({
-        model,
-        booking: {
-            type: booking.type,
-            [booking.type]: model.id
-        },
-        type: booking.type,
+        type: type,
+        [type]: model
     });
 }
 /*booking: {
@@ -46,39 +42,31 @@ async function _updateWithoutSave(booking, orderId, customerId, files){
         model = await hotelBookingService.updateHotelBookingWithoutSave(booking[type], orderId, customerId, files);
     }
     else {
-        throw ApiError.BadRequest(`Non-existent service: ${type}`);
+        throw ApiError.BadRequest(`Non-existent service type: ${type}`);
     }
 
     return ({
-        model,
-        booking: {
-            type: booking.type,
-            [booking.type]: model.id
-        },
+        type,
+        model
     });
 }
 
 async function _save(model, type, files){
     if(type === 'hotel/booking'){
-        model = await hotelBookingService.saveHotelBooking(model, files);
+        await hotelBookingService.saveHotelBooking(model, files);
     }
     else {
-        throw ApiError.BadRequest(`Non-existent service: ${type}`);
+        throw ApiError.BadRequest(`Non-existent service type: ${type}`);
     }
-
-    return model;
 }
 
-/**
- * Создает и присваивает id броней к заказу.
- * Должно гарантировать, что, либо все модели сохранятся без ошибок, либо выдаст ошибку и ни одна не сохранится.
- * */
-async function createMany(bookings, order, files) {
+async function defineMany(bookings, order, files){
     if(!bookings || !order){
         throw ApiError.ServerError('No required arguments');
     }
     /*
         order: {
+            id: Schema.Types.ObjectId,
             customer: Schema.Types.ObjectId,
             status: String,
             accessHolders: [Schema.Types.ObjectId]?
@@ -100,20 +88,40 @@ async function createMany(bookings, order, files) {
         return await _createWithoutSave(booking, order.id, order.customer, files);
     }));
 
-    /* Здесь гарантируется, что, либо все модели сохранятся, либо ни одна не сохранится. */
+    /*
+    results(bookings with populated [type] fields) : [{
+        type: String,
+        [type]: model
+    }]
+    */
 
     // Валидация.
-    await Promise.all(results.map(async result => await result.model.validate()));
+    await Promise.all(results.map(async result => await result[result.type].validate()));
 
+    return results;
+}
+
+/**
+ * bookings = {
+ *     type: String,
+ *     [type]: model
+ * }
+ * */
+async function saveMany(bookings, files) {
+    if(!bookings){
+        throw ApiError.ServerError('No required arguments');
+    }
     // Здесь можем засетить каждому файлы или удалить прикрепленные файлы.
 
     // Сохранение.
-    await Promise.all(results.map(async result => {
+    await Promise.all(bookings.map(async booking => {
+        const type = booking.type;
+        const model = booking[booking.type];
         // здесь files нужно будет как-то распарсить? или создать отдельный api для каждой услуги.
-        return await _save(result.model, result.booking.type, files);
+        await _save(model, type, files);
     }));
 
-    return results.map(result => result.booking);
+    return bookings;
 }
 
 
@@ -200,7 +208,8 @@ async function populateBookings(order){
 
 
 module.exports = ({
-    createMany,
+    defineMany,
+    saveMany,
     updateMany,
     deleteMany,
 

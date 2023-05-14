@@ -84,7 +84,8 @@ export default function HotelOrderFlow(){
                         'hotel/room': data.room.id,
                     }
                 }
-            ]
+            ],
+            meta: {}
         });
 
         const response = await fetch('/api/order', {

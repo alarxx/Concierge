@@ -22,12 +22,24 @@ export default function useOrder({ socketHandler, authHandler }){
     const [extendedOrders, setExtendedOrders] = useState([])
 
     const [ordersLoading, setOrdersLoading] = useState(true);
-    const [ordersError, setOrdersError] = useState();
+    const [ordersError, setOrdersError] = useState(null);
+
+
+    /*
+    // Когда сервер отключен, бывает что ордера потом вообще не грузятся
+    useEffect(()=>{
+        if(ordersError){
+            setTimeout(()=>{
+                window.location.reload();
+            }, 500)
+        }
+    }, [ordersError])*/
 
 
     useEffect(()=>{
         const abortController = new AbortController();
 
+        setOrdersLoading(true);
         preloadOrders({ signal: abortController.signal });
 
         return (() => {
@@ -174,7 +186,8 @@ export default function useOrder({ socketHandler, authHandler }){
 
 
     return ({
-        orders:extendedOrders,
+        orders:orders,
+        extendedOrders:extendedOrders,
         ordersLoading,
         ordersError,
 
