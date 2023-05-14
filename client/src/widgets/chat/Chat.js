@@ -7,6 +7,8 @@ import Messenger from "../../pages/business_client/chat/Messenger";
 import {useAppContext} from '../../context/AppContext';
 import {useNavigate, useParams} from "react-router-dom";
 import Logger from "../../internal/Logger";
+import Block from "../../shared/ui/block/Block";
+import Loader from "../../shared/ui/loader/Loader";
 
 /**
  * Должен показывать компонент Conversations на desktop-e, на мобилке же нет.
@@ -43,6 +45,12 @@ export default function Chat({ activeConversationId='', openConversation=f=>f, c
     useEffect(()=>{
         logger.log({conversation})
     }, [conversation, messages])
+
+    if(chatLoading){
+        return (<>
+            <Block isAlignCenter={true}><Loader color={'black'}/></Block>
+        </>);
+    }
 
     return (
         <>

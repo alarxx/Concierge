@@ -19,8 +19,14 @@ export default function OrderList({}) {
         console.log('orderLoadingg = ',ordersLoading)
     })
 
+    if(ordersLoading){
+        return (<>
+            <Block isAlignCenter={true}><Loader color={'black'}/></Block>
+        </>)
+    }
+
     return (<>
-        {ordersLoading ? <Block isAlignCenter={true}><Loader color={'black'}/></Block> : orders.map((order, i) => {
+        {orders.map((order, i) => {
             return (<div key={i}>
                 <OrderCard
                     order={order}

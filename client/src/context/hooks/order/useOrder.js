@@ -7,36 +7,7 @@ import Logger from "../../../internal/Logger";
 import setIds from "../../../internal/setIds";
 
 
-async function extendOrders(orders, setOrders, stop={ signal: false }){
 
-    const extendedOrders = await Promise.all(orders.map(async order => {
-
-        const bookings = await Promise.all(order.bookings.map(async booking => {
-            const { type } = booking;
-            if(type === 'hotel/booking'){
-                const { hotel, 'hotel/room': room } = booking;
-                if(!hotel || !room){
-                    // Дополнить прикрепленную услугу заказа вызвав /api/hotel/room
-                    const response = await fetch('/api/hotel/room/' + booking['hotel/booking']['hotel/room']);
-                    const json = await response.json();
-                    setIds(json);
-                    // console.log(`extendOrders:`, {booking, json});
-                    // console.log(`extendOrders: api response`, response);
-                    return ({...booking, ...json});
-                }
-            }
-            return booking;
-        }));
-
-        return ({...order, bookings});
-
-    }));
-
-    if(!stop.signal){
-        setOrders(extendedOrders);
-    }
-
-}
 
 
 export default function useOrder({ socketHandler, authHandler }){
@@ -64,6 +35,7 @@ export default function useOrder({ socketHandler, authHandler }){
         });
     }, []);
 
+
     useEffect(()=>{
         const stop = { signal: false };
         extendOrders(orders, setExtendedOrders, stop);
@@ -71,6 +43,7 @@ export default function useOrder({ socketHandler, authHandler }){
             stop.signal = true;
         }
     }, [orders])
+
 
     async function createOrder(order={bookings:[], accessHolders:[]}, opts={signal: undefined}){
         // Как отлавливать ошибку и если что перенаправлять пользователя обратно, чтобы исправить ошибку?
@@ -87,6 +60,7 @@ export default function useOrder({ socketHandler, authHandler }){
             .then(json => logger.log("Create", json))
             .catch(e => logger.log("Error on create", e))
     }
+
 
     /* Не нужно сетить ордера здесь, потому что у нас придет уведомление /save, /delete */
     async function updateOrder(order={id:''}, opts={signal:undefined}){
@@ -105,6 +79,7 @@ export default function useOrder({ socketHandler, authHandler }){
             .catch(e => logger.log("Error on update", e))
     }
 
+
     async function deleteOrder(order={id:''}, opts={signal:undefined}){
         try{
             const res = await fetch('/api/order', {
@@ -122,6 +97,7 @@ export default function useOrder({ socketHandler, authHandler }){
             logger.log(e);
         }
     }
+
 
     /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать */
     async function preloadOrders(opts={ signal: undefined }){
@@ -154,6 +130,39 @@ export default function useOrder({ socketHandler, authHandler }){
         setOrdersLoading(false);
     }
 
+
+    async function extendOrders(orders, setExtendedOrders, stop={ signal: false }){
+        setOrdersLoading(true);
+        const extendedOrders = await Promise.all(orders.map(async order => {
+
+            const bookings = await Promise.all(order.bookings.map(async booking => {
+                const { type } = booking;
+                if(type === 'hotel/booking'){
+                    const { hotel, 'hotel/room': room } = booking;
+                    if(!hotel || !room){
+                        // Дополнить прикрепленную услугу заказа вызвав /api/hotel/room
+                        const response = await fetch('/api/hotel/room/' + booking['hotel/booking']['hotel/room']);
+                        const json = await response.json();
+                        setIds(json);
+                        // console.log(`extendOrders:`, {booking, json});
+                        // console.log(`extendOrders: api response`, response);
+                        return ({...booking, ...json});
+                    }
+                }
+                return booking;
+            }));
+
+            return ({...order, bookings});
+
+        }));
+
+        if(!stop.signal){
+            setExtendedOrders(extendedOrders);
+            setOrdersLoading(false);
+        }
+
+    }
+
     async function takeOrder(order){
         logger.log({order})
         if(!order || !order.id){
@@ -162,6 +171,7 @@ export default function useOrder({ socketHandler, authHandler }){
 
         socket.emit('take-order', order);
     }
+
 
     return ({
         orders:extendedOrders,
