@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+
 module.exports = {
   entry: './src/index.js',
   output: {
@@ -27,21 +28,45 @@ module.exports = {
         use: ['@svgr/webpack'],
       },
 
+      // {
+      //   test: /\.css$/,
+      //   use: [
+      //     {
+      //       loader: 'style-loader',
+      //     },
+      //     {
+      //       loader: 'style-loader!css-loader',
+      //       options: {
+      //         modules: {
+      //         //   // localIdentName:'[name]__[local]--[hash:base64:5]',
+      //         },
+      //       },
+      //     },
+      //   ],
+      // },
       {
-        test: /\.css$/,
+        test: /\.(css|scss)$/,
         use: [
-          {
-            loader: 'style-loader',
-          },
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
+              importLoaders: 1,
               modules: {
-                localIdentName:'[name]__[local]--[hash:base64:5]',
+                localIdentName: "[name]__[local]___[hash:base64:5]",
               },
-            },
-          },
+            }
+          }
         ],
+        include: /\.module\.css$/
+      },
+      {
+        test: /\.(css|scss)$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ],
+        exclude: /\.module\.css$/
       },
 
     ]
