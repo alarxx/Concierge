@@ -3,36 +3,36 @@
  * Нужно админам и возможно менеджерам Concierge и партнерам об их клиентах.
  * */
 
-const participantDto = require('../../../dtos/chat/participant-dto');
-const {io} = require("../../socket-io");
-
+const asyncParticipantDto = require('../../../dtos/async/chat/participant-dto');
 const logger = require('../../../log/logger')('notification-observer');
 
 async function notify(method, modelName, participantDoc){
     const io = require('../../socket-io').io;
 
-    function __notify(userId){
+    const { Participant } = require('../../../models/models-manager');
+
+    const dto = await asyncParticipantDto(participantDoc, );
+
+    async function __notify(userId){
         try{
-            io.to(String(userId)).emit(`/${method}/${modelName}`, participantDto(participantDoc));
+            io.to(String(userId)).emit(`/${method}/${modelName}`, dto);
         }
         catch(e){
-            logger.error(`failed to emit /${method}/${modelName} to user(${userId}) with message:`, participantDto(participantDoc));
+            logger.error(`failed to emit /${method}/${modelName} to user(${userId}) with message:`, participantDoc);
         }
     }
-
-    const { Participant } = require('../../../models/models-manager');
 
     // В participants может как входить, так и нет participantDoc.
     const participants = await Participant.find({ conversation: participantDoc.conversation });
 
-    __notify(participantDoc.user);
+    await __notify(participantDoc.user);
 
-    participants.map( participant => {
+    await Promise.all(participants.map(async participant => {
         if(participant.user == participantDoc.user){
             return;
         }
-        __notify(participant.user);
-    });
+        await __notify(participant.user);
+    }));
 }
 
 module.exports = function(schema) {

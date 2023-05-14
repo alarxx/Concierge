@@ -1,7 +1,8 @@
 const ApiError = require("../../exceptions/ApiError");
 
-const { Order } = require('../../models/models-manager');
+const { Order, User } = require('../../models/models-manager');
 const orderDto = require('../../dtos/order-dto');
+const asyncOrderDto = require('../../dtos/async/order-dto');
 
 const logger = require('../../log/logger')('order-service');
 
@@ -20,10 +21,7 @@ const modelService = new ModelService(Order);
  * */
 async function findByQueryParams(filters, user) {
     async function returnOrders(orders){
-        return await Promise.all(orders.map(async o => {
-            await bookingsService.populateBookings(o);
-            return orderDto(o, user);
-        }));
+        return await Promise.all(orders.map(async o => await asyncOrderDto(o, user)));
     }
 
     let _filters = { ...filters };
