@@ -147,11 +147,6 @@ async function updateOne(body, files, user) {
         throw ApiError.NotFound(`Order not found`);
     }
 
-    /** define bookings */
-    const bookings = _body.bookings ? _body.bookings : [];
-    delete _body.bookings;
-    order.bookings = await bookingsService.updateMany(bookings, order, files);
-
     /*
     * Здесь нужна проверка есть ли строка файла, но там нет файла
     * Это нужно, чтобы удалять файлы.
@@ -160,6 +155,12 @@ async function updateOne(body, files, user) {
     await modelService.deleteInvalidFileFields(_body, order);
     order.set(_body);
 
+    await order.validate();
+
+    /** define bookings */
+    const bookings = _body.bookings ? _body.bookings : [];
+    delete _body.bookings;
+    order.bookings = await bookingsService.updateMany(bookings, order, files);
 
     await modelService.saveWithFiles(order, files, { user });
 

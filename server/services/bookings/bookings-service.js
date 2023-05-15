@@ -132,9 +132,15 @@ async function saveMany(bookings, files) {
  * */
 async function updateMany(bookings, order, files) {
     // Нужно удалять booking-и, которые были в order.bookings, но нет в bookings.
+    /*
+    bookings: {id?, type:String, [type]:Object}
+    * */
     const missing = order.bookings.filter(orderBooking => {
+        const orderBookingId = orderBooking[orderBooking.type];
         // Пробегаем по всем order.bookings и проверяем есть ли они в bookings. Ищем те, которых нет.
-        return !bookings.some(booking => booking[booking.type] == orderBooking[orderBooking.type]);
+        return !bookings.some(booking => {
+            return booking[booking.type] == orderBookingId;
+        });
     });
     await deleteMany(missing);
 

@@ -1,11 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 /**
  *
  * */
 export default function useMultistep(Steps=[]){
+
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
-    const [lastStep, ] = useState(Steps.length - 1)
+
+    const [lastStep, setLastStep] = useState(0);
+
+    useEffect(()=>{
+        setLastStep(Steps.length - 1);
+    }, [Steps])
 
 
     function next(){

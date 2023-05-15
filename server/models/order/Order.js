@@ -26,7 +26,7 @@ const MetaSchema = new Schema({
 
     needs: [{
         type: String,
-        enum: ['hotel', 'airfare', 'housing', 'transport', 'travel', 'informal'],
+        enum: ['hotel', 'airfare', 'transfer'], //, 'housing', 'transport', 'travel', 'informal'],
         required: true,
     }],
 
