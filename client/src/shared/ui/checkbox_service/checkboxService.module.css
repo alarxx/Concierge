@@ -1,0 +1,86 @@
+.CheckboxService {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border: 1px solid rgba(30, 38, 47, 0.06);
+    /* card */
+    box-shadow: 2px 4px 4px rgba(30, 38, 47, 0.02);
+    border-radius: 16px;
+    cursor: pointer;
+    background-color: white;
+    margin-bottom: 8px;
+}
+.CheckboxService:last-child {
+    margin-bottom: 0;
+}
+.CheckboxService:hover {
+    background: rgb(252, 252, 252);
+}
+/*.CheckboxService--active {*/
+/*    border: 2px solid #1E262F;*/
+/*}*/
+/* #services:checked ~ .service-item {
+    border: 2px solid #1E262F;
+} */
+
+.CheckboxService__info {
+    font-size: 14px;
+}
+.CheckboxService__icon {
+    width: 36px;
+    margin-right: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.CheckboxService__title {
+    font-weight: 600;
+}
+.CheckboxService__description {
+    margin-top: 3px;
+    font-size: 10px;
+    color: #A3A5A6;
+}
+
+
+.CheckboxService-label input[type=checkbox] {
+    z-index: -1;
+    opacity: 0;
+    display: block;
+    width: 0;
+    height: 0;
+}
+
+/* Checked */
+.CheckboxService-label input[type=checkbox]:checked + .CheckboxService {
+    border: 3px solid #1E262F;
+}
+
+/* Focus нужен JS для этого */
+.focused .CheckboxService {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Hover */
+.CheckboxService:hover {
+    color: #666;
+}
+
+/* Active */
+.CheckboxService-label input[type=checkbox]:active:not(:disabled) + .CheckboxService {
+    /*background: #2086E5;*/
+    /*color: white;*/
+    /*outline: 1px solid;*/
+    /*outline-color: #4a4a4a;*/
+}
+
+/* Disabled */
+.CheckboxService-label input[type=checkbox]:disabled + .CheckboxService {
+    background: #efefef;
+    color: #666;
+    cursor: default;
+}
+.CheckboxService-label input[type=checkbox]:checked:disabled + .CheckboxService {
+    background: #f7efdc;
+}

@@ -1,4 +1,6 @@
 import React from 'react';
+import Block from "../../../shared/ui/block/Block";
+import Typography from "../../../shared/ui/typography/Typography";
 
 export default function TransferStep({
                                       data={},
@@ -14,6 +16,8 @@ export default function TransferStep({
     const { } = data;
 
     return (<>
-        <h1>Transfer</h1>
+        <Block isAlignCenter={true} bottom={40}>
+            <Typography size={20} weight={700} align={'center'}>Данные по трансферу</Typography>
+        </Block>
     </>);
 }
