@@ -1,4 +1,6 @@
 import React from 'react';
+import Block from "../../../shared/ui/block/Block";
+import Typography from "../../../shared/ui/typography/Typography";
 
 export default function AirfareStep({
                                          data={},
@@ -14,6 +16,8 @@ export default function AirfareStep({
     const {  } = data;
 
     return (<>
-        <h1>Airfare</h1>
+        <Block isAlignCenter={true} bottom={20}>
+            <Typography size={20} weight={700} align={'center'}>Данные по билетам</Typography>
+        </Block>
     </>);
 }

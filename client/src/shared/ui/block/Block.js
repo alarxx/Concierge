@@ -2,9 +2,10 @@ import React from 'react';
 
 import styles from './block.module.css'
 
-export default function Block({children, top, bottom, left, right, isAlignCenter}){
+export default function Block({children, top, bottom, left, right, width, isAlignCenter}){
 
     const style = {
+        width,
         marginTop: top,
         marginBottom: bottom,
         marginLeft: left,

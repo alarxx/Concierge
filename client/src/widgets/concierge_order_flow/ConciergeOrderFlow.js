@@ -8,6 +8,20 @@ import NeedsStep from "./steps/NeedsStep";
 import HotelStep from "./steps/HotelStep";
 import AirfareStep from "./steps/AirfareStep";
 import TransferStep from "./steps/TransferStep";
+import CardBody from "../../shared/ui/card/CardBody";
+import NewHotelOrder from "../../entities/order/new/NewHotelOrder";
+import NewTicketsOrder from "../../entities/order/new/NewTicketsOrder";
+import Modal from "../../shared/ui/modal/Modal";
+import ComingSoon from "../../features/order/coming_soon/ComingSoon";
+import NewTransferOrder from "../../entities/order/new/NewTransferOrder";
+import Card from "../../shared/ui/card/Card";
+import GroupFlex from "../../shared/ui/group_flex/GroupFlex";
+import Block from "../../shared/ui/block/Block";
+import ButtonIconic from "../../shared/ui/button_iconic/ButtonIconic";
+import Typography from "../../shared/ui/typography/Typography";
+import Button from "../../shared/ui/button/Button";
+
+import ArrowLeft from '../../assets/icons/backbtn_icon.svg'
 
 export default function ConciergeOrderFlow() {
 
@@ -21,7 +35,7 @@ export default function ConciergeOrderFlow() {
     const [data, setData] = useState({});
 
     /* В зависимости от того, что входит в needs добавляем в массив компоненты */
-    const [Steps, setSteps] = useState([NeedsStep]);
+    const [Steps, setSteps] = useState([NeedsStep,HotelStep]);
 
     /*useEffect(()=>{
         setSteps(()=>{
@@ -66,18 +80,43 @@ export default function ConciergeOrderFlow() {
 
 
     return (<>
-        {<Step
-            data={data}
-            upsertFields={upsertFields}
+        <Card>
+            <CardBody>
+                <form>
+                    {<Step
+                        data={data}
+                        upsertFields={upsertFields}
 
-            next={next}
-            back={back}
+                        next={next}
+                        back={back}
 
-            submit={submit}
-            close={close}
+                        submit={submit}
+                        close={close}
 
-            isFirstStep={isFirstStep}
-            isLastStep={isLastStep}
-        />}
+                        isFirstStep={isFirstStep}
+                        isLastStep={isLastStep}
+                    />}
+                </form>
+            </CardBody>
+            <CardBody>
+                <GroupFlex justify={isFirstStep ? 'jce' : 'jcsb'}>
+                    { !isFirstStep &&
+                        <Block width={'auto'}>
+                            <ButtonIconic inText={true} onClick={back}>
+                                <ArrowLeft />
+                                <Typography size={16} weight={500} color={'grey'}>Назад</Typography>
+                            </ButtonIconic>
+                        </Block>
+                    }
+
+                    <Block width={'auto'}>
+                        <Button onClick={next}>
+                            {isLastStep ? 'Отправить' : 'Вперёд'}
+
+                        </Button>
+                    </Block>
+                </GroupFlex>
+            </CardBody>
+        </Card>
     </>);
 }

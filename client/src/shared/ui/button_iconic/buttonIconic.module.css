@@ -11,3 +11,13 @@
 .ButtonIconic svg {
     stroke: white;
 }
+.ButtonIconic--in-text {
+
+}
+.ButtonIconic--in-text svg {
+    margin-right: 4px;
+    scale: .9;
+}
+.ButtonIconic--in-text svg path {
+    stroke: #bcbcbc;
+}
