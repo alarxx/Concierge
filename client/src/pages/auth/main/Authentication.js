@@ -15,6 +15,7 @@ import CardBody from '../../../shared/ui/card/CardBody';
 import CardFooter from '../../../shared/ui/card/CardFooter';
 import TextWithLink from '../../../shared/ui/text_with_link/TextWithLink'
 import Button from '../../../shared/ui/button/Button'
+import Loading from "../../../shared/loading/Loading";
 /*
 * 1) Не всегда при OAuth2 имеется имя, а в приложении хотелось бы иметь имя всегда.
 * Для этого нужно, если нет имени пользователя, перенаправлять на страницу
@@ -31,15 +32,22 @@ export default function Authentication(){
 
     const [tabType, setTabType] = useState('signin');
 
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(()=>{
         logger.log({ state: location.state });
         return location.state?.error;
     })
 
-    // SignUp/SignIn должны быть в одном компоненте и OAuth тоже, все должно быть в одном Authentication page
-    return (
-        <Box center={true}>
+    function onAzureClick(){
+        setIsLoading(true);
+        // navigate
+        window.location.replace('auth/azure');
+    }
 
+    // SignUp/SignIn должны быть в одном компоненте и OAuth тоже, все должно быть в одном Authentication page
+    return (<>
+        {isLoading && <Loading />}
+        <Box center={true}>
             <Card>
                 <CardHeader>
                     <Logo />
@@ -50,7 +58,7 @@ export default function Authentication(){
                     {tabType === 'signup' && <SendActivationMail />}
                     {tabType === 'signin' && <SignIn />}
                     <br />
-                    <Button variant='second'><a href={"/auth/azure"}>OpenID Connect</a></Button>
+                    <Button variant='second' onClick={onAzureClick}>OpenID Connect</Button>
                 </CardBody>
                 
                 <CardFooter>
@@ -64,7 +72,7 @@ export default function Authentication(){
             </Card>
 
         </Box>
-    );
+    </>);
 }
 
 /*
