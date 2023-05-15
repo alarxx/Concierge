@@ -15,11 +15,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          script: |
-            echo "debug"
-            echo "command -v node"
-            node -v
-            
+          script: |           
             echo "start deploy"
             cd ~/deploy/concierge
             git pull
