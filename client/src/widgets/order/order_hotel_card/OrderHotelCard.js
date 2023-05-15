@@ -13,7 +13,7 @@ import Chip from "../../../shared/ui/chip/Chip";
 import CardHeader from "../../../shared/ui/card/CardHeader";
 import CardBody from "../../../shared/ui/card/CardBody";
 import Block from "../../../shared/ui/block/Block";
-import statusEnum from "../../../internal/statusEnum";
+import statusEnum from "../../../internal/order/StatusEnum";
 
 
 export default function OrderHotelCard({ hotel_booking={}, onClick=f=>f }) {

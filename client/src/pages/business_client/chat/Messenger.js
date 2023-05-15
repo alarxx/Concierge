@@ -20,12 +20,9 @@ import FileInChat from "../../../features/chat/file_in_chat/FileInChat";
 import BottomPanel from "../../../shared/ui/bottom_panel/BottomPanel";
 import Button from "../../../shared/ui/button/Button";
 
-function findIndexById (array, id) {
-    return array.findIndex(obj => obj.id === id);
-}
-function objClone(obj){
-    return JSON.parse(JSON.stringify(obj))
-}
+import findIndexById from "../../../internal/findIndexById";
+import objClone from "../../../internal/objClone";
+
 //message: {type=choice, id, items, selected, submitted}
 export default function Messenger({
                                       conversation,

@@ -18,7 +18,7 @@ export default function useBigList(api, opts={}){
         return `${api}?skip=${skip}&limit=${limit}&sort=${sort}`;
     }*/
     function getUrl(skip, limit, _opts={}){
-        return `${api}/?` + new URLSearchParams({
+        return `${api}?` + new URLSearchParams({
             skip,
             limit,
             sort:'createdAt',
