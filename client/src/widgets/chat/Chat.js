@@ -5,7 +5,7 @@ import React, {useEffect, useMemo, useState} from 'react'
 import Conversations from "../../pages/business_client/chat/Conversations";
 import Messenger from "../../pages/business_client/chat/Messenger";
 import {useAppContext} from '../../context/AppContext';
-import {useNavigate, useParams} from "react-router-dom";
+import {Navigate, useNavigate, useParams} from "react-router-dom";
 import Logger from "../../internal/Logger";
 import Block from "../../shared/ui/block/Block";
 import Loader from "../../shared/ui/loader/Loader";
@@ -21,9 +21,16 @@ export default function Chat({ activeConversationId='', openConversation=f=>f, c
     const { messages, conversations, notifications, sendMessage, deleteNotifications, _upsertMessage, chatLoading } = chatHandler;
     const { user } = authHandler;
 
-    const [conversation, setConversation] = useState();
+    const conversation = conversations.find(conversation => conversation.id === activeConversationId);
 
-    const [conversationMessages, setConversationMessages] = useState([]);
+    const conversationMessages = messages.filter(m => m.conversation === activeConversationId);
+
+    useEffect(()=>{
+        if(activeConversationId && !conversation){
+            logger.log("closeConversation");
+            closeConversation();
+        }
+    },[activeConversationId])
 
     useEffect(()=>{
         if(activeConversationId){
@@ -31,7 +38,7 @@ export default function Chat({ activeConversationId='', openConversation=f=>f, c
         }
     }, [activeConversationId, messages]);
 
-    useEffect(()=>{
+    /*useEffect(()=>{
         if(activeConversationId){
             setConversation(conversations.find(conversation => conversation.id === activeConversationId));
             setConversationMessages(messages.filter(m => m.conversation === activeConversationId));
@@ -40,7 +47,7 @@ export default function Chat({ activeConversationId='', openConversation=f=>f, c
             setConversation(null);
             setConversationMessages([]);
         }
-    }, [activeConversationId, messages]);
+    }, [activeConversationId, messages]);*/
 
     useEffect(()=>{
         logger.log({conversation})

@@ -41,7 +41,7 @@ module.exports = function(schema) {
     });
 
     schema.post('findOneAndDelete', async function(messageDoc, next){
-        const modelName = (document.constructor.modelName).toLowerCase(); // Можно было бы и просто 'message' написать, а не так
+        const modelName = (messageDoc.constructor.modelName).toLowerCase(); // Можно было бы и просто 'message' написать, а не так
         try{
             await notify('delete', modelName, messageDoc);
             next();

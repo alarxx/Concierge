@@ -7,18 +7,17 @@ import Logger from "../../../internal/Logger";
 import setIds from "../../../internal/setIds";
 
 
-
-
-
 export default function useOrder({ socketHandler, authHandler }){
 
-    const logger = useMemo(()=>new Logger('useOrder'), [])
+    const logger = useMemo(()=>new Logger('useOrder'), []);
 
     const navigate = useNavigate();
 
     const { socket } = socketHandler;
 
     const { data:orders, upsertData:upsertOrders } = useFreshData({ socket, modelName:'order' });
+
+    /** extendedOrders не гарантирует наличия в типе hotel/booking hotel и hotel/room полей */
     const [extendedOrders, setExtendedOrders] = useState([])
 
     const [ordersLoading, setOrdersLoading] = useState(true);
@@ -68,7 +67,7 @@ export default function useOrder({ socketHandler, authHandler }){
             body: JSON.stringify(order),
             ...opts
         })
-            .then(res=>res.json())
+            .then(res => res.json())
             .then(json => logger.log("Create", json))
             .catch(e => logger.log("Error on create", e))
     }
@@ -155,7 +154,7 @@ export default function useOrder({ socketHandler, authHandler }){
                 // Если extendedOrders уже содержит order и нужные данные в booking, то продолжаем.
                 if(extendedOrder) {
                     const eo_booking = extendedOrder.bookings.find(b => b.id === booking.id);
-                    logger.log({order, extendedOrder, booking, eo_booking})
+                    // logger.log({order, extendedOrder, booking, eo_booking});
 
                     if(eo_booking){
                         const {type} = eo_booking;
@@ -172,6 +171,9 @@ export default function useOrder({ socketHandler, authHandler }){
                 if (type === 'hotel/booking') {
                     // Дополнить прикрепленную услугу заказа вызвав /api/hotel/room
                     const response = await fetch('/api/hotel/room/' + booking['hotel/booking']['hotel/room']);
+                    if(response.status < 200 || response.status >= 300){
+                        return booking;
+                    }
                     const json = await response.json();
                     setIds(json);
                     // console.log(`extendOrders:`, {booking, json});
@@ -194,9 +196,9 @@ export default function useOrder({ socketHandler, authHandler }){
     }
 
     async function takeOrder(order){
-        logger.log({order})
+        logger.log("takeOrder:", {order});
         if(!order || !order.id){
-            return logger.log("orders is null or not an object", { order })
+            return logger.log("takeOrder:", "orders is null or not an object", { order });
         }
 
         socket.emit('take-order', order);

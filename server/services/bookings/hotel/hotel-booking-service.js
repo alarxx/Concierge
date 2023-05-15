@@ -46,7 +46,7 @@ async function updateHotelBookingWithoutSave(body, orderId, customerId, files){
     return model;
 }
 
-async function deleteHotelBooking(id){
+async function deleteHotelBookingById(id){
     const hotelBooking = await Hotel_Booking.findById(id);
     logger.log(`delete hotel booking(${id}):`, hotelBooking)
     if(!hotelBooking){
@@ -65,6 +65,6 @@ async function saveHotelBooking(model, files){
 module.exports = ({
     createHotelBookingWithoutSave,
     updateHotelBookingWithoutSave,
-    deleteHotelBooking,
+    deleteHotelBookingById,
     saveHotelBooking,
 });

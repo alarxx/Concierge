@@ -194,7 +194,7 @@ async function deleteMany(bookings) {
         let model;
 
         if(type === 'hotel/booking'){
-            model = await hotelBookingService.deleteHotelBooking(booking[booking.type]);
+            model = await hotelBookingService.deleteHotelBookingById(booking[booking.type]);
         }
         else {
             throw ApiError.BadRequest(`Non-existent service: ${type}`);

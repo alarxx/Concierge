@@ -20,9 +20,12 @@ export default function(extendedBooking, extendedOrder){
 
     if(extendedBooking.type === 'hotel/booking'){
         const booking = extendedBooking['hotel/booking'];
-        const hotelName = extendedBooking.hotel.name;
-        const roomName = extendedBooking['hotel/room'].name;
-        const city = extendedBooking.hotel.city.split(",")[1].trim();
+        const hotelName = extendedBooking.hotel?.name;
+        const roomName = extendedBooking['hotel/room']?.name;
+
+        const words = extendedBooking.hotel?.city.split(",", 2); // 'Казахстан, Астана'.split(",", 2);
+        const city = words?.length === 2 ? words[1]: words;
+
         const start_date = new Date(booking.checkInDate);
         const final_date = new Date(booking.checkOutDate);
         return ({

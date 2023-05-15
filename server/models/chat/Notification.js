@@ -12,6 +12,10 @@ const NotificationSchema = new Schema(
             ref: 'Message',
             // required: true,
         },
+        conversation: {
+            type: Schema.Types.ObjectId,
+            ref: 'Conversation',
+        },
         user: {
             type: Schema.Types.ObjectId,
             ref: 'User',

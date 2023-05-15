@@ -6,14 +6,16 @@ function objectsTraversal(obj, f){
     f(obj);
 
     for(const key in obj){
-        if(typeof obj[key] === 'object'){
+        if(typeof obj[key] === 'object'){ // null это видимо тоже объект
+            // console.log(`setIds: objectsTraversal by key ${key}:`, obj)
             objectsTraversal(obj[key], f)
         }
     }
 }
 
 function renameId(obj){
-    if(obj._id) {
+    // console.log(`setIds: renameId:`, obj, (!obj ? 'OBJECT IS NULL' : ''))
+    if(obj?._id) {
         obj.id = obj._id;
         // delete obj._id;
     }
@@ -24,6 +26,7 @@ function renameId(obj){
  * Создать глубокий клон можно вот так JSON.parse(JSON.stringify(obj))
  * */
 export default function setIds(obj){
+    // console.log("setIds:", {obj})
     objectsTraversal(obj, renameId)
     return obj;
 }
