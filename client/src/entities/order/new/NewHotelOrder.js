@@ -114,20 +114,21 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                     required
                 />
                 <GroupInput>
-                    <DatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        monthsShown={2}
-                    />
-                    <DatePicker
-                        selected={endDate}
-                        onChange={(date) => setEndDate(date)}
-                        selectsEnd
-                        startDate={startDate}
-                        endDate={endDate}
-                        minDate={startDate}
-                    />
-                    <MyInput placeHolder='Дата отлета' type='date' name='departure_date' data={data} upsertFields={upsertFields} />
+                    {/*<DatePicker*/}
+                    {/*    selected={startDate}*/}
+                    {/*    onChange={(date) => setStartDate(date)}*/}
+                    {/*    monthsShown={2}*/}
+                    {/*/>*/}
+                    {/*<DatePicker*/}
+                    {/*    selected={endDate}*/}
+                    {/*    onChange={(date) => setEndDate(date)}*/}
+                    {/*    selectsEnd*/}
+                    {/*    startDate={startDate}*/}
+                    {/*    endDate={endDate}*/}
+                    {/*    minDate={startDate}*/}
+                    {/*/>*/}
+                    <MyInput placeHolder='Дата заезда' type='date' name='start_date' data={data} upsertFields={upsertFields} />
+                    <MyInput placeHolder='Дата выезда' type='date' name='end_date' data={data} upsertFields={upsertFields} />
                 </GroupInput>
                 <MyInput placeHolder='1 Номер для' type='number' name='number_of_adults' data={data} upsertFields={upsertFields} />
                 <MyInput placeHolder='Дети' type='number' name='number_of_children' data={data} upsertFields={upsertFields} />
