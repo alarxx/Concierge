@@ -19,6 +19,11 @@ jobs:
           key: ${{ secrets.SERVER_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
+            echo "debug"
+            echo "command -v node"
+            node -v
+            
+            echo "start deploy"
             cd ~/deploy/concierge
             git pull
             (cd server && npm i && pm2 restart concierge_server)
