@@ -132,24 +132,24 @@ async function updateOne(body, files, user) {
     if (!files) {
         files = {};
     }
-
     if (Object.keys(body).length + Object.keys(files).length < 2) {
         throw ApiError.BadRequest("Empty request body or too few fields");
     }
 
+    /** Define. Определяем. */
+
     const _body = { ...body };
 
+    /** define order */
     const pkey = modelService.get_pkey(_body);
-
     const order = await Order.findOne({[(pkey === 'id' ? '_id' : pkey)]: _body[pkey]});
     if (!order) {
         throw ApiError.NotFound(`Order not found`);
     }
 
-
+    /** define bookings */
     const bookings = _body.bookings ? _body.bookings : [];
     delete _body.bookings;
-
     order.bookings = await bookingsService.updateMany(bookings, order, files);
 
     /*

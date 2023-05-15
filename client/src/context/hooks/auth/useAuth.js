@@ -252,7 +252,12 @@ export default function useAuth({ socketHandler }){
                 // Можно было бы поставить эту проверку после !isAuthenticated, но эта ошибка тогда никогда не будет достижима
                 const message = 'Something went wrong, failed to authenticate'; //'Not authenticated for some reason';
                 logger.error(message);
-                return navigate('/authn', { replace: true, state: { message } });
+                return navigate('/authn', {
+                    replace: true,
+                    state: {
+                        error: { message }
+                    }
+                });
             }
         }
 

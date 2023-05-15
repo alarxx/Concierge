@@ -28,6 +28,7 @@ export default function ResetPassword(){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    // До этого была фича закрытия
     const {timer, startTimer} = useTimer(()=>window.close(), 5);
 
     const [token] = useState(location.state?.reset_password_token);
@@ -42,7 +43,7 @@ export default function ResetPassword(){
             .then(json => {
                 logger.log(json)
                 if(json.status >= 200 && json.status < 300){
-                    startTimer();
+                    // startTimer();
                     setSuccess(json);
                 }
                 else {
@@ -73,7 +74,7 @@ export default function ResetPassword(){
     return (<>
         <h1>[Change Password Page]</h1>
 
-        {success && <p>{success.message}. This tab will automatically close after {timer} second{timer>=2?'s':''}</p>}
+        {/*{success && <p>{success.message}. This tab will automatically close after {timer} second{timer>=2?'s':''}</p>}*/}
 
         {loading && <Loading />}
         {error && <p>{error.message}</p>}

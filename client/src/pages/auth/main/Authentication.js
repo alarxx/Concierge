@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useAppContext} from "../../../context/AppContext";
 
 import Logger from '../../../internal/Logger';
@@ -25,10 +25,16 @@ import Button from '../../../shared/ui/button/Button'
 export default function Authentication(){
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const logger = useMemo(()=>new Logger('Authentication'), []);
 
     const [tabType, setTabType] = useState('signin');
+
+    const [error, setError] = useState(()=>{
+        logger.log({ state: location.state });
+        return location.state?.error;
+    })
 
     // SignUp/SignIn должны быть в одном компоненте и OAuth тоже, все должно быть в одном Authentication page
     return (
@@ -40,6 +46,7 @@ export default function Authentication(){
                 </CardHeader>
 
                 <CardBody>
+                    {error && <p>{error.message}</p>}
                     {tabType === 'signup' && <SendActivationMail />}
                     {tabType === 'signin' && <SignIn />}
                     <br />
