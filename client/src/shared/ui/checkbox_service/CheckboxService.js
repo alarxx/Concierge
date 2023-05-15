@@ -36,7 +36,7 @@ export default function CheckboxService({
         <label className={styles['CheckboxService-label']}>
 
             <input
-                // name={name}
+                name={name}
                 value={value}
                 type="checkbox"
                 onChange={onChange}

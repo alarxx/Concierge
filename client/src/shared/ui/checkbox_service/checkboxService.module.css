@@ -54,7 +54,7 @@
 
 /* Checked */
 .CheckboxService-label input[type=checkbox]:checked + .CheckboxService {
-    border: 3px solid #1E262F;
+    border: 2px solid #1E262F;
 }
 
 /* Focus нужен JS для этого */

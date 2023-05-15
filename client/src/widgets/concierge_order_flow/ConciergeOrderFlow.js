@@ -78,45 +78,23 @@ export default function ConciergeOrderFlow() {
 
     async function close(){}
 
+    useEffect(()=>{
+        console.log('DATA', data)
+    }, [data])
 
     return (<>
-        <Card>
-            <CardBody>
-                <form>
-                    {<Step
-                        data={data}
-                        upsertFields={upsertFields}
+        {<Step
+            data={data}
+            upsertFields={upsertFields}
 
-                        next={next}
-                        back={back}
+            next={next}
+            back={back}
 
-                        submit={submit}
-                        close={close}
+            submit={submit}
+            close={close}
 
-                        isFirstStep={isFirstStep}
-                        isLastStep={isLastStep}
-                    />}
-                </form>
-            </CardBody>
-            <CardBody>
-                <GroupFlex justify={isFirstStep ? 'jce' : 'jcsb'}>
-                    { !isFirstStep &&
-                        <Block width={'auto'}>
-                            <ButtonIconic inText={true} onClick={back}>
-                                <ArrowLeft />
-                                <Typography size={16} weight={500} color={'grey'}>Назад</Typography>
-                            </ButtonIconic>
-                        </Block>
-                    }
-
-                    <Block width={'auto'}>
-                        <Button onClick={next}>
-                            {isLastStep ? 'Отправить' : 'Вперёд'}
-
-                        </Button>
-                    </Block>
-                </GroupFlex>
-            </CardBody>
-        </Card>
+            isFirstStep={isFirstStep}
+            isLastStep={isLastStep}
+        />}
     </>);
 }

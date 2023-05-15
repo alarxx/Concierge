@@ -6,6 +6,9 @@ import GroupInput from "../../../shared/ui/group_input/GroupInput";
 import MyInput from "../../../entities/order/new/_MyInput";
 
 import _SelectCity from "../_select_city/_SelectCity";
+import _NavigationButtons from "../_navigation_buttons/_NavigationButtons";
+import CardBody from "../../../shared/ui/card/CardBody";
+import Card from "../../../shared/ui/card/Card";
 
 export default function HotelStep({
                                       data={},
@@ -15,7 +18,10 @@ export default function HotelStep({
                                       back=f=>f,
 
                                       submit=f=>f,
-                                      close=f=>f
+                                      close=f=>f,
+
+                                      isFirstStep=false,
+                                      isLastStep=false,
                                   }){
 
     const {  } = data;
@@ -35,19 +41,32 @@ export default function HotelStep({
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
 
+    function onSubmitHandler() {
+        if (isLastStep) {
+            return submit()
+        }
+        return next();
+    }
+
     return (<>
-        <Block isAlignCenter={true} bottom={40}>
-            <Typography size={20} weight={700} align={'center'}>Данные по отелю</Typography>
-        </Block>
+        <form onSubmit={onSubmitHandler}>
+            <Card>
+                <CardBody>
+                    <Block isAlignCenter={true} bottom={40}>
+                        <Typography size={20} weight={700} align={'center'}>Данные по отелю</Typography>
+                    </Block>
 
-        <_SelectCity selectOption={selectOption} handleOnSelect={handleOnSelect}/>
+                    <_SelectCity selectOption={selectOption} handleOnSelect={handleOnSelect}/>
 
-        <GroupInput>
-            <MyInput placeHolder='Дата заезда' type='date' name='start_date' data={data} upsertFields={upsertFields} />
-            <MyInput placeHolder='Дата выезда' type='date' name='end_date' data={data} upsertFields={upsertFields} />
-        </GroupInput>
-        <MyInput placeHolder='1 Номер для' type='number' name='number_of_adults' data={data} upsertFields={upsertFields} />
-        <MyInput placeHolder='Дети' type='number' name='number_of_children' data={data} upsertFields={upsertFields} />
-
+                    <GroupInput>
+                        <MyInput placeHolder='Дата заезда' type='date' name='start_date' data={data} upsertFields={upsertFields} required={true} />
+                        <MyInput placeHolder='Дата выезда' type='date' name='end_date' data={data} upsertFields={upsertFields} required={true} />
+                    </GroupInput>
+                    <MyInput placeHolder='1 Номер для' type='number' name='number_of_adults' data={data} upsertFields={upsertFields} required={true} />
+                    <MyInput placeHolder='Дети' type='number' name='number_of_children' data={data} upsertFields={upsertFields} required={true} />
+                </CardBody>
+            </Card>
+            <_NavigationButtons isLastStep={isLastStep} isFirstStep={isFirstStep} back={back}/>
+        </form>
     </>);
 }
