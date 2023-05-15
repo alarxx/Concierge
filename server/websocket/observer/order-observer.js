@@ -51,7 +51,7 @@ module.exports = function(schema) {
     });
 
     schema.post('findOneAndDelete', async function(orderDoc, next){
-        const modelName = (document.constructor.modelName).toLowerCase(); // Можно было бы и просто 'order' написать, а не так
+        const modelName = (orderDoc.constructor.modelName).toLowerCase(); // Можно было бы и просто 'order' написать, а не так
         try{
             await notify('delete', modelName, orderDoc);
             next();

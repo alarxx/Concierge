@@ -49,7 +49,7 @@ module.exports = function(schema) {
     });
 
     schema.post('findOneAndDelete', async function(doc, next){
-        const modelName = (document.constructor.modelName).toLowerCase();
+        const modelName = (doc.constructor.modelName).toLowerCase();
         try{
             await notify('delete', modelName, doc);
             next();
