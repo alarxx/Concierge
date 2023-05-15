@@ -9,6 +9,7 @@ const logger = require('../../log/logger')('order-service');
 const ModelService = require("../helpers/ModelService");
 const bookingsService = require('../bookings/bookings-service');
 const chatService = require('../chat/chat-service');
+const conversationService = require('../chat/conversation/conversation-service');
 
 const checkNecessaryFields = require("../helpers/checkNecessaryFields");
 const conversation_dto = require("../../dtos/chat/conversation-dto");
@@ -200,14 +201,25 @@ async function deleteOne(body, user) {
         throw ApiError.NotFound(`${modelService.modelName} not found`);
     }
 
+    /** Может ли отсюда выйти неопределенное состояние? */
+
     // Нужно сделать проверку и удалить все Booking-и прикрепленные к order.
-    await bookingsService.deleteMany(order.bookings);
+    await bookingsService.deleteMany(order.bookings)
+        .catch(logger.log);
 
-    await Order.findOneAndDelete({[(pkey === 'id' ? '_id' : pkey)]: body[pkey]});
+    await Order.findOneAndDelete({[(pkey === 'id' ? '_id' : pkey)]: body[pkey]})
+        .catch(logger.log);
 
-    await modelService.deleteAttachedFiles(order);
+    await modelService.deleteAttachedFiles(order)
+        .catch(logger.log);
 
-    return orderDto(order, user);
+    // нужно удалить conversation, всех participant-ов, message-ы и notifications
+    await conversationService.deepDelete(order.conversation)
+        .catch(logger.log);
+
+    return ({
+        order: orderDto(order, user)
+    });
 }
 
 

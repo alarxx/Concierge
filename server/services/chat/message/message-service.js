@@ -115,6 +115,7 @@ async function sendMessage(message, files, user) {
         const notification = new Notification({
             type: 'message',
             message: m.id,
+            conversation: m.conversation,
             user: p.user,
         })
 
