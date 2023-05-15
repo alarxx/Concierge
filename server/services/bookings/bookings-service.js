@@ -28,7 +28,7 @@ async function _createWithoutSave(booking, orderId, customerId, files){
 }
 /*booking: {
     type: booking.type,
-        [booking.type]: model.id
+    [booking.type]: model.id
 }*/
 /**
  *
@@ -46,8 +46,8 @@ async function _updateWithoutSave(booking, orderId, customerId, files){
     }
 
     return ({
-        type,
-        model
+        type: type,
+        [type]: model
     });
 }
 
@@ -129,20 +129,25 @@ async function saveMany(bookings, files) {
  * Обновляет брони присвоенные к order-у.
  * Order сюда нельзя кидать order.bookings нераскрытыми? Кажется можно, здесь нужен только их id.
  * Здесь может быть как удаление, так и прибавка, так и ноль изменений. Если кинуть сюда пустой массив, это будет значить удаление всех броней.
+ *
+ * bookings прилетает с клиента, booking[booking.type] в развернутом виде и должен иметь id.
+ * order это модель из Order.findOne, в order.bookings booking[booking.type] в неразвернутом виде
  * */
 async function updateMany(bookings, order, files) {
     // Нужно удалять booking-и, которые были в order.bookings, но нет в bookings.
     /*
-    bookings: {id?, type:String, [type]:Object}
+    bookings: {type:String, [type]:{id? ...booking}}
+    order.bookings: {type:String, [type]:id}
     * */
-    const missing = order.bookings.filter(orderBooking => {
+    const missing_orders = order.bookings.filter(orderBooking => {
         const orderBookingId = orderBooking[orderBooking.type];
         // Пробегаем по всем order.bookings и проверяем есть ли они в bookings. Ищем те, которых нет.
-        return !bookings.some(booking => {
-            return booking[booking.type] == orderBookingId;
+        const order_present = bookings.some(booking => {
+            return orderBookingId == booking[booking.type].id;
         });
+        return !order_present;
     });
-    await deleteMany(missing);
+    await deleteMany(missing_orders);
 
     // Здесь нужно сделать так, чтобы booking-и, которые не изменились, не save-лись лишний раз.
 
@@ -152,13 +157,12 @@ async function updateMany(bookings, order, files) {
 
         // Если booking = { id, order, customer }, то это обновление,
         // Иначе это создание нового букинга.
-
-        if(!booking.id){
+        if(!booking[booking.type].id){
             return await _createWithoutSave(booking, order.id, order.customer, files);
         }
 
         //Если order.bookings не содержит booking.id
-        if(!order.bookings.some(b => b[b.type] == booking.id)){
+        if(!order.bookings.some(orderBooking => orderBooking[orderBooking.type] == booking[booking.type].id)){
             throw ApiError.BadRequest('Invalid booking or order data. Please check the provided booking ID.');
         }
 
@@ -166,15 +170,15 @@ async function updateMany(bookings, order, files) {
 
     }));
 
-    await Promise.all(results.map(async result => await result.model.validate()));
+    await Promise.all(results.map(async result => await result[result.type].validate()));
 
     // и здесь гарантируется, что, либо все модели сохранятся, либо ни одна не сохранится.
-    await Promise.all(results.map(async result => {
+    /*await Promise.all(results.map(async result => {
         // здесь files нужно будет как-то распарсить? или создать отдельный api для каждой услуги.
         return await _save(result.model, result.booking.type, files);
-    }));
+    }));*/
 
-    return results.map(result => result.booking);
+    return results; //.map(result => result.booking);
 
 }
 
