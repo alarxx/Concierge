@@ -78,10 +78,6 @@ export default function ConciergeOrderFlow() {
 
     async function close(){}
 
-    useEffect(()=>{
-        console.log('DATA', data)
-    }, [data])
-
     return (<>
         {<Step
             data={data}

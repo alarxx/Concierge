@@ -32,7 +32,19 @@ export default function NeedsStep({
 
     // получение данных из чекбоксов (CheckboxService)
     const [servicesPool, setServicesPool] = useState([]);
-    const [isNotChecked, setIsNotChecked] = useState(false)
+    const [isNotValid, setIsNotValid] = useState(false)
+
+    useEffect(()=> {
+        if (needs) {
+            setServicesPool(needs)
+        }
+    }, [])
+
+    useEffect(()=>{
+        console.log('servicesPool', servicesPool)
+        upsertFields({needs: servicesPool})
+    }, [servicesPool])
+
 
     const handleCheckboxChange = (event) => {
         const value = event.target.value;
@@ -41,25 +53,18 @@ export default function NeedsStep({
         if (isChecked) {
             // Add the value to the selectedValues array
             setServicesPool([...servicesPool, value]);
-            setIsNotChecked(false)
+            setIsNotValid(false)
         } else {
             // Remove the value from the selectedValues array
             setServicesPool(servicesPool.filter((v) => v !== value));
         }
     };
 
-    // можно удалить этот участок кода, тут просто проверяем servicesPool
-    useEffect(()=>{
-        console.log(servicesPool)
-        upsertFields({needs: servicesPool})
-    }, [servicesPool])
-    // --
-
     function onSubmitHandler(e) {
         e.preventDefault();
 
-        if (needs.length === 0) {
-            setIsNotChecked(true)
+        if (servicesPool.length === 0) {
+            setIsNotValid(true)
             return;
         }
         if (isLastStep) {
@@ -76,11 +81,11 @@ export default function NeedsStep({
                         <Typography size={20} weight={700} align={'center'}>Что вам может понадобиться?</Typography>
                     </Block>
 
-                    <CheckboxService name={'needs'} value={'hotel'} Icon={<HotelIcon/>} title={'Отель'} onChange={handleCheckboxChange} bottom={12}/>
-                    <CheckboxService name={'needs'} value={'ticket'} Icon={<TicketIcon/>} title={'Авиабилеты'} onChange={handleCheckboxChange} bottom={12} />
-                    <CheckboxService name={'needs'} value={'transfer'} Icon={<TransferIcon/>} title={'Трансфер'} onChange={handleCheckboxChange}/>
+                    <CheckboxService isChecked={needs && needs.includes('hotel')} name={'needs'} value={'hotel'} Icon={<HotelIcon/>} title={'Отель'} onChange={handleCheckboxChange} bottom={12}/>
+                    <CheckboxService isChecked={needs && needs.includes('ticket')} name={'needs'} value={'ticket'} Icon={<TicketIcon/>} title={'Авиабилеты'} onChange={handleCheckboxChange} bottom={12} />
+                    <CheckboxService isChecked={needs && needs.includes('transfer')} name={'needs'} value={'transfer'} Icon={<TransferIcon/>} title={'Трансфер'} onChange={handleCheckboxChange}/>
 
-                    { isNotChecked &&
+                    { isNotValid &&
                         <Block top={15}>
                             <Typography color={'#d21616'}>(!) Выберите хотя бы один из пунктов</Typography>
                         </Block>

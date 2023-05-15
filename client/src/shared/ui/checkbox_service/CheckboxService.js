@@ -25,6 +25,7 @@ export default function CheckboxService({
     value,
     required=false,
     bottom,
+    isChecked,
 
 }) {
 
@@ -41,6 +42,7 @@ export default function CheckboxService({
                 type="checkbox"
                 onChange={onChange}
                 required={required}
+                checked={isChecked}
             />
 
             <div className={styles['CheckboxService']} style={style}>
