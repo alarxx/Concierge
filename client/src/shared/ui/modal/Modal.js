@@ -9,7 +9,7 @@ export default function Modal({children, onClose=f=>f, minWidth,maxWidth, height
     const style = {
         minWidth: minWidth,
         maxWidth: maxWidth,
-        height: height,
+        maxHeight: height,
     }
 
     const modalRef = useRef(null);

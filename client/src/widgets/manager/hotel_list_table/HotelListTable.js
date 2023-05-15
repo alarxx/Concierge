@@ -8,18 +8,24 @@ import HotelCrudAction from "../hotel_crud_action/HotelCrudAction";
 import useToggle from "../../../hooks/useToggle";
 import HotelCrudForm from "../../../features/hotel/hotel_crud_form/HotelCrudForm";
 import Link from "../../../shared/ui/link/Link";
+import HotelRoomForm from "../../../features/hotel/hotel_room_form/HotelRoomForm";
 
 
-function HotelTableItem({item}){
+function HotelTableItem({item, key}){
     const [isActive, toggle] = useToggle(false);
+    const [isRoomActive, roomToggle] = useToggle(false);
 
     return (<>
-        { isActive && <HotelCrudForm title={'Информация об отеле'} item={item} onClose={toggle}/> }
+        <TableRow key={key}>
+            { isActive && <HotelCrudForm title={'Информация об отеле'} item={item} onClose={toggle}/> }
+            { isRoomActive && <HotelRoomForm title={'Номера'} item={item} onClose={roomToggle}/> }
 
-        <td>{item.id}</td>
-        <td>{item.name}</td>
-        <td>{item.city}</td>
-        <td><Link text={'Подробнее'} onClick={toggle} /></td>
+            <td>{item.id}</td>
+            <td>{item.name}</td>
+            <td>{item.city}</td>
+            <td><Link text={'Подробнее'} onClick={toggle} /></td>
+            <td><Link text={'Посмотреть номера'} onClick={roomToggle} /></td>
+        </TableRow>
     </>)
 }
 
@@ -47,6 +53,7 @@ export default function HotelListTable({children, active}) {
                 <TableRow isHead={true}>Название</TableRow>
                 <TableRow isHead={true}>Местоположение</TableRow>
                 <TableRow isHead={true}>Действие</TableRow>
+                <TableRow isHead={true}>Действие</TableRow>
                 {/*<TableRow isHead={true}>Звездность</TableRow>*/}
                 {/*<TableRow isHead={true}>Контакты</TableRow>*/}
                 {/*<TableRow isHead={true}>Город</TableRow>*/}
@@ -55,9 +62,7 @@ export default function HotelListTable({children, active}) {
             </TableHead>
             <TableBody Loader={<Loader color={'black'}/>} isLoading={isLoading}>
                 { hotels.map( item => (
-                    <TableRow key={item.id}>
-                        <HotelTableItem item={item}/>
-                    </TableRow>
+                    <HotelTableItem key={item.id} item={item}/>
                 ))}
             </TableBody>
         </Table>

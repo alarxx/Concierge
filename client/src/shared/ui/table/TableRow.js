@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function  TableRow({isHead, children, key}) {
+export default function  TableRow({isHead, children, key, onClick=f=>f}) {
 
     if (isHead) {
         return (<>
@@ -9,6 +9,6 @@ export default function  TableRow({isHead, children, key}) {
     }
 
     return (<>
-        <tr key={key}>{children}</tr>
+        <tr key={key} onClick={onClick}>{children}</tr>
     </>)
 }
