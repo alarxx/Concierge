@@ -1,10 +1,7 @@
-name: Simple deploy using ssh and git pull
+name: Simple deployment with SSH on manual trigger
 
 on:
-  push:
-    branches:
-      - master
-      - github-ci-test
+  workflow_dispatch:
 
 jobs:
   deploy:
