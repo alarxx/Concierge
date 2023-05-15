@@ -5,11 +5,13 @@ import findIndexById from "../../internal/findIndexById";
 import Logger from "../../internal/Logger";
 
 export default function useFreshData({ socket, modelName }){
-    const logger = useMemo(()=>new Logger('useFreshData'),[])
 
     const name = modelName.toLowerCase();
 
+    const logger = useMemo(()=>new Logger(`useFreshData(${name})`),[])
+
     const [data, setData] = useState([]);
+
 
     function upsertData(objectsToUpsert=[]){
         // здесь должна быть проверка(comparing) каждого документа из массива по времени и сетить только в случае если document моложе,
@@ -40,30 +42,41 @@ export default function useFreshData({ socket, modelName }){
         })
     }
 
+
     function removeData(objectsToRemove=[]){
         setData(prev => {
-            const clone = [...prev]
+            const clone = [...prev];
+            // logger.log("before delete:", {data: clone})
             objectsToRemove.map(doc => {
-                const i = findIndexById(prev, doc.id)
+                const i = findIndexById(prev, doc.id);
                 clone.splice(i, 1);
             });
+            // logger.log("after delete:", {data: clone})
             return clone;
-        })
+        });
     }
+
 
     useEffect(() => {
         socket.on(`/save/${name}`, (doc) => {
-            setIds(doc);
             logger.log(`/save/${name}`, doc);
+            if(!doc){
+                return logger.error(`/save/${name}: doc is null`);
+            }
+            setIds(doc);
             upsertData([doc]);
         });
+
         socket.on(`/delete/${name}`, (doc) => {
-            // Зачем это делать, если мы все равно удаляем этот док
-            setIds(doc);
             logger.log(`/delete/${name}`, doc);
-            removeData([doc])
+            if(!doc){
+                return logger.error(`/delete/${name}: doc is null`);
+            }
+            setIds(doc); // Зачем это делать, если мы все равно удаляем этот док? Нам нужен id в объекте
+            removeData([doc]);
         });
     }, []);
+
 
     return ({
         data,

@@ -69,6 +69,10 @@ export default function Conversations({
             const i = lastMessage.conversationIndex;
             const conversation = conversations[i];
 
+            if(!conversation){
+                return (<div key={key}></div>);
+            }
+
             return (<div key={key}>
                 <ChatItemCard
                     name={conversation.name}
