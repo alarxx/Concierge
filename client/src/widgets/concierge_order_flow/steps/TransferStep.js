@@ -21,9 +21,11 @@ export default function TransferStep({
 
     const { } = data;
 
-    function onSubmitHandler() {
+    function onSubmitHandler(e) {
+        e.preventDefault();
+
         if (isLastStep) {
-            return submit()
+            return submit();
         }
         return next();
     }

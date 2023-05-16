@@ -60,7 +60,7 @@ export default function Conversations({
                 ...conversation,
                 newest_message,
                 notifications_number,
-                name: orderInfo.customerName,
+                customerName: orderInfo.customerName,
                 ordersLast4IDDigits: orderInfo.last4IDDigits,
                 description: orderInfo.name
             });
@@ -81,13 +81,13 @@ export default function Conversations({
 
     return (<>
         {sorted_extended_conversations.map((extended_conversation, key) => {
-            const {name, notifications_number, newest_message, ordersLast4IDDigits, description} = extended_conversation;
+            const {customerName, notifications_number, newest_message, ordersLast4IDDigits, description} = extended_conversation;
 
             const last_message = !newest_message ? '' : (newest_message.text ? truncateString(newest_message.text) : newest_message.type);
 
             return (<div key={key}>
                 <ChatItemCard
-                    name={name}
+                    customerName={customerName}
                     description={description}
                     ordersLast4IDDigits={ordersLast4IDDigits}
                     unread_num={notifications_number}

@@ -22,7 +22,9 @@ export default function AirfareStep({
 
     const {  } = data;
 
-    function onSubmitHandler() {
+    function onSubmitHandler(e) {
+        e.preventDefault();
+
         if (isLastStep) {
             return submit()
         }

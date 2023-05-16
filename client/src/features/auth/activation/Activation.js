@@ -11,6 +11,8 @@ import Input from '../../../shared/ui/input/Input';
 import Button from '../../../shared/ui/button/Button';
 import Loading from "../../../shared/loading/Loading";
 
+import env from '../../../../.env.json';
+
 /**
  * Страница активации аккаунта.
  *
@@ -38,7 +40,7 @@ export default function Activation(){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const {timer, startTimer} = useTimer(()=>window.close(), 5);
+    const {timer, startTimer} = useTimer(()=>window.location.replace(env.API_URL), 5);
 
     const [token] = useState(location.state?.activation_token);
     const [name, setName] = useState('')
@@ -81,34 +83,43 @@ export default function Activation(){
     }, []);
 
 
-    return (<>
-        <h1>[Activation Page]</h1>
+    if(success){
+        return (<>
+            <h1>Activation</h1>
 
-        {success && <p>{success.message}. This tab will automatically close after {timer} second{timer>=2?'s':''}</p>}
+            {success && <p>{success.message}.</p>}
+            <Button onClick={e => window.history.replace(env.API_URL)}>Продолжить</Button>
+        </>);
+    }
+
+    return (<>
+        <h1>Активация аккаунта</h1>
+
+        {/*{success && <p>{success.message}. This tab will automatically close after {timer} second{timer>=2?'s':''}</p>}*/}
 
         {loading && <Loading />}
-        {error && <p>{error.message}</p>}
+        {error && <p>{JSON.stringify(error.errors)}</p>}
 
         {/* Если токен просрочен, то это показывать нельзя, простую проверку наличия error ставить нельзя, может выйти ошибка "слабый пароль" */}
         {token && (!loading && !success) && <form onSubmit={onActivateAccount}>
             <label>Name</label>
-            <Input 
-                type={'text'} 
-                name={'name'} 
-                value={name} 
+            <Input
+                type={'text'}
+                name={'name'}
+                value={name}
                 placeHolder='Введите имя'
-                onChange={e=>setName(e.target.value)} 
+                onChange={e=>setName(e.target.value)}
             /> {/*required*/}
             <br/>
 
             <label>Password</label>
-            <Input 
-                type={'password'} 
-                name={'password'} 
-                value={password} 
+            <Input
+                type={'password'}
+                name={'password'}
+                value={password}
                 placeHolder='Введите пароль'
-                onChange={e=>setPassword(e.target.value)} 
-                required 
+                onChange={e=>setPassword(e.target.value)}
+                required
             />
 
             <Button type="submit">Активировать аккаунт</Button>

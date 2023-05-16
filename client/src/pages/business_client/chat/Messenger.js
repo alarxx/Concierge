@@ -22,6 +22,8 @@ import Button from "../../../shared/ui/button/Button";
 
 import findIndexById from "../../../internal/findIndexById";
 import objClone from "../../../internal/objClone";
+import {useAppContext} from "../../../context/AppContext";
+import getOrderInfo from "../../../internal/order/getOrderInfo";
 
 //message: {type=choice, id, items, selected, submitted}
 export default function Messenger({
@@ -33,6 +35,11 @@ export default function Messenger({
                                       sendMessage=f=>f,
                                   }){
     const logger = useMemo(()=>new Logger('Messenger'), []);
+
+    const { orderHandler } = useAppContext();
+    const { orders } = orderHandler;
+    const orderInfo = getOrderInfo(orders.find(o => o.conversation == conversation.id));
+
 
     /**
      * Всегда когда меняется состояние сообщений мы пересчитываем messagesSelected для choice form,
@@ -48,6 +55,7 @@ export default function Messenger({
         }, []);
         setMessagesSelected(ids)
     }, [messages])
+
 
     const [control, setControl] = useState('text');
     const [messagesSelected, setMessagesSelected] = useState([])
@@ -153,7 +161,7 @@ export default function Messenger({
         <>
             <NavbarPanel
                 LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={closeConversation} />}
-                title={conversation.name}
+                title={orderInfo.customerName}
             />
             {/*<div className={styles.hotel__list} style={{ height: "100%", overflow: 'auto' }}>*/}
             {/*    <InfiniteScroll*/}

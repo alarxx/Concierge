@@ -67,7 +67,7 @@ export default function SendResetPasswordMail() {
     }, []);
 
     return (<>
-        <h1>Сброс пароля</h1>
+        <h3>Сброс пароля</h3>
         {success && <p>{success.message}</p>}
         {loading && <Loading />}
         {error && <p>{error.message}</p>}

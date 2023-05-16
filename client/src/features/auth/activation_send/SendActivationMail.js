@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import useTimer from "../../../hooks/useTimer";
 import Logger from "../../../internal/Logger";
@@ -7,6 +7,7 @@ import Input from '../../../shared/ui/input/Input';
 import Button from '../../../shared/ui/button/Button'
 import {useAppContext} from "../../../context/AppContext";
 import Loading from "../../../shared/loading/Loading";
+import {useNavigate} from "react-router-dom";
 
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
@@ -15,6 +16,8 @@ import Loading from "../../../shared/loading/Loading";
 export default function SendActivationMail({ }){
 
     const logger = useMemo(()=>new Logger('SendActivationMail'), []);
+
+    const navigate = useNavigate();
 
     const { authHandler } = useAppContext();
     const { sendActivationMail } = authHandler;
@@ -25,7 +28,16 @@ export default function SendActivationMail({ }){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const {timer, startTimer} = useTimer(()=>{}, 60);
+    const {timer, startTimer, resetTimer, stopTimer} = useTimer(()=>{}, 60);
+
+    useEffect(()=>{
+        if(timer === 0){
+            resetTimer();
+            stopTimer();
+            setSuccess(null);
+            setError(null);
+        }
+    }, [timer])
 
     async function onSubmit(e){
         e.preventDefault();
@@ -50,17 +62,17 @@ export default function SendActivationMail({ }){
     }
 
     return (<>
-        <h1>Send activation e-mail</h1>
+        <h3>Отправить письмо активации</h3>
 
         {loading && <Loading />}
-        {success && <><p>{success.message}</p></>}
+        {success && <><p>Письмо успешно отправлено.{/*{success.message}*/}</p></>}
         {error && <p>{error.message}</p>}
 
-        {success && <p>We can send again {timer > 0 ? `after ${timer} seconds`:''}</p>}
+        {success && <p>Мы можем отправить письмо снова {timer > 0 ? `через ${timer} секунд`:''}</p>}
 
         <form onSubmit={onSubmit}>
             <div>
-                <label>Email</label>
+                {/*<label>Email</label>*/}
                 <Input
                     type="text"
                     name="email"
@@ -71,7 +83,7 @@ export default function SendActivationMail({ }){
                 />
             </div>
 
-            <Button type="submit">Продолжить</Button>
+            {!success && !error && <Button type="submit">Отправить</Button>}
         </form>
     </>);
 }

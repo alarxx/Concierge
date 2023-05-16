@@ -28,17 +28,17 @@ export default function NeedsStep({
 
     // получение данных из чекбоксов (CheckboxService)
     const [servicesPool, setServicesPool] = useState([]);
-    const [isNotValid, setIsNotValid] = useState(false)
+    const [isNotValid, setIsNotValid] = useState(false);
 
     useEffect(()=> {
         if (needs) {
-            setServicesPool(needs)
+            setServicesPool(needs);
         }
     }, [])
 
     useEffect(()=>{
-        console.log('servicesPool', servicesPool)
-        upsertFields({needs: servicesPool})
+        console.log('servicesPool', servicesPool);
+        upsertFields({needs: servicesPool});
     }, [servicesPool])
 
 
@@ -64,7 +64,7 @@ export default function NeedsStep({
             return;
         }
         if (isLastStep) {
-            return submit()
+            return submit();
         }
         return next();
     }

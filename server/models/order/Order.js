@@ -29,49 +29,78 @@ const MetaSchema = new Schema({
         enum: ['hotel', 'airfare', 'transfer'], //, 'housing', 'transport', 'travel', 'informal'],
         required: true,
     }],
-
-    num_of_people: {
-        type: Number,
-        default: 1,
-    },
-    // если в needs входит 'tickets'
-    departure_place:{
+    city: {
         type: String,
     },
-    destination_place: {
-        type: String,
+    hotel: {
+        city: {
+            type: String,
+        },
+        number_of_adults: {
+            type: Number,
+            default: 1,
+        },
+        number_of_children: {
+            type: Number,
+            default: 0,
+        },
+        check_in_date: {
+            type: Date,
+            default: () => new Date(), // Просто хз как из postman-a ставить
+            required: true,
+        },
+        check_out_date: {
+            type: Date,
+            default: () => new Date(), // Просто хз как из postman-a ставить
+            required: true,
+        },
+        price: {
+            type: Number,
+        },
     },
 
-    // если в needs входит 'tickets'
-    travel_transport: {
-        type: String,
-        enum: ['airplane', 'train']
-    },
-    date_start: {
-        type: Date,
-    },
-    date_end: {
-        type: Date,
-    },
-    one_way_ticket: {
-        type: Boolean,
+    airfare: {
+        // если в needs входит 'tickets'
+        departure_place:{
+            type: String,
+        },
+        destination_place: {
+            type: String,
+        },
+        // если в needs входит 'tickets'
+        travel_transport: {
+            type: String,
+            enum: ['airplane', 'train']
+        },
+        date_start: {
+            type: Date,
+        },
+        date_end: {
+            type: Date,
+        },
+        one_way_ticket: {
+            type: Boolean,
+        },
     },
 
-    housing: {
+    transfer: {
+        transport: {
+            type: String,
+            enum: ['car', 'limousine']
+        },
+        isDriverNeeded: {
+            type: Boolean,
+        },
+    },
+
+    /*housing: {
         type: String,
         enum: ['hotel', 'apartment'],
     },
     separate_apartments: {
         type: Boolean,
-    },
-
-    transport: {
-        type: String,
-        enum: ['car', 'limousine']
-    },
-    driverNeeded: {
-        type: Boolean,
-    },
+    },*/
+    /**/
 
     description: String,
 

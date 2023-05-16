@@ -16,7 +16,7 @@ import Badge from "../../../shared/ui/badge/Badge";
 import Avatar from "../../../shared/ui/avatar/Avatar";
 
 export default function ChatItemCard({
-                                         name='Название чата',
+                                         customerName = 'Название чата',
                                          description='Город: услуги',
                                          unread_num=0,
                                          last_message='',
@@ -39,7 +39,7 @@ export default function ChatItemCard({
                     <div style={{width: '100%'}}>
                         <GroupFlex align={'ais'} justify={'jcsb'}>
                             <div>
-                                <div><Typography size={16} weight={600} bottom={2}>{name}</Typography></div>
+                                <div><Typography size={16} weight={600} bottom={2}>{customerName}</Typography></div>
                                 <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>{`${description}, #${ordersLast4IDDigits}`}</Typography></div>
                             </div>
                             {unread_num > 0 && <Badge text={unread_num.toString()} />}

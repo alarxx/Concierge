@@ -22,6 +22,7 @@ import Typography from "../../shared/ui/typography/Typography";
 import Button from "../../shared/ui/button/Button";
 
 import ArrowLeft from '../../assets/icons/backbtn_icon.svg'
+import Loading from "../../shared/loading/Loading";
 
 export default function ConciergeOrderFlow() {
 
@@ -32,7 +33,8 @@ export default function ConciergeOrderFlow() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [data, setData] = useState({});
+    const [data, setData] = useState({number_of_adults: 1, number_of_children: 0});
+    const [isLoading, setIsLoading] = useState(false);
 
     /* В зависимости от того, что входит в needs добавляем в массив компоненты */
     const [Steps, setSteps] = useState([NeedsStep]);
@@ -76,11 +78,50 @@ export default function ConciergeOrderFlow() {
     const {Step, back, next, isFirstStep, isLastStep} = useMultistep(Steps);
 
 
-    async function submit(){}
+    async function submit(){
+        // do something with data
+        logger.log("submit:", data);
+        setIsLoading(true);
+        const meta = {
+            needs: data.needs,
+            city: data.city,
+        }
+        if(data.needs.includes('hotel')){
+            meta.hotel = {};
+            meta.hotel.city = data.city;
+            meta.hotel.check_in_date = data.check_in_date;
+            meta.hotel.check_in_date = data.check_out_date;
+            meta.hotel.number_of_adults = data.number_of_adults;
+            meta.hotel.number_of_children = data.number_of_children;
+        }
+        const order = {
+            meta
+        }
+        await fetch('/api/order', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(order),
+        })
+            .then(res => res.json())
+            .then(json => {
+                logger.log("Create", json);
+            })
+            .catch(e => {
+                logger.log("Error on create", e)
+            })
+            .finally(()=>{
+                navigate('/orders');
+            })
+    }
 
     async function close(){}
 
     return (<>
+
+        {isLoading && <Loading />}
+
         {<Step
             data={data}
             upsertFields={upsertFields}
@@ -94,5 +135,6 @@ export default function ConciergeOrderFlow() {
             isFirstStep={isFirstStep}
             isLastStep={isLastStep}
         />}
+
     </>);
 }

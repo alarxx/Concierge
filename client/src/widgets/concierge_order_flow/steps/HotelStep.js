@@ -9,6 +9,7 @@ import _SelectCity from "../_select_city/_SelectCity";
 import _NavigationButtons from "../_navigation_buttons/_NavigationButtons";
 import CardBody from "../../../shared/ui/card/CardBody";
 import Card from "../../../shared/ui/card/Card";
+import Logger from "../../../internal/Logger";
 
 export default function HotelStep({
                                     data={},
@@ -24,26 +25,29 @@ export default function HotelStep({
                                     isLastStep=false,
                                 }){
 
+    const logger = useMemo(()=>new Logger('HotelStep'), []);
+
     const {  } = data;
 
-
-    const [selectOption, setSelectOption] = useState(null)
+    const [selectOption, setSelectOption] = useState([]);
 
     const handleOnSelect = (e) => {
-        setSelectOption(e.value)
+        setSelectOption(e.value);
     }
 
     useEffect(()=>{
         upsertFields({city: selectOption});
-        console.log(selectOption)
+        logger.log(selectOption);
     }, [selectOption])
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    // const [startDate, setStartDate] = useState(new Date());
+    // const [endDate, setEndDate] = useState(new Date());
 
-    function onSubmitHandler() {
+    function onSubmitHandler(e) {
+        e.preventDefault();
+
         if (isLastStep) {
-            return submit()
+            return submit();
         }
         return next();
     }
@@ -59,8 +63,8 @@ export default function HotelStep({
                     <_SelectCity selectOption={selectOption} handleOnSelect={handleOnSelect}/>
 
                     <GroupInput>
-                        <MyInput placeHolder='Дата заезда' type='date' name='start_date' data={data} upsertFields={upsertFields} required={true} />
-                        <MyInput placeHolder='Дата выезда' type='date' name='end_date' data={data} upsertFields={upsertFields} required={true} />
+                        <MyInput placeHolder='Дата заезда' type='date' name='check_in_date' data={data} upsertFields={upsertFields} required={true} />
+                        <MyInput placeHolder='Дата выезда' type='date' name='check_out_date' data={data} upsertFields={upsertFields} required={true} />
                     </GroupInput>
                     <MyInput placeHolder='1 Номер для' type='number' name='number_of_adults' data={data} upsertFields={upsertFields} required={true} />
                     <MyInput placeHolder='Дети' type='number' name='number_of_children' data={data} upsertFields={upsertFields} required={true} />
