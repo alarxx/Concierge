@@ -35,23 +35,25 @@ export default function ConciergeOrderFlow() {
     const [data, setData] = useState({});
 
     /* В зависимости от того, что входит в needs добавляем в массив компоненты */
-    const [Steps, setSteps] = useState([NeedsStep,HotelStep]);
+    const [Steps, setSteps] = useState([NeedsStep]);
 
-    /*useEffect(()=>{
+    useEffect(()=>{
         setSteps(()=>{
             const steps = [NeedsStep];
-            if(data.needs['hotel']){
-                steps.push(HotelStep);
-            }
-            if(data.needs['airfare']){
-                steps.push(AirfareStep);
-            }
-            if(data.needs['transfer']){
-                steps.push(TransferStep);
+            if (data.needs) {
+                if(data.needs.includes('hotel')){
+                    steps.push(HotelStep);
+                }
+                if(data.needs.includes('airfare')){
+                    steps.push(AirfareStep);
+                }
+                if(data.needs.includes('transfer')){
+                    steps.push(TransferStep);
+                }
             }
             return steps;
         });
-    }, [data])*/
+    }, [data])
 
 
     /**
