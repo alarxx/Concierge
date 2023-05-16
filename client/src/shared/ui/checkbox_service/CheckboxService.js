@@ -3,7 +3,7 @@ import React from "react";
 import styles from './checkboxService.module.css'
 
 
-// TO DO: сделать режим фокусировки при нажатии TAB
+// TODO: сделать режим фокусировки при нажатии TAB
 
 // $(window).keyup(function(e){
 //     var target = $('.checkbox-btn input:focus');
