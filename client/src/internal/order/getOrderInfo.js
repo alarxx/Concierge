@@ -4,19 +4,26 @@ import statusEnum from "./StatusEnum";
 import getBookingInfo from "./getBookingInfo";
 
 const logger = new Logger('getOrderInfo');
-export default function(extendedOrder){
-    logger.log({ extendedOrder });
+export default function getOrderInfo(order){
+    logger.log({ order });
 
-    const status = statusEnum[extendedOrder.status];
+    if(!order){
+        logger.log("ORDER IS NUll")
+        return ({
+            status: '',
+            last4IDDigits: '',
+            customerName: '',
+            name: '',
+        });
+    }
 
-    extendedOrder.bookings.map(booking => {
-        getBookingInfo(booking, extendedOrder);
-    })
+
+    const status = statusEnum[order.status];
 
     return ({
         status,
-        last4IDDigits: String(extendedOrder.id).substr(-4),
-        customerName: extendedOrder.customer.name,
-        name,
+        last4IDDigits: String(order.id).substr(-4),
+        customerName: order.customer.name,
+        name: 'Город: услуги.'
     });
 }

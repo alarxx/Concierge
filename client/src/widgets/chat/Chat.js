@@ -50,10 +50,6 @@ export default function Chat({ activeConversationId='', openConversation=f=>f, c
         <>
             {!conversation &&
                 <Conversations
-                    chatLoading={chatLoading}
-                    conversations={conversations}
-                    notifications={notifications}
-                    messages={messages}
                     openConversation={openConversation}
                 />
             }
