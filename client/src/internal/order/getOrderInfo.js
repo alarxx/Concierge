@@ -7,6 +7,8 @@ const logger = new Logger('getOrderInfo');
 export default function getOrderInfo(order){
     logger.log({ order });
 
+    // name достаем из meta, большую часть достаем из meta.
+
     if(!order){
         logger.log("ORDER IS NUll")
         return ({
