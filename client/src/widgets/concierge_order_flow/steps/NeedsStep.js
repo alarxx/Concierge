@@ -15,18 +15,18 @@ import Card from "../../../shared/ui/card/Card";
 import _NavigationButtons from "../_navigation_buttons/_NavigationButtons";
 
 export default function NeedsStep({
-                                      data={},
-                                      upsertFields=f=>f,
+                                    data={},
+                                    upsertFields=f=>f,
 
-                                      next=f=>f,
-                                      back=f=>f,
+                                    next=f=>f,
+                                    back=f=>f,
 
-                                      submit=f=>f,
-                                      close=f=>f,
+                                    submit=f=>f,
+                                    close=f=>f,
 
-                                      isFirstStep=false,
-                                      isLastStep=false,
-                              }){
+                                    isFirstStep=false,
+                                    isLastStep=false,
+                                }){
 
     const { needs } = data;
 
@@ -93,8 +93,8 @@ export default function NeedsStep({
 
                     {/*<input type={'text'} value={needs?needs:''} onChange={e => upsertFields({ needs: e.target.value}) }/>*/}
                 </CardBody>
+                <_NavigationButtons isLastStep={isLastStep} isFirstStep={isFirstStep} back={back}/>
             </Card>
-            <_NavigationButtons isLastStep={isLastStep} isFirstStep={isFirstStep} back={back}/>
         </form>
     </>);
 }

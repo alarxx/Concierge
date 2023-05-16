@@ -11,18 +11,18 @@ import CardBody from "../../../shared/ui/card/CardBody";
 import Card from "../../../shared/ui/card/Card";
 
 export default function HotelStep({
-                                      data={},
-                                      upsertFields=f=>f,
+                                    data={},
+                                    upsertFields=f=>f,
 
-                                      next=f=>f,
-                                      back=f=>f,
+                                    next=f=>f,
+                                    back=f=>f,
 
-                                      submit=f=>f,
-                                      close=f=>f,
+                                    submit=f=>f,
+                                    close=f=>f,
 
-                                      isFirstStep=false,
-                                      isLastStep=false,
-                                  }){
+                                    isFirstStep=false,
+                                    isLastStep=false,
+                                }){
 
     const {  } = data;
 
@@ -65,8 +65,9 @@ export default function HotelStep({
                     <MyInput placeHolder='1 Номер для' type='number' name='number_of_adults' data={data} upsertFields={upsertFields} required={true} />
                     <MyInput placeHolder='Дети' type='number' name='number_of_children' data={data} upsertFields={upsertFields} required={true} />
                 </CardBody>
+
+                <_NavigationButtons isLastStep={isLastStep} isFirstStep={isFirstStep} back={back}/>
             </Card>
-            <_NavigationButtons isLastStep={isLastStep} isFirstStep={isFirstStep} back={back}/>
         </form>
     </>);
 }
