@@ -2,7 +2,8 @@ import React, {useEffect, useMemo, useState} from 'react'
 /**
  * Придется писать хук для отправки и получения сообщений
  * */
-import Conversations from "../../pages/business_client/chat/Conversations";
+// import Conversations from "../../pages/business_client/chat/Conversations";
+import Conversations from "./Conversations";
 import Messenger from "../../pages/business_client/chat/Messenger";
 import {useAppContext} from '../../context/AppContext';
 import {Navigate, useNavigate, useParams} from "react-router-dom";
@@ -38,20 +39,6 @@ export default function Chat({ activeConversationId='', openConversation=f=>f, c
         }
     }, [activeConversationId, messages]);
 
-    /*useEffect(()=>{
-        if(activeConversationId){
-            setConversation(conversations.find(conversation => conversation.id === activeConversationId));
-            setConversationMessages(messages.filter(m => m.conversation === activeConversationId));
-        }
-        else {
-            setConversation(null);
-            setConversationMessages([]);
-        }
-    }, [activeConversationId, messages]);*/
-
-    useEffect(()=>{
-        logger.log({conversation})
-    }, [conversation, messages])
 
     if(chatLoading){
         return (<>
