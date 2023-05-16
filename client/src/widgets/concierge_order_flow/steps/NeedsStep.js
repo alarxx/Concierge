@@ -7,10 +7,6 @@ import HotelIcon from '../../../assets/icons/bed_icon.svg'
 import TicketIcon from '../../../assets/icons/ticket_icon.svg'
 import TransferIcon from '../../../assets/icons/transfer_icon.svg'
 import CardBody from "../../../shared/ui/card/CardBody";
-import GroupFlex from "../../../shared/ui/group_flex/GroupFlex";
-import ButtonIconic from "../../../shared/ui/button_iconic/ButtonIconic";
-import ArrowLeft from "../../../assets/icons/backbtn_icon.svg";
-import Button from "../../../shared/ui/button/Button";
 import Card from "../../../shared/ui/card/Card";
 import _NavigationButtons from "../_navigation_buttons/_NavigationButtons";
 
@@ -82,7 +78,7 @@ export default function NeedsStep({
                     </Block>
 
                     <CheckboxService isChecked={needs && needs.includes('hotel')} name={'needs'} value={'hotel'} Icon={<HotelIcon/>} title={'Отель'} onChange={handleCheckboxChange} bottom={12}/>
-                    <CheckboxService isChecked={needs && needs.includes('ticket')} name={'needs'} value={'ticket'} Icon={<TicketIcon/>} title={'Авиабилеты'} onChange={handleCheckboxChange} bottom={12} />
+                    <CheckboxService isChecked={needs && needs.includes('airfare')} name={'needs'} value={'airfare'} Icon={<TicketIcon/>} title={'Авиабилеты'} onChange={handleCheckboxChange} bottom={12} />
                     <CheckboxService isChecked={needs && needs.includes('transfer')} name={'needs'} value={'transfer'} Icon={<TransferIcon/>} title={'Трансфер'} onChange={handleCheckboxChange}/>
 
                     { isNotValid &&
