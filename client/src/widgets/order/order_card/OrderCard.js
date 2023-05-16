@@ -26,9 +26,9 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
     const {orderHandler} = useAppContext();
     const {extendedOrders} = orderHandler;
 
-    const extendedOrder = extendedOrders.find(eo => eo.id === order.id);
-    const firstBookingInfo = getBookingInfo(extendedOrder.bookings[0], extendedOrder);
-    const orderInfo = getOrderInfo(extendedOrder);
+    // const extendedOrder = extendedOrders.find(eo => eo.id === order.id);
+    // const firstBookingInfo = getBookingInfo(extendedOrder.bookings[0], extendedOrder);
+    const orderInfo = getOrderInfo(order);
 
     return(<>
         <CardService onClick={onClick}>
@@ -36,9 +36,9 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
             <CardBody>
                 <GroupFlex align={'ais'} justify={'jcsb'}>
                     <div>
-                        <div><Typography size={16} weight={600} bottom={2}>{firstBookingInfo.name}</Typography></div>
+                        <div><Typography size={16} weight={600} bottom={2}>{orderInfo.name}</Typography></div>
                         <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>Заказ #{orderInfo.last4IDDigits}</Typography></div>
-                        <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>{firstBookingInfo.customerName}</Typography></div>
+                        <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>{orderInfo.customerName}</Typography></div>
                     </div>
                     <Chip text={orderInfo.status.text} variant={orderInfo.status.variant} />
                 </GroupFlex>
@@ -46,10 +46,10 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
 
             <CardBody>
                 <div>
-                    <Typography size={14} weight={500} bottom={2}>{firstBookingInfo.start_date} - {firstBookingInfo.final_date} - {firstBookingInfo.number_of_adults}</Typography>
+                    <Typography size={14} weight={500} bottom={2}>{orderInfo.start_date} - {orderInfo.final_date} - {orderInfo.number_of_adults}</Typography>
                 </div>
                 <div>
-                    <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>{firstBookingInfo.description}</Typography>
+                    <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>{orderInfo.description}</Typography>
                 </div>
             </CardBody>
 

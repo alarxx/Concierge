@@ -4,6 +4,9 @@ import {useNavigate} from "react-router-dom";
 
 import ChatItemCard from "./chat_item_card/ChatItemCard";
 import Logger from "../../internal/Logger";
+import {useAppContext} from "../../context/AppContext";
+
+import getOrderInfo from "../../internal/order/getOrderInfo";
 
 function truncateString(str) {
     // console.log("last message", str);
@@ -15,15 +18,15 @@ function truncateString(str) {
 }
 
 export default function Conversations({
-                                          conversations=[],
-                                          notifications=[],
-                                          messages=[],
-                                          chatLoading=true,
                                           openConversation=f=>f
                                       }){
     const logger = useMemo(()=>new Logger('Conversations'), []);
 
     const navigate = useNavigate();
+
+    const {chatHandler, orderHandler} = useAppContext();
+    const {conversations, notifications, messages} = chatHandler;
+    const {orders} = orderHandler;
 
 
     /**
@@ -51,10 +54,15 @@ export default function Conversations({
             const _notifications = notifications.filter(notification => notification.conversation == conversation.id);
             const notifications_number = _notifications.length;
 
+            const orderInfo = getOrderInfo(orders.find(_order => _order.conversation == conversation.id));
+
             return ({
                 ...conversation,
                 newest_message,
-                notifications_number
+                notifications_number,
+                name: orderInfo.customerName,
+                ordersLast4IDDigits: orderInfo.last4IDDigits,
+                description: orderInfo.name
             });
         });
 
@@ -73,11 +81,15 @@ export default function Conversations({
 
     return (<>
         {sorted_extended_conversations.map((extended_conversation, key) => {
-            const {name, notifications_number, newest_message} = extended_conversation;
+            const {name, notifications_number, newest_message, ordersLast4IDDigits, description} = extended_conversation;
+
             const last_message = !newest_message ? '' : (newest_message.text ? truncateString(newest_message.text) : newest_message.type);
+
             return (<div key={key}>
                 <ChatItemCard
                     name={name}
+                    description={description}
+                    ordersLast4IDDigits={ordersLast4IDDigits}
                     unread_num={notifications_number}
                     last_message={last_message}
                     onClick={e => openConversation(extended_conversation)}
