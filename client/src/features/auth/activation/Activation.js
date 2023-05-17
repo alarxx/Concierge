@@ -43,7 +43,9 @@ export default function Activation(){
     const {timer, startTimer} = useTimer(()=>window.location.replace(env.API_URL), 5);
 
     const [token] = useState(location.state?.activation_token);
-    const [name, setName] = useState('')
+    const [firstname, setFirstname] = useState('')
+    const [lastname, setLastname] = useState('')
+    const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
 
     function onActivateAccount(e){
@@ -51,7 +53,7 @@ export default function Activation(){
         setError(null);
         setLoading(true);
 
-        activation({ activation_token: token, name, password })
+        activation({ activation_token: token, name:`${firstname} ${lastname}`, phone:phone, password })
             .then(json => {
                 logger.log(json)
                 if(json.status >= 200 && json.status < 300){
@@ -102,13 +104,37 @@ export default function Activation(){
 
         {/* Если токен просрочен, то это показывать нельзя, простую проверку наличия error ставить нельзя, может выйти ошибка "слабый пароль" */}
         {token && (!loading && !success) && <form onSubmit={onActivateAccount}>
-            <label>Name</label>
+            <label>Имя</label>
             <Input
                 type={'text'}
-                name={'name'}
-                value={name}
+                name={'firstname'}
+                value={firstname}
                 placeHolder='Введите имя'
-                onChange={e=>setName(e.target.value)}
+                onChange={e=>setFirstname(e.target.value)}
+                required
+            />
+
+            <br/>
+
+            <label>Фамилия</label>
+            <Input
+                type={'text'}
+                name={'lastname'}
+                value={lastname}
+                placeHolder='Введите фамилию'
+                onChange={e=>setLastname(e.target.value)}
+                required
+            /> {/*required*/}
+            <br/>
+
+            <label>Номер телефона</label>
+            <Input
+                type={'text'}
+                name={'phone'}
+                value={phone}
+                placeHolder='Введите номер телефона'
+                onChange={e=>setPhone(e.target.value)}
+                required
             /> {/*required*/}
             <br/>
 
@@ -122,7 +148,7 @@ export default function Activation(){
                 required
             />
 
-            <Button type="submit">Активировать аккаунт</Button>
+            <Button type="submit">Создать аккаунт</Button>
         </form>}
 
     </>);

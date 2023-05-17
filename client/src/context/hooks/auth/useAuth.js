@@ -350,10 +350,10 @@ export default function useAuth({ socketHandler }){
 
     /**
      * */
-    async function activation({ activation_token, name, password }){
+    async function activation({ activation_token, name, phone, password }){
         return await fetchJSON('/auth/local/activation', {
             method: 'POST',
-            body: { activation_token, name, password }
+            body: { activation_token, name, phone, password }
         });
     }
 

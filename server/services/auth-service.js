@@ -62,14 +62,14 @@ async function sendActivationMail({ email }){
 }
 
 
-async function activation({ activation_token, name, password } ){
+async function activation({ activation_token, name, phone, password } ){
     if(!activation_token){
         throw ApiError.BadRequest("Activation token is not provided");
     }
 
     const { email } = await tokenService.verifyToken(activation_token, 'activation_token');
 
-    return await userService.createUser({ name, email, password });
+    return await userService.createUser({ name, phone, email, password });
 }
 
 
