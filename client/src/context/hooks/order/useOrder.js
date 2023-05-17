@@ -151,6 +151,8 @@ export default function useOrder({ socketHandler, authHandler }){
 
             const bookings = await Promise.all(order.bookings.map(async (booking, i) => {
 
+                console.log(`extendOrders:`, {booking});
+
                 // Если extendedOrders уже содержит order и нужные данные в booking, то продолжаем.
                 if(extendedOrder) {
                     const eo_booking = extendedOrder.bookings.find(b => b.id === booking.id);
@@ -168,15 +170,19 @@ export default function useOrder({ socketHandler, authHandler }){
                 }
 
                 const {type} = booking;
+
                 if (type === 'hotel/booking') {
                     // Дополнить прикрепленную услугу заказа вызвав /api/hotel/room
-                    const response = await fetch('/api/hotel/room/' + booking['hotel/booking']['hotel/room']);
+                    // const response = await fetch('/api/hotel/room/' + booking['hotel/booking']['hotel/room']);
+                    const response = await fetch('/api/hotel/' + booking['hotel/booking']['hotel']);
+                    console.log(`extendOrders: response:`, response);
+
                     if(response.status < 200 || response.status >= 300){
                         return booking;
                     }
                     const json = await response.json();
                     setIds(json);
-                    // console.log(`extendOrders:`, {booking, json});
+                    console.log(`extendOrders: json:`, {booking, json});
                     // console.log(`extendOrders: api response`, response);
                     return ({...booking, ...json});
                 }

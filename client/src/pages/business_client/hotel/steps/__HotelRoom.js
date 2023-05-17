@@ -17,7 +17,7 @@ import BackIcon from "../../../../assets/icons/backbtn_icon.svg";
 import Logger from "../../../../internal/Logger";
 import Container from "../../../../shared/ui/box/Container";
 
-export default function HotelRoom({ data={}, back=f=>f, next=f=>f }) {
+export default function __HotelRoom({ data={}, back= f=>f, next= f=>f }) {
     const logger = useMemo(()=>new Logger('HotelRoom'), []);
 
     const { room } = data;

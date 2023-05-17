@@ -133,11 +133,29 @@ async function updateOne(body, files, user) {
     return model; // dto(model);
 }
 
+async function findById(id, user){
+    if (!user) {
+        throw ApiError.ServerError('user is missing')
+    }
+    if (!id) {
+        throw ApiError.ServerError('id is missing')
+    }
+    const hotel = await Hotel.findById(id);
+
+    if(!hotel){
+        throw ApiError.BadRequest('hotel not found')
+    }
+
+    return ({
+        hotel: hotelDto(hotel, user)
+    });
+}
 
 module.exports = ({
     ...adminService,
     pagination,
     findByQueryParams,
     createOne,
-    updateOne
+    updateOne,
+    findById
 });

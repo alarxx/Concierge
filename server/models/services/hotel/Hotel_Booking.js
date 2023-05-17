@@ -12,7 +12,11 @@ const BookingSchema = new Schema(
         'hotel/room': {
             type: Schema.Types.ObjectId,
             ref: 'Hotel/Room',
-            required: true,
+            immutable: true,
+        },
+        'hotel': {
+            type: Schema.Types.ObjectId,
+            ref: 'Hotel',
             immutable: true,
         },
 

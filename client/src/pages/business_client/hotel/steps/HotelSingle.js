@@ -52,7 +52,7 @@ export default function HotelSingle({ data={}, next=f=>f, back=f=>f, }) {
         </Box>
 
         <BottomControl>
-            <Button variant={'control'} onClick={e => next()}>Выбрать комнату (X)</Button>
+            <Button variant={'control'} onClick={e => next()}>Выбрать отель</Button>
         </BottomControl>
 
         <NavigationPanel />

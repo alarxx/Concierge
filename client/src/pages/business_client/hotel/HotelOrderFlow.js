@@ -8,16 +8,14 @@ import useMultistep from "../../../hooks/useMultistep";
 
 import HotelsList from "./steps/HotelsList";
 import HotelSingle from "./steps/HotelSingle";
-import HotelRoomsList from "./steps/HotelRoomsList";
-import HotelRoom from "./steps/HotelRoom";
 import HotelConfirm from "./steps/HotelConfirm";
 import useBigList from "../../../hooks/useBigList";
 
 const Steps = [
     HotelsList,
     HotelSingle,
-    HotelRoomsList,
-    HotelRoom,
+    // HotelRoomsList,
+    // HotelRoom,
     HotelConfirm,
 ];
 
@@ -76,16 +74,29 @@ export default function HotelOrderFlow(){
         logger.log('submit:', { data });
 
         const type = 'hotel/booking';
+
+        const meta = {
+            needs: ['hotel'],
+            city: data.city,
+        };
+
+        meta.hotel = {};
+        meta.hotel.city = data.city;
+        meta.hotel.check_in_date = data.check_in_date;
+        meta.hotel.check_in_date = data.check_out_date;
+        meta.hotel.number_of_adults = data.number_of_adults;
+        meta.hotel.number_of_children = data.number_of_children;
+
         const order = ({
             bookings: [
                 {
                     type,
                     [type]: {
-                        'hotel/room': data.room.id,
+                        'hotel': data.hotel.id,
                     }
                 }
             ],
-            meta: {}
+            meta: meta
         });
 
         const response = await fetch('/api/order', {

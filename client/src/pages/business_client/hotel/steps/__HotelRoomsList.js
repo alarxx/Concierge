@@ -21,8 +21,8 @@ import Container from "../../../../shared/ui/box/Container";
 import ConciergeAction from "../../../../widgets/order/concierge_action/ConciergeAction";
 
 
-export default function HotelRoomsList({ data={}, upsertFields=f=>f, next=f=>f, back=f=>f }){
-    const logger = useMemo(()=>new Logger('HotelRoomsList'), []);
+export default function __HotelRoomsList({ data={}, upsertFields= f=>f, next= f=>f, back= f=>f }){
+    const logger = useMemo(()=>new Logger('__HotelRoomsList'), []);
 
     const { hotel } = data;
     const rooms = hotel['hotel/rooms'];
