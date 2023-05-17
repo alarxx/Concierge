@@ -23,17 +23,18 @@ import getOrderInfo from "../../internal/order/getOrderInfo";
 //message: {type=choice, id, items, selected, submitted}
 export default function Messenger({
                                       conversation,
-                                      user,
-                                      messages=[],
                                       closeConversation=f=>f,
-                                      sendMessage=f=>f,
                                   }){
     const logger = useMemo(()=>new Logger('Messenger'), []);
 
-    const { orderHandler, chatHandler } = useAppContext();
-    const {deleteNotifications} = chatHandler;
-    const { orders } = orderHandler;
+    const { authHandler, orderHandler, chatHandler } = useAppContext();
 
+    const {user} = authHandler;
+
+    const {deleteNotifications, messages} = chatHandler;
+    const conversationMessages = messages.filter(m => m.conversation === conversation.id);
+
+    const { orders } = orderHandler;
     const orderInfo = getOrderInfo(orders.find(o => o.conversation == conversation.id));
 
     /** Delete notifications on open conversation (Messenger) */
@@ -45,20 +46,6 @@ export default function Messenger({
 
     const [control, setControl] = useState('text');  // ['text', 'choice']
 
-    function onTextSend(text){
-        sendMessage({
-            conversation: conversation.id,
-            type: 'text',
-            text: text,
-        })
-    }
-
-    function onFileRequest(){
-        sendMessage({
-            conversation: conversation.id,
-            type: 'file',
-        })
-    }
 
     /** Индекс сообщения, перед которым нужно отобразить новый день */
     const [newDates, setNewDates] = useState([]);
@@ -111,8 +98,7 @@ export default function Messenger({
             <BottomPanel>
                 {control ==='text' &&
                     <ChatInputForm
-                        onLeftClick={e => {}}
-                        onSend={text => onTextSend(text)}
+                        conversation={conversation}
                     />
                 }
                 {control === 'choice' &&

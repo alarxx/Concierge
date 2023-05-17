@@ -1,21 +1,31 @@
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import Button from "../../../shared/ui/button/Button";
 import Modal from "../../../shared/ui/modal/Modal";
 import ChatActionsForm from "../../../features/chat/chat_actions_form/ChatActionsForm";
 import MenuIcon from "../../../assets/icons/menu.svg";
 import ButtonIconic from "../../../shared/ui/button_iconic/ButtonIconic";
+import {useAppContext} from "../../../context/AppContext";
+import Logger from "../../../internal/Logger";
 
-export default function ChatActions({setAction=f=>f}) {
+export default function ChatActions({ conversation }) {
+    const logger = useMemo(()=>new Logger('ChatActions'), []);
+
+    const { chatHandler } = useAppContext();
+    const { sendMessage } = chatHandler;
 
     const [isModalActive, setIsModalActive] = useState(false);
-    function onClick() {
-        setIsModalActive(true)
+
+    function onFileRequest(){
+        sendMessage({
+            conversation: conversation.id,
+            type: 'file',
+        })
     }
 
     return(<>
         {isModalActive && <Modal minWidth={360} maxWidth={400} onClose={e => setIsModalActive(false)}>
-            <ChatActionsForm setAction={action => setAction(action)} cancelClick={e => setIsModalActive(false)} />
+            <ChatActionsForm cancelClick={e => setIsModalActive(false)} />
         </Modal>}
-        <ButtonIconic onClick={onClick}><MenuIcon /></ButtonIconic>
+        <ButtonIconic onClick={e=>setIsModalActive(true)}><MenuIcon /></ButtonIconic>
     </>)
 }

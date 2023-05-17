@@ -7,41 +7,51 @@ import Block from "../../../shared/ui/block/Block";
 import GroupFlex from "../../../shared/ui/group_flex/GroupFlex";
 import ButtonIconic from "../../../shared/ui/button_iconic/ButtonIconic";
 import SendIcon from "../../../assets/icons/send.svg";
+import {useAppContext} from "../../../context/AppContext";
 export default function ChatInputForm({
-                                       initInput="",
-                                       onSend=console.log,
-                                       onLeftClick=f=>f,
-                                   }){
+                                          conversation,
+                                          initInput="",
+                                      }){
 
-    const [input, setInput] = useState(initInput);
+    const { chatHandler } = useAppContext();
+    const { sendMessage } = chatHandler;
 
-    function send( e ){
-        if(!input) return;
-        onSend(input)
-        setInput("")
+    const [inputText, setInputText] = useState(initInput);
+
+    function onTextSend(){
+        if(!inputText) {
+            return;
+        }
+        sendMessage({
+            conversation: conversation.id,
+            type: 'text',
+            text: inputText,
+        });
+        setInputText("");
     }
 
-    return (
+    return (<>
         <GroupFlex>
 
-            <ChatActions setAction={onLeftClick} />
+            <ChatActions conversation={conversation} />
 
             <Block left={15} right={15}>
                 <input
                     type="text"
                     className={styles["chat__input"]}
                     placeholder="Введите сообщение"
-                    value={input}
-                    onChange={ e => setInput(e.target.value) }
+                    value={inputText}
+                    onChange={ e => setInputText(e.target.value) }
                     onKeyDown={ e => {
-                        if(e.key==='Enter')
-                            send(e)
+                        if(e.key==='Enter'){
+                            onTextSend()
+                        }
                     }}
                 />
             </Block>
 
-            <ButtonIconic onClick={send}><SendIcon /></ButtonIconic>
+            <ButtonIconic onClick={e=>onTextSend()}><SendIcon /></ButtonIconic>
 
         </GroupFlex>
-    );
+    </>);
 }

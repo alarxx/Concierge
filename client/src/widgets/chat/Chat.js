@@ -4,7 +4,8 @@ import React, {useEffect, useMemo, useState} from 'react'
  * */
 // import Conversations from "../../pages/business_client/chat/Conversations";
 import Conversations from "./Conversations";
-import Messenger from "../../pages/business_client/chat/Messenger";
+// import Messenger from "../../pages/business_client/chat/Messenger";
+import Messenger from "./Messenger";
 import {useAppContext} from '../../context/AppContext';
 import {Navigate, useNavigate, useParams} from "react-router-dom";
 import Logger from "../../internal/Logger";
@@ -17,14 +18,11 @@ import Loader from "../../shared/ui/loader/Loader";
 export default function Chat({ activeConversationId='', openConversation=()=>{}, closeConversation=()=>{} }){
     const logger = useMemo(()=>new Logger('Chat'), []);
 
-    const { chatHandler, authHandler } = useAppContext();
+    const { chatHandler } = useAppContext();
 
-    const { messages, conversations, notifications, sendMessage, deleteNotifications, _upsertMessage, chatLoading } = chatHandler;
-    const { user } = authHandler;
+    const { conversations, chatLoading } = chatHandler;
 
     const conversation = conversations.find(conversation => conversation.id === activeConversationId);
-
-    const conversationMessages = messages.filter(m => m.conversation === activeConversationId);
 
     useEffect(()=>{
         if(activeConversationId && !conversation){
@@ -32,12 +30,6 @@ export default function Chat({ activeConversationId='', openConversation=()=>{},
             closeConversation();
         }
     },[activeConversationId])
-
-    useEffect(()=>{
-        if(activeConversationId){
-            deleteNotifications(conversationMessages);
-        }
-    }, [activeConversationId, messages]);
 
 
     if(chatLoading){
@@ -57,11 +49,7 @@ export default function Chat({ activeConversationId='', openConversation=()=>{},
             {conversation &&
                 <Messenger
                     conversation={conversation}
-                    user={user}
-                    messages={conversationMessages}
-                    sendMessage={sendMessage}
                     closeConversation={closeConversation}
-                    _upsertMessage={_upsertMessage}
                 />
             }
         </>
