@@ -40,6 +40,8 @@ export default function OrderList({}) {
     }
 
     return (<>
+        {sortedOrders.length === 0 && <p>Нет заказов</p>}
+
         {sortedOrders.map((order, i) => {
             return (<div key={i}>
                 <OrderCard

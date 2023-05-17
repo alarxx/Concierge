@@ -80,6 +80,7 @@ export default function Conversations({
 
 
     return (<>
+        {sorted_extended_conversations.length === 0 && <p>Нет бесед</p>}
         {sorted_extended_conversations.map((extended_conversation, key) => {
             const {customerName, notifications_number, newest_message, ordersLast4IDDigits, description} = extended_conversation;
 
