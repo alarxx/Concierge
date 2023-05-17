@@ -20,6 +20,7 @@ import Logger from "../../../internal/Logger";
 import getOrderInfo from "../../../internal/order/getOrderInfo";
 import getBookingInfo from "../../../internal/order/getBookingInfo";
 import Block from "../../../shared/ui/block/Block";
+import Button from "../../../shared/ui/button/Button";
 
 export default function OrderCard({ order={}, onClick=f=>f }) {
     const logger = useMemo(()=>new Logger('OrderCard'), []);
@@ -54,6 +55,21 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
                     <div>
                         <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>{orderInfo.description}</Typography>
                     </div>
+                </Block>
+
+                <Block top={20}>
+                    <GroupFlex>
+
+                        <Block right={10}>
+                            <Button variant={'outline'} size={'small'}>Подробнее</Button>
+                        </Block>
+
+                        {(user.role === 'client' || (user.role === 'admin' && order.status !== 'new')) &&
+                            <Block>
+                                <Button size={'small'} onClick={e=>navigate(`/chat/${order.conversation}`)}>Перейти в чат</Button>
+                            </Block>
+                        }
+                    </GroupFlex>
                 </Block>
             </CardBody>
 

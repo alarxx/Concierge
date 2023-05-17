@@ -12,6 +12,9 @@ import GroupInput from "../../../shared/ui/group_input/GroupInput";
 
 import MyInput from './_MyInput'
 import Logger from "../../../internal/Logger";
+import Iterator from "../../../shared/ui/iterator/Iterator";
+import GroupFlex from "../../../shared/ui/group_flex/GroupFlex";
+import Block from "../../../shared/ui/block/Block";
 // import Select from "../../../shared/ui/select/Select";
 
 export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f }){
@@ -116,28 +119,34 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                 />
                 <label>Даты проживания</label>
                 <GroupInput>
-                    {/*<DatePicker*/}
-                    {/*    selected={startDate}*/}
-                    {/*    onChange={(date) => setStartDate(date)}*/}
-                    {/*    monthsShown={2}*/}
-                    {/*/>*/}
-                    {/*<DatePicker*/}
-                    {/*    selected={endDate}*/}
-                    {/*    onChange={(date) => setEndDate(date)}*/}
-                    {/*    selectsEnd*/}
-                    {/*    startDate={startDate}*/}
-                    {/*    endDate={endDate}*/}
-                    {/*    minDate={startDate}*/}
-                    {/*/>*/}
-                    <MyInput placeHolder='Дата заезда' type='date' name='start_date' data={data} upsertFields={upsertFields} />
-                    <MyInput placeHolder='Дата выезда' type='date' name='end_date' data={data} upsertFields={upsertFields} />
+                    <DatePicker
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                        monthsShown={2}
+                    />
+                    <DatePicker
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                        selectsEnd
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={startDate}
+                    />
+                    {/*<MyInput placeHolder='Дата заезда' type='date' name='start_date' data={data} upsertFields={upsertFields} />*/}
+                    {/*<MyInput placeHolder='Дата выезда' type='date' name='end_date' data={data} upsertFields={upsertFields} />*/}
                 </GroupInput>
 
-                <label>Количество взрослых</label>
-                <MyInput placeHolder='1 Номер для' type='number' name='number_of_adults' data={data} upsertFields={upsertFields} />
+                <GroupInput>
+                    <Block right={20}>
+                        <label>Взрослые</label>
+                        <Iterator minValue={1} value={data.number_of_adults} onChange={e => upsertFields({number_of_adults: e})}/>
+                    </Block>
+                    <Block>
+                        <label>Дети</label>
+                        <Iterator value={data.number_of_children} onChange={e => upsertFields({number_of_children: e})}/>
+                    </Block>
+                </GroupInput>
 
-                <label>Количество детей</label>
-                <MyInput placeHolder='Дети' type='number' name='number_of_children' data={data} upsertFields={upsertFields} />
 
                 <Button type={'submit'}>Поиск отеля</Button>
             </form>
