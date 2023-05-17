@@ -18,7 +18,7 @@ export default function Landing({}){
     // А если на Landing находится нужная информация?
     useEffect(()=>{
         if(isAuthenticated){
-            navigate('/profile', { replace: true });
+            navigate('/orders', { replace: true });
         }
     })
 

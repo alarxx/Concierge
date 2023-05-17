@@ -3,27 +3,22 @@
  * */
 import React, {useEffect, useMemo, useRef, useState} from 'react'
 import {useNavigate} from "react-router-dom";
-import ChatInputForm from "../../../features/chat/chat_input_form/ChatInputForm";
-import ChatMessage from "../../../features/chat/chat_message/ChatMessage";
-import DayInChat from "../../../features/chat/day_in_chat/DayInChat";
-import NavbarPanel from "../../../widgets/navbar_panel/NavbarPanel";
-import NavbarLeft from "../../../shared/ui/navbar/NavbarLeft";
-import Box from "../../../shared/ui/box/Box";
-import Container from "../../../shared/ui/box/Container";
+import ChatInputForm from "../../features/chat/chat_input_form/ChatInputForm";
+import ChatMessage from "../../features/chat/chat_message/ChatMessage";
+import DayInChat from "../../features/chat/day_in_chat/DayInChat";
+import NavbarPanel from "../../widgets/navbar_panel/NavbarPanel";
+import NavbarLeft from "../../shared/ui/navbar/NavbarLeft";
 
-import BackIcon from "../../../assets/icons/backbtn_icon.svg";
-import ChatChoiceForm from "./ChatChoiceForm";
-// import ChatAttachPanel from "./ChatAttachPanel";
-import ChatServicePanel from "./ChatServicePanel";
-import Logger from "../../../internal/Logger";
-import FileInChat from "../../../features/chat/file_in_chat/FileInChat";
-import BottomPanel from "../../../shared/ui/bottom_panel/BottomPanel";
-import Button from "../../../shared/ui/button/Button";
+import BackIcon from "../../assets/icons/backbtn_icon.svg";
+import Logger from "../../internal/Logger";
+import FileInChat from "../../features/chat/file_in_chat/FileInChat";
+import BottomPanel from "../../shared/ui/bottom_panel/BottomPanel";
+import Button from "../../shared/ui/button/Button";
 
-import findIndexById from "../../../internal/findIndexById";
-import objClone from "../../../internal/objClone";
-import {useAppContext} from "../../../context/AppContext";
-import getOrderInfo from "../../../internal/order/getOrderInfo";
+import findIndexById from "../../internal/findIndexById";
+import objClone from "../../internal/objClone";
+import {useAppContext} from "../../context/AppContext";
+import getOrderInfo from "../../internal/order/getOrderInfo";
 
 //message: {type=choice, id, items, selected, submitted}
 export default function Messenger({
@@ -39,6 +34,7 @@ export default function Messenger({
     const { orderHandler, chatHandler } = useAppContext();
     const {notifications, deleteNotifications} = chatHandler;
     const { orders } = orderHandler;
+
     const orderInfo = getOrderInfo(orders.find(o => o.conversation == conversation.id));
 
     /** Delete notifications on open conversation (Messenger) */
@@ -47,23 +43,9 @@ export default function Messenger({
         deleteNotifications(conversation.id);
     }, [notifications]);
 
-    /**
-     * Всегда когда меняется состояние сообщений мы пересчитываем messagesSelected для choice form,
-     * В них хранятся именно message.id, потом мы должны будем найти сам message из массива, зная его id
-     * */
-    useEffect(()=>{
-        const ids = messages.reduce((acc, message, index) => {
-            if(message.type !== 'choice' || message.choice.submitted) return acc;
-            if (message.choice.selectedServices.length > 0) {
-                acc.push(message.id);
-            }
-            return acc;
-        }, []);
-        setMessagesSelected(ids)
-    }, [messages])
-
 
     const [control, setControl] = useState('text');
+
     const [messagesSelected, setMessagesSelected] = useState([])
     const [isAttach, setIsAttach] = useState(false);
     const [action, setAction] = useState('actions');
@@ -81,12 +63,15 @@ export default function Messenger({
             onFileRequest();
             dropAttachPanel();
         }
-        else if(messagesSelected.length !== 0)
+        else if(messagesSelected.length !== 0){
             setControl('choice')
-        else if(isAttach)
+        }
+        else if(isAttach){
             setControl('attach')
-        else
+        }
+        else{
             setControl('text')
+        }
     })
 
     function onTextSend(text){
@@ -96,30 +81,6 @@ export default function Messenger({
             text: text,
         })
     }
-    function onChoiceSend(){
-        // Нужно найти нужные сообщения, поставить им значения submitted и отправить на сервер.
-        messagesSelected.map(id => {
-            const index = findIndexById(messages, id)
-            const message = messages[index];
-            sendMessage(message);
-        })
-        setMessagesSelected([]);
-    }
-    function onChoiceRequest(services){
-        console.log("onChoiceRequest", services);
-        sendMessage({
-            conversation: conversation.id,
-            type: 'choice',
-            choice: {
-                services,
-                selectedServices: [],
-                multiple_choice: true,
-                submitted: false,
-            }
-        });
-        dropAttachPanel();
-    }
-
 
     function onFileRequest(){
         sendMessage({
@@ -169,24 +130,7 @@ export default function Messenger({
                 LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={closeConversation} />}
                 title={user.role === 'admin' ? orderInfo.customerName : (orderInfo.managerName)}
             />
-            {/*<div className={styles.hotel__list} style={{ height: "100%", overflow: 'auto' }}>*/}
-            {/*    <InfiniteScroll*/}
-            {/*        pageStart={0}*/}
-            {/*        loadMore={loadMore}*/}
-            {/*        hasMore={hasMore}*/}
-            {/*        loader={*/}
-            {/*            <div className="loader" key={0}>*/}
-            {/*                Loading ...*/}
-            {/*            </div>*/}
-            {/*        }*/}
-            {/*        isReverse={true}*/}
-            {/*        useWindow={false}*/}
-            {/*    >*/}
-            {/*        {items.map((item, i) => (*/}
-            {/*            <HotelCard key={i} title={item.name} price={'от 50,000 KZT '} addInfo={'2 взрослых, 2 ночи'} onClick={e => onRoomClick(item)} />*/}
-            {/*        ))}*/}
-            {/*    </InfiniteScroll>*/}
-            {/*</div>*/}
+
             {messages.map((message, messageIndex) => {
                 if(message.type==='text'){
                     console.log(message)
@@ -209,22 +153,6 @@ export default function Messenger({
                         </div>
                     );
                 }
-                // else if(message.type==='choice'){
-                //     // В messageForm должно отличаться только selected,
-                //     // Как еще можно решить проблему куда именно вставлять selected? Чувствую что можно подругому
-                //     /**/
-                //     return (
-                //         <div key={messageIndex}>
-                //             {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
-                //             <ChatChoiceForm
-                //                 user={user}
-                //                 message={message}
-                //                 onServiceSelect={service => selectService(message, service)}
-                //                 onAnother={message => console.log("another", message)}
-                //             />
-                //         </div>
-                //     );
-                // }
             })}
 
 
@@ -243,26 +171,7 @@ export default function Messenger({
                 }
             </BottomPanel>
 
-            {/*{control === 'attach' &&*/}
-            {/*    <ChatAttachPanel*/}
-            {/*        title="Выберите паттерн"*/}
-            {/*        onClose={ e => {*/}
-            {/*            dropAttachPanel()*/}
-            {/*        }}*/}
-            {/*    >*/}
 
-            {/*        /!*{action === 'actions' &&*!/*/}
-            {/*        /!*    <ChatActionButtons setAction={action => setAction(action)}/>*!/*/}
-            {/*        /!*}*!/*/}
-            {/*        {action === 'offer services' &&*/}
-            {/*            <ChatServicePanel*/}
-            {/*                onSubmit={services => onChoiceRequest(services)}*/}
-            {/*            />*/}
-            {/*        }*/}
-            {/*    </ChatAttachPanel>*/}
-            {/*}*/}
-
-            {/* Menu */}
         </>
     );
 }
