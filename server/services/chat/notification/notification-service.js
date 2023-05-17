@@ -11,6 +11,17 @@ const adminService = AdminService(Notification, notificationDto, { creatorField:
 
 const modelService = new ModelService(Notification);
 
+async function deleteNotifications(notification_ids, user){
+    const notifications = await Notification.find({_id: { $in: notification_ids }});
+    await Promise.all(notifications.map(async notification => {
+        if(notification.user != user.id){
+            return;
+        }
+        await Notification.findOneAndDelete({ _id: notification.id });
+    }))
+}
+
 module.exports = ({
     ...adminService,
+    deleteNotifications
 });

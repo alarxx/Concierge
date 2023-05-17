@@ -112,6 +112,9 @@ async function sendMessage(message, files, user) {
     const participants = await Participant.find({ conversation: message.conversation });
 
     await Promise.all(participants.map(async p => {
+        if(p.user == user.id){
+            return;
+        }
         const notification = new Notification({
             type: 'message',
             message: m.id,
