@@ -36,10 +36,15 @@ export default function Messenger({
                                   }){
     const logger = useMemo(()=>new Logger('Messenger'), []);
 
-    const { orderHandler } = useAppContext();
+    const { orderHandler, chatHandler } = useAppContext();
+    const {notifications, deleteNotifications} = chatHandler;
     const { orders } = orderHandler;
     const orderInfo = getOrderInfo(orders.find(o => o.conversation == conversation.id));
 
+    useEffect(()=>{
+        logger.log('deleteNotifications', {conversation});
+        deleteNotifications(conversation.id);
+    }, [notifications]);
 
     /**
      * Всегда когда меняется состояние сообщений мы пересчитываем messagesSelected для choice form,

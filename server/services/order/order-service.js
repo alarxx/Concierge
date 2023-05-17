@@ -237,6 +237,7 @@ async function takeOrder(order, user){
     }
     logger.log("takeOrder:", {orderModel})
     orderModel.status = 'handling';
+    orderModel.manager = user.id;
     await orderModel.save();
     // join conversation,
     await chatService.joinConversation(order.conversation, user);

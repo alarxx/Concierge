@@ -115,6 +115,10 @@ const OrderSchema = new Schema(
             immutable: true,
             required: true
         },
+        manager: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
         conversation: {
             type: Schema.Types.ObjectId,
             ref: 'Conversation',

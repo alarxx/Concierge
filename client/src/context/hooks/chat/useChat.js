@@ -199,9 +199,9 @@ export default function useChat({ socketHandler, authHandler }){
         socket.emit('join-conversation', conversation);
     }*/
 
-    function deleteNotifications(messages){
-        // const ms = messages.filter(m => m.conversation == conversation.id);
-        const ns = notifications.filter(n => messages.some(m => m.id == n.message));
+    function deleteNotifications(conversationId){
+        const ns = notifications.filter(n => n.conversation == conversationId);
+        // const ns = notifications.filter(n => messages.some(m => m.id == n.message));
         if(ns.length !== 0){
             logger.log("deleteNotification", ns);
             socket.emit('delete-notifications', ns)
