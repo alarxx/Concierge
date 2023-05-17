@@ -26,16 +26,16 @@ export default function Page({ children }){
     const { user, isAuthenticated, userLoading, isOffline } = authHandler;
     const { device } = adaptiveHandler;
 
-    if(device !== 'mobile' && (!isAuthenticated || isAuthenticated && user.role !== 'admin')){
-        return <>
-            <Modal minWidth={360} maxWidth={400}>
-                <Block isAlignCenter={true}>
-                    <Typography weight={700} size={24} bottom={12}>Адаптация в разработке</Typography>
-                    <Typography weight={500} size={16} color={'#65727D'} align={'center'}>Пожалуйста, перейдите на ваше мобильное устройство, чтобы воспользоваться всеми функциями.</Typography>
-                </Block>
-            </Modal>
-        </>
-    }
+    // if(device !== 'mobile' && (!isAuthenticated || isAuthenticated && user.role !== 'admin')){
+    //     return <>
+    //         <Modal minWidth={360} maxWidth={400}>
+    //             <Block isAlignCenter={true}>
+    //                 <Typography weight={700} size={24} bottom={12}>Адаптация в разработке</Typography>
+    //                 <Typography weight={500} size={16} color={'#65727D'} align={'center'}>Пожалуйста, перейдите на ваше мобильное устройство, чтобы воспользоваться всеми функциями.</Typography>
+    //             </Block>
+    //         </Modal>
+    //     </>
+    // }
 
     // Если был залогинен, то мы не дергаем страницу.
     if(isOffline){

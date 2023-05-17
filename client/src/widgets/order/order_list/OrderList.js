@@ -5,6 +5,7 @@ import {useAppContext} from "../../../context/AppContext";
 import Block from "../../../shared/ui/block/Block";
 import Logger from "../../../internal/Logger";
 import {useNavigate} from "react-router-dom";
+import Grid from "../../../shared/ui/grid/Grid";
 
 export default function OrderList({}) {
     const logger = useMemo(()=>new Logger('OrderList'), [])
@@ -40,17 +41,19 @@ export default function OrderList({}) {
     }
 
     return (<>
-        {sortedOrders.length === 0 && <p>Нет заказов</p>}
+        <Grid>
+            {sortedOrders.length === 0 && <p>Нет заказов</p>}
 
-        {sortedOrders.map((order, i) => {
-            return (<div key={i}>
-                <OrderCard
-                    order={order}
-                    onClick={e => {
-                        navigate(`/orders/${order.id}`);
-                    }}
-                />
-            </div>);
-        })}
+            {sortedOrders.map((order, i) => {
+                return (<div key={i}>
+                    <OrderCard
+                        order={order}
+                        onClick={e => {
+                            navigate(`/orders/${order.id}`);
+                        }}
+                    />
+                </div>);
+            })}
+        </Grid>
     </>)
 }

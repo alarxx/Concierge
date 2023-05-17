@@ -19,6 +19,7 @@ import Logger from "../../../internal/Logger";
 
 import getOrderInfo from "../../../internal/order/getOrderInfo";
 import getBookingInfo from "../../../internal/order/getBookingInfo";
+import Block from "../../../shared/ui/block/Block";
 
 export default function OrderCard({ order={}, onClick=f=>f }) {
     const logger = useMemo(()=>new Logger('OrderCard'), []);
@@ -32,7 +33,7 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
     const orderInfo = getOrderInfo(order);
 
     return(<>
-        <CardService onClick={onClick}>
+        <CardService onClick={onClick} isGrid={true}>
 
             <CardBody>
                 <GroupFlex align={'ais'} justify={'jcsb'}>
@@ -45,15 +46,15 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
                     </div>
                     <Chip text={orderInfo.status.text} variant={orderInfo.status.variant} />
                 </GroupFlex>
-            </CardBody>
 
-            <CardBody>
-                <div>
-                    <Typography size={14} weight={500} bottom={2}>{orderInfo.start_date} - {orderInfo.final_date} - {orderInfo.number_of_adults}</Typography>
-                </div>
-                <div>
-                    <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>{orderInfo.description}</Typography>
-                </div>
+                <Block top={20}>
+                    <div>
+                        <Typography size={14} weight={500} bottom={2}>{orderInfo.start_date} - {orderInfo.final_date} - {orderInfo.number_of_adults}</Typography>
+                    </div>
+                    <div>
+                        <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>{orderInfo.description}</Typography>
+                    </div>
+                </Block>
             </CardBody>
 
         </CardService>
