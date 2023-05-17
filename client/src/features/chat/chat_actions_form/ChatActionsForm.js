@@ -11,7 +11,7 @@ import ArchiveIcon from "../../../assets/icons/direct-normal.svg";
 import {useAppContext} from "../../../context/AppContext";
 import Logger from "../../../internal/Logger";
 
-export default function ChatActionsForm({ cancelClick=f=>f }) {
+export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
     const logger = useMemo(()=>new Logger('ChatActionsForm'), []);
 
     const { chatHandler } = useAppContext();
@@ -22,6 +22,10 @@ export default function ChatActionsForm({ cancelClick=f=>f }) {
     }
     function onFileRequest(e){
         logger.log('onFileRequest');
+        // sendMessage({
+        //     conversation: conversation.id,
+        //     type: 'file',
+        // })
     }
     function onSendFile(e){
         logger.log('onSendFile');

@@ -15,16 +15,9 @@ export default function ChatActions({ conversation }) {
 
     const [isModalActive, setIsModalActive] = useState(false);
 
-    function onFileRequest(){
-        sendMessage({
-            conversation: conversation.id,
-            type: 'file',
-        })
-    }
-
     return(<>
         {isModalActive && <Modal minWidth={360} maxWidth={400} onClose={e => setIsModalActive(false)}>
-            <ChatActionsForm cancelClick={e => setIsModalActive(false)} />
+            <ChatActionsForm conversation={conversation} cancelClick={e => setIsModalActive(false)} />
         </Modal>}
         <ButtonIconic onClick={e=>setIsModalActive(true)}><MenuIcon /></ButtonIconic>
     </>)
