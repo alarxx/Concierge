@@ -25,14 +25,13 @@ export default function Messenger({
                                       conversation,
                                       user,
                                       messages=[],
-                                      _upsertMessage=f=>f,
                                       closeConversation=f=>f,
                                       sendMessage=f=>f,
                                   }){
     const logger = useMemo(()=>new Logger('Messenger'), []);
 
     const { orderHandler, chatHandler } = useAppContext();
-    const {notifications, deleteNotifications} = chatHandler;
+    const {deleteNotifications} = chatHandler;
     const { orders } = orderHandler;
 
     const orderInfo = getOrderInfo(orders.find(o => o.conversation == conversation.id));
@@ -41,38 +40,10 @@ export default function Messenger({
     useEffect(()=>{
         logger.log('deleteNotifications', {conversation});
         deleteNotifications(conversation.id);
-    }, [notifications]);
+    }, [messages]);
 
 
-    const [control, setControl] = useState('text');
-
-    const [messagesSelected, setMessagesSelected] = useState([])
-    const [isAttach, setIsAttach] = useState(false);
-    const [action, setAction] = useState('actions');
-
-    function dropAttachPanel(){
-        setControl('text');
-        setAction('actions');
-        setIsAttach(false);
-    }
-
-    // const [lastDate, setLastDate] = useState();
-
-    useEffect(()=>{
-        if(action === 'request files'){
-            onFileRequest();
-            dropAttachPanel();
-        }
-        else if(messagesSelected.length !== 0){
-            setControl('choice')
-        }
-        else if(isAttach){
-            setControl('attach')
-        }
-        else{
-            setControl('text')
-        }
-    })
+    const [control, setControl] = useState('text');  // ['text', 'choice']
 
     function onTextSend(text){
         sendMessage({
@@ -87,26 +58,6 @@ export default function Messenger({
             conversation: conversation.id,
             type: 'file',
         })
-    }
-
-    /**
-     * Upsert selected service to messages selectedServices if message type is choice, and it wasn't submitted.
-     * Мы не отправляем это изменение, выборы видны только у клиента.
-     * При перезагрузке страницы выборы исчезнут.
-     * */
-    function selectService(message, service){
-        if(!message.choice.submitted) {
-            if(message.sender == user.id) return;
-            // console.log("Messenger select", message, "\nSelected service", service);
-            const services = message.choice.multiple_choice ?
-                toggleArrayElement(message.choice.selectedServices, service.id):
-                message.choice.selectedServices.includes(service.id) ? [] : [service.id]
-            // console.log(services);
-            const messageClone = objClone(message) // Копирование объекта
-            messageClone.choice.selectedServices = services
-            // console.log("message clone", messageClone);
-            _upsertMessage(messageClone)
-        }
     }
 
     /** Индекс сообщения, перед которым нужно отобразить новый день */
@@ -149,7 +100,7 @@ export default function Messenger({
                     return (
                         <div key={messageIndex}>
                             {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
-                            <FileInChat message={message} user={user} onFileLoad={onFileLoad}/>
+                            <FileInChat message={message} user={user} onFileLoad={e=>e}/>
                         </div>
                     );
                 }
@@ -160,14 +111,12 @@ export default function Messenger({
             <BottomPanel>
                 {control ==='text' &&
                     <ChatInputForm
-                        onLeftClick={e => {
-                            setAction('actions')
-                        }}
+                        onLeftClick={e => {}}
                         onSend={text => onTextSend(text)}
                     />
                 }
                 {control === 'choice' &&
-                    <Button onClick={e => onChoiceSend()}>Сделать выбор</Button>
+                    <Button onClick={e => e}>Сделать выбор</Button>
                 }
             </BottomPanel>
 

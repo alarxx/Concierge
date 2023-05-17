@@ -17,7 +17,8 @@ async function deleteNotifications(notification_ids, user){
         if(notification.user != user.id){
             return;
         }
-        await Notification.findOneAndDelete({ _id: notification.id });
+        await Notification.findOneAndDelete({ _id: notification.id })
+            .catch(logger.log);
     }))
 }
 
