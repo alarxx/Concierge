@@ -15,13 +15,12 @@ export default function Landing({}){
     const { user, authenticate, isAuthenticated } = authHandler;
     const navigate = useNavigate();
 
-    /*
     // А если на Landing находится нужная информация?
     useEffect(()=>{
         if(isAuthenticated){
             navigate('/profile', { replace: true });
         }
-    })*/
+    })
 
     function setReactFavicon(){
         const favicon = document.querySelector('[rel=icon]');
