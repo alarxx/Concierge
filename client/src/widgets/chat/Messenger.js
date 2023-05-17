@@ -52,7 +52,7 @@ export default function Messenger({
     useEffect(()=>{
         const indexes = [];
         let lastDate = null;
-        messages.map((message, i)=>{
+        conversationMessages.map((message, i)=>{
             const date = new Date(message.createdAt);
             if(!lastDate || date.getDate() != lastDate.getDate()){
                 lastDate = date
@@ -69,7 +69,7 @@ export default function Messenger({
                 title={user.role === 'admin' ? orderInfo.customerName : (orderInfo.managerName)}
             />
 
-            {messages.map((message, messageIndex) => {
+            {conversationMessages.map((message, messageIndex) => {
                 if(message.type==='text'){
                     console.log(message)
 

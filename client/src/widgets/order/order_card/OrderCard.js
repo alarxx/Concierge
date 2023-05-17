@@ -1,5 +1,6 @@
 import React, {useEffect, useMemo} from 'react'
 
+import {useNavigate} from "react-router-dom";
 import {useAppContext} from "../../../context/AppContext";
 
 import Card from "../../../shared/ui/card/Card";
@@ -25,6 +26,8 @@ import Button from "../../../shared/ui/button/Button";
 export default function OrderCard({ order={}, onClick=f=>f }) {
     const logger = useMemo(()=>new Logger('OrderCard'), []);
 
+    const navigate = useNavigate();
+
     const {orderHandler, authHandler} = useAppContext();
     const {user} = authHandler;
     const {extendedOrders} = orderHandler;
@@ -34,7 +37,7 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
     const orderInfo = getOrderInfo(order);
 
     return(<>
-        <CardService onClick={onClick} isGrid={true}>
+        <CardService onClick={onClick} isGrid={true} cursor={'default'}>
 
             <CardBody>
                 <GroupFlex align={'ais'} justify={'jcsb'}>
@@ -61,7 +64,7 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
                     <GroupFlex>
 
                         <Block right={10}>
-                            <Button variant={'outline'} size={'small'}>Подробнее</Button>
+                            <Button variant={'outline'} size={'small'} onClick={e=>navigate(`/orders/${order.id}`)}>Подробнее</Button>
                         </Block>
 
                         {(user.role === 'client' || (user.role === 'admin' && order.status !== 'new')) &&

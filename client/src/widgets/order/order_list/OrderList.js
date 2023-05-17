@@ -49,7 +49,7 @@ export default function OrderList({}) {
                     <OrderCard
                         order={order}
                         onClick={e => {
-                            navigate(`/orders/${order.id}`);
+                            //navigate(`/orders/${order.id}`);
                         }}
                     />
                 </div>);
