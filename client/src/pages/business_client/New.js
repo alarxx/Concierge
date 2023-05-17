@@ -18,8 +18,8 @@ export default function New(){
                     <Block top={40} bottom={30}>
                         <Logo />
                     </Block>
-                    {/*<ServiceChoice />*/}
-                    <ConciergeOrderFlow />
+                    <ServiceChoice />
+                    {/*<ConciergeOrderFlow />*/}
                 </Container>
             </Box>
             <NavigationPanel />

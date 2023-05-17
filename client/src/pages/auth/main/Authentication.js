@@ -58,7 +58,7 @@ export default function Authentication(){
                     {tabType === 'signup' && <SendActivationMail />}
                     {tabType === 'signin' && <SignIn />}
                     <br />
-                    <Button variant='second' onClick={onAzureClick}>OpenID Connect</Button>
+                    <Button variant='outline' onClick={onAzureClick}>Войти с Microsoft</Button>
                 </CardBody>
                 
                 <CardFooter>

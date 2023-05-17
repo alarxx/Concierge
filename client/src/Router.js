@@ -26,6 +26,7 @@ import NotFound404 from "./pages/NotFound404";
 import AdminPage from "./middlewares/AdminPage";
 import AdminDashboard from "./pages/manager/AdminDashboard";
 import ChatPage from "./pages/business_client/chat/ChatPage";
+import ConciergeNewOrder from "./pages/business_client/concierge-new-order/ConciergeNewOrder";
 
 
 export default function Router(){
@@ -87,7 +88,8 @@ export default function Router(){
 			{/** Order-Flow */}
 			<Route path='/new'>
 				<Route index element={<ProtectedPage><New /></ProtectedPage>}/>
-				<Route path='hotel' element={<ProtectedPage><HotelOrderFlow /></ProtectedPage>}/>
+				<Route path={'concierge'} element={<ProtectedPage><ConciergeNewOrder /></ProtectedPage>}/>
+				<Route path={'hotel'} element={<ProtectedPage><HotelOrderFlow /></ProtectedPage>}/>
 			</Route>
 
 			{/** Orders Views */}

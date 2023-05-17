@@ -81,6 +81,7 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
     return (
         <div className="">
             <form onSubmit={submit_findHotels}>
+                <label>Город</label>
                 <Select
                     placeholder={'Введите город'}
                     options={cityOptions}
@@ -113,6 +114,7 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                     onChange={handleOnSelect}
                     required
                 />
+                <label>Даты проживания</label>
                 <GroupInput>
                     {/*<DatePicker*/}
                     {/*    selected={startDate}*/}
@@ -130,7 +132,11 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                     <MyInput placeHolder='Дата заезда' type='date' name='start_date' data={data} upsertFields={upsertFields} />
                     <MyInput placeHolder='Дата выезда' type='date' name='end_date' data={data} upsertFields={upsertFields} />
                 </GroupInput>
+
+                <label>Количество взрослых</label>
                 <MyInput placeHolder='1 Номер для' type='number' name='number_of_adults' data={data} upsertFields={upsertFields} />
+
+                <label>Количество детей</label>
                 <MyInput placeHolder='Дети' type='number' name='number_of_children' data={data} upsertFields={upsertFields} />
 
                 <Button type={'submit'}>Поиск отеля</Button>

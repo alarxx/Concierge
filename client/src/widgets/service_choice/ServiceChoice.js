@@ -96,7 +96,7 @@ export default function ServiceChoice() {
             </CardBody>
         </Card>
 
-        <Button top={20} variant={'outline'} onClick={e => setIsModalActive(true)}>Создать составной заказ</Button>
+        <Button top={20} variant={'outline'} onClick={e => setIsModalActive(true)/*navigate('/new/concierge')*/}>Создать составной заказ</Button>
 
     </>)
 }
