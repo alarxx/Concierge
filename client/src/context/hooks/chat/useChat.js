@@ -201,6 +201,7 @@ export default function useChat({ socketHandler, authHandler }){
 
     function deleteNotifications(conversationId){
         const ns = notifications.filter(n => n.conversation == conversationId);
+        logger.log("deleteNotifications", {notifications: ns})
         // const ns = notifications.filter(n => messages.some(m => m.id == n.message));
         if(ns.length !== 0){
             logger.log("deleteNotification", ns);
