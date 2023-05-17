@@ -10,6 +10,7 @@ const ModelService = require("../helpers/ModelService");
 const bookingsService = require('../bookings/bookings-service');
 const chatService = require('../chat/chat-service');
 const conversationService = require('../chat/conversation/conversation-service');
+const messageService = require('../chat/message/message-service');
 
 const checkNecessaryFields = require("../helpers/checkNecessaryFields");
 const conversation_dto = require("../../dtos/chat/conversation-dto");
@@ -114,6 +115,9 @@ async function createOne(body, files, user) {
     await chatService.saveConversationWithParticipants(conversation, participants);
 
     await modelService.saveWithFiles(order, files, { user });
+
+    await messageService.sendScripts(conversation.id);
+
 
     return ({
         order: orderDto(order, user),

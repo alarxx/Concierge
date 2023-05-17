@@ -161,38 +161,9 @@ async function joinConversation(conversationId, user){
     await p.save();
     await conversationModel.save(); // тот кто вошел должен получить беседу.
 
-    /*
-    // script messages on first Manager join
-    if(user.role === 'manager'){
-        const script_messages = [
-            "Ваша заявка принята!",
-            `Здравствуйте, меня зовут ${user.name}. Я ваш менеджер консультант `,
-            "Данные о заказе, будут отображаться на главной странице и в окне информации чата"
-        ]
-        // Что будет если сокет выйдет в эти 9 секунд, я хз
-        for(let i=0; i<script_messages.length; i++){
-            setTimeout(()=>{
-                createMessage({
-                    type: "text",
-                    text: script_messages[i],
-                    conversation: conversation.id
-                }, socket);
-                return;
-            }, 1500*(i+1)) // каждые 1.5 сек будут прилетать script_messages[i].
-        }
-    }*/
+
 }
 
-async function deleteNotifications(notifications){
-    /*const Notifications = require('../../models/modelsManager').models.Notification;
-
-    const ids = notifications.map(n => n.id);
-    const ns = await Notifications.find({ '_id': { $in: ids } })
-
-    await Promise.all(ns.map(async n => {
-        await n.deepDelete();
-    }))*/
-}
 
 module.exports = ({
     firstLoad,

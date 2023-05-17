@@ -68,6 +68,10 @@ async function sendMessage(message, files, user) {
     await modelService.deleteInvalidFileFields(message);
 
     // Проверить состоит ли пользователь в conversation
+    const conversation = await Conversation.findById(message.conversation);
+    if(!conversation){
+        throw ApiError.NotFound('conversation not found');
+    }
 
     //Нужно не только тупое сохранение сделать, но и изменение
     let m = message.id ?
@@ -130,8 +134,30 @@ async function sendMessage(message, files, user) {
     return messageDto(m, user);
 }
 
+async function sendScripts(conversationId){
+
+    // script messages on first Manager join
+    const script_messages = [
+        "Ваша заявка принята!",
+        `Здравствуйте, вас приветствует Concierge Service. Ваш личный менеджер-консультант скоро ответит вам.`,
+        "Данные о заказе, будут отображаться на главной странице и в окне информации чата"
+    ]
+    // Что будет если сокет выйдет в эти 9 секунд, я хз
+    for(let i=0; i<script_messages.length; i++){
+        setTimeout(()=>{
+            sendMessage({
+                type: "text",
+                text: script_messages[i],
+                conversation: conversationId
+            }, {}, {id: '6463349a81472c0e599a2771'});
+            return;
+        }, 1500*(i+1)) // каждые 1.5 сек будут прилетать script_messages[i].
+    }
+}
+
 module.exports = ({
     ...adminService,
     pagination,
     sendMessage,
+    sendScripts
 });
