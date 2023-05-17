@@ -23,7 +23,8 @@ import getBookingInfo from "../../../internal/order/getBookingInfo";
 export default function OrderCard({ order={}, onClick=f=>f }) {
     const logger = useMemo(()=>new Logger('OrderCard'), []);
 
-    const {orderHandler} = useAppContext();
+    const {orderHandler, authHandler} = useAppContext();
+    const {user} = authHandler;
     const {extendedOrders} = orderHandler;
 
     // const extendedOrder = extendedOrders.find(eo => eo.id === order.id);
@@ -38,7 +39,9 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
                     <div>
                         <div><Typography size={16} weight={600} bottom={2}>{orderInfo.name}</Typography></div>
                         <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>Заказ #{orderInfo.last4IDDigits}</Typography></div>
-                        <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>{orderInfo.customerName}</Typography></div>
+                        {user.role === 'admin' && <>
+                            <div><Typography size={16} weight={600} bottom={4} color={'#959BA1'}>{orderInfo.customerName}</Typography></div>
+                        </>}
                     </div>
                     <Chip text={orderInfo.status.text} variant={orderInfo.status.variant} />
                 </GroupFlex>

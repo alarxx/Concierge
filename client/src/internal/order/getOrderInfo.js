@@ -48,6 +48,7 @@ export default function getOrderInfo(order){
         status,
         last4IDDigits: String(order.id).substr(-4),
         customerName: order.customer.name,
-        name
+        name,
+        managerName: order.manager?.name ? order.manager.name : 'Менеджер',
     });
 }

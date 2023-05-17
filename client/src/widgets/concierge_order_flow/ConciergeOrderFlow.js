@@ -33,7 +33,7 @@ export default function ConciergeOrderFlow() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [data, setData] = useState({number_of_adults: 1, number_of_children: 0});
+    const [data, setData] = useState({});//{number_of_adults: 1, number_of_children: 0});
     const [isLoading, setIsLoading] = useState(false);
 
     /* В зависимости от того, что входит в needs добавляем в массив компоненты */
@@ -49,9 +49,9 @@ export default function ConciergeOrderFlow() {
                 if(data.needs.includes('airfare')){
                     steps.push(AirfareStep);
                 }
-                if(data.needs.includes('transfer')){
-                    steps.push(TransferStep);
-                }
+                // if(data.needs.includes('transfer')){
+                //     steps.push(TransferStep);
+                // }
             }
             return steps;
         });

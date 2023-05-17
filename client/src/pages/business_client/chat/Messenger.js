@@ -161,7 +161,7 @@ export default function Messenger({
         <>
             <NavbarPanel
                 LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={closeConversation} />}
-                title={orderInfo.customerName}
+                title={user.role === 'admin' ? orderInfo.customerName : (orderInfo.managerName)}
             />
             {/*<div className={styles.hotel__list} style={{ height: "100%", overflow: 'auto' }}>*/}
             {/*    <InfiniteScroll*/}

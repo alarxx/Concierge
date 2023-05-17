@@ -27,9 +27,9 @@ export default function HotelStep({
 
     const logger = useMemo(()=>new Logger('HotelStep'), []);
 
-    const {  } = data;
+    const { city } = data;
 
-    const [selectOption, setSelectOption] = useState([]);
+    const [selectOption, setSelectOption] = useState(city);
 
     const handleOnSelect = (e) => {
         setSelectOption(e.value);
@@ -60,13 +60,19 @@ export default function HotelStep({
                         <Typography size={20} weight={700} align={'center'}>Данные по отелю</Typography>
                     </Block>
 
+                    <label>Город</label>
                     <_SelectCity selectOption={selectOption} handleOnSelect={handleOnSelect}/>
 
+                    <label>Даты проживания</label>
                     <GroupInput>
                         <MyInput placeHolder='Дата заезда' type='date' name='check_in_date' data={data} upsertFields={upsertFields} required={true} />
                         <MyInput placeHolder='Дата выезда' type='date' name='check_out_date' data={data} upsertFields={upsertFields} required={true} />
                     </GroupInput>
+
+                    <label>Количество взрослых</label>
                     <MyInput placeHolder='1 Номер для' type='number' name='number_of_adults' data={data} upsertFields={upsertFields} required={true} />
+
+                    <label>Количество детей</label>
                     <MyInput placeHolder='Дети' type='number' name='number_of_children' data={data} upsertFields={upsertFields} required={true} />
                 </CardBody>
 
