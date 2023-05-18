@@ -55,7 +55,8 @@ export default function OrderInfo({}){
         <Box navbar={true} menu={true} yummy={true}>
             <Container>
 
-                <Accordion expanded={expanded === 'personal-data'}>
+                {/*<Accordion expanded={expanded === 'personal-data'}>*/}
+                <Accordion expanded={true}>
                     <AccordionSummary onClick={() => handleChange('personal-data')} >
                         <Card variant='info'>
                             <CardBody>
@@ -67,7 +68,8 @@ export default function OrderInfo({}){
                         </Card>
                     </AccordionSummary>
 
-                    {expanded === 'personal-data' && <AccordionDetails>
+                    {/*{expanded === 'personal-data' && <AccordionDetails>*/}
+                    {<AccordionDetails>
                         <Card variant='info'>
                             <CardBody>
                                 <EmployeeInfo name={order.customer.name} phone={order.customer.phone} email={order.customer.email}/>
@@ -76,7 +78,8 @@ export default function OrderInfo({}){
                     </AccordionDetails>}
                 </Accordion>
 
-                <Accordion expanded={expanded === 'order'}>
+                {/*<Accordion expanded={expanded === 'order'}>*/}
+                <Accordion expanded={true}>
                     <AccordionSummary onClick={() => handleChange('order')} >
                         <Card variant='info'>
                             <CardBody>
@@ -88,7 +91,8 @@ export default function OrderInfo({}){
                         </Card>
                     </AccordionSummary>
 
-                    {expanded === 'order' && <>
+                    {/*{expanded === 'order' && <>*/}
+                    {<>
                         <AccordionDetails>
                             {extendedOrder.bookings.map((booking, i) => {
                                 if(booking.type === 'hotel/booking') {

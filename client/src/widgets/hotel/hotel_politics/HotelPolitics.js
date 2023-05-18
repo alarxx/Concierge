@@ -15,7 +15,7 @@ import PetsIcon from '../../../assets/icons/pets-icon.svg'
 import GeneralIcon from '../../../assets/icons/details_icon.svg'
 
 
-export default function HotelPolitics({}) {
+export default function HotelPolitics({ hotel }) {
 
 
     return(<>
@@ -27,15 +27,16 @@ export default function HotelPolitics({}) {
             </ListDetails>
 
             <ListDetails Icon={<MealsIcon/>} >
-                <Typography size={16} weight={700}>Тип питания: </Typography><Typography size={16} weight={500}>Все включено</Typography>
+                <Typography size={16} weight={700}>Тип питания: </Typography><Typography size={16} weight={500}>На базе завтраков</Typography>
             </ListDetails>
 
             <ListDetails Icon={<PetsIcon/>} title={'Животные:'}>
-                <Typography size={16} weight={500}>Животные разрешены с доплатой. Цена за проживание: 10,000 KZT за ночь.</Typography>
+                <Typography size={16} weight={500}>Животные разрешены с доплатой. Цену за проживания сможете уточнить у менеджера.</Typography>
             </ListDetails>
 
             <ListDetails Icon={<GeneralIcon/>} title={'Политика отмены: '}>
-                <Typography size={16} weight={500}>Отмена брони возможна с доплатой. Цена за отмену брони: 20% от суммы брони.</Typography>
+                {/*<Typography size={16} weight={500}>Отмена брони возможна с доплатой. Цена за отмену брони: % от суммы брони.</Typography>*/}
+                <Typography size={16} weight={500}>Отмена брони возможна с доплатой. Уточняйте у менеджера.</Typography>
             </ListDetails>
         </Card>
     </>)

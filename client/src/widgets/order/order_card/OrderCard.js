@@ -22,6 +22,7 @@ import getOrderInfo from "../../../internal/order/getOrderInfo";
 import getBookingInfo from "../../../internal/order/getBookingInfo";
 import Block from "../../../shared/ui/block/Block";
 import Button from "../../../shared/ui/button/Button";
+import dateToForm from "../../../internal/order/dateToString";
 
 export default function OrderCard({ order={}, onClick=f=>f }) {
     const logger = useMemo(()=>new Logger('OrderCard'), []);
@@ -53,7 +54,7 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
 
                 <Block top={20}>
                     <div>
-                        <Typography size={14} weight={500} bottom={2}>{orderInfo.start_date} - {orderInfo.final_date} - {orderInfo.number_of_adults}</Typography>
+                        <Typography size={14} weight={500} bottom={2}>{dateToForm(order.meta?.hotel?.check_in_date)} - {dateToForm(order.meta?.hotel?.check_out_date)} - {order.meta?.hotel?.number_of_adults} {order.meta?.hotel?.number_of_adults>1?'взрослых':'взрослый'}{order.meta?.hotel?.number_of_children !== 0 ? `, ${order.meta?.hotel?.number_of_children} ${order.meta?.hotel?.number_of_children>1?'детей':'ребенок'}`:''}</Typography>
                     </div>
                     <div>
                         <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>{orderInfo.description}</Typography>

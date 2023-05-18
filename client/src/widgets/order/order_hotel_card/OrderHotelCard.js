@@ -17,17 +17,9 @@ import statusEnum from "../../../internal/order/StatusEnum";
 import Logger from "../../../internal/Logger";
 
 import monthName from "../../../internal/monthName";
+import dateToForm from "../../../internal/order/dateToString";
+import getCity from "../../../internal/order/getCity";
 
-function getCity(fullcity){
-    const words = fullcity?.split(",", 2); // 'Казахстан, Астана'.split(",", 2);
-    return words?.length === 2 ? words[1]: words;
-}
-
-function dateToForm(date){
-    const _date = new Date(date);
-    console.log("dateToForm", monthName(_date.getMonth()));
-    return `${_date.getDate()} ${monthName(_date.getMonth()).substring(0, 3).toLowerCase()}`;
-}
 
 export default function OrderHotelCard({ hotelmeta, hotel, hotel_booking={}, onClick=f=>f }) {
 
@@ -56,7 +48,7 @@ export default function OrderHotelCard({ hotelmeta, hotel, hotel_booking={}, onC
             </CardBody>
             <CardBody>
                 <div>
-                    <Typography size={14} weight={500} bottom={2}>{dateToForm(hotelmeta.check_in_date)} - {dateToForm(hotelmeta.check_out_date)} - {hotelmeta.number_of_adults} {hotelmeta.number_of_adults > 1 ? 'взрослых' : 'взрослый'}</Typography>
+                    <Typography size={14} weight={500} bottom={2}>{dateToForm(hotelmeta.check_in_date)} - {dateToForm(hotelmeta.check_out_date)} - {hotelmeta.number_of_adults} {hotelmeta.number_of_adults>1?'взрослых':'взрослый'}{hotelmeta.number_of_children !== 0 ? `, ${hotelmeta.number_of_children} ${hotelmeta.number_of_children>1?'детей':'ребенок'}`:''}</Typography>
                 </div>
                 {/*<div>
                     <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>Lux на 2, № 1 - Питание: BB</Typography>

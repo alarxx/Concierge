@@ -37,12 +37,15 @@ export default function HotelOrderDetails({hotel, data}) {
             {/*</ListDetails>*/}
 
             <ListDetails Icon={<PersonalIcon/>} title={'Бронь на:'}>
-                <div><Typography size={16} weight={500}>Люди: </Typography> <Typography size={16} weight={700}>{data.number_of_adults} взрослых</Typography> </div>
+                <div>
+                    <Typography size={16} weight={500}>Люди: </Typography>
+                    <Typography size={16} weight={700}>{data.number_of_adults} {data.number_of_adults>1?'взрослых':'взрослый'}{data.number_of_children !== 0 ? `, ${data.number_of_children} ${data.number_of_children>1?'детей':'ребенок'}`:''}</Typography>
+                </div>
                 <div><Typography size={16} weight={500}>Период: </Typography> <Typography size={16} weight={700}>с {} по {}</Typography> </div>
             </ListDetails>
 
             <ListDetails Icon={<MealsIcon/>} title={'Питание:'} >
-                <Typography size={16} weight={700}>Тип питания: </Typography><Typography size={16} weight={500}>На базе завтраков</Typography>
+                <Typography size={16} weight={700}>Тип питания: </Typography><Typography size={16} weight={500}>По ум. на базе завтраков</Typography>
             </ListDetails>
 
         </Card>
