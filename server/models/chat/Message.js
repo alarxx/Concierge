@@ -38,7 +38,7 @@ const MessageSchema = new Schema(
         },
         type: {
             type: String,
-            enum: ['service?', 'text', 'file', 'choice', 'notice', 'payment'],
+            enum: ['service?', 'text', 'file', 'image', 'choice', 'notice', 'payment'],
             immutable: true,
             required: true,
         },
@@ -47,6 +47,10 @@ const MessageSchema = new Schema(
             type: String,
         },
         file: {
+            type: Schema.Types.ObjectId,
+            ref: 'File'
+        },
+        image: {
             type: Schema.Types.ObjectId,
             ref: 'File'
         },

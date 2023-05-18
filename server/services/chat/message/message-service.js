@@ -99,7 +99,10 @@ async function sendMessage(message, files, user) {
     }
     // А когда файл? Нужно сохранить file и установить его id в message.file
     else if(m.type === 'file'){
-        console.log(m);
+        logger.log("m.type === 'file'",{m, files});
+    }
+    else if(m.type === 'image'){
+        logger.log("m.type === 'image'",{m, files});
     }
     else {
         throw ApiError.BadRequest('Bad message type');
