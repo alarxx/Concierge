@@ -30,8 +30,8 @@ export default function ChatInputForm({
         });
         setInputText("");
 
-        bottomref?.current?.scrollIntoView();
-        console.log("BOTTOM REF", bottomref.current)
+        // bottomref?.current?.scrollIntoView({behavior: 'smooth'});
+        // console.log("BOTTOM REF", bottomref.current)
     }
 
     return (<>

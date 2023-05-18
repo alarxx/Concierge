@@ -46,8 +46,8 @@ export default function Messenger({
         deleteNotifications(conversation.id);
 
         // scroll to bottom
-        bottomRef?.current?.scrollIntoView();
-        console.log('BOTTOM REF',bottomRef)
+        bottomRef?.current?.scrollIntoView({behavior: 'smooth'});
+        // console.log('BOTTOM REF',bottomRef)
     }, [messages]);
 
 
@@ -114,7 +114,7 @@ export default function Messenger({
                     }
                 })}
 
-                <div className="" ref={bottomRef} />
+                <div className="" ref={bottomRef} style={{paddingTop: 40}} />
 
                 <BottomPanel>
                     {control ==='text' &&
