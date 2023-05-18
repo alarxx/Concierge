@@ -8,11 +8,11 @@ import styles from  './fileInChat.module.css'
 import Message from "../message/Message";
 
 /** Можно использовать пакет file-saver */
-function downloadFile({file}){
+function downloadFile({file, file_name}){
     fetch(`/file/d/${file}`, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/octet-stream',
+            // 'Content-Type': 'application/octet-stream',
             // 'Content-Disposition': 'attachment; filename=fileName.ext'
         },
     })
@@ -22,7 +22,7 @@ function downloadFile({file}){
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = file.name;
+            a.download = file_name;
             a.click();
         }).catch(console.log);
 }
@@ -47,7 +47,7 @@ function onFileLoad(messageId, file){
  * */
 export default function FileInChat({ message, user}){
 
-    const file = message.file;
+    const {file, file_name} = message;
 
     return (<>
         <Message message={message} user={user}>
@@ -55,12 +55,12 @@ export default function FileInChat({ message, user}){
             {file &&
                 <div className={styles["chat-download"]}
                      onClick={e => {
-                         downloadFile({file: file})
+                         downloadFile({file, file_name})
                      }}
                 >
                     <div className={styles["chat-download__block"]}></div>
                     <div className={styles["chat-download__file"]}>
-                        {file.name ? file.name : 'File.name'}
+                        {file_name ? file_name : 'File.name'}
                     </div>
                     <div className={styles["chat-download__btn"]}>
                         <DownloadIcon />

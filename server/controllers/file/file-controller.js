@@ -26,6 +26,7 @@ module.exports = ({
         try{
             const id = req.params.id;
             const file = await fileService.getFile(id, req.user);
+            console.log("download file:", path.resolve(require.main.path, file.path), file.name);
             res.download(path.resolve(require.main.path, file.path), file.name);
         }
         catch(e){
