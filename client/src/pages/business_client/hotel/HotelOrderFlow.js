@@ -83,7 +83,7 @@ export default function HotelOrderFlow(){
         meta.hotel = {};
         meta.hotel.city = data.city;
         meta.hotel.check_in_date = data.check_in_date;
-        meta.hotel.check_in_date = data.check_out_date;
+        meta.hotel.check_out_date = data.check_out_date;
         meta.hotel.number_of_adults = data.number_of_adults;
         meta.hotel.number_of_children = data.number_of_children;
 

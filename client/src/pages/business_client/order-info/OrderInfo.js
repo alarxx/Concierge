@@ -41,10 +41,11 @@ export default function OrderInfo({}){
     const { id } = useParams();
 
     const { orderHandler, authHandler } = useAppContext();
-    const { orders, takeOrder } = orderHandler;
+    const { orders, extendedOrders, takeOrder } = orderHandler;
     const { user } = authHandler;
 
     const order = orders.find(order => order.id == id);
+    const extendedOrder = extendedOrders.find(order => order.id == id);
 
     return (<>
         <NavbarPanel
@@ -89,10 +90,10 @@ export default function OrderInfo({}){
 
                     {expanded === 'order' && <>
                         <AccordionDetails>
-                            {order.bookings.map((booking, i) => {
+                            {extendedOrder.bookings.map((booking, i) => {
                                 if(booking.type === 'hotel/booking') {
                                     return (<div key={i}>
-                                        <OrderHotelCard hotel_booking={booking['hotel/booking']}/>
+                                        <OrderHotelCard hotelmeta={order.meta.hotel} hotel={booking.hotel} hotel_booking={booking['hotel/booking']}/>
                                     </div>);
                                 }
                                 else {
