@@ -5,7 +5,6 @@ const HotelSchema = new Schema(
         company: {
             type: Schema.Types.ObjectId,
             ref: 'Company',
-            required: true,
             immutable: true,
         },
 
@@ -46,6 +45,10 @@ const HotelSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'File',
         }],
+
+        cancellation_policy:{
+            type: String,
+        },
     },
     {
         timestamps: true,

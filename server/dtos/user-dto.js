@@ -1,6 +1,7 @@
 module.exports = (model, user) => !model ? null : ({
     id: model.id,
     name: model.name,
+    phone: model.phone,
     email: model.email,
     role: model.role,
     status: model.status,

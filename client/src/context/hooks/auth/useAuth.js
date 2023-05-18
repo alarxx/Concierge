@@ -273,6 +273,7 @@ export default function useAuth({ socketHandler }){
             return safeNavigate('/authn/banned');
         }
         else if(!user.name || !user.phone){
+            logger.log('/authn/no_name', {user});
             return safeNavigate('/authn/no_name');
         }
         else if(location.pathname === '/authn/banned' || location.pathname === '/authn/activation' || location.pathname === '/authn/no_name'){
