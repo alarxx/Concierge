@@ -56,6 +56,8 @@ async function pagination(filters, user){ //, skip, limit, sort) { // query
 }
 
 async function sendMessage(message, files, user) {
+    logger.log({ message, files, user });
+
     if (!files) {
         files = {};
     }
