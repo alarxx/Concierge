@@ -167,7 +167,7 @@ export default function HotelCrudForm({title='', onClose, item}) {
                 </Block>
 
                 <Block top={30}>
-                    <Uploader id={1}/>
+                    <Uploader isMultiple={false} id={1}/>
                 </Block>
 
 

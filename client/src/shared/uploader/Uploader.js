@@ -1,10 +1,13 @@
-import React, {useRef, useState} from "react";
+import React, {useMemo, useRef, useState} from "react";
 
 import styles from './uploader.module.css';
 import Button from "./components/Button";
 import Preview from "./components/Preview";
+import Logger from "../../internal/Logger";
 
 export default function Uploader({isMultiple=true, accept=['.png','.jpg', '.jpeg'], id}) {
+
+    const logger = useMemo(()=>new Logger('Uploader'), []);
 
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [filePreviews, setFilePreviews] = useState([]);
@@ -50,7 +53,9 @@ export default function Uploader({isMultiple=true, accept=['.png','.jpg', '.jpeg
         // setTimeout(() => block.remove(), 300)
     };
 
-    const handleSubmit = async (event) => {
+
+    // загрузка массива файлов
+    const handleSubmitMultiple = async (event) => {
         event.preventDefault();
 
         const formData = new FormData();
@@ -88,10 +93,43 @@ export default function Uploader({isMultiple=true, accept=['.png','.jpg', '.jpeg
         });
     };
 
+    // загрузка одного файла
+    function handleSubmitSingle(event) {
+        event.preventDefault();
+
+        if (selectedFiles) {
+            const selectedImage = selectedFiles[0]
+            const formData = new FormData();
+
+            // нужно айдишник отеля присваивать, но при создании отеля айдишник не существует
+            // formData.append('hotel', id);
+            formData.append('type', 'image');
+            formData.append('image', selectedImage);
+
+            logger.log('SINGLE FILE',selectedImage);
+
+            // api загрузки файлов
+            fetch('/api/file/', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    logger.log('Image response', response);
+                    // Handle server response
+                })
+                .catch(error => {
+                    // Handle upload error
+                    logger.log('Image error', error);
+                });
+
+        }
+    }
+
     const fileInputRef = useRef(null);
     const handleButtonClick = () => {
         fileInputRef.current.click();
     };
+
 
 
     return(
@@ -108,7 +146,7 @@ export default function Uploader({isMultiple=true, accept=['.png','.jpg', '.jpeg
 
                 <Button type={'button'} onClick={handleButtonClick}>Выбрать изображения</Button>
 
-                {(selectedFiles && selectedFiles.length > 0) && <Button type={'submit'} onClick={handleSubmit}>Загрузить</Button>}
+                {(selectedFiles && selectedFiles.length > 0) && <Button type={'submit'} onClick={isMultiple ? handleSubmitMultiple : handleSubmitSingle}>Загрузить</Button>}
 
             </form>
         </div>
