@@ -9,12 +9,14 @@ import fetchJSON from "../../../internal/fetchJSON";
 
 export default function NoNameForm({ }){
 
-    const {authHandler} = useAppContext();
-    const {assignName} = authHandler;
+    const navigate = useNavigate();
 
-    const [name1, setName1] = useState('');
-    const [name2, setName2] = useState('');
-    const [phone, setPhone] = useState('');
+    const {authHandler} = useAppContext();
+    const {user} = authHandler;
+
+    const [name1, setName1] = useState(user.name.split(" ")[0]);
+    const [name2, setName2] = useState(user.name.split(" ")[1]);
+    const [phone, setPhone] = useState(user.phone);
 
     const logger = useMemo(()=>new Logger('NoName'),[])
 
@@ -43,6 +45,7 @@ export default function NoNameForm({ }){
         if(response.status === 200){
             setSuccess(json);
             setError(null);
+            navigate('/');
         }
         else {
             logger.log("USER ERROR",json)
