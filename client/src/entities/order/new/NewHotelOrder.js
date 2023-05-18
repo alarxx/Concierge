@@ -81,6 +81,10 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
 
+    useEffect(()=>{
+      logger.log('DATA', data)
+    }, data)
+
     return (
         <div className="">
             <form onSubmit={submit_findHotels}>
@@ -119,21 +123,21 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                 />
                 <label>Даты проживания</label>
                 <GroupInput>
-                    <DatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        monthsShown={2}
-                    />
-                    <DatePicker
-                        selected={endDate}
-                        onChange={(date) => setEndDate(date)}
-                        selectsEnd
-                        startDate={startDate}
-                        endDate={endDate}
-                        minDate={startDate}
-                    />
-                    {/*<MyInput placeHolder='Дата заезда' type='date' name='start_date' data={data} upsertFields={upsertFields} />*/}
-                    {/*<MyInput placeHolder='Дата выезда' type='date' name='end_date' data={data} upsertFields={upsertFields} />*/}
+                    {/*<DatePicker*/}
+                    {/*    selected={startDate}*/}
+                    {/*    onChange={(date) => setStartDate(date)}*/}
+                    {/*    monthsShown={2}*/}
+                    {/*/>*/}
+                    {/*<DatePicker*/}
+                    {/*    selected={endDate}*/}
+                    {/*    onChange={(date) => setEndDate(date)}*/}
+                    {/*    selectsEnd*/}
+                    {/*    startDate={startDate}*/}
+                    {/*    endDate={endDate}*/}
+                    {/*    minDate={startDate}*/}
+                    {/*/>*/}
+                    <MyInput placeHolder='Дата заезда' type='date' name='start_date' data={data} upsertFields={upsertFields} />
+                    <MyInput placeHolder='Дата выезда' type='date' name='end_date' data={data} upsertFields={upsertFields} />
                 </GroupInput>
 
                 <GroupInput>

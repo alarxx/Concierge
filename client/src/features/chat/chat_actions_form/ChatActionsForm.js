@@ -35,12 +35,22 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
 
 
 
+    const [previewUrl, setPreviewUrl] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef(null);
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-        setSelectedFile(file)
-        // Handle the selected files
+        setSelectedFile(file);
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setPreviewUrl(reader.result);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            setPreviewUrl('');
+        }
     };
     function onImageSend(e){
         fileInputRef.current.click();
@@ -71,6 +81,16 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
             <Block isAlignCenter={true}>
                 <Typography weight={700} size={24}>Что вы хотите сделать?</Typography>
             </Block>}
+
+            {(selectedFile && previewUrl) && (
+                <div>
+                    {selectedFile.type.startsWith('image/') ? (
+                        <img src={previewUrl} alt="File Preview" style={{ maxWidth: '100%' }} />
+                    ) : (
+                        <a href={previewUrl} download={selectedFile.name}>Download {selectedFile.name}</a>
+                    )}
+                </div>
+            )}
 
             <GroupButtons top={20}>
                 {!selectedFile &&
