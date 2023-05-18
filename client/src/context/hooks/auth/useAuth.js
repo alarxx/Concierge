@@ -379,11 +379,14 @@ export default function useAuth({ socketHandler }){
         if(!isAuthenticated) {
             return logger.error('Authentication is required to assignName');
         }
-        return await userFetch('/auth/name', {
+        const json = await userFetch('/auth/name', {
             method: "PATCH",
             body: { name, phone }
         });
+        setUserLoading(false);
+        return json;
         /*
+
         logger.log(json)
         Авто reconnect с socket user-observer
         if(json.status === 200){
