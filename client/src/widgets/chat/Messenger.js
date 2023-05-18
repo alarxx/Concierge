@@ -19,6 +19,7 @@ import findIndexById from "../../internal/findIndexById";
 import objClone from "../../internal/objClone";
 import {useAppContext} from "../../context/AppContext";
 import getOrderInfo from "../../internal/order/getOrderInfo";
+import Message from "../../features/chat/message/Message";
 
 //message: {type=choice, id, items, selected, submitted}
 export default function Messenger({
@@ -84,10 +85,11 @@ export default function Messenger({
                     );
                 }
                 else if(message.type==='file') {
+                    logger.log('FILE MESSAGE', {message})
                     return (
                         <div key={messageIndex}>
                             {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
-                            <FileInChat message={message} user={user} onFileLoad={e=>e}/>
+                            <FileInChat message={message} user={user}/>
                         </div>
                     );
                 }
@@ -96,9 +98,9 @@ export default function Messenger({
                     return (
                         <div key={messageIndex}>
                             {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
-                            <div>
-                                image
-                            </div>
+                            <Message message={message} user={user}>
+                                <img src={`/file/${message.image}`} style={{width:'100%'}}/>
+                            </Message>
                         </div>
                     );
                 }

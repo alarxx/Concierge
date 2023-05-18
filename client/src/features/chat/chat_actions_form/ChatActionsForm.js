@@ -28,14 +28,8 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
         //     type: 'file',
         // })
     }
-    function onSendFile(e){
-        logger.log('onSendFile');
-    }
 
 
-
-
-    const [previewUrl, setPreviewUrl] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef(null);
     const handleFileChange = (event) => {
@@ -52,20 +46,85 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
             setPreviewUrl('');
         }
     };
-    function onImageSend(e){
+    function onSendFile(e){
         fileInputRef.current.click();
-        logger.log('onImageSend');
+        logger.log('onSendFile');
     }
 
     function onFileSubmit() {
         if (selectedFile && conversation) {
-            sendMessage({
-                conversation: conversation.id,
-                type: 'image',
-                image: selectedFile,
+            const formData = new FormData();
+            formData.append('conversation', conversation.id);
+            formData.append('type', 'file');
+            formData.append('file', selectedFile);
+
+            fetch('/api/chat/message/send', {
+                method: 'POST',
+                body: formData
             })
-            logger.log('Image sent', selectedFile);
+                .then(response => {
+                    logger.log('File response', response);
+                    // Handle server response
+                })
+                .catch(error => {
+                    // Handle upload error
+                    logger.log('File error', error);
+                });
+
+            logger.log('File sent', selectedImage);
         }
+        cancelClick()
+        logger.log('FILE SENT', selectedFile);
+    }
+
+
+
+
+    const [previewUrl, setPreviewUrl] = useState('');
+    const [selectedImage, setSelectedImage] = useState(null);
+    const imageInputRef = useRef(null);
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedImage(file);
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setPreviewUrl(reader.result);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            setPreviewUrl('');
+        }
+    };
+    function onImageSend(e){
+        imageInputRef.current.click();
+        logger.log('onImageSend');
+    }
+
+    function onImageSubmit() {
+        if (selectedImage && conversation) {
+            const formData = new FormData();
+            formData.append('conversation', conversation.id);
+            formData.append('type', 'image');
+            formData.append('image', selectedImage);
+
+            fetch('/api/chat/message/send', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    logger.log('Image response', response);
+                    // Handle server response
+                })
+                .catch(error => {
+                    // Handle upload error
+                    logger.log('Image error', error);
+                });
+
+            logger.log('Image sent', selectedImage);
+        }
+        cancelClick()
     }
 
 
@@ -77,23 +136,23 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
 
     return(<>
         <Modal minWidth={360} maxWidth={400} onClose={cancelClick}>
-            {!selectedFile &&
+            {!selectedImage &&
             <Block isAlignCenter={true}>
                 <Typography weight={700} size={24}>Что вы хотите сделать?</Typography>
             </Block>}
 
-            {(selectedFile && previewUrl) && (
+            {(selectedImage && previewUrl) && (
                 <div>
-                    {selectedFile.type.startsWith('image/') ? (
+                    {selectedImage.type.startsWith('image/') ? (
                         <img src={previewUrl} alt="File Preview" style={{ maxWidth: '100%' }} />
                     ) : (
-                        <a href={previewUrl} download={selectedFile.name}>Download {selectedFile.name}</a>
+                        <a href={previewUrl} download={selectedImage.name}>Download {selectedImage.name}</a>
                     )}
                 </div>
             )}
 
             <GroupButtons top={20}>
-                {!selectedFile &&
+                {(!selectedImage || !selectedFile) &&
                     <>
                         <Button onClick={onOfferServices}>
                             <HouseIcon viewBox="0 0 24 24"/>
@@ -106,12 +165,13 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
                         </Button>
 
                         <Button onClick={onSendFile}>
+                            <input type={'file'} accept={'.pdf,.doc,.docx,.ppt,.pptx'} name={'image'} onChange={handleFileChange} ref={fileInputRef} style={{ display: 'none' }} />
                             <PersonalCardIcon viewBox="0 0 24 24"/>
                             Отправить файлы
                         </Button>
 
                         <Button onClick={onImageSend}>
-                            <input type={'file'} accept={'.png,.jpg,.jpeg'} name={'image'} onChange={handleFileChange} ref={fileInputRef} style={{ display: 'none' }} />
+                            <input type={'file'} accept={'.png,.jpg,.jpeg'} name={'image'} onChange={handleImageChange} ref={imageInputRef} style={{ display: 'none' }} />
                             <GalleryIcon viewBox="0 0 24 24"/>
                             Отправить изображение
                         </Button>
@@ -128,6 +188,7 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
                     </>
                 }
 
+                {selectedImage && <Button onClick={onImageSubmit}>Отправить</Button>}
                 {selectedFile && <Button onClick={onFileSubmit}>Отправить</Button>}
 
                 <Button variant={'cancel'} onClick={cancelClick}>Отмена</Button>

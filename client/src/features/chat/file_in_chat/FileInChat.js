@@ -44,7 +44,9 @@ function onFileLoad(messageId, file){
 /**
  * Как загружать и скачивать файлы без input??
  * */
-export default function FileInChat({ messageId, file, isDownloadable}){
+export default function FileInChat({ message, user}){
+
+    const file = message.file;
 
     return (<>
 
