@@ -63,6 +63,8 @@ async function pagination(filters, user) {
     return returnHotels(hotels);
 }
 
+const fileService = require("../../services/file-service");
+
 async function createOne(body, files, user) {
     if (!files) {
         files = {};
@@ -85,6 +87,17 @@ async function createOne(body, files, user) {
     // validate city
     await model.validate();
     await cityService.checkCityExists(model.city);
+
+    if(files.images){
+        const image_ids = await Promise.all(files.images.map(async (image, i) => {
+            const file = await fileService.createFile(files.images[i], {
+                owner: user.id,
+                accessType: 'public',
+            });
+            return file.id;
+        }));
+        model.images = image_ids;
+    }
 
     await modelService.saveWithFiles(model, files, { user });
 
