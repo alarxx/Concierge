@@ -25,11 +25,12 @@ export default function HotelCard({title='', price='', addInfo='', onClick=f=>f}
             </CardServiceBody>
             <CardServiceFooter>
                 <GroupFlex>
-                    <div>
+                    {/*<div>
                         <div><Typography size={16} weight={700} bottom={4}>{price}</Typography></div>
                         <div><Typography size={12} weight={500}>{addInfo}</Typography></div>
                     </div>
                     <ButtonLike />
+                    */}
                 </GroupFlex>
             </CardServiceFooter>
         </CardService>

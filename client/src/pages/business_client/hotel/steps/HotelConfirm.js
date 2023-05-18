@@ -21,7 +21,7 @@ import Loading from "../../../../shared/loading/Loading";
 export default function HotelConfirm({ data={}, submit=f=>f, back=f=>f}) {
     const logger = useMemo(()=>new Logger('HotelConfirm'), []);
 
-    const {hotel, room} = data;
+    const {hotel, room, meta} = data;
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -41,10 +41,10 @@ export default function HotelConfirm({ data={}, submit=f=>f, back=f=>f}) {
 
         <Box navbar={true} menu={true} yummy={true}>
             <Container>
-                <HotelOrderDetails />
+                <HotelOrderDetails data={data} hotel={hotel}/>
                 <HotelPolitics />
-                <HotelRoomPrice />
-                <HotelRoomDetails />
+                {/*<HotelRoomPrice />*/}
+                {/*<HotelRoomDetails />*/}
             </Container>
         </Box>
 

@@ -26,6 +26,17 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
         return navigate('/new/hotel', { replace: false, state: { data } })
     }
 
+    useEffect(()=>{
+        const obj = {};
+        if(!data.number_of_adults){
+            obj.number_of_adults = 1;
+        }
+        if(!data.number_of_children){
+            obj.number_of_children = 0;
+        }
+        upsertFields(obj);
+    },[])
+
     const DropdownIndicator = (props) => {
         return (
             components.DropdownIndicator && (
@@ -136,8 +147,8 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                     {/*    endDate={endDate}*/}
                     {/*    minDate={startDate}*/}
                     {/*/>*/}
-                    <MyInput placeHolder='Дата заезда' type='date' name='start_date' data={data} upsertFields={upsertFields} />
-                    <MyInput placeHolder='Дата выезда' type='date' name='end_date' data={data} upsertFields={upsertFields} />
+                    <MyInput placeHolder='Дата заезда' type='date' name='start_date' data={data} upsertFields={upsertFields} required />
+                    <MyInput placeHolder='Дата выезда' type='date' name='end_date' data={data} upsertFields={upsertFields} required />
                 </GroupInput>
 
                 <GroupInput>
