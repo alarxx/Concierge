@@ -5,6 +5,8 @@ const AdminService = require('../../helpers/AdminService');
 const { Message, Conversation, Participant, Notification } = require('../../../models/models-manager');
 const messageDto = require('../../../dtos/chat/message-dto');
 const checkNecessaryFields = require("../../helpers/checkNecessaryFields");
+const mongoose = require("mongoose");
+const fileService = require("../../file-service");
 
 const logger = require('../../../log/logger')('message-service');
 
@@ -105,6 +107,22 @@ async function sendMessage(message, files, user) {
     }
     else if(m.type === 'image'){
         logger.log("m.type === 'image'",{m, files});
+        if(message['image']) {
+
+            // Здесь нужно учитывать, что под files[key] может быть массив файлов, также и model[key] !!!???
+
+            // delete if file already exist
+
+            const file = await fileService.createFile(message['image'], {
+                owner: user.id,
+                accessType: 'public',
+                // accessHolders: opts.owner ? [...opts.accessHolders, opts.owner] : opts.accessHolders,
+            });
+
+            m['image'] = file.id;
+
+            return file;
+        }
     }
     else {
         throw ApiError.BadRequest('Bad message type');
@@ -113,9 +131,9 @@ async function sendMessage(message, files, user) {
     await m.validate();
 
     // Нужно прикреплять файлы
-    await modelService.saveWithFiles(m, files, { user });
+    // await modelService.saveWithFiles(m, files, { user });
 
-    // await m.save();
+    await m.save();
 
 
     // Отправить всем уведомление
