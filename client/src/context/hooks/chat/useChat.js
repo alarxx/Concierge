@@ -192,6 +192,7 @@ export default function useChat({ socketHandler, authHandler }){
      * }
      * */
     function sendMessage(message){
+        logger.log("sendMessage", {message});
         socket.emit("send-message", message);
     }
 
