@@ -59,7 +59,7 @@ export default function OrderInfo({}){
                         <Card variant='info'>
                             <CardBody>
                                 <GroupFlex align='aic' justify='jcsb'>
-                                    Ваши данные
+                                    Контактные данные
                                     <TriangleIcon/>
                                 </GroupFlex>
                             </CardBody>
@@ -69,7 +69,7 @@ export default function OrderInfo({}){
                     {expanded === 'personal-data' && <AccordionDetails>
                         <Card variant='info'>
                             <CardBody>
-                                <EmployeeInfo/>
+                                <EmployeeInfo name={order.customer.name} phone={order.customer.phone} email={order.customer.email}/>
                             </CardBody>
                         </Card>
                     </AccordionDetails>}

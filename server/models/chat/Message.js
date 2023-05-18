@@ -50,6 +50,9 @@ const MessageSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'File'
         },
+        file_name: {
+            type: String,
+        },
         image: {
             type: Schema.Types.ObjectId,
             ref: 'File'
@@ -67,6 +70,7 @@ const MessageSchema = new Schema(
         description: {
             type: String,
         },
+
     },
     {
         timestamps: true,
