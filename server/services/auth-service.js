@@ -73,16 +73,22 @@ async function activation({ activation_token, name, phone, password } ){
 }
 
 
-async function setName({ user, name }){
-    if(user.name){
-        throw ApiError.Conflict("Name already exists");
+async function setName({ user, name, phone }){
+    if(user.name && user.phone){
+        throw ApiError.Conflict("Name and phone already exists");
     }
     else if(!name){
         throw ApiError.BadRequest("Name cannot be empty");
     }
+    else if(!phone){
+        throw ApiError.BadRequest("Phone cannot be empty");
+    }
 
     const userModel = await User.findById(user.id);
+
     userModel.name = name;
+    userModel.phone = phone;
+
     await userModel.save();
 
     return userDto(userModel);

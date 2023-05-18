@@ -35,9 +35,9 @@ async function activation(req, res, next){
 
 async function setName(req, res, next){
     try{
-        const {name} = req.body;
+        const {name, phone} = req.body;
 
-        const user = await authService.setName({ user: req.user, name });
+        const user = await authService.setName({ user: req.user, name, phone });
 
         res.json({ message: "Successfully assigned a name" })
     }

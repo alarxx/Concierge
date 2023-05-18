@@ -9,7 +9,9 @@ export default function NoName({ }){
     const {authHandler} = useAppContext();
     const {assignName} = authHandler;
 
-    const [name, setName] = useState('');
+    const [name1, setName1] = useState('');
+    const [name2, setName2] = useState('');
+    const [phone, setPhone] = useState('');
 
     const logger = useMemo(()=>new Logger('NoName'),[])
 
@@ -22,7 +24,7 @@ export default function NoName({ }){
         setError(null);
         setLoading(true);
 
-        assignName({ name })
+        assignName({ name: `${name1} ${name2}`, phone })
             .then(json => {
                 if(json.status === 200){
                     setSuccess(json);
@@ -37,13 +39,21 @@ export default function NoName({ }){
     }
 
     return (<>
-        <h1>[No Name]</h1>
+        <h1>Не хватает обязательных полей</h1>
 
         {loading && <p>loading...</p>}
         {success && <p>{success.message}</p>}
         {error && <p>{error.message}</p>}
 
-        <input value={name} onChange={e => setName(e.target.value)}/>
+        <label>Имя</label>
+        <input value={name1} onChange={e => setName1(e.target.value)} required/>
+
+        <label>Фамилия</label>
+        <input value={name2} onChange={e => setName2(e.target.value)} required/>
+
+        <label>Номер телефона</label>
+        <input value={phone} onChange={e => setPhone(e.target.value)} required/>
+
         <button onClick={onSetName}>Set name</button>
 
     </>);

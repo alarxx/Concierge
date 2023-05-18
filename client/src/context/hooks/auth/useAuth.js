@@ -272,7 +272,7 @@ export default function useAuth({ socketHandler }){
         if(user.status === 'banned'){
             return safeNavigate('/authn/banned');
         }
-        else if(!user.name){
+        else if(!user.name || !user.phone){
             return safeNavigate('/authn/no_name');
         }
         else if(location.pathname === '/authn/banned' || location.pathname === '/authn/activation' || location.pathname === '/authn/no_name'){
@@ -371,7 +371,7 @@ export default function useAuth({ socketHandler }){
     /**
      * Возможно есть смысл здесь не делать userFetch, а использовать fetchJSON обычный?
      * */
-    async function assignName({ name }){
+    async function assignName({ name, phone }){
         if(userLoading){
             return logger.error('Please wait for the user to connect');
         }
@@ -380,7 +380,7 @@ export default function useAuth({ socketHandler }){
         }
         return await userFetch('/auth/name', {
             method: "PATCH",
-            body: { name }
+            body: { name, phone }
         });
         /*
         logger.log(json)
