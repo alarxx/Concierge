@@ -1,0 +1,14 @@
+.uploader {
+    border-radius: 6px;
+    background: #fff;
+    padding: 1rem;
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, .2);
+}
+
+.uploader input[type=file] {
+    display: none;
+}
+.uploader-previews {
+    display: flex;
+    align-items: center;
+}

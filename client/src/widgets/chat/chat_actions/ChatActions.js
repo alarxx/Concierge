@@ -6,6 +6,8 @@ import MenuIcon from "../../../assets/icons/menu.svg";
 import ButtonIconic from "../../../shared/ui/button_iconic/ButtonIconic";
 import {useAppContext} from "../../../context/AppContext";
 import Logger from "../../../internal/Logger";
+import ConciergeServiceForm from "../../../features/order/concierge_service_form/ConciergeServiceForm";
+import useToggle from "../../../hooks/useToggle";
 
 export default function ChatActions({ conversation }) {
     const logger = useMemo(()=>new Logger('ChatActions'), []);
@@ -13,12 +15,10 @@ export default function ChatActions({ conversation }) {
     const { chatHandler } = useAppContext();
     const { sendMessage } = chatHandler;
 
-    const [isModalActive, setIsModalActive] = useState(false);
+    const [isActive, toggle] = useToggle(false);
 
     return(<>
-        {isModalActive && <Modal minWidth={360} maxWidth={400} onClose={e => setIsModalActive(false)}>
-            <ChatActionsForm conversation={conversation} cancelClick={e => setIsModalActive(false)} />
-        </Modal>}
-        <ButtonIconic onClick={e=>setIsModalActive(true)}><MenuIcon /></ButtonIconic>
+        { isActive &&  <ChatActionsForm conversation={conversation} cancelClick={toggle} /> }
+        <ButtonIconic onClick={toggle}><MenuIcon /></ButtonIconic>
     </>)
 }

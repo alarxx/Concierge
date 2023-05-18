@@ -19,6 +19,7 @@ import CardBody from "../../../shared/ui/card/CardBody";
 import GroupFlex from "../../../shared/ui/group_flex/GroupFlex";
 import Modal from "../../../shared/ui/modal/Modal";
 import LogoutForm from "../../../features/auth/logout/LogoutForm";
+import Uploader from "../../../shared/uploader/Uploader";
 
 
 export default function Profile({}){
