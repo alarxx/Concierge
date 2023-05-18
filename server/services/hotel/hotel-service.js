@@ -141,6 +141,18 @@ async function updateOne(body, files, user) {
     await model.validate();
     await cityService.checkCityExists(model.city);
 
+    // Здесь желательно удалять файлы, которые были на model.images
+    if(files.images){
+        const image_ids = await Promise.all(files.images.map(async (image, i) => {
+            const file = await fileService.createFile(files.images[i], {
+                owner: user.id,
+                accessType: 'public',
+            });
+            return file.id;
+        }));
+        model.images = image_ids;
+    }
+
     await modelService.saveWithFiles(model, files, { user });
 
     return model; // dto(model);
