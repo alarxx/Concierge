@@ -56,6 +56,8 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
             const formData = new FormData();
             formData.append('conversation', conversation.id);
             formData.append('type', 'file');
+            logger.log('FILE NAME', selectedFile)
+            // selectedFile.name = encodeURIComponent(selectedFile.name);
             formData.append('file', selectedFile);
 
             fetch('/api/chat/message/send', {
@@ -152,7 +154,7 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
             )}
 
             <GroupButtons top={20}>
-                {(!selectedImage || !selectedFile) &&
+                {(!selectedImage && !selectedFile) &&
                     <>
                         <Button onClick={onOfferServices}>
                             <HouseIcon viewBox="0 0 24 24"/>
