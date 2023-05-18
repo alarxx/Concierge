@@ -11,6 +11,7 @@ import {useAppContext} from "../../../context/AppContext";
 export default function ChatInputForm({
                                           conversation,
                                           initInput="",
+                                          bottomref
                                       }){
 
     const { chatHandler } = useAppContext();
@@ -28,6 +29,9 @@ export default function ChatInputForm({
             text: inputText,
         });
         setInputText("");
+
+        bottomref?.current?.scrollIntoView();
+        console.log("BOTTOM REF", bottomref.current)
     }
 
     return (<>

@@ -38,11 +38,16 @@ export default function Messenger({
 
     const { orders } = orderHandler;
     const orderInfo = getOrderInfo(orders.find(o => o.conversation == conversation.id));
+    const bottomRef = useRef(null)
 
     /** Delete notifications on open conversation (Messenger) */
     useEffect(()=>{
         logger.log('deleteNotifications', {conversation});
         deleteNotifications(conversation.id);
+
+        // scroll to bottom
+        bottomRef?.current?.scrollIntoView();
+        console.log('BOTTOM REF',bottomRef)
     }, [messages]);
 
 
@@ -64,6 +69,7 @@ export default function Messenger({
         setNewDates(indexes)
     }, [messages])
 
+
     return (
         <>
             <Container>
@@ -74,7 +80,7 @@ export default function Messenger({
 
                 {conversationMessages.map((message, messageIndex) => {
                     if(message.type==='text'){
-                        console.log(message)
+                        // console.log(message)
 
                         return (
                             <div key={messageIndex}>
@@ -108,11 +114,12 @@ export default function Messenger({
                     }
                 })}
 
-
+                <div className="" ref={bottomRef} />
 
                 <BottomPanel>
                     {control ==='text' &&
                         <ChatInputForm
+                            bottomref={bottomRef}
                             conversation={conversation}
                         />
                     }
