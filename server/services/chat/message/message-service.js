@@ -109,10 +109,11 @@ async function sendMessage(message, files, user) {
     } // ничего не делаем при других type пока
 
     await m.validate();
-    // Нужно прикреплять файлы
-    // await modelService.saveWithFiles(m, files, { user });
 
-    await m.save();
+    // Нужно прикреплять файлы
+    await modelService.saveWithFiles(m, files, { user });
+
+    // await m.save();
 
 
     // Отправить всем уведомление
