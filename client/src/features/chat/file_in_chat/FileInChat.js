@@ -5,10 +5,11 @@ import DownloadIcon from '../../../assets/icons/document-download.svg'
 import Button from "../../../shared/ui/button/Button";
 
 import styles from  './fileInChat.module.css'
+import Message from "../message/Message";
 
 /** Можно использовать пакет file-saver */
 function downloadFile({file}){
-    fetch(`/file/${file.id}`, {
+    fetch(`/file/d/${file}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/octet-stream',
@@ -49,34 +50,35 @@ export default function FileInChat({ message, user}){
     const file = message.file;
 
     return (<>
+        <Message message={message} user={user}>
 
-        {file &&
-            <div className={styles["chat-download"]}
-                 onClick={e => {
-                     downloadFile({file: file})
-                 }}
-            >
-                <div className={styles["chat-download__block"]}></div>
-                <div className={styles["chat-download__file"]}>
-                    {file.name ? file.name : 'File.name'}
+            {file &&
+                <div className={styles["chat-download"]}
+                     onClick={e => {
+                         downloadFile({file: file})
+                     }}
+                >
+                    <div className={styles["chat-download__block"]}></div>
+                    <div className={styles["chat-download__file"]}>
+                        {file.name ? file.name : 'File.name'}
+                    </div>
+                    <div className={styles["chat-download__btn"]}>
+                        <DownloadIcon />
+                    </div>
                 </div>
-                <div className={styles["chat-download__btn"]}>
-                    <DownloadIcon />
+            }
+            {!file &&
+                <div className={styles["chat-attach"]}>
+                    <Button>
+                        <input name="file" type="file" onChange={e => {
+                            e.preventDefault();
+                            onFileLoad(message.id, e.target.files[0]);
+                        }}/>
+                        <LoadIcon />
+                        <span>Прикрепить файлы</span>
+                    </Button>
                 </div>
-            </div>
-        }
-        {!file &&
-            <div className={styles["chat-attach"]}>
-                <Button>
-                    {isDownloadable && <input name="file" type="file" onChange={e => {
-                        e.preventDefault();
-                        onFileLoad(messageId, e.target.files[0]);
-                    }}/>}
-                    <LoadIcon />
-                    <span>Прикрепить файлы</span>
-                </Button>
-            </div>
-        }
-
+            }
+        </Message>
     </>);
 }
