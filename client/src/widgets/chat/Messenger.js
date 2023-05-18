@@ -20,6 +20,7 @@ import objClone from "../../internal/objClone";
 import {useAppContext} from "../../context/AppContext";
 import getOrderInfo from "../../internal/order/getOrderInfo";
 import Message from "../../features/chat/message/Message";
+import Container from "../../shared/ui/box/Container";
 
 //message: {type=choice, id, items, selected, submitted}
 export default function Messenger({
@@ -65,61 +66,62 @@ export default function Messenger({
 
     return (
         <>
-            <NavbarPanel
-                LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={closeConversation} />}
-                title={user.role === 'admin' ? orderInfo.customerName : (orderInfo.managerName)}
-            />
+            <Container>
+                <NavbarPanel
+                    LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={closeConversation} />}
+                    title={user.role === 'admin' ? orderInfo.customerName : (orderInfo.managerName)}
+                />
 
-            {conversationMessages.map((message, messageIndex) => {
-                if(message.type==='text'){
-                    console.log(message)
+                {conversationMessages.map((message, messageIndex) => {
+                    if(message.type==='text'){
+                        console.log(message)
 
-                    return (
-                        <div key={messageIndex}>
-                            {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
-                            <ChatMessage
-                                message={message}
-                                user={user}
-                            />
-                        </div>
-                    );
-                }
-                else if(message.type==='file') {
-                    logger.log('FILE MESSAGE', {message})
-                    return (
-                        <div key={messageIndex}>
-                            {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
-                            <FileInChat message={message} user={user}/>
-                        </div>
-                    );
-                }
-                else if(message.type==='image') {
-                    logger.log('IMAGE MESSAGE', {message})
-                    return (
-                        <div key={messageIndex}>
-                            {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
-                            <Message message={message} user={user}>
-                                <img src={`/file/${message.image}`} style={{width:'100%'}}/>
-                            </Message>
-                        </div>
-                    );
-                }
-            })}
-
-
-
-            <BottomPanel>
-                {control ==='text' &&
-                    <ChatInputForm
-                        conversation={conversation}
-                    />
-                }
-                {control === 'choice' &&
-                    <Button onClick={e => e}>Сделать выбор</Button>
-                }
-            </BottomPanel>
+                        return (
+                            <div key={messageIndex}>
+                                {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
+                                <ChatMessage
+                                    message={message}
+                                    user={user}
+                                />
+                            </div>
+                        );
+                    }
+                    else if(message.type==='file') {
+                        logger.log('FILE MESSAGE', {message})
+                        return (
+                            <div key={messageIndex}>
+                                {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
+                                <FileInChat message={message} user={user}/>
+                            </div>
+                        );
+                    }
+                    else if(message.type==='image') {
+                        logger.log('IMAGE MESSAGE', {message})
+                        return (
+                            <div key={messageIndex}>
+                                {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
+                                <Message message={message} user={user}>
+                                    <img src={`/file/${message.image}`} style={{width:'100%'}}/>
+                                </Message>
+                            </div>
+                        );
+                    }
+                })}
 
 
+
+                <BottomPanel>
+                    {control ==='text' &&
+                        <ChatInputForm
+                            conversation={conversation}
+                        />
+                    }
+                    {control === 'choice' &&
+                        <Button onClick={e => e}>Сделать выбор</Button>
+                    }
+                </BottomPanel>
+
+            </Container>
         </>
     );
 }
