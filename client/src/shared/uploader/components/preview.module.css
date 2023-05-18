@@ -9,6 +9,8 @@
     margin-bottom: .5rem;
     margin-right: .5rem;
     overflow: hidden;
+    min-height: 60px;
+    border: 2px solid;
 }
 
 .preview-image.removing {
@@ -25,8 +27,8 @@
     opacity: 1;
 }
 
-.preview-image:hover .preview-info {
-    bottom: 4px;
+.preview-image:hover .preview {
+    border: 1px solid #3E6AD7;
 }
 
 .preview-remove {
@@ -47,19 +49,24 @@
 
 .preview-info {
     position: absolute;
+    display: none;
     right: 0;
     bottom: -30px;
     left: 0;
     height: 24px;
     font-size: .8rem;
     background: rgba(255, 255, 255, .5);
-    display: flex;
+    /*display: flex;*/
     align-items: center;
     justify-content: space-between;
     padding: 0 5px;
     transition: bottom .22s;
 }
 
+.preview-image:hover .preview-info {
+    display: flex;
+    bottom: 4px;
+}
 .preview-info-progress {
     position: absolute;
     left: 0;

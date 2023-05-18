@@ -156,15 +156,15 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
             <GroupButtons top={20}>
                 {(!selectedImage && !selectedFile) &&
                     <>
-                        <Button onClick={onOfferServices}>
-                            <HouseIcon viewBox="0 0 24 24"/>
-                            Предложить услуги
-                        </Button>
+                        {/*<Button onClick={onOfferServices}>*/}
+                        {/*    <HouseIcon viewBox="0 0 24 24"/>*/}
+                        {/*    Предложить услуги*/}
+                        {/*</Button>*/}
 
-                        <Button onClick={onFileRequest}>
-                            <PersonalCardIcon viewBox="0 0 24 24"/>
-                            Получить файлы
-                        </Button>
+                        {/*<Button onClick={onFileRequest}>*/}
+                        {/*    <PersonalCardIcon viewBox="0 0 24 24"/>*/}
+                        {/*    Получить файлы*/}
+                        {/*</Button>*/}
 
                         <Button onClick={onSendFile}>
                             <input type={'file'} accept={'.pdf,.doc,.docx,.ppt,.pptx'} name={'image'} onChange={handleFileChange} ref={fileInputRef} style={{ display: 'none' }} />
@@ -183,10 +183,10 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
                             Изменить данные
                         </Button>*/}
 
-                        <Button onClick={onSendToArchive}>
-                            <ArchiveIcon viewBox="0 0 24 24"/>
-                            Отправить в архив
-                        </Button>
+                        {/*<Button onClick={onSendToArchive}>*/}
+                        {/*    <ArchiveIcon viewBox="0 0 24 24"/>*/}
+                        {/*    Отправить в архив*/}
+                        {/*</Button>*/}
                     </>
                 }
 

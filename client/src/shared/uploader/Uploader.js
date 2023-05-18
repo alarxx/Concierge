@@ -73,6 +73,7 @@ export default function Uploader({isMultiple=true, accept=['.png','.jpg', '.jpeg
                 }
             });
 
+            // ЛОГИКА ЗАГРУЗКИ В БЭКЕНД
             xhr.open('POST', '/api/upload');
             xhr.onload = () => {
                 if (xhr.status === 200) {
@@ -105,7 +106,7 @@ export default function Uploader({isMultiple=true, accept=['.png','.jpg', '.jpeg
                     ))}
                 </div>
 
-                <Button type={'button'} onClick={handleButtonClick}>Открыть</Button>
+                <Button type={'button'} onClick={handleButtonClick}>Выбрать изображения</Button>
 
                 {(selectedFiles && selectedFiles.length > 0) && <Button type={'submit'} onClick={handleSubmit}>Загрузить</Button>}
 

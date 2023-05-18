@@ -7,6 +7,7 @@ import Input from "../../../shared/ui/input/Input";
 import GroupInput from "../../../shared/ui/group_input/GroupInput";
 import GroupButtons from "../../../shared/ui/group_buttons/GroupButtons";
 import Modal from "../../../shared/ui/modal/Modal";
+import Uploader from "../../../shared/uploader/Uploader";
 
 export default function HotelCrudForm({title='', onClose, item}) {
 
@@ -163,6 +164,10 @@ export default function HotelCrudForm({title='', onClose, item}) {
                             required
                         />
                     </GroupInput>
+                </Block>
+
+                <Block top={30}>
+                    <Uploader id={1}/>
                 </Block>
 
 
