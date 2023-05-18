@@ -91,6 +91,17 @@ export default function Messenger({
                         </div>
                     );
                 }
+                else if(message.type==='image') {
+                    logger.log('IMAGE MESSAGE', {message})
+                    return (
+                        <div key={messageIndex}>
+                            {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
+                            <div>
+                                image
+                            </div>
+                        </div>
+                    );
+                }
             })}
 
 
