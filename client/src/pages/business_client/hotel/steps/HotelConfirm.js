@@ -41,7 +41,16 @@ export default function HotelConfirm({ data={}, submit=f=>f, back=f=>f}) {
 
         <Box navbar={true} menu={true} yummy={true}>
             <Container>
-                <HotelOrderDetails data={data} hotel={hotel}/>
+                <HotelOrderDetails
+                    hotel_name={hotel.name}
+                    hotel_city={hotel.city}
+                    check_in_date={data.check_in_date}
+                    check_out_date={data.check_out_date}
+                    number_of_adults={data.number_of_adults}
+                    number_of_children={data.number_of_children}
+                    address={hotel.address}
+                    stars={hotel.stars}
+                />
                 <HotelPolitics />
                 {/*<HotelRoomPrice />*/}
                 {/*<HotelRoomDetails />*/}

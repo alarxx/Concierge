@@ -36,7 +36,7 @@ export default function HotelPolitics({ hotel }) {
 
             <ListDetails Icon={<GeneralIcon/>} title={'Политика отмены: '}>
                 {/*<Typography size={16} weight={500}>Отмена брони возможна с доплатой. Цена за отмену брони: % от суммы брони.</Typography>*/}
-                <Typography size={16} weight={500}>Отмена брони возможна с доплатой. Уточняйте у менеджера.</Typography>
+                <Typography size={16} weight={500}>Отмена брони возможна с доплатой. Цену сможете уточнить у менеджера.</Typography>
             </ListDetails>
         </Card>
     </>)

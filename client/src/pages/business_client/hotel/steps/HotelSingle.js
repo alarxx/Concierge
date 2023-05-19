@@ -44,10 +44,10 @@ export default function HotelSingle({ data={}, next=f=>f, back=f=>f, }) {
         <Box navbar={true} menu={true} yummy={true}>
             <Container>
                 <Gallery height={240} />
-                {/*<HotelGeo />*/}
+                <HotelGeo />
                 {/*<HotelChoiceRoom />*/}
-                <HotelPolitics />
-                <HotelDetails />
+                <HotelPolitics hotel={hotel} />
+                <HotelDetails hotel={hotel} />
             </Container>
         </Box>
 

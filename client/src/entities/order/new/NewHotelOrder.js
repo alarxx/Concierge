@@ -89,9 +89,6 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
         console.log(selectOption)
     }, [selectOption])
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-
     useEffect(()=>{
       logger.log('DATA', data)
     }, data)
@@ -147,8 +144,8 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                     {/*    endDate={endDate}*/}
                     {/*    minDate={startDate}*/}
                     {/*/>*/}
-                    <MyInput placeHolder='Дата заезда' type='date' name='start_date' data={data} upsertFields={upsertFields} required />
-                    <MyInput placeHolder='Дата выезда' type='date' name='end_date' data={data} upsertFields={upsertFields} required />
+                    <MyInput placeHolder='Дата заезда' type='date' name='check_in_date' data={data} upsertFields={upsertFields}  />
+                    <MyInput placeHolder='Дата выезда' type='date' name='check_out_date' data={data} upsertFields={upsertFields}  />
                 </GroupInput>
 
                 <GroupInput>

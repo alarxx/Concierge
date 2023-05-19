@@ -17,7 +17,7 @@ import statusEnum from "../../../internal/order/StatusEnum";
 import Logger from "../../../internal/Logger";
 
 import monthName from "../../../internal/monthName";
-import dateToForm from "../../../internal/order/dateToString";
+import dateToForm from "../../../internal/order/date_toString";
 import getCity from "../../../internal/order/getCity";
 
 
