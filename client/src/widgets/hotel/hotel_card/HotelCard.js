@@ -11,13 +11,13 @@ import Gallery from "../../../shared/ui/gallery/Gallery";
 import Stars from "../../../shared/ui/stars/Stars";
 
 
-export default function HotelCard({title='', price='', addInfo='', onClick=f=>f}) {
+export default function HotelCard({title='', stars=0, price='', addInfo='', onClick=f=>f}) {
 
 
     return(<>
         <CardService onClick={onClick}>
             <CardServiceHeader>
-                <Stars />
+                {stars > 0 && <Stars stars={stars}/>}
                 {title}
             </CardServiceHeader>
             <CardServiceBody>

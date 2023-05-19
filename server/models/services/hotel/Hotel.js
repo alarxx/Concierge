@@ -49,6 +49,15 @@ const HotelSchema = new Schema(
         cancellation_policy:{
             type: String,
         },
+        check_in_time:{
+            type: String,
+        },
+        check_out_time:{
+            type: String,
+        },
+        food_type: {
+            type: String,
+        }
     },
     {
         timestamps: true,
