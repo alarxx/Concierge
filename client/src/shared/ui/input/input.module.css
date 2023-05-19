@@ -1,3 +1,7 @@
+.input-wrapper {
+    width: 100%;
+    position: relative;
+}
 .input-form label, .select-form label {
     font-weight: 600;
     font-size: 14px;
@@ -29,6 +33,20 @@
     color: rgba(53, 53, 53, 0.5);
     font-weight: 500;
 }
+.input-icon {
+    position: absolute;
+    top: 47%;
+    transform: translate(0, -50%);
+    right: 6px;
+    cursor: pointer;
+
+}
+.input-icon svg {
+    transform: scale(.5);
+    fill: #282C2E;
+}
+
+
 /* .input:last-child {
     margin-bottom: 0;
 } */
