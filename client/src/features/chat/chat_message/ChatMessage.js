@@ -22,7 +22,7 @@ export default function ChatMessage({
 
             <div className={styles[`chat-message`]}>
                 <div className={styles["chat-message__text"]}>
-                    {message.text}
+                    {`${message.text}${!message.isDelivered ? " (отправляется)" : ''}`}
                 </div>
                 <div className={styles["chat-message__time"]}>
                     {messageTime(message)}

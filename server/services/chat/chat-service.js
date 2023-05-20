@@ -10,6 +10,9 @@ const notification_dto = require('../../dtos/chat/notification-dto');
 const participant_dto = require('../../dtos/chat/participant-dto');
 const async_participant_dto = require('../../dtos/async/chat/participant-dto');
 
+const conversationsUpsert = require("../../websocket/emitter/chat/conversations-upsert");
+const messagesUpsert = require("../../websocket/emitter/chat/messages-upsert");
+
 const conversation_modelService = new ModelService(Conversation);
 const message_modelService = new ModelService(Message);
 const notification_modelService = new ModelService(Notification);
@@ -146,22 +149,26 @@ async function joinConversation(conversationId, user){
 
     const conversationModel = await Conversation.findById(conversationId);
     if(!conversationModel){
-        return console.log(`Conversation does not exist`, conversationId)
+        return logger.error(`Conversation does not exist`, conversationId);
     }
 
     const participant_info = {conversation: conversationId, user: user.id};
 
     const exist_participant = await Participant.findOne(participant_info);
     if(exist_participant){
-        return console.log(`Participant already exists `, exist_participant)
+        return logger.error(`Participant already exists `, exist_participant);
     }
 
     const p = new Participant(participant_info);
 
+    const messageModels = await Message.find({conversation: conversationId});
+
     await p.save();
-    await conversationModel.save(); // тот кто вошел должен получить беседу.
 
-
+    // Только тот кто вошел должен получить беседу.
+    // await conversationModel.save(); Это отправит всем conversation, это не оптимально
+    conversationsUpsert(user.id, [conversationModel]);
+    messagesUpsert(user.id, messageModels);
 }
 
 

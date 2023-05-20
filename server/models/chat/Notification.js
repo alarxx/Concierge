@@ -5,16 +5,18 @@ const NotificationSchema = new Schema(
     {
         type: {
             type: String,
-            enum: ['message']
+            enum: ['message'],
+            default: 'message'
         },
         message: {
             type: Schema.Types.ObjectId,
             ref: 'Message',
-            // required: true,
+            required: true,
         },
         conversation: {
             type: Schema.Types.ObjectId,
             ref: 'Conversation',
+            required: true,
         },
         user: {
             type: Schema.Types.ObjectId,

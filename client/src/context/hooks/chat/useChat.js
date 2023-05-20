@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react'
 
 import useFreshData from "../useFreshData";
 import Logger from "../../../internal/Logger";
+import useMessages from "./useMessages";
 
 /*const conversationsDefault = [
     {
@@ -130,7 +131,7 @@ export default function useChat({ socketHandler, authHandler }){
     const [chatLoading, setChatLoading] = useState(false);
     const [chatError, setChatError] = useState(null);
 
-    const { data:messages, setData:setMessages } = useFreshData({ socket, modelName: 'message' });
+    const { messages, setMessages, sendMessage } = useMessages({ socketHandler, authHandler })
     const { data:conversations, setData:setConversations } = useFreshData({ socket, modelName: 'conversation' })
     const { data:participants, setData:setParticipants } = useFreshData({ socket, modelName: 'participant' });
     const { data:notifications, setData:setNotifications } = useFreshData({ socket, modelName: 'notification' });
@@ -185,17 +186,6 @@ export default function useChat({ socketHandler, authHandler }){
         setChatLoading(false)
     }
 
-    /**
-     * message - объект, который содержит {
-     *     conversation: ObjectId,
-     *     type: 'text',
-     *     text: 'Hello, World!'
-     * }
-     * */
-    function sendMessage(message){
-        logger.log("sendMessage", {message});
-        socket.emit("send-message", message);
-    }
 
     /*function joinConversation(conversation){
         socket.emit('join-conversation', conversation);

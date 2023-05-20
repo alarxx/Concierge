@@ -1,11 +1,13 @@
+const uuid = require('uuid');
+
 const ApiError = require("../../../exceptions/ApiError");
+
 const ModelService = require("../../helpers/ModelService");
 const AdminService = require('../../helpers/AdminService');
 
 const { Message, Conversation, Participant, Notification } = require('../../../models/models-manager');
 const messageDto = require('../../../dtos/chat/message-dto');
 const checkNecessaryFields = require("../../helpers/checkNecessaryFields");
-const mongoose = require("mongoose");
 const fileService = require("../../file-service");
 
 const logger = require('../../../log/logger')('message-service');
@@ -57,7 +59,16 @@ async function pagination(filters, user){ //, skip, limit, sort) { // query
     return items.map(item => messageDto(item));
 }
 
+async function delay(ms){
+    logger.log({delay: ms});
+    return new Promise((resolve, reject)=>{
+        setTimeout(()=>resolve(), ms);
+    });
+}
+
 async function sendMessage(message, files, user) {
+    await delay(1000);
+
     logger.log({ message, files, user });
 
     if (!files) {
@@ -81,8 +92,9 @@ async function sendMessage(message, files, user) {
     let m = message.id ?
         await Message.findById(message.id) :
         new Message({
-            sender: user.id,
-            ...message
+            ...message,
+            sender: user.id, // переназначаем sender назначенное пользователем.
+            createdAt: new Date(), // мы переназначаем время назначенное пользователем.
         });
 
     if(!m) {
@@ -153,15 +165,16 @@ async function sendScripts(conversationId){
         "Данные о заказе, будут отображаться на главной странице и в окне информации чата"
     ]
     // Что будет если сокет выйдет в эти 9 секунд, я хз
-    for(let i=0; i<script_messages.length; i++){
+    for(let i = 0; i < script_messages.length; i++){
         setTimeout(()=>{
             sendMessage({
                 type: "text",
                 text: script_messages[i],
-                conversation: conversationId
+                conversation: conversationId,
+                message_id: uuid.v4(),
             }, {}, {id: '6463349a81472c0e599a2771'});
             return;
-        }, 1500*(i+1)) // каждые 1.5 сек будут прилетать script_messages[i].
+        }, 1500 * (i+1)) // каждые 1.5 сек будут прилетать script_messages[i].
     }
 }
 

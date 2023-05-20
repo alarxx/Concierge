@@ -51,7 +51,10 @@ export default function useFreshData({ socket, modelName }){
             const clone = [...prev];
             // logger.log("before delete:", {data: clone})
             objectsToRemove.map(doc => {
-                const i = findIndexById(prev, doc.id);
+                const i = findIndexById(clone, doc.id);
+                if(i === -1) {
+                    return;
+                }
                 clone.splice(i, 1);
             });
             // logger.log("after delete:", {data: clone})
@@ -69,7 +72,14 @@ export default function useFreshData({ socket, modelName }){
             setIds(doc);
             upsertData([doc]);
         });
-
+        socket.on(`/upsert/${name}`, (docs) => {
+            logger.log(`/upsert/${name}`, docs);
+            if(!docs){
+                return logger.error(`/upsert/${name}: docs is null`);
+            }
+            setIds(docs);
+            upsertData(docs);
+        });
         socket.on(`/delete/${name}`, (doc) => {
             logger.log(`/delete/${name}`, doc);
             if(!doc){

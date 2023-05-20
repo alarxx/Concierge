@@ -42,6 +42,10 @@ const MessageSchema = new Schema(
             immutable: true,
             required: true,
         },
+        message_id: {
+            type: String,
+            required: true,
+        },
         // action: {type: String, enum: ['invite_members', 'join_group_by_link']},
         text: {
             type: String,
@@ -70,11 +74,6 @@ const MessageSchema = new Schema(
         description: {
             type: String,
         },
-
-        isSent: {
-            type: Boolean,
-            default: false,
-        }
     },
     {
         timestamps: true,
