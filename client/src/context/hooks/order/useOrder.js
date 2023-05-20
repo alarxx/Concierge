@@ -15,7 +15,7 @@ export default function useOrder({ socketHandler, authHandler }){
 
     const { socket, isConnected } = socketHandler;
 
-    const { data:orders, upsertData:upsertOrders } = useFreshData({ socket, modelName:'order' });
+    const { data:orders, setData:setOrders } = useFreshData({ socket, modelName:'order' });
 
 
 
@@ -133,7 +133,7 @@ export default function useOrder({ socketHandler, authHandler }){
 
             if(res.status === 200){
                 logger.log("success", json);
-                upsertOrders(json);
+                setOrders(json);
                 setOrdersError(null);
             }
             else {

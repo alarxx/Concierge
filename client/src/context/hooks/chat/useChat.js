@@ -123,17 +123,17 @@ const messagesDefault = [
  * Должен предоставлять данные о том, какая комната сейчас открыта у пользователя
  * */
 export default function useChat({ socketHandler, authHandler }){
-    const logger = useMemo(()=>new Logger('useChat'), [])
+    const logger = useMemo(() => new Logger('useChat'), [])
 
     const { socket, isConnected } = socketHandler
 
     const [chatLoading, setChatLoading] = useState(false);
     const [chatError, setChatError] = useState(null);
 
-    const { data:messages, upsertData:upsertMessages } = useFreshData({ socket, modelName: 'message' });
-    const { data:conversations, upsertData:upsertConversations } = useFreshData({ socket, modelName: 'conversation' })
-    const { data:participants, upsertData:upsertParticipants } = useFreshData({ socket, modelName: 'participant' });
-    const { data:notifications, upsertData:upsertNotifications } = useFreshData({ socket, modelName: 'notification' });
+    const { data:messages, setData:setMessages } = useFreshData({ socket, modelName: 'message' });
+    const { data:conversations, setData:setConversations } = useFreshData({ socket, modelName: 'conversation' })
+    const { data:participants, setData:setParticipants } = useFreshData({ socket, modelName: 'participant' });
+    const { data:notifications, setData:setNotifications } = useFreshData({ socket, modelName: 'notification' });
 
 
     useEffect(()=>{
@@ -167,10 +167,10 @@ export default function useChat({ socketHandler, authHandler }){
 
             if(res.status === 200){
                 logger.log("success:", json);
-                upsertConversations(json.conversations);
-                upsertParticipants(json.participants);
-                upsertNotifications(json.notifications);
-                upsertMessages(json.messages);
+                setConversations(json.conversations);
+                setParticipants(json.participants);
+                setNotifications(json.notifications);
+                setMessages(json.messages);
             }
             else {
                 logger.log("error", json);

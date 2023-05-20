@@ -1,20 +1,19 @@
 import React, {useEffect, useMemo, useState} from "react";
 
-import setIds from "../../internal/setIds";
-import findIndexById from "../../internal/findIndexById";
-import Logger from "../../internal/Logger";
+import setIds from "../../../internal/setIds";
+import findIndexById from "../../../internal/findIndexById";
+import Logger from "../../../internal/Logger";
 
-export default function useFreshData({ socket, modelName }){
+export default function useMessages({ socketHandler }){
 
-    const name = modelName.toLowerCase();
+    const name = 'message';
 
-    const logger = useMemo(()=>new Logger(`useFreshData(${name})`),[])
+    const logger = useMemo(()=>new Logger(`useMessages`),[])
+
+    const {socket, isConnected} = socketHandler;
 
     const [data, setData] = useState([]);
 
-    function _setData(objectsToUpsert=[]){
-        setData(objectsToUpsert.map(doc => setIds(doc)));
-    }
 
     function upsertData(objectsToUpsert=[]){
         // здесь должна быть проверка(comparing) каждого документа из массива по времени и сетить только в случае если document моложе,
@@ -83,7 +82,7 @@ export default function useFreshData({ socket, modelName }){
 
     return ({
         data,
-        setData: _setData,
+        setData,
         upsertData,
         removeData,
     });

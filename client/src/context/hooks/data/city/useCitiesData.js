@@ -9,7 +9,7 @@ export default function useCitiesData({ socketHandler }){
 
     const { socket, isConnected } = socketHandler;
 
-    const { data, upsertData } = useFreshData({ socket, modelName:'city' });
+    const { data, upsertData, setData } = useFreshData({ socket, modelName:'city' });
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
@@ -44,7 +44,7 @@ export default function useCitiesData({ socketHandler }){
 
             if(res.status === 200){
                 logger.log("success", json);
-                upsertData(json);
+                setData(json);
                 setError(null);
             }
             else {
