@@ -15,8 +15,10 @@ import Loader from "../../shared/ui/loader/Loader";
 /**
  * Должен показывать компонент Conversations на desktop-e, на мобилке же нет.
  * */
-export default function Chat({ activeConversationId='', openConversation=()=>{}, closeConversation=()=>{} }){
+export default function Chat({ activeConversationId='', openConversation=(id)=>{}, closeConversation=()=>{} }){
     const logger = useMemo(()=>new Logger('Chat'), []);
+
+    const navigate = useNavigate();
 
     const { chatHandler } = useAppContext();
 
@@ -26,8 +28,8 @@ export default function Chat({ activeConversationId='', openConversation=()=>{},
 
     useEffect(()=>{
         if(activeConversationId && !conversation){
-            logger.log("closeConversation");
-            closeConversation();
+            // closeConversation();
+            navigate('/404', {replace: true}); // обязательно с replace
         }
     },[activeConversationId])
 

@@ -21,7 +21,7 @@ export default function ChatPage(){
     }
 
     function closeConversation(){
-        navigate(-1);
+        navigate('/chat ');
     }
 
     return (<>
