@@ -78,7 +78,7 @@ export default function ProtectedPage({ children }){
         }
         return (<>
             <Alert variant={'danger'}>
-                <p>offline</p>
+                <p>Соединение потеряно</p>
             </Alert>
             {children}
         </>);

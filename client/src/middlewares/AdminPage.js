@@ -46,7 +46,7 @@ export default function AdminPage({ children }){
         }
         return (<>
             <Alert variant={'danger'}>
-                <p>offline</p>
+                <p>Соединение потеряно</p>
             </Alert>
             {children}
         </>);

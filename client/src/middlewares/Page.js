@@ -42,7 +42,7 @@ export default function Page({ children }){
         // pop-up окно должно быть
         return (<>
             <Alert variant={'danger'}>
-                <p>offline</p>
+                <p>Соединение потеряно</p>
             </Alert>
             {children}
         </>);
