@@ -10,10 +10,10 @@ export default function useFreshData({ socket, modelName }){
 
     const logger = useMemo(()=>new Logger(`useFreshData(${name})`),[])
 
-    const [data, setData] = useState([]);
+    const [data, _setData] = useState([]);
 
-    function _setData(objectsToUpsert=[]){
-        setData(objectsToUpsert.map(doc => setIds(doc)));
+    function setData(objectsToUpsert=[]){
+        _setData(objectsToUpsert.map(doc => setIds(doc)));
     }
 
     function upsertData(objectsToUpsert=[]){
@@ -21,7 +21,7 @@ export default function useFreshData({ socket, modelName }){
         // Если такого вообще нет, то мы добавляем,
         // Еще если в новых данных нет элемента из старых, то мы удаляем его
         // На случай, если нам прилетели старые данные, а в пул уже успели прилететь новые данные
-        setData(prev => {
+        _setData(prev => {
             const clone = [...prev];
 
             objectsToUpsert.map(doc => {
@@ -47,7 +47,7 @@ export default function useFreshData({ socket, modelName }){
 
 
     function removeData(objectsToRemove=[]){
-        setData(prev => {
+        _setData(prev => {
             const clone = [...prev];
             // logger.log("before delete:", {data: clone})
             objectsToRemove.map(doc => {
@@ -83,7 +83,7 @@ export default function useFreshData({ socket, modelName }){
 
     return ({
         data,
-        setData: _setData,
+        setData,
         upsertData,
         removeData,
     });
