@@ -125,7 +125,7 @@ const messagesDefault = [
 export default function useChat({ socketHandler, authHandler }){
     const logger = useMemo(()=>new Logger('useChat'), [])
 
-    const { socket } = socketHandler
+    const { socket, isConnected } = socketHandler
 
     const [chatLoading, setChatLoading] = useState(false);
     const [chatError, setChatError] = useState(null);
@@ -135,11 +135,12 @@ export default function useChat({ socketHandler, authHandler }){
     const { data:participants, upsertData:upsertParticipants } = useFreshData({ socket, modelName: 'participant' });
     const { data:notifications, upsertData:upsertNotifications } = useFreshData({ socket, modelName: 'notification' });
 
-    useEffect(()=>{
-        // logger.log('chat is changed', {messages, conversations, participants, notifications});
-    }, [conversations, notifications, participants, messages])
 
     useEffect(()=>{
+        if(!isConnected){
+            return;
+        }
+
         const abortController = new AbortController();
 
         preloadChat({ signal: abortController.signal });
@@ -147,7 +148,7 @@ export default function useChat({ socketHandler, authHandler }){
         return (() => {
             abortController.abort();
         });
-    }, [])
+    }, [isConnected])
 
     /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать. Хз */
     async function preloadChat({ signal }){
@@ -204,7 +205,7 @@ export default function useChat({ socketHandler, authHandler }){
         const ns = notifications.filter(n => n.conversation == conversationId);
         logger.log("deleteNotifications", {notifications: ns})
         // const ns = notifications.filter(n => messages.some(m => m.id == n.message));
-        if(ns.length !== 0){
+        if(ns.length > 0){
             logger.log("deleteNotification", ns);
             socket.emit('delete-notifications', ns)
         }

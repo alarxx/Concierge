@@ -23,7 +23,7 @@ function AppContextProvider({ children }){
     const chatHandler = useChat({socketHandler, authHandler});
     const orderHandler = useOrder({socketHandler, authHandler});
 
-    const dataHandler = useData({ socketHandler });
+    const dataHandler = useData({ socketHandler, authHandler });
 
     const notificationsHandler = useNotifications();
 

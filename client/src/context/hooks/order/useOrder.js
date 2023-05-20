@@ -13,15 +13,18 @@ export default function useOrder({ socketHandler, authHandler }){
 
     const navigate = useNavigate();
 
-    const { socket } = socketHandler;
+    const { socket, isConnected } = socketHandler;
 
     const { data:orders, upsertData:upsertOrders } = useFreshData({ socket, modelName:'order' });
 
-    /** extendedOrders не гарантирует наличия в типе hotel/booking hotel и hotel/room полей */
-    const [extendedOrders, setExtendedOrders] = useState([])
+
 
     const [ordersLoading, setOrdersLoading] = useState(true);
     const [ordersError, setOrdersError] = useState(null);
+
+    /** extendedOrders не гарантирует наличия в типе hotel/booking hotel и hotel/room полей */
+    const [extendedOrders, setExtendedOrders] = useState([])
+    const [extendedOrdersLoading, setExtendedOrdersLoading] = useState(true);
 
 
     /*
@@ -36,15 +39,18 @@ export default function useOrder({ socketHandler, authHandler }){
 
 
     useEffect(()=>{
+        if(!isConnected){
+            return;
+        }
+
         const abortController = new AbortController();
 
-        setOrdersLoading(true);
         preloadOrders({ signal: abortController.signal });
 
         return (() => {
             abortController.abort();
         });
-    }, []);
+    }, [isConnected]);
 
 
     useEffect(()=>{
@@ -112,6 +118,7 @@ export default function useOrder({ socketHandler, authHandler }){
 
     /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать */
     async function preloadOrders(opts={ signal: undefined }){
+        logger.log('preloadOrders');
         setOrdersLoading(true);
         try{
             // В любом случае, если пользователь не админ, ему вернутся только его заказы, нужно сделать какую-то сортировку для админов.
@@ -143,6 +150,7 @@ export default function useOrder({ socketHandler, authHandler }){
 
 
     async function extendOrders(stop={ signal: false }){
+        // setExtendedOrdersLoading(true);
         setOrdersLoading(true);
         const _extendedOrders = await Promise.all(orders.map(async order => {
 
@@ -151,7 +159,7 @@ export default function useOrder({ socketHandler, authHandler }){
 
             const bookings = await Promise.all(order.bookings.map(async (booking, i) => {
 
-                console.log(`extendOrders:`, {booking});
+                logger.log(`extendOrders:`, {booking});
 
                 // Если extendedOrders уже содержит order и нужные данные в booking, то продолжаем.
                 if(extendedOrder) {
@@ -196,7 +204,9 @@ export default function useOrder({ socketHandler, authHandler }){
 
         if(!stop.signal){
             setExtendedOrders(_extendedOrders);
+            // setExtendedOrdersLoading(false);
             setOrdersLoading(false);
+
         }
 
     }

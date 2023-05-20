@@ -30,12 +30,9 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
 
     const navigate = useNavigate();
 
-    const {orderHandler, authHandler} = useAppContext();
+    const {authHandler} = useAppContext();
     const {user} = authHandler;
-    const {extendedOrders} = orderHandler;
 
-    // const extendedOrder = extendedOrders.find(eo => eo.id === order.id);
-    // const firstBookingInfo = getBookingInfo(extendedOrder.bookings[0], extendedOrder);
     const orderInfo = getOrderInfo(order);
 
     return(<>

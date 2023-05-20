@@ -7,7 +7,7 @@ import Logger from "../../../../internal/Logger";
 export default function useCitiesData({ socketHandler }){
     const logger = useMemo(()=>new Logger('useCitiesData'), [])
 
-    const { socket } = socketHandler;
+    const { socket, isConnected } = socketHandler;
 
     const { data, upsertData } = useFreshData({ socket, modelName:'city' });
 
@@ -15,6 +15,10 @@ export default function useCitiesData({ socketHandler }){
     const [error, setError] = useState();
 
     useEffect(()=>{
+        if(!isConnected){
+            return;
+        }
+
         const abortController = new AbortController();
 
         preload({ signal: abortController.signal });
@@ -22,7 +26,7 @@ export default function useCitiesData({ socketHandler }){
         return (() => {
             abortController.abort();
         });
-    }, []);
+    }, [isConnected]);
 
     /** функция должна вызываться в начале приложения, а дальше по просьбе user-а или при изменении user-a подгружать */
     async function preload(opts={ signal: undefined }){
