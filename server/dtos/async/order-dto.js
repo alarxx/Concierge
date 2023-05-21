@@ -1,9 +1,13 @@
 const orderDto = require("../order-dto");
-const {User} = require("../../models/models-manager");
 
 function userDto(user){
     if(!user){
-        return;
+        return ({
+            id: '',
+            name: '',
+            email: '',
+            phone: '',
+        });
     }
     return ({
         id: user.id,
