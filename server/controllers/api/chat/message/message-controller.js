@@ -9,7 +9,7 @@ const standardController = StandardController(service);
 
 async function sendMessage(req, res, next){
     try{
-        const data = service.sendMessage(req.body, req.files, req.user);
+        const data = await service.sendMessage(req.body, req.files, req.user);
         res.json(data);
     }
     catch(e){
