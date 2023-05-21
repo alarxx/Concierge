@@ -7,6 +7,9 @@
     margin-bottom: 12px;
     cursor: pointer;
 }
+.card-service:last-child {
+    margin-bottom: 0;
+}
 .card-service__header, .card-service__footer {
     padding: 8px 12px;
 
