@@ -23,8 +23,8 @@ export default function useOrder({ socketHandler, authHandler }){
     const [ordersError, setOrdersError] = useState(null);
 
     /** extendedOrders не гарантирует наличия в типе hotel/booking hotel и hotel/room полей */
-    const [extendedOrders, setExtendedOrders] = useState([])
-    const [extendedOrdersLoading, setExtendedOrdersLoading] = useState(true);
+    // const [extendedOrders, setExtendedOrders] = useState([])
+    // const [extendedOrdersLoading, setExtendedOrdersLoading] = useState(true);
 
 
     /*
@@ -53,13 +53,13 @@ export default function useOrder({ socketHandler, authHandler }){
     }, [isConnected]);
 
 
-    useEffect(()=>{
+    /*useEffect(()=>{
         const stop = { signal: false };
         extendOrders(stop);
         return () => {
             stop.signal = true;
         }
-    }, [orders])
+    }, [orders])*/
 
 
     async function createOrder(order={bookings:[], accessHolders:[]}, opts={signal: undefined}){
@@ -149,7 +149,7 @@ export default function useOrder({ socketHandler, authHandler }){
     }
 
 
-    async function extendOrders(stop={ signal: false }){
+    /*async function extendOrders(stop={ signal: false }){
         // setExtendedOrdersLoading(true);
         setOrdersLoading(true);
         const _extendedOrders = await Promise.all(orders.map(async order => {
@@ -209,7 +209,7 @@ export default function useOrder({ socketHandler, authHandler }){
 
         }
 
-    }
+    }*/
 
     async function takeOrder(order){
         logger.log("takeOrder:", {order});
@@ -222,8 +222,8 @@ export default function useOrder({ socketHandler, authHandler }){
 
 
     return ({
-        orders:orders,
-        extendedOrders:extendedOrders,
+        orders,
+        // extendedOrders,
         ordersLoading,
         ordersError,
 

@@ -1,12 +1,14 @@
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {useAppContext} from "../../context/AppContext";
 import {useNavigate} from "react-router-dom";
 
-import ChatItemCard from "./chat_item_card/ChatItemCard";
 import Logger from "../../internal/Logger";
-import {useAppContext} from "../../context/AppContext";
 
 import getOrderInfo from "../../internal/order/getOrderInfo";
+
+import ChatItemCard from "./chat_item_card/ChatItemCard";
+
 
 function truncateString(str) {
     // console.log("last message", str);
@@ -82,14 +84,15 @@ export default function Conversations({
 
     return (<>
         {sorted_extended_conversations.length === 0 && <p>Нет бесед</p>}
-        {sorted_extended_conversations.map((extended_conversation, key) => {
+        {sorted_extended_conversations.map((extended_conversation, index) => {
 
             const {managerName, customerName, notifications_number, newest_message, ordersLast4IDDigits, description} = extended_conversation;
 
             const last_message = !newest_message ? '' : (newest_message.text ? truncateString(newest_message.text) : newest_message.type);
 
-            return (<>
-                <ChatItemCard key={key}
+            return (
+                <ChatItemCard
+                    key={index}
                     customerName={customerName}
                     managerName={managerName}
                     description={description}
@@ -98,7 +101,7 @@ export default function Conversations({
                     last_message={last_message}
                     onClick={e => openConversation(extended_conversation)}
                 />
-            </>);
+            );
         })}
     </>);
 }
