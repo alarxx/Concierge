@@ -41,7 +41,7 @@ export default function Page({ children }){
     if(isOffline){
         // pop-up окно должно быть
         return (<>
-            <Alert variant={'danger'}>
+            <Alert variant={'grey'}>
                 <p>Соединение потеряно</p>
             </Alert>
             {children}

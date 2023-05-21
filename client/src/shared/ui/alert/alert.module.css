@@ -15,6 +15,9 @@
 .Alert--danger {
     background-color: #8e0000;
 }
+.Alert--grey {
+    background-color: #787878;
+}
 .Alert--loader {
     background: none;
 }

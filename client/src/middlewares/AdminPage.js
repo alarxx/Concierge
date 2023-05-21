@@ -45,7 +45,7 @@ export default function AdminPage({ children }){
             return (<Navigate to={'/'} />);
         }
         return (<>
-            <Alert variant={'danger'}>
+            <Alert variant={'grey'}>
                 <p>Соединение потеряно</p>
             </Alert>
             {children}
