@@ -48,9 +48,6 @@ export default function OrderList({}) {
                 return (<div key={i}>
                     <OrderCard
                         order={order}
-                        onClick={e => {
-                            //navigate(`/orders/${order.id}`);
-                        }}
                     />
                 </div>);
             })}

@@ -25,7 +25,7 @@ import Button from "../../../shared/ui/button/Button";
 import dateRange from "../../../internal/order/dateRange_toString";
 import numberOfPeople from "../../../internal/order/numberOfPeople_toString";
 
-export default function OrderCard({ order={}, onClick=f=>f }) {
+export default function OrderCard({ order={} }) {
     const logger = useMemo(()=>new Logger('OrderCard'), []);
 
     const navigate = useNavigate();
@@ -36,13 +36,13 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
     const orderInfo = getOrderInfo(order);
 
     return(<>
-        <CardService onClick={onClick} isGrid={true} cursor={'default'}>
+        <CardService onClick={f=>f} isGrid={true} cursor={'default'}>
 
             <CardBody>
                 <GroupFlex align={'ais'} justify={'jcsb'}>
                     <div>
                         <div><Typography size={16} weight={600} bottom={2}>{orderInfo.name}</Typography></div>
-                        <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>Заказ #{orderInfo.first4IDDigits}</Typography></div>
+                        <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>Заказ #{orderInfo.last4IDDigits}</Typography></div>
                         {user.role === 'admin' && <>
                             <div><Typography size={16} weight={600} bottom={4} color={'#959BA1'}>{orderInfo.customerName}</Typography></div>
                         </>}

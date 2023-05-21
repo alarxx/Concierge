@@ -64,7 +64,7 @@ export default function Conversations({
                 notifications_number,
                 customerName: orderInfo.customerName,
                 managerName: orderInfo.managerName,
-                ordersFirst4IDDigits: orderInfo.first4IDDigits,
+                ordersLast4IDDigits: orderInfo.last4IDDigits,
                 description: orderInfo.name
             });
         });
@@ -86,7 +86,7 @@ export default function Conversations({
         {sorted_extended_conversations.length === 0 && <p>Нет бесед</p>}
         {sorted_extended_conversations.map((extended_conversation, index) => {
 
-            const {managerName, customerName, notifications_number, newest_message, ordersFirst4IDDigits, description} = extended_conversation;
+            const {managerName, customerName, notifications_number, newest_message, ordersLast4IDDigits, description} = extended_conversation;
 
             const last_message = !newest_message ? '' : (newest_message.text ? truncateString(newest_message.text) : newest_message.type);
 
@@ -96,7 +96,7 @@ export default function Conversations({
                     customerName={customerName}
                     managerName={managerName}
                     description={description}
-                    ordersFirst4IDDigits={ordersFirst4IDDigits}
+                    ordersLast4IDDigits={ordersLast4IDDigits}
                     unread_num={notifications_number}
                     last_message={last_message}
                     onClick={e => openConversation(extended_conversation)}

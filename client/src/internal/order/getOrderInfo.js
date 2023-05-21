@@ -36,7 +36,6 @@ export default function getOrderInfo(order){
         return ({
             status: { text: '', variant: '' },
             last4IDDigits: '',
-            first4IDDigits: '',
             customerName: '',
             name: '',
             managerName: 'Менеджер',
@@ -49,7 +48,6 @@ export default function getOrderInfo(order){
     return ({
         status,
         last4IDDigits: String(order.id).substr(-4),
-        first4IDDigits: String(order.id).substring(0, 4),
         customerName: order.customer.name,
         name,
         managerName: order.manager?.name ? order.manager.name : 'Менеджер',

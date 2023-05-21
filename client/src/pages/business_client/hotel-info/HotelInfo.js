@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 
@@ -17,22 +17,38 @@ import HotelPolitics from "../../../widgets/hotel/hotel_politics/HotelPolitics";
 import HotelDetails from "../../../widgets/hotel/hotel_details/HotelDetails";
 import NavbarLeft from "../../../shared/ui/navbar/NavbarLeft";
 import Container from "../../../shared/ui/box/Container";
+import {useAppContext} from "../../../context/AppContext";
 
 
 export default function HotelInfo({ }) {
     const logger = useMemo(() => new Logger('HotelInfo'), []);
 
+    const navigate = useNavigate();
+
+    const location = useLocation();
+
+    const [previous_page, _] = useState(() => location.state?.previous_page);
+
     const { id:hotelId } = useParams();
 
-    const hotel = {};
+    const {loaderHandler} = useAppContext();
+    const {getHotel} = loaderHandler;
+
+    const hotel = getHotel(hotelId);
+
+    if(hotel.isLoading){
+        return (<>
+            <p>loading...</p>
+        </>);
+    }
 
     return(<>
         <NavbarPanel
-            LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => back()} />}
+            LeftButton={previous_page ? <NavbarLeft Icon={<BackIcon />} onClick={e => navigate(previous_page, {replace: true})} /> : null}
             title={'Отель'}
         />
 
-        <Box navbar={true} menu={true} yummy={true}>
+        <Box navbar menu>
             <Container>
                 <Gallery height={240} />
                 <HotelGeo />
@@ -41,10 +57,6 @@ export default function HotelInfo({ }) {
                 <HotelDetails hotel={hotel} />
             </Container>
         </Box>
-
-        <BottomControl>
-            <Button variant={'control'} onClick={e => next()}>Выбрать отель</Button>
-        </BottomControl>
 
         <NavigationPanel />
     </>)

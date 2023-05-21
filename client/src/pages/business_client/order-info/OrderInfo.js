@@ -42,7 +42,7 @@ export default function OrderInfo({}){
     return (<>
         <NavbarPanel
             LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => navigate('/orders')} />}
-            title={`Заказ #${orderInfo.first4IDDigits}`}
+            title={`Заказ #${orderInfo.last4IDDigits}`}
         />
         <Box navbar={true} menu={true} yummy={true}>
             <Container>

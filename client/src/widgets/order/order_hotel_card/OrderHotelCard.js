@@ -21,19 +21,25 @@ import dateToForm from "../../../internal/order/date_toString";
 import getCity from "../../../internal/order/getCity";
 import dateRange_toString from "../../../internal/order/dateRange_toString";
 import numberOfPeople_toString from "../../../internal/order/numberOfPeople_toString";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useAppContext} from "../../../context/AppContext";
 
 
 export default function OrderHotelCard({ hotel_booking={} }) {
     const logger = useMemo(()=>new Logger('OrderHotelCard'), [])
 
+    const location = useLocation();
+
     const navigate = useNavigate();
     const {loaderHandler} = useAppContext();
     const {getHotel} = loaderHandler;
 
     function navigateToHotel(){
-        navigate(`/hotels/${hotel_booking.hotel}`);
+        navigate(`/hotels/${hotel_booking.hotel}`, {
+            state: {
+                previous_page: location.pathname
+            }
+        });
     }
 
     // const status = statusEnum[hotel_booking.status];
