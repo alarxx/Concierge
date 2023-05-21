@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 
 import {useNavigate} from "react-router-dom";
+import {useAppContext} from "../../../context/AppContext";
 
-import env from '../../../../.env.json';
+import version from '../../../../version.json';
 
 import NavbarPanel from '../../../widgets/navbar_panel/NavbarPanel';
 import Box from '../../../shared/ui/box/Box'
@@ -11,17 +12,10 @@ import Container from "../../../shared/ui/box/Container";
 import Card from "../../../shared/ui/card/Card";
 import CardServiceHeader from "../../../shared/ui/card_service/CardServiceHeader";
 import Typography from "../../../shared/ui/typography/Typography";
-import Accordion from "../../../shared/ui/accordion/Accordion";
 import Block from "../../../shared/ui/block/Block";
 import ProfileSet from "./ProfileSet";
 import Button from "../../../shared/ui/button/Button";
 import LogoutAction from "../../../widgets/logout_action/LogoutAction";
-import {useAppContext} from "../../../context/AppContext";
-import CardBody from "../../../shared/ui/card/CardBody";
-import GroupFlex from "../../../shared/ui/group_flex/GroupFlex";
-import Modal from "../../../shared/ui/modal/Modal";
-import LogoutForm from "../../../features/auth/logout/LogoutForm";
-import Uploader from "../../../shared/uploader/Uploader";
 
 
 export default function Profile({}){
@@ -58,7 +52,7 @@ export default function Profile({}){
                     <LogoutAction />
 
                     <Block top={10}>
-                        <Typography size={14} color={'grey'} align={'center'}>v0.0.1</Typography>
+                        <Typography size={14} color={'grey'} align={'center'}>v{version.version}</Typography>
                     </Block>
 
                 </Container>
