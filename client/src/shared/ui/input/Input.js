@@ -32,7 +32,11 @@ export default function Input({
                 onChange={onChange}
                 required={required}
             />
-            {type === 'password' && <span className={styles['input-icon']} onClick={handleToggle}>{_type === 'password' ? <EyeIcon/> : <EyeOffIcon/>}</span>}
+            {type === 'password' && <>
+                <span className={styles['input-icon']} onClick={handleToggle}>
+                    {_type === 'password' ? <EyeOffIcon/> : <EyeIcon/>}
+                </span>
+            </>}
         </div>
     );
 }

@@ -72,7 +72,7 @@ export default function SendActivationMail({ }){
 
         <form onSubmit={onSubmit}>
             <div>
-                {/*<label>Email</label>*/}
+                <label>Email</label>
                 <Input
                     type="text"
                     name="email"

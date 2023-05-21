@@ -15,7 +15,7 @@ export default function Banned({ }){
     const logout = useAppContext().authHandler.logout;
 
     return (<>
-        <h1>[Banned]</h1>
+        <h3>Banned</h3>
 
         <button onClick={async e => {
             logger.log(await logout());

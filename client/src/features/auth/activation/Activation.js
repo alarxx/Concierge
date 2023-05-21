@@ -43,6 +43,8 @@ export default function Activation(){
     const {timer, startTimer} = useTimer(()=>window.location.replace(env.API_URL), 5);
 
     const [token] = useState(location.state?.activation_token);
+    const [isTokenExpired, setIsTokenExpired] = useState(false);
+
     const [firstname, setFirstname] = useState('')
     const [lastname, setLastname] = useState('')
     const [phone, setPhone] = useState('')
@@ -57,7 +59,7 @@ export default function Activation(){
             .then(json => {
                 logger.log(json)
                 if(json.status >= 200 && json.status < 300){
-                    startTimer();
+                    // startTimer();
                     setSuccess(json);
                 }
                 else {
@@ -80,27 +82,58 @@ export default function Activation(){
         * */
         const expired = isExpired(token);
         if(expired){
-            setError(new Error('The activation token has expired'));
+            setIsTokenExpired(true);
+            setError({
+                message: 'Validation Error',
+                errors: [
+                    { name: 'activation_token', message: 'Токен активации просрочен'},// 'The activation token has expired' }
+                ]
+            });
         }
     }, []);
 
 
     if(success){
         return (<>
-            <h1>Activation</h1>
-
+            <h3>Активация аккаунта</h3>
             {success && <p>{success.message}.</p>}
-            <Button onClick={e => window.history.replace(env.API_URL)}>Продолжить</Button>
+            {/*{success && <p>{success.message}. This tab will automatically close after {timer} second{timer>=2?'s':''}</p>}*/}
+            <Button onClick={e => window.location.replace(env.API_URL)}>Продолжить</Button>
+        </>);
+    }
+
+    if(isTokenExpired){
+        return (<>
+            <h3>Активация аккаунта</h3>
+            <p>Токен активации просрочен</p>
+            <Button onClick={e => {
+                // Чтобы не было двойных слэшей в url, простая проверка на то заканчивается ли url на "/".
+                window.location.replace(String(env.API_URL).endsWith('/') ?
+                    `${env.API_URL}authn` :
+                    `${env.API_URL}/authn`
+                )
+            }}>
+                Авторизация
+            </Button>
         </>);
     }
 
     return (<>
-        <h1>Активация аккаунта</h1>
+        <h3>Активация аккаунта</h3>
 
         {/*{success && <p>{success.message}. This tab will automatically close after {timer} second{timer>=2?'s':''}</p>}*/}
 
         {loading && <Loading />}
-        {error && <p>{JSON.stringify(error.errors)}</p>}
+        {error && <p>
+            {error.errors
+                .map(err => {
+                    if(err.message === 'Insecure password'){
+                        return 'Небезопасный пароль';
+                    }
+                    return err.message;
+                })
+                .join(', ')}
+        </p>}
 
         {/* Если токен просрочен, то это показывать нельзя, простую проверку наличия error ставить нельзя, может выйти ошибка "слабый пароль" */}
         {token && (!loading && !success) && <form onSubmit={onActivateAccount}>
@@ -138,7 +171,7 @@ export default function Activation(){
             /> {/*required*/}
             <br/>
 
-            <label>Password</label>
+            <label>Пароль</label>
             <Input
                 type={'password'}
                 name={'password'}

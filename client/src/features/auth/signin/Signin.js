@@ -71,13 +71,17 @@ export default function SignIn({ }){
 
     }, [error])
 
-    return (
+    return (<>
+        <h3>Вход</h3>
+
         <div className="">
             {loading && <Loading />}
             {error && <p>{error.message}</p>}
 
             <form onSubmit={onSubmit}>
-                <Input 
+
+                <label>Email</label>
+                <Input
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     name="email"
@@ -85,7 +89,9 @@ export default function SignIn({ }){
                     type='email' 
                     required
                 />
-                <Input 
+
+                <label>Пароль</label>
+                <Input
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     name="password"
@@ -94,8 +100,9 @@ export default function SignIn({ }){
                     required
                 />
                 <Button type='submit'>Вход</Button>
+
             </form>
         </div>
-    );
+    </>);
 }
 
