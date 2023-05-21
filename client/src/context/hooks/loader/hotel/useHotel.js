@@ -1,7 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 export default function useHotel({ socketHandler }){
+    const { isConnected } = socketHandler;
+
     const [hotels, setHotels] = useState({}); // {id1: {isLoading, city, name}, id2: {isLoading, city, name}}
+
+    useEffect(()=>{
+        if(isConnected){
+            setHotels({});
+        }
+    }, [isConnected])
 
     async function loadHotel(id){
         const response = await fetch(`/api/hotel/${id}`);
