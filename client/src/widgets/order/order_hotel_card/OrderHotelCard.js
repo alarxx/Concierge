@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import Card from "../../../shared/ui/card/Card";
 import CardServiceHeader from "../../../shared/ui/card_service/CardServiceHeader";
 import CardServiceBody from "../../../shared/ui/card_service/CardServiceBody";
@@ -19,20 +19,42 @@ import Logger from "../../../internal/Logger";
 import monthName from "../../../internal/monthName";
 import dateToForm from "../../../internal/order/date_toString";
 import getCity from "../../../internal/order/getCity";
+import dateRange_toString from "../../../internal/order/dateRange_toString";
+import numberOfPeople_toString from "../../../internal/order/numberOfPeople_toString";
+import {useNavigate} from "react-router-dom";
+import {useAppContext} from "../../../context/AppContext";
 
 
-export default function OrderHotelCard({ hotelmeta, hotel, hotel_booking={}, onClick=f=>f }) {
-
+export default function OrderHotelCard({ hotel_booking={} }) {
     const logger = useMemo(()=>new Logger('OrderHotelCard'), [])
 
-    const status = statusEnum[hotel_booking.status];
+    const navigate = useNavigate();
+    const {loaderHandler} = useAppContext();
+    const {getHotel} = loaderHandler;
 
-    useEffect(()=>{
-        logger.log({hotelmeta});
-    }, [])
+    function navigateToHotel(){
+        navigate(`/hotels/${hotel_booking.hotel}`);
+    }
+
+    // const status = statusEnum[hotel_booking.status];
+
+    // hotel нужно fetch-ить
+    const hotel = getHotel(hotel_booking.hotel); // {city: 'City', name: 'Hotel Name', isLoading: true}
+
+    if(hotel.isLoading){
+        return (<>
+            <CardService onClick={navigateToHotel}>
+                <CardBody>
+                    <div>
+                        <Typography size={14} weight={500} bottom={2}>loading...</Typography>
+                    </div>
+                </CardBody>
+            </CardService>
+        </>);
+    }
 
     return(<>
-        <CardService onClick={onClick}>
+        <CardService onClick={navigateToHotel}>
             <CardBody>
                 <Block bottom={8}>
                     <Gallery/>
@@ -48,7 +70,7 @@ export default function OrderHotelCard({ hotelmeta, hotel, hotel_booking={}, onC
             </CardBody>
             <CardBody>
                 <div>
-                    <Typography size={14} weight={500} bottom={2}>{dateToForm(hotelmeta.check_in_date)} - {dateToForm(hotelmeta.check_out_date)} - {hotelmeta.number_of_adults} {hotelmeta.number_of_adults>1?'взрослых':'взрослый'}{hotelmeta.number_of_children !== 0 ? `, ${hotelmeta.number_of_children} ${hotelmeta.number_of_children>1?'детей':'ребенок'}`:''}</Typography>
+                    <Typography size={14} weight={500} bottom={2}>{dateRange_toString(hotel_booking.check_in_date, hotel_booking.check_out_date)} - {numberOfPeople_toString(hotel_booking.number_of_adults, hotel_booking.number_of_children)}</Typography>
                 </div>
                 {/*<div>
                     <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>Lux на 2, № 1 - Питание: BB</Typography>

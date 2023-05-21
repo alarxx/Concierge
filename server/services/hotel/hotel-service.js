@@ -171,9 +171,7 @@ async function findById(id, user){
         throw ApiError.BadRequest('hotel not found')
     }
 
-    return ({
-        hotel: hotelDto(hotel, user)
-    });
+    return hotelDto(hotel, user);
 }
 
 module.exports = ({

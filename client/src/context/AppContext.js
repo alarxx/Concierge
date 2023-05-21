@@ -8,6 +8,7 @@ import useChat from "./hooks/chat/useChat";
 import useOrder from "./hooks/order/useOrder";
 import useData from "./hooks/data/useData";
 import useNotifications from "./hooks/notifications/useNotifications";
+import useLoader from "./hooks/loader/useLoader";
 
 const Context = createContext();
 
@@ -24,6 +25,7 @@ function AppContextProvider({ children }){
     const orderHandler = useOrder({socketHandler, authHandler});
 
     const dataHandler = useData({ socketHandler, authHandler });
+    const loaderHandler = useLoader({ socketHandler, authHandler });
 
     const notificationsHandler = useNotifications();
 
@@ -36,7 +38,8 @@ function AppContextProvider({ children }){
             chatHandler,
             orderHandler,
             dataHandler,
-            notificationsHandler
+            loaderHandler,
+            notificationsHandler,
         }}>
             {children}
         </Context.Provider>

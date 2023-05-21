@@ -1,4 +1,7 @@
 export default function monthName(m){
+    if(!m){
+        return "Месяц";
+    }
     switch(m){
         case 0:
             return "Январь"

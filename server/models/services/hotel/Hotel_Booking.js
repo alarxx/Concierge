@@ -27,17 +27,22 @@ const BookingSchema = new Schema(
             immutable: true,
         },
 
-        checkInDate: {
+        check_in_date: {
             type: Date,
-            default: () => new Date(), // Просто хз как из postman-a ставить
             required: true,
         },
-        checkOutDate: {
+        check_out_date: {
             type: Date,
-            default: () => new Date(), // Просто хз как из postman-a ставить
             required: true,
         },
-
+        number_of_adults: {
+            type: Number,
+            default: 1,
+        },
+        number_of_children: {
+            type: Number,
+            default: 0,
+        },
         // Bill
         price: {
             type: Number, // or String?

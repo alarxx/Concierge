@@ -13,7 +13,7 @@ import GeneralIcon from "../../../assets/icons/details_icon.svg";
 import ListDetailsItem from "../../../shared/ui/list_details/ListDetailsItem";
 
 
-export default function HotelDetails({}) {
+export default function HotelDetails({ hotel }) {
 
 
     return(<>

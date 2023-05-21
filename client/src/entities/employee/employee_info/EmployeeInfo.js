@@ -9,11 +9,13 @@ export default function EmployeeInfo({name='', phone='', email=''}){
             <form>
                 {/*<Typography size='18' weight='700' bottom='12'>Контактные данные</Typography>*/}
                 {/*<br/>*/}
-                Имя *
+                <label>Имя *</label>
                 <Input value={name} placeHolder='Имя' type='text' field_key='from_city' />
-                Телефон *
+
+                <label>Телефон *</label>
                 <Input value={phone} placeHolder='Телефон' type='text' field_key='from_city' />
-                Эл. почта *
+
+                <label>Эл. почта *</label>
                 <Input value={email} placeHolder='Эл. почта' type='text' field_key='from_city' />
             </form>
         </div>

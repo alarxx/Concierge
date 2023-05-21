@@ -46,12 +46,10 @@ const MetaSchema = new Schema({
         },
         check_in_date: {
             type: Date,
-            default: () => new Date(), // Просто хз как из postman-a ставить
             required: true,
         },
         check_out_date: {
             type: Date,
-            default: () => new Date(), // Просто хз как из postman-a ставить
             required: true,
         },
         price: {

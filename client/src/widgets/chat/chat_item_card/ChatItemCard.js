@@ -22,7 +22,7 @@ export default function ChatItemCard({
                                          description='Город: услуги',
                                          unread_num=0,
                                          last_message='',
-                                         ordersLast4IDDigits='0000',
+                                         ordersFirst4IDDigits='0000',
                                          onClick=f=>f,
 }) {
 
@@ -44,7 +44,7 @@ export default function ChatItemCard({
                         <GroupFlex align={'ais'} justify={'jcsb'}>
                             <div>
                                 <div><Typography size={16} weight={600} bottom={2}>{user.role === 'admin' ? customerName : managerName}</Typography></div>
-                                <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>{`${description}, #${ordersLast4IDDigits}`}</Typography></div>
+                                <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>{`${description}, #${ordersFirst4IDDigits}`}</Typography></div>
                             </div>
                             {unread_num > 0 && <Badge text={unread_num.toString()} />}
                         </GroupFlex>

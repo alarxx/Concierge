@@ -23,78 +23,89 @@ import BackIcon from "../../../assets/icons/backbtn_icon.svg";
 import BottomControl from "../../../shared/ui/bottom_control/BottomControl";
 import ConciergeAction from "../../../widgets/order/concierge_action/ConciergeAction";
 import Button from "../../../shared/ui/button/Button";
-import getOrderInfo from "../../../internal/order/getOrderInfo";
 
 
 export default function OrderInfo({}){
 
+    const [expanded, setExpanded] = useState(null);
+
+    function handleChange(panel) {
+        if (expanded === panel) {
+            setExpanded(null)
+        } else {
+            setExpanded(panel)
+        }
+    }
 
     const navigate = useNavigate();
     const { id } = useParams();
 
     const { orderHandler, authHandler } = useAppContext();
-    const { orders, takeOrder } = orderHandler;
+    const { orders, extendedOrders, takeOrder } = orderHandler;
     const { user } = authHandler;
 
     const order = orders.find(order => order.id == id);
-    const orderInfo = getOrderInfo(order);
+    const extendedOrder = extendedOrders.find(order => order.id == id);
 
     return (<>
         <NavbarPanel
             LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => navigate('/orders')} />}
-            title={`Заказ #${orderInfo.first4IDDigits}`}
+            title={`Заказ #${id}`}
         />
         <Box navbar={true} menu={true} yummy={true}>
             <Container>
 
+                {/*<Accordion expanded={expanded === 'personal-data'}>*/}
                 <Accordion expanded={true}>
-                    <AccordionSummary onClick={() => {}} >
+                    <AccordionSummary onClick={() => handleChange('personal-data')} >
                         <Card variant='info'>
                             <CardBody>
                                 <GroupFlex align='aic' justify='jcsb'>
                                     Контактные данные
-                                    <TriangleIcon />
+                                    <TriangleIcon/>
                                 </GroupFlex>
                             </CardBody>
                         </Card>
                     </AccordionSummary>
 
-                    {/*{expanded === 'personal-data' && */}
-                    <AccordionDetails>
+                    {/*{expanded === 'personal-data' && <AccordionDetails>*/}
+                    {<AccordionDetails>
                         <Card variant='info'>
                             <CardBody>
                                 <EmployeeInfo name={order.customer.name} phone={order.customer.phone} email={order.customer.email}/>
                             </CardBody>
                         </Card>
-                    </AccordionDetails>
+                    </AccordionDetails>}
                 </Accordion>
 
+                {/*<Accordion expanded={expanded === 'order'}>*/}
                 <Accordion expanded={true}>
-                    <AccordionSummary onClick={() => {}} >
+                    <AccordionSummary onClick={() => handleChange('order')} >
                         <Card variant='info'>
                             <CardBody>
                                 <GroupFlex align='aic' justify='jcsb'>
                                     Мой заказ
-                                    <TriangleIcon />
+                                    <TriangleIcon/>
                                 </GroupFlex>
                             </CardBody>
                         </Card>
                     </AccordionSummary>
 
-                    <AccordionDetails>
-                        {order.bookings.map((booking, i) => {
-                            const {type} = booking;
-                            if(type === 'hotel/booking') {
-                                return (<OrderHotelCard
-                                    key={i}
-                                    hotel_booking={booking[type]}
-                                />);
-                            }
-                            else {
-                                return (<p key={i}>unknown service type</p>);
-                            }
-                        })}
-                    </AccordionDetails>
+                    {/*{expanded === 'order' && <>*/}
+                    {<>
+                        <AccordionDetails>
+                            {extendedOrder.bookings.map((booking, i) => {
+                                if(booking.type === 'hotel/booking') {
+                                    return (<div key={i}>
+                                        <OrderHotelCard hotelmeta={order.meta.hotel} hotel={booking.hotel} hotel_booking={booking['hotel/booking']}/>
+                                    </div>);
+                                }
+                                else {
+                                    return (<p>unknown service type</p>);
+                                }
+                            })}
+                        </AccordionDetails>
+                    </>}
                 </Accordion>
 
 

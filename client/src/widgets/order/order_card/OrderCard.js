@@ -42,7 +42,7 @@ export default function OrderCard({ order={}, onClick=f=>f }) {
                 <GroupFlex align={'ais'} justify={'jcsb'}>
                     <div>
                         <div><Typography size={16} weight={600} bottom={2}>{orderInfo.name}</Typography></div>
-                        <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>Заказ #{orderInfo.last4IDDigits}</Typography></div>
+                        <div> <Typography size={16} weight={600} bottom={4} color={'#959BA1'}>Заказ #{orderInfo.first4IDDigits}</Typography></div>
                         {user.role === 'admin' && <>
                             <div><Typography size={16} weight={600} bottom={4} color={'#959BA1'}>{orderInfo.customerName}</Typography></div>
                         </>}

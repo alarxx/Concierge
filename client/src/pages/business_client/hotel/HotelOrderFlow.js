@@ -93,6 +93,10 @@ export default function HotelOrderFlow(){
                     type,
                     [type]: {
                         'hotel': data.hotel.id,
+                        check_in_date: data.check_in_date,
+                        check_out_date: data.check_out_date,
+                        number_of_adults: data.number_of_adults,
+                        number_of_children: data.number_of_children,
                     }
                 }
             ],
