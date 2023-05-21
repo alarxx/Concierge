@@ -17,7 +17,7 @@ function userDto(user){
     });
 }
 
-module.exports = async function(model, user){
+module.exports = async function asyncOrderDto(model, user){
     const bookingsService = require("../../services/bookings/bookings-service");
     const {User} = require("../../models/models-manager");
     await bookingsService.populateBookings(model);

@@ -88,8 +88,8 @@ export default function Conversations({
 
             const last_message = !newest_message ? '' : (newest_message.text ? truncateString(newest_message.text) : newest_message.type);
 
-            return (<div key={key}>
-                <ChatItemCard
+            return (<>
+                <ChatItemCard key={key}
                     customerName={customerName}
                     managerName={managerName}
                     description={description}
@@ -98,7 +98,7 @@ export default function Conversations({
                     last_message={last_message}
                     onClick={e => openConversation(extended_conversation)}
                 />
-            </div>);
+            </>);
         })}
     </>);
 }

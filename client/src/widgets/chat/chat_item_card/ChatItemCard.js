@@ -24,6 +24,7 @@ export default function ChatItemCard({
                                          last_message='',
                                          ordersLast4IDDigits='0000',
                                          onClick=f=>f,
+                                         key
 }) {
 
     const {authHandler} = useAppContext();
@@ -36,7 +37,7 @@ export default function ChatItemCard({
     }
 
     return(<>
-        <CardService onClick={onClick}>
+        <CardService onClick={onClick} key={key}>
             <CardBody>
                 <div style={style}>
                     <Avatar right={12} />

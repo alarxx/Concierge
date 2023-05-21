@@ -46,7 +46,8 @@ async function findByQueryParams(filters, user) {
     // Нет pkeys, только какие-то фильтры.
     // При отсутствии фильтров будет выдавать все документы.
     if(pkeys.length < 1){
-        const orders = await Order.find(_filters).sort({createdAt: 1}); // запрос на получение документов
+        const orders = await Order.find(_filters) // запрос на получение документов
+            .sort({createdAt: 1});
         return await returnOrders(orders);
     }
 
@@ -58,7 +59,8 @@ async function findByQueryParams(filters, user) {
 
     delete _filters[pkey];
 
-    const orders = await Order.find({ ..._filters, [pkey==='id'?'_id':pkey]: { $in: values } }).sort({createdAt: 1}); // запрос на получение документов
+    const orders = await Order.find({ ..._filters, [pkey==='id'?'_id':pkey]: { $in: values } }) // запрос на получение документов
+        .sort({createdAt: 1});
 
     return await returnOrders(orders);
 }
