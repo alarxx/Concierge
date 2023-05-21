@@ -5,15 +5,15 @@
     align-items: center;
     justify-content: center;
     color: white;
-    padding: 6px;
+    padding: 2px;
     cursor: pointer;
     background: none;
     border: none;
-    /*font-size: 14px;*/
+    font-size: 14px;
     /*font-weight: 500;*/
     color: rgba(255, 255, 255, 0.4);
     font-weight: 600;
-    font-size: 16px;
+    /*font-size: 16px;*/
     position: relative;
 }
 .bottomNavigationAction--notifications {
@@ -26,7 +26,7 @@
     fill: rgba(255, 255, 255, 0.4);;
 }
 .bottomNavigationAction span {
-    margin-top: 2px;
+    /*margin-top: 2px;*/
     text-align: center;
 }
 .bottomNavigationAction-active {
@@ -35,4 +35,7 @@
 }
 .bottomNavigationAction-active svg path {
     fill: white;
+}
+.bottomNavigationAction-active svg {
+    scale: .8;
 }
