@@ -12,23 +12,11 @@ import {useAppContext} from "../../../context/AppContext";
 import Logger from "../../../internal/Logger";
 import Modal from "../../../shared/ui/modal/Modal";
 
-export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
+export default function ChatActionsForm({ conversation, cancelClick=()=>{} }) {
     const logger = useMemo(()=>new Logger('ChatActionsForm'), []);
 
     const { chatHandler } = useAppContext();
     const { sendMessage } = chatHandler;
-
-    function onOfferServices(e){
-        logger.log('onOfferServices');
-    }
-    function onFileRequest(e){
-        logger.log('onFileRequest');
-        // sendMessage({
-        //     conversation: conversation.id,
-        //     type: 'file',
-        // })
-    }
-
 
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef(null);
@@ -53,30 +41,14 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
 
     function onFileSubmit() {
         if (selectedFile && conversation) {
-            const formData = new FormData();
-            formData.append('conversation', conversation.id);
-            formData.append('type', 'file');
-            logger.log('FILE NAME', selectedFile)
-            // selectedFile.name = encodeURIComponent(selectedFile.name);
-            formData.append('file', selectedFile);
-
-            fetch('/api/chat/message/send', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => {
-                    logger.log('File response', response);
-                    // Handle server response
-                })
-                .catch(error => {
-                    // Handle upload error
-                    logger.log('File error', error);
-                });
-
-            logger.log('File sent', selectedImage);
+            sendMessage({
+                conversation: conversation.id,
+                type: 'file',
+                file: selectedImage,
+            });
         }
         cancelClick()
-        logger.log('FILE SENT', selectedFile);
+        // logger.log('FILE SENT', selectedFile);
     }
 
 
@@ -106,25 +78,11 @@ export default function ChatActionsForm({ conversation, cancelClick=f=>f }) {
 
     function onImageSubmit() {
         if (selectedImage && conversation) {
-            const formData = new FormData();
-            formData.append('conversation', conversation.id);
-            formData.append('type', 'image');
-            formData.append('image', selectedImage);
-
-            fetch('/api/chat/message/send', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => {
-                    logger.log('Image response', response);
-                    // Handle server response
-                })
-                .catch(error => {
-                    // Handle upload error
-                    logger.log('Image error', error);
-                });
-
-            logger.log('Image sent', selectedImage);
+            sendMessage({
+                conversation: conversation.id,
+                type: 'image',
+                image: selectedImage,
+            });
         }
         cancelClick()
     }

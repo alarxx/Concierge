@@ -6,6 +6,8 @@ import setIds from "../../../internal/setIds";
 import Logger from "../../../internal/Logger";
 
 
+
+
 /**
  * При отправке сообщение должно сразу добавляться в массив сообщений с полями message_id=uuid, isSent=false.
  *
@@ -104,6 +106,30 @@ export default function useMessages({ socketHandler, authHandler }){
     }, []);
 
 
+
+    function _sendMessageAPI(message){
+        const formData = new FormData();
+        formData.append('conversation', message.conversation);
+        formData.append('type', message.type);
+        // logger.log('FILE NAME', message.file);
+        // selectedFile.name = encodeURIComponent(selectedFile.name);
+        formData.append(message.type, message[message.type]);
+        formData.append('message_id', message.message_id);
+
+        fetch('/api/chat/message/send', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                console.log('_sendMessageAPI: File response', response);
+                // Handle server response
+            })
+            .catch(error => {
+                // Handle upload error
+                console.log('_sendMessageAPI: File error', error);
+            });
+    }
+
     /**
      * message - объект, который содержит {
      *     conversation: ObjectId of Conversation,
@@ -114,6 +140,10 @@ export default function useMessages({ socketHandler, authHandler }){
      * для отправки достаточно полей conversation, type и [type].
      * */
     function sendMessage(message){
+        if(!message.type || !message.conversation){
+            logger.error("sendMessage", "'type' and 'conversation' are required fields");
+        }
+
         message.message_id = uuid.v4();
         message.sender = user.id; //'645e7594864709d8b09357a7';
         message.createdAt = new Date(); //Date Sun May 21 2023 02:55:41 GMT+0600 (Бангладеш, стандартное время)
@@ -127,11 +157,8 @@ export default function useMessages({ socketHandler, authHandler }){
         if(message.type === 'text'){
             socket.emit("send-message", message);
         }
-        else if(message.type === 'file'){
-
-        }
-        else if(message.type === 'image'){
-
+        else if(message.type === 'file' || message.type === 'image'){
+            _sendMessageAPI(message);
         }
     }
 
