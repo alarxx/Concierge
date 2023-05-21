@@ -12,6 +12,7 @@ import Button from '../../../shared/ui/button/Button';
 import Loading from "../../../shared/loading/Loading";
 
 import env from '../../../../.env.json';
+import InputPhone from "../../../shared/ui/input_phone/InputPhone";
 
 /**
  * Страница активации аккаунта.
@@ -162,14 +163,15 @@ export default function Activation(){
             <br/>
 
             <label>Номер телефона</label>
-            <Input
-                type={'number'}
-                name={'phone'}
-                value={phone}
-                placeHolder='Введите номер телефона'
-                onChange={e=>setPhone(e.target.value)}
-                required
-            /> {/*required*/}
+            <InputPhone value={phone} onChange={phone=>setPhone(phone)}/>
+            {/*<Input*/}
+            {/*    type={'number'}*/}
+            {/*    name={'phone'}*/}
+            {/*    value={phone}*/}
+            {/*    placeHolder='Введите номер телефона'*/}
+            {/*    onChange={e=>setPhone(e.target.value)}*/}
+            {/*    required*/}
+            {/*/> /!*required*!/*/}
             <br/>
 
             <label>Пароль</label>
