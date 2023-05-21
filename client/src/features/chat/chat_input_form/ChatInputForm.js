@@ -51,6 +51,7 @@ export default function ChatInputForm({
                             onTextSend()
                         }
                     }}
+                    autoFocus={true}
                 />
             </Block>
 
