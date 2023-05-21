@@ -6,6 +6,7 @@ import {useAppContext} from "../../../context/AppContext";
 import Button from "../../../shared/ui/button/Button";
 import Input from "../../../shared/ui/input/Input";
 import fetchJSON from "../../../internal/fetchJSON";
+import InputPhone from "../../../shared/ui/input_phone/InputPhone";
 
 export default function NoNameForm({ }){
 
@@ -76,7 +77,7 @@ export default function NoNameForm({ }){
             <Input value={name2} onChange={e => setName2(e.target.value)} required/>
 
             <label>Номер телефона</label>
-            <Input type="number" value={phone} onChange={e => setPhone(e.target.value)} required/>
+            <InputPhone value={phone} onChange={phone=>setPhone(phone)}/>
 
             <Button type={'submit'} >Сохранить</Button>
         </form>
