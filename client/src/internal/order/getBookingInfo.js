@@ -14,7 +14,7 @@ const logger = new Logger('getBookingInfo');
  * }
  * */
 export default function(extendedBooking, extendedOrder){
-    logger.log({ extendedOrder, extendedBooking });
+    // logger.log({ extendedOrder, extendedBooking });
 
     const status = statusEnum[extendedBooking[extendedBooking.type].status];
 

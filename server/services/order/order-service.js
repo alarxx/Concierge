@@ -18,16 +18,16 @@ const participant_dto = require("../../dtos/chat/participant-dto");
 
 const modelService = new ModelService(Order);
 
+async function returnOrders(orders, user){
+    return await Promise.all(orders.map(async o => await asyncOrderDto(o, user)));
+}
+
 /**
  * Поиск заказов по параметрам.
  * Если пользователь клиент, то ему возвращаются только его заказы.
  * Скорее всего нужно будет добавить какой-нибудь массив accessHolders.
  * */
 async function findByQueryParams(filters, user) {
-    async function returnOrders(orders){
-        return await Promise.all(orders.map(async o => await asyncOrderDto(o, user)));
-    }
-
     let _filters = { ...filters };
 
     if (!user) {
@@ -48,7 +48,7 @@ async function findByQueryParams(filters, user) {
     if(pkeys.length < 1){
         const orders = await Order.find(_filters) // запрос на получение документов
             .sort({createdAt: 1});
-        return await returnOrders(orders);
+        return await returnOrders(orders, user);
     }
 
     // else pkeys.length = 1
@@ -62,7 +62,7 @@ async function findByQueryParams(filters, user) {
     const orders = await Order.find({ ..._filters, [pkey==='id'?'_id':pkey]: { $in: values } }) // запрос на получение документов
         .sort({createdAt: 1});
 
-    return await returnOrders(orders);
+    return await returnOrders(orders, user);
 }
 
 

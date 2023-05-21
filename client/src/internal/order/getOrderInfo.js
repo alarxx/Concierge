@@ -17,7 +17,7 @@ function getServices(meta){
 }
 
 function getName(meta){
-    logger.log("getName:", meta);
+    // logger.log("getName:", meta);
     return `${getCity(meta)}: ${getServices(meta)}`;
 }
 
@@ -27,7 +27,7 @@ function getCity(meta){
 }
 
 export default function getOrderInfo(order){
-    logger.log({ order });
+    // logger.log({ order });
 
     // name достаем из meta, большую часть достаем из meta.
 
@@ -38,6 +38,7 @@ export default function getOrderInfo(order){
             last4IDDigits: '',
             customerName: '',
             name: '',
+            managerName: 'Менеджер',
         });
     }
 

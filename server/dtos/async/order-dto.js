@@ -1,4 +1,5 @@
 const orderDto = require("../order-dto");
+const logger = require('../../log/logger')('async-order-dto');
 
 function userDto(user){
     if(!user){
@@ -19,20 +20,21 @@ function userDto(user){
 
 module.exports = async function asyncOrderDto(model, user){
     const bookingsService = require("../../services/bookings/bookings-service");
-    const {User} = require("../../models/models-manager");
-    await bookingsService.populateBookings(model);
 
-    const customer = await User.findById(model.customer);
-    const customerDto = userDto(customer);
+    await Promise.all([
+        await bookingsService.populateBookings(model),
+        await model.populate('customer'),
+        await model.populate('manager')
+    ])
 
-    const manager = await User.findById(model.manager);
-    const managerDto = userDto(manager);
+    const customerDto = userDto(model.customer);
+    const managerDto = userDto(model.manager);
 
-    /*logger.log("------", ({
-        ...orderDto(o, user),
-        customer: customerDto,
-        manager: managerDto,
-    }));*/
+    // logger.log("------", ({
+    //     order: orderDto(model, user),
+    //     customer: model.customer,
+    //     manager: model.manager,
+    // }));
 
     return ({
         ...orderDto(model, user),
