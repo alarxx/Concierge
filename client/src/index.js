@@ -17,10 +17,17 @@ document.addEventListener('mousewheel', function(e){
 }, {passive:false});
 
 // отключение zoom прикосновениями (в том числе трекападами и т.п.) в Safari и iOS
-document.addEventListener('gesturestart', function(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-}, {passive:false});
+// document.addEventListener('gesturestart', function(e){
+//     e.preventDefault();
+//     e.stopImmediatePropagation();
+// }, {passive:false});
+
+document.addEventListener('touchmove', function(event) {
+    if (event.scale !== 1) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
 
 // отключение zoom через клавиатуру (ctrl + "+", ctrl + "-")
 // кнопки браузера для управления zoom отключены не будут
