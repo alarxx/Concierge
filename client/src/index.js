@@ -26,7 +26,7 @@ document.addEventListener('gesturestart', function(e){
 // кнопки браузера для управления zoom отключены не будут
 document.addEventListener('keydown', function(e){
     if(!e.ctrlKey && !e.metaKey) return;
-    if(e.keyCode !== 189 && e.keyCode !== 187) return;
+    if(e.key !== '-' && e.key !== '+') return;
 
     e.preventDefault();
     e.stopImmediatePropagation();
