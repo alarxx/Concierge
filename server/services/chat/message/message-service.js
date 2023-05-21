@@ -67,9 +67,9 @@ async function delay(ms){
 }
 
 async function sendMessage(message, files, user) {
-    await delay(1000);
+    // await delay(1000);
 
-    logger.log({ message, files, user });
+    // logger.log({ message, files, user });
 
     if (!files) {
         files = {};
@@ -89,13 +89,27 @@ async function sendMessage(message, files, user) {
     }
 
     //Нужно не только тупое сохранение сделать, но и изменение
-    let m = message.id ?
+    let m; /*= message.id ?
         await Message.findById(message.id) :
         new Message({
             ...message,
             sender: user.id, // переназначаем sender назначенное пользователем.
             createdAt: new Date(), // мы переназначаем время назначенное пользователем.
+        });*/
+
+    if(message.id){
+        m = await Message.findById(message.id);
+    }
+    else{
+        if(!message.message_id || !uuid.validate(message.message_id)){
+           throw ApiError.BadRequest('message must have a uuid message_id');
+        }
+        m = new Message({
+            ...message,
+            sender: user.id, // переназначаем sender назначенное пользователем.
+            createdAt: new Date(), // мы переназначаем время назначенное пользователем.
         });
+    }
 
     if(!m) {
         // Если id есть, но сообщение не найдено
