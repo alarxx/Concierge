@@ -23,8 +23,10 @@ document.addEventListener('mousewheel', function(e){
 // }, {passive:false});
 
 document.addEventListener('touchmove', function(event) {
-    if (event.scale !== 1) {
-        event.preventDefault();
+    if (event.touches.length >= 2) {
+        if (event.scale !== 1) {
+            event.preventDefault();
+        }
     }
 }, { passive: false });
 
