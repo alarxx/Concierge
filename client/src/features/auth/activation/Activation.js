@@ -93,12 +93,19 @@ export default function Activation(){
     }, []);
 
 
+    function navigate_authn(){
+        window.location.replace(String(env.API_URL).endsWith('/') ?
+            `${env.API_URL}authn` :
+            `${env.API_URL}/authn`
+        )
+    }
+
     if(success){
         return (<>
             <h3>Активация аккаунта</h3>
             {success && <p>{success.message}.</p>}
             {/*{success && <p>{success.message}. This tab will automatically close after {timer} second{timer>=2?'s':''}</p>}*/}
-            <Button onClick={e => window.location.replace(env.API_URL)}>Продолжить</Button>
+            <Button onClick={navigate_authn}>Продолжить</Button>
         </>);
     }
 
@@ -106,13 +113,7 @@ export default function Activation(){
         return (<>
             <h3>Активация аккаунта</h3>
             <p>Токен активации просрочен</p>
-            <Button onClick={e => {
-                // Чтобы не было двойных слэшей в url, простая проверка на то заканчивается ли url на "/".
-                window.location.replace(String(env.API_URL).endsWith('/') ?
-                    `${env.API_URL}authn` :
-                    `${env.API_URL}/authn`
-                )
-            }}>
+            <Button onClick={navigate_authn}>
                 Авторизация
             </Button>
         </>);
@@ -124,16 +125,16 @@ export default function Activation(){
         {/*{success && <p>{success.message}. This tab will automatically close after {timer} second{timer>=2?'s':''}</p>}*/}
 
         {loading && <Loading />}
-        {error && <p>
+        {error && (error.errors?.length > 0 ? <p>
             {error.errors
                 .map(err => {
                     if(err.message === 'Insecure password'){
-                        return 'Небезопасный пароль';
+                        return 'Пароль должен включать строковые символ, символы с большой буквы, цифры, специальные символы';
                     }
-                    return err.message;
+                    return err.message || err.phone; // Сори за err.phone lil shitcode, mongoose так выдает ошибки
                 })
                 .join(', ')}
-        </p>}
+        </p> : error.message)}
 
         {/* Если токен просрочен, то это показывать нельзя, простую проверку наличия error ставить нельзя, может выйти ошибка "слабый пароль" */}
         {token && (!loading && !success) && <form onSubmit={onActivateAccount}>
@@ -162,7 +163,7 @@ export default function Activation(){
 
             <label>Номер телефона</label>
             <Input
-                type={'text'}
+                type={'number'}
                 name={'phone'}
                 value={phone}
                 placeHolder='Введите номер телефона'
