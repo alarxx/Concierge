@@ -10,7 +10,7 @@ function messageTime(message){
     return `${zero(date.getHours())}${date.getHours()} : ${zero(date.getMinutes())}${date.getMinutes()}`
 }
 
-export default function Message({children, message, user}){
+export default function MessageWrapper({children, message, user}){
 
     const mymssg = message.sender == user.id;
 

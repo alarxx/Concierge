@@ -5,7 +5,7 @@ import DownloadIcon from '../../../assets/icons/document-download.svg'
 import Button from "../../../shared/ui/button/Button";
 
 import styles from  './fileInChat.module.css'
-import Message from "../message/Message";
+import MessageWrapper from "../message_wrapper/MessageWrapper";
 
 /** Можно использовать пакет file-saver */
 function downloadFile({file, file_name}){
@@ -49,9 +49,16 @@ export default function FileInChat({ message, user}){
 
     const {file, file_name} = message;
 
-    return (<>
-        <Message message={message} user={user}>
+    if(!message.isDelivered){
+        return (<>
+            <MessageWrapper message={message} user={user}>
+                (отправляется)
+            </MessageWrapper>
+        </>);
+    }
 
+    return (<>
+        <MessageWrapper message={message} user={user}>
             {file &&
                 <div className={styles["chat-download"]}
                      onClick={e => {
@@ -79,6 +86,6 @@ export default function FileInChat({ message, user}){
                     </Button>
                 </div>
             }
-        </Message>
+        </MessageWrapper>
     </>);
 }
