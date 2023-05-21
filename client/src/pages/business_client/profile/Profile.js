@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 
 import {useNavigate} from "react-router-dom";
 
+import env from '../../../../.env.json';
+
 import NavbarPanel from '../../../widgets/navbar_panel/NavbarPanel';
 import Box from '../../../shared/ui/box/Box'
 import NavigationPanel from '../../../widgets/navigation_panel/NavigationPanel';
@@ -54,6 +56,10 @@ export default function Profile({}){
                     </>}
 
                     <LogoutAction />
+
+                    <Block top={10}>
+                        <Typography size={14} color={'grey'} align={'center'}>v0.0.1</Typography>
+                    </Block>
 
                 </Container>
             </Box>
