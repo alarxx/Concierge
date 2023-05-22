@@ -145,7 +145,6 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                     </Block>
                     <Block width={'100%'}>
                         <label>Дети</label>
-                        {/*<Iterator value={data.number_of_children} onChange={e => upsertFields({number_of_children: e})}/>*/}
                         <KidsBox onChangeKids={agesOfKids => upsertFields({ages_of_kids: agesOfKids}) } />
                     </Block>
                 </GroupInput>
