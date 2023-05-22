@@ -4,6 +4,7 @@ import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
 import {FixedSizeList} from "react-window";
 
+import styles from './myList.module.css'
 export default function MyList({
                     isItemLoaded,
                     loadMoreItems,
