@@ -8,3 +8,13 @@
 .GroupInput input:last-child {
     margin-right: 0;
 }
+
+.GroupInput--ais {
+    align-items: start;
+}
+
+@media (max-width:640px){
+    .GroupInput--mobile {
+        flex-direction: column;
+    }
+}
