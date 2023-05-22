@@ -19,7 +19,7 @@ import findIndexById from "../../internal/findIndexById";
 import objClone from "../../internal/objClone";
 import {useAppContext} from "../../context/AppContext";
 import getOrderInfo from "../../internal/order/getOrderInfo";
-import Message from "../../features/chat/message/Message";
+import Message from "../../widgets/chat/message/Message";
 import Container from "../../shared/ui/box/Container";
 
 //message: {type=choice, id, items, selected, submitted}
@@ -79,39 +79,14 @@ export default function Messenger({
                 />
 
                 {conversationMessages.map((message, messageIndex) => {
-                    if(message.type==='text'){
-                        // console.log(message)
 
-                        return (
-                            <div key={messageIndex}>
-                                {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
-                                <ChatMessage
-                                    message={message}
-                                    user={user}
-                                />
-                            </div>
-                        );
-                    }
-                    else if(message.type==='file') {
-                        logger.log('FILE MESSAGE', {message})
-                        return (
-                            <div key={messageIndex}>
-                                {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
-                                <FileInChat message={message} user={user}/>
-                            </div>
-                        );
-                    }
-                    else if(message.type==='image') {
-                        logger.log('IMAGE MESSAGE', {message})
-                        return (
-                            <div key={messageIndex}>
-                                {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
-                                <Message message={message} user={user}>
-                                    <img src={`/file/${message.image}`} style={{width:'100%'}}/>
-                                </Message>
-                            </div>
-                        );
-                    }
+                    return (<div key={messageIndex}>
+                            {newDates.includes(messageIndex) && <DayInChat date={new Date(message.createdAt)}/>}
+                            <Message
+                                message={message}
+                                user={user}
+                            />
+                    </div>);
                 })}
 
                 <div className="" ref={bottomRef} style={{paddingTop: 40}} />

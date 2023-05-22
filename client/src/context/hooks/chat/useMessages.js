@@ -115,6 +115,7 @@ export default function useMessages({ socketHandler, authHandler }){
         // selectedFile.name = encodeURIComponent(selectedFile.name);
         formData.append(message.type, message[message.type]);
         formData.append('message_id', message.message_id);
+        formData.append('file_name', message.file_name);
 
         fetch('/api/chat/message/send', {
             method: 'POST',

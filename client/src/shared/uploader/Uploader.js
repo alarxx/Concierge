@@ -1,19 +1,18 @@
-import React, {useMemo, useRef, useState} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 
 import styles from './uploader.module.css';
 import Button from "./components/Button";
 import Preview from "./components/Preview";
 import Logger from "../../internal/Logger";
 
-export default function Uploader({isMultiple=true, accept=['.png','.jpg', '.jpeg'], id}) {
+export default function Uploader({setSelectedFiles=f=>f, isMultiple=true, accept=['.png','.jpg', '.jpeg']}) {
 
     const logger = useMemo(()=>new Logger('Uploader'), []);
 
-    const [selectedFiles, setSelectedFiles] = useState([]);
     const [filePreviews, setFilePreviews] = useState([]);
     const [uploadProgress, setUploadProgress] = useState([]);
 
-    const handleFileChange = (event) => {
+    function handleFileChange(event){
         if (!event.target.files.length) {
             return
         }
@@ -37,9 +36,9 @@ export default function Uploader({isMultiple=true, accept=['.png','.jpg', '.jpeg
             };
             reader.readAsDataURL(files[i]);
         }
-    };
+    }
 
-    const handleRemovePreview = (index) => {
+    function handleRemovePreview(index){
         // if (!event.target.dataset.name) {
         //     return
         // }
@@ -51,11 +50,11 @@ export default function Uploader({isMultiple=true, accept=['.png','.jpg', '.jpeg
         updatedPreviews.splice(index, 1);
         setFilePreviews(updatedPreviews);
         // setTimeout(() => block.remove(), 300)
-    };
+    }
 
 
-    // загрузка массива файлов
-    const handleSubmitMultiple = async (event) => {
+   /* // загрузка массива файлов
+    async function handleSubmit(event){
         event.preventDefault();
 
         const formData = new FormData();
@@ -91,8 +90,9 @@ export default function Uploader({isMultiple=true, accept=['.png','.jpg', '.jpeg
 
             xhr.send(formData);
         });
-    };
+    }*/
 
+    /*
     // загрузка одного файла
     function handleSubmitSingle(event) {
         event.preventDefault();
@@ -123,13 +123,12 @@ export default function Uploader({isMultiple=true, accept=['.png','.jpg', '.jpeg
                 });
 
         }
-    }
+    }*/
 
     const fileInputRef = useRef(null);
-    const handleButtonClick = () => {
+    function handleButtonClick(){
         fileInputRef.current.click();
-    };
-
+    }
 
 
     return(
@@ -146,7 +145,7 @@ export default function Uploader({isMultiple=true, accept=['.png','.jpg', '.jpeg
 
                 <Button type={'button'} onClick={handleButtonClick}>Выбрать изображения</Button>
 
-                {(selectedFiles && selectedFiles.length > 0) && <Button type={'submit'} onClick={isMultiple ? handleSubmitMultiple : handleSubmitSingle}>Загрузить</Button>}
+                {/*{(selectedFiles && selectedFiles.length > 0) && <Button type={'submit'} onClick={handleSubmit}>Загрузить</Button>}*/}
 
             </form>
         </div>

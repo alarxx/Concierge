@@ -44,7 +44,8 @@ export default function ChatActionsForm({ conversation, cancelClick=()=>{} }) {
             sendMessage({
                 conversation: conversation.id,
                 type: 'file',
-                file: selectedImage,
+                file: selectedFile,
+                file_name: selectedFile.name,
             });
         }
         cancelClick()
@@ -82,6 +83,7 @@ export default function ChatActionsForm({ conversation, cancelClick=()=>{} }) {
                 conversation: conversation.id,
                 type: 'image',
                 image: selectedImage,
+                file_name: selectedImage.name,
             });
         }
         cancelClick()

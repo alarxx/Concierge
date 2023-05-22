@@ -66,6 +66,11 @@ async function pagination(filters, user) {
 const fileService = require("../../services/file-service");
 
 async function createOne(body, files, user) {
+
+    logger.log("createOne", {body, files});
+
+    return;
+
     if (!files) {
         files = {};
     }
@@ -82,21 +87,18 @@ async function createOne(body, files, user) {
 
     const model = new Hotel({...body, creator: user.id});
 
-    // logger.log("createOne", {body, model});
-
     // validate city
     await model.validate();
     await cityService.checkCityExists(model.city);
 
     if(files.images){
-        const image_ids = await Promise.all(files.images.map(async (image, i) => {
+        /*model.images = await Promise.all(files.images.map(async (image, i) => {
             const file = await fileService.createFile(files.images[i], {
                 owner: user.id,
                 accessType: 'public',
             });
             return file.id;
-        }));
-        model.images = image_ids;
+        }));*/
     }
 
     await modelService.saveWithFiles(model, files, { user });
@@ -143,14 +145,13 @@ async function updateOne(body, files, user) {
 
     // Здесь желательно удалять файлы, которые были на model.images
     if(files.images){
-        const image_ids = await Promise.all(files.images.map(async (image, i) => {
+        model.images = await Promise.all(files.images.map(async (image, i) => {
             const file = await fileService.createFile(files.images[i], {
                 owner: user.id,
                 accessType: 'public',
             });
             return file.id;
         }));
-        model.images = image_ids;
     }
 
     await modelService.saveWithFiles(model, files, { user });

@@ -15,6 +15,15 @@ export default function ChatMessage({
                                     user,
                                 }){
 
+    /*
+    // Хотелось бы сделать так
+    return (
+        <MessageWrapper message={message} user={user}>
+            {`${message.text}${!message.isDelivered ? " (отправляется)" : ''}`}
+        </MessageWrapper>
+    );
+    * */
+
     const mymssg = message.sender == user.id;
 
     return (
