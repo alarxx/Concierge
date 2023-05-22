@@ -3,7 +3,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 
 import DatePicker from "react-datepicker";
-import './datepicker.css'
 
 import Select, {components} from 'react-select'
 import Input from '../../../shared/ui/input/Input';
@@ -15,6 +14,7 @@ import Logger from "../../../internal/Logger";
 import Iterator from "../../../shared/ui/iterator/Iterator";
 import GroupFlex from "../../../shared/ui/group_flex/GroupFlex";
 import Block from "../../../shared/ui/block/Block";
+import RangeDatepicker from "../../../shared/range_datepicker/RangeDatepicker";
 // import Select from "../../../shared/ui/select/Select";
 
 export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f }){
@@ -93,6 +93,8 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
       logger.log('DATA', data)
     }, data)
 
+
+
     return (
         <div className="">
             <form onSubmit={submit_findHotels}>
@@ -130,23 +132,11 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                     required
                 />
                 <label>Даты проживания</label>
-                <GroupInput>
-                    {/*<DatePicker*/}
-                    {/*    selected={startDate}*/}
-                    {/*    onChange={(date) => setStartDate(date)}*/}
-                    {/*    monthsShown={2}*/}
-                    {/*/>*/}
-                    {/*<DatePicker*/}
-                    {/*    selected={endDate}*/}
-                    {/*    onChange={(date) => setEndDate(date)}*/}
-                    {/*    selectsEnd*/}
-                    {/*    startDate={startDate}*/}
-                    {/*    endDate={endDate}*/}
-                    {/*    minDate={startDate}*/}
-                    {/*/>*/}
-                    <MyInput placeHolder='Дата заезда' type='date' name='check_in_date' data={data} upsertFields={upsertFields}  />
-                    <MyInput placeHolder='Дата выезда' type='date' name='check_out_date' data={data} upsertFields={upsertFields}  />
-                </GroupInput>
+                <RangeDatepicker onChangeDates={dateRange => upsertFields({check_in_date: dateRange[0], check_out_date: dateRange[1]})} />
+                {/*<GroupInputDate>*/}
+                {/*    /!*<MyInput placeHolder='Дата заезда' type='date' name='check_in_date' data={data} upsertFields={upsertFields}  />*!/*/}
+                {/*    /!*<MyInput placeHolder='Дата выезда' type='date' name='check_out_date' data={data} upsertFields={upsertFields}  />*!/*/}
+                {/*</GroupInputDate>*/}
 
                 <GroupInput>
                     <Block right={20}>
