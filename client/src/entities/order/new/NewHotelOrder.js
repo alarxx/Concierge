@@ -79,7 +79,7 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
         setCityOptions(c);
     },[cities])
 
-    const [selectOption, setSelectOption] = useState(null)
+    const [selectOption, setSelectOption] = useState(data.city);
 
     const handleOnSelect = (e) => {
         setSelectOption(e.value)
@@ -87,7 +87,7 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
 
     useEffect(()=>{
         upsertFields({city: selectOption});
-        console.log(selectOption)
+        logger.log(selectOption);
     }, [selectOption])
 
     useEffect(()=>{
@@ -133,7 +133,7 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                     required
                 />
                 <label>Даты проживания</label>
-                <RangeDatepicker onChangeDates={dateRange => upsertFields({check_in_date: dateRange[0], check_out_date: dateRange[1]})} />
+                <RangeDatepicker initialDateRange={[new Date(data.check_in_date), new Date(data.check_out_date)]} onChangeDates={dateRange => upsertFields({check_in_date: dateRange[0], check_out_date: dateRange[1]})} />
                 {/*<GroupInputDate>*/}
                 {/*    /!*<MyInput placeHolder='Дата заезда' type='date' name='check_in_date' data={data} upsertFields={upsertFields}  />*!/*/}
                 {/*    /!*<MyInput placeHolder='Дата выезда' type='date' name='check_out_date' data={data} upsertFields={upsertFields}  />*!/*/}

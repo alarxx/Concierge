@@ -26,17 +26,21 @@ import LogoutForm from "../../features/auth/logout/LogoutForm";
 import {useAppContext} from "../../context/AppContext";
 
 export default function ServiceChoice() {
-    const location = useLocation();
-    const navigate = useNavigate();
 
-    const { dataHandler } = useAppContext();
+    const { dataHandler, URLStateHandler } = useAppContext();
     const { cities } = dataHandler;
+    const { getState:getURLState, setState:setURLState } = URLStateHandler;
 
-    const [data, setData] = useState(() => location.state?.data ? location.state.data : {});
+    const [data, setData] = useState(() => getURLState() ? getURLState() : {});
 
     function upsertFields(fields){
         setData(prev => ({...prev, ...fields}));
     }
+
+    useEffect(()=>{
+        // console.log("ServiceChoice getState", data);
+        setURLState(data);
+    },[data])
 
     const [activeTab, setActiveTab] = useState('NewHotelOrder');
 

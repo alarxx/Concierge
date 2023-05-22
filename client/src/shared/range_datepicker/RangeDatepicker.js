@@ -13,7 +13,7 @@ import {useAppContext} from "../../context/AppContext";
 //         <input value={value} onChange={onChange} onClick={onClick}  />
 //     </>)
 // }
-export default function RangeDatepicker({onChangeDates=f=>f}) {
+export default function RangeDatepicker({initialDateRange=[null, null], onChangeDates=f=>f}) {
 
     // const [startDate, setStartDate] = useState(null);
     // const [endDate, setEndDate] = useState();
@@ -21,7 +21,7 @@ export default function RangeDatepicker({onChangeDates=f=>f}) {
     const {adaptiveHandler} = useAppContext();
     const { device } = adaptiveHandler;
 
-    const [dateRange, setDateRange] = useState([null, null]);
+    const [dateRange, setDateRange] = useState(initialDateRange);
     const [startDate, endDate] = dateRange;
 
     useEffect(() => {

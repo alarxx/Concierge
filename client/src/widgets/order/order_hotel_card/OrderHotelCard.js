@@ -63,7 +63,7 @@ export default function OrderHotelCard({ hotel_booking={} }) {
         <CardService onClick={navigateToHotel}>
             <CardBody>
                 <Block bottom={8}>
-                    <Gallery/>
+                    <Gallery images={hotel.images.map(id=>`/file/${id}`)}/>
                 </Block>
 
                 <GroupFlex align={'ais'} justify={'jcsb'}>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Card from "../../../shared/ui/card/Card";
 import CardServiceHeader from "../../../shared/ui/card_service/CardServiceHeader";
 import CardServiceBody from "../../../shared/ui/card_service/CardServiceBody";
@@ -11,8 +11,7 @@ import Gallery from "../../../shared/ui/gallery/Gallery";
 import Stars from "../../../shared/ui/stars/Stars";
 
 
-export default function HotelCard({title='', stars=0, price='', addInfo='', onClick=f=>f}) {
-
+export default function HotelCard({title='', stars=0, price='', addInfo='', images=[], onClick=f=>f}) {
 
     return(<>
         <CardService onClick={onClick}>
@@ -21,7 +20,7 @@ export default function HotelCard({title='', stars=0, price='', addInfo='', onCl
                 {title}
             </CardServiceHeader>
             <CardServiceBody>
-                <Gallery height={160} />
+                <Gallery images={images.map(id=>`/file/${id}`)} height={160} />
             </CardServiceBody>
             <CardServiceFooter>
                 <GroupFlex>
