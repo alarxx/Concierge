@@ -41,8 +41,18 @@ export default function HotelCrudForm({title='', onClose=f=>f, item=undefined}) 
         upsertFields({images: []});
     }, [])
 
-    function onSubmit() {
+    async function onSubmit() {
         console.log('hotel create submit', data)
+
+        const formData = new FormData();
+        formData.append("images", data.images);
+
+        const response = await fetch('/api/hotel', {
+            method: 'POST',
+            body: formData
+        })
+        console.log("hotel create response", response);
+
     }
 
     function setSelectedImages(selectedFiles){

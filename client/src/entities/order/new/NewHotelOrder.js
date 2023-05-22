@@ -132,7 +132,7 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                     required
                 />
                 <label>Даты проживания</label>
-                <RangeDatepicker initialDateRange={[new Date(data.check_in_date), new Date(data.check_out_date)]} onChangeDates={dateRange => upsertFields({check_in_date: dateRange[0], check_out_date: dateRange[1]})} />
+                <RangeDatepicker initialDateRange={[data.check_in_date ? new Date(data.check_in_date) : null, data.check_out_date ? new Date(data.check_out_date) : null]} onChangeDates={dateRange => upsertFields({check_in_date: dateRange[0], check_out_date: dateRange[1]})} />
                 {/*<GroupInputDate>*/}
                 {/*    /!*<MyInput placeHolder='Дата заезда' type='date' name='check_in_date' data={data} upsertFields={upsertFields}  />*!/*/}
                 {/*    /!*<MyInput placeHolder='Дата выезда' type='date' name='check_out_date' data={data} upsertFields={upsertFields}  />*!/*/}
