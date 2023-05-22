@@ -16,6 +16,8 @@ import CardFooter from '../../../shared/ui/card/CardFooter';
 import TextWithLink from '../../../shared/ui/text_with_link/TextWithLink'
 import Button from '../../../shared/ui/button/Button'
 import Loading from "../../../shared/loading/Loading";
+import Block from "../../../shared/ui/block/Block";
+import Typography from "../../../shared/ui/typography/Typography";
 /*
 * 1) Не всегда при OAuth2 имеется имя, а в приложении хотелось бы иметь имя всегда.
 * Для этого нужно, если нет имени пользователя, перенаправлять на страницу
@@ -48,17 +50,24 @@ export default function Authentication(){
     return (<>
         {isLoading && <Loading />}
         <Box center={true}>
+            <Block top={40} bottom={30}>
+                <Logo />
+            </Block>
             <Card>
                 <CardHeader>
-                    <Logo />
+                    <Block isAlignCenter={true}>
+                        {tabType === 'signin' && <Typography weight={600} size={24} align={'center'}>Вход</Typography>}
+                        {tabType === 'signup' && <Typography weight={600} size={24} align={'center'}>Регистрация</Typography>}
+                    </Block>
                 </CardHeader>
 
                 <CardBody>
                     {error && <p>{error.message}</p>}
                     {tabType === 'signup' && <SendActivationMail />}
                     {tabType === 'signin' && <SignIn />}
-                    <br />
-                    <Button variant='outline' onClick={onAzureClick}>Войти с Microsoft</Button>
+                    <Block top={10}>
+                        <Button variant='outline' onClick={onAzureClick}>Войти с Microsoft</Button>
+                    </Block>
                 </CardBody>
                 
                 <CardFooter>

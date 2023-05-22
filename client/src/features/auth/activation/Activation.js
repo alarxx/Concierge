@@ -13,6 +13,7 @@ import Loading from "../../../shared/loading/Loading";
 
 import env from '../../../../.env.json';
 import InputPhone from "../../../shared/ui/input_phone/InputPhone";
+import Block from "../../../shared/ui/block/Block";
 
 /**
  * Страница активации аккаунта.
@@ -183,8 +184,10 @@ export default function Activation(){
                 onChange={e=>setPassword(e.target.value)}
                 required
             />
+            <Block top={10}>
+                <Button type="submit">Создать аккаунт</Button>
+            </Block>
 
-            <Button type="submit">Создать аккаунт</Button>
         </form>}
 
     </>);

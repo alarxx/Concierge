@@ -72,7 +72,6 @@ export default function ResetPassword(){
 
 
     return (<>
-        <h3>Смена пароля</h3>
 
         {/*{success && <p>{success.message}. This tab will automatically close after {timer} second{timer>=2?'s':''}</p>}*/}
         {success && <>

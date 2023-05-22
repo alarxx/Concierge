@@ -8,6 +8,7 @@ import Button from '../../../shared/ui/button/Button'
 import {useAppContext} from "../../../context/AppContext";
 import Loading from "../../../shared/loading/Loading";
 import {useNavigate} from "react-router-dom";
+import Block from "../../../shared/ui/block/Block";
 
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
@@ -62,7 +63,7 @@ export default function SendActivationMail({ }){
     }
 
     return (<>
-        <h3>Отправить письмо активации</h3>
+        {/*<h3>Отправить письмо активации</h3>*/}
 
         {loading && <Loading />}
         {success && <><p>Письмо успешно отправлено.{/*{success.message}*/}</p></>}
@@ -83,7 +84,10 @@ export default function SendActivationMail({ }){
                 />
             </div>
 
-            {!success && !error && <Button type="submit">Отправить</Button>}
+            {!success && !error &&
+                <Block top={10}>
+                    <Button type="submit">Отправить</Button>
+                </Block>}
         </form>
     </>);
 }

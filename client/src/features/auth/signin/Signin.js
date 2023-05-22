@@ -6,6 +6,8 @@ import {useAppContext} from "../../../context/AppContext";
 import {useNavigate} from "react-router-dom";
 import Logger from "../../../internal/Logger";
 import Loading from "../../../shared/loading/Loading";
+import Typography from "../../../shared/ui/typography/Typography";
+import Block from "../../../shared/ui/block/Block";
 
 /**
  * SignIn должен работать также, как и OAuth Azure Ad перенаправлять на link и redirect-ить на /?authenticated=Boolean,
@@ -72,8 +74,6 @@ export default function SignIn({ }){
     }, [error])
 
     return (<>
-        <h3>Вход</h3>
-
         <div className="">
             {loading && <Loading />}
             {error && <p>{error.message}</p>}
@@ -99,7 +99,9 @@ export default function SignIn({ }){
                     type='password' 
                     required
                 />
-                <Button type='submit'>Вход</Button>
+                <Block top={10}>
+                    <Button type='submit'>Вход</Button>
+                </Block>
 
             </form>
         </div>
