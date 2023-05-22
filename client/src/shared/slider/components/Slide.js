@@ -8,7 +8,7 @@ export default function Slide({ data: { url, title } }) {
   return (
     <div className={styles['slide']}>
       <SlideImage src={url} alt={title} />
-      <SlideTitle title={title} />
+      {/*<SlideTitle title={title} />*/}
     </div>
   );
 }

@@ -8,6 +8,6 @@ export default function Stars({ stars=0 }) {
     const starsArray =  [...new Array(stars)]; // [...new Array((stars > 5 ? 5 : stars))];
 
     return (<div className={styles.stars}>
-        {starsArray.map((_, i)=><StarIcon />)}
+        {starsArray.map((_, i)=><StarIcon key={i} />)}
     </div>)
 }

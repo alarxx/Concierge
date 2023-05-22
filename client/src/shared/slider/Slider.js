@@ -11,8 +11,8 @@ import styles from './slider.module.css'
 
 export const SliderContext = createContext();
 
-const Slider = function ({ items=[], width, height, autoPlay, autoPlayTime }) {
-  // const [items, setItems] = useState([{title: "alar", url: '/file/6465d268d6005f56ee16c18b'}]);
+const Slider = function ({ images=[], width, height, autoPlay, autoPlayTime }) {
+  const [items, setItems] = useState([{title: "alar", url: '/file/646b038f1b08015b5e5ba2b6'}]);
   const [slide, setSlide] = useState(0);
   const [touchPosition, setTouchPosition] = useState(null)
 
