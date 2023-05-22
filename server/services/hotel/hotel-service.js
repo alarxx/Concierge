@@ -69,7 +69,6 @@ async function createOne(body, files, user) {
 
     logger.log("createOne", {body, files});
 
-    return;
 
     if (!files) {
         files = {};
@@ -91,14 +90,23 @@ async function createOne(body, files, user) {
     await model.validate();
     await cityService.checkCityExists(model.city);
 
-    if(files.images){
-        /*model.images = await Promise.all(files.images.map(async (image, i) => {
-            const file = await fileService.createFile(files.images[i], {
+    const files_images = Object.keys(files)
+        .filter(key => key.startsWith('images'))
+        .sort((a, b) => {
+            const indexA = Number(a.split('.')[1]);
+            const indexB = Number(b.split('.')[1]);
+            return indexA - indexB;
+        })
+        .map(key => files[key]);
+
+    if(files_images.length > 0){
+        model.images = await Promise.all(files_images.map(async (image) => {
+            const file = await fileService.createFile(image, {
                 owner: user.id,
                 accessType: 'public',
             });
             return file.id;
-        }));*/
+        }));
     }
 
     await modelService.saveWithFiles(model, files, { user });

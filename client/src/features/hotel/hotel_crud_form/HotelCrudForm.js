@@ -41,18 +41,29 @@ export default function HotelCrudForm({title='', onClose=f=>f, item=undefined}) 
         upsertFields({images: []});
     }, [])
 
-    async function onSubmit() {
-        console.log('hotel create submit', data)
+    async function onSubmit(e) {
+        e.preventDefault();
+
+        console.log('HotelCrudForm: hotel create submit', data);
 
         const formData = new FormData();
-        formData.append("images", data.images);
+
+        for (let i = 0; i < data.images.length; i++) {
+            formData.append(`images.${i}`, data.images[i])
+        }
+
+        delete data.images;
+
+        Object.keys(data).map(key => {
+            formData.append(key, data[key]);
+        })
 
         const response = await fetch('/api/hotel', {
             method: 'POST',
             body: formData
-        })
-        console.log("hotel create response", response);
+        });
 
+        onClose();
     }
 
     function setSelectedImages(selectedFiles){
@@ -63,7 +74,7 @@ export default function HotelCrudForm({title='', onClose=f=>f, item=undefined}) 
 
     return(<>
         <Modal minWidth={720} maxWidth={1000} onClose={onClose}>
-            <form>
+            <form onSubmit={onSubmit}>
                 <Block bottom={40} isAlignCenter={true}>
                     <Typography weight={700} size={24}>{title}</Typography>
                 </Block>
@@ -71,46 +82,46 @@ export default function HotelCrudForm({title='', onClose=f=>f, item=undefined}) 
                 <Block>
                     <Typography weight={600} size={18}>Общее</Typography>
                     <GroupInput>
-                        <MyInput type={'text'} placeHolder={'Название *'} name={'name'} data={data} upsertFields={upsertFields} required/>
+                        <MyInput type={'text'} name={'name'} placeHolder={'Название *'} data={data} upsertFields={upsertFields} required/>
                         <MyInput type={'number'} name={'stars'} placeHolder={'Звездность *'} data={data} upsertFields={upsertFields} required/>
                     </GroupInput>
                     <GroupInput>
-                        <MyInput type={'text'} name={'name'} placeHolder={'Номер для связи *'} data={data} upsertFields={upsertFields} required/>
-                        <MyInput type={'number'} name={'stars'} placeHolder={'Второй номер'} data={data} upsertFields={upsertFields} required/>
+                        <MyInput type={'text'} name={'phone'} placeHolder={'Номер для связи *'} data={data} upsertFields={upsertFields} required/>
+                        {/*<MyInput type={'number'} name={'stars'} placeHolder={'Второй номер'} data={data} upsertFields={upsertFields} required/>*/}
                     </GroupInput>
                 </Block>
 
                 <Block top={20}>
                     <Typography weight={600} size={18}>Местоположение</Typography>
                     <GroupInput>
-                        <MyInput type={'text'} name={'name'} placeHolder={'Город'} data={data} upsertFields={upsertFields} required/>
-                        <MyInput type={'number'} name={'stars'} placeHolder={'Адрес'} required/>
+                        <MyInput type={'text'} name={'city'} placeHolder={'Город'} data={data} upsertFields={upsertFields} required/>
+                        <MyInput type={'text'} name={'address'} placeHolder={'Адрес'} data={data} upsertFields={upsertFields} required/>
                     </GroupInput>
-                    <MyInput type={'number'} name={'stars'} placeHolder={'Ссылка в 2GIS'} data={data} upsertFields={upsertFields} required/>
-                    <MyInput type={'number'} name={'stars'} placeHolder={'Описание'} data={data} upsertFields={upsertFields} required/>
+                    <MyInput type={'text'} name={'2gis_link'} placeHolder={'Ссылка в 2GIS'} data={data} upsertFields={upsertFields} required/>
+                    <MyInput type={'text'} name={'description'} placeHolder={'Описание'} data={data} upsertFields={upsertFields} required/>
                 </Block>
 
                 <Block top={20}>
                     <Typography weight={600} size={18}>Политика отеля</Typography>
                     <GroupInput>
-                        <MyInput type={'text'} name={'name'} placeHolder={'Город'} data={data} upsertFields={upsertFields} required/>
-                        <MyInput type={'number'} name={'stars'} placeHolder={'Адрес'} data={data} upsertFields={upsertFields} required/>
+                        {/*<MyInput type={'text'} name={'name'} placeHolder={'Город'} data={data} upsertFields={upsertFields} required/>*/}
+                        {/*<MyInput type={'number'} name={'stars'} placeHolder={'Адрес'} data={data} upsertFields={upsertFields} required/>*/}
                     </GroupInput>
                 </Block>
 
                 <Block top={20}>
                     <Typography weight={600} size={18}>Дети</Typography>
                     <GroupInput>
-                        <MyInput type={'number'} name={'name'} placeHolder={'Мин возраст'} data={data} upsertFields={upsertFields} required/>
-                        <MyInput type={'number'} name={'stars'} placeHolder={'Макс возраст'} data={data} upsertFields={upsertFields} required/>
+                        {/*<MyInput type={'number'} name={'name'} placeHolder={'Мин возраст'} data={data} upsertFields={upsertFields} required/>*/}
+                        {/*<MyInput type={'number'} name={'stars'} placeHolder={'Макс возраст'} data={data} upsertFields={upsertFields} required/>*/}
                     </GroupInput>
                 </Block>
 
                 <Block top={20}>
                     <Typography weight={600} size={18}>Цена</Typography>
                     <GroupInput>
-                        <MyInput type={'number'} name={'name'} placeHolder={'Цена за день, KZT'} data={data} upsertFields={upsertFields} required/>
-                        <MyInput type={'number'} name={'stars'} placeHolder={'Cегмент'} data={data} upsertFields={upsertFields} required/>
+                        {/*<MyInput type={'number'} name={'name'} placeHolder={'Цена за день, KZT'} data={data} upsertFields={upsertFields} required/>*/}
+                        {/*<MyInput type={'number'} name={'stars'} placeHolder={'Cегмент'} data={data} upsertFields={upsertFields} required/>*/}
                     </GroupInput>
                 </Block>
 
@@ -120,7 +131,7 @@ export default function HotelCrudForm({title='', onClose=f=>f, item=undefined}) 
 
 
                 <GroupButtons top={20}>
-                    <Button type={'submit'} onClick={onSubmit}>Добавить</Button>
+                    <Button type={'submit'}>Добавить</Button>
                     <Button variant={'cancel'} onClick={onClose}>Отмена</Button>
                 </GroupButtons>
             </form>
