@@ -1,18 +1,54 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import Typography from "../../../shared/ui/typography/Typography";
 import Button from "../../../shared/ui/button/Button";
 import Block from "../../../shared/ui/block/Block";
-import Input from "../../../shared/ui/input/Input";
 import GroupInput from "../../../shared/ui/group_input/GroupInput";
 import GroupButtons from "../../../shared/ui/group_buttons/GroupButtons";
 import Modal from "../../../shared/ui/modal/Modal";
 import Uploader from "../../../shared/uploader/Uploader";
 
-export default function HotelCrudForm({title='', onClose, item}) {
+import Input from "../../../shared/ui/input/Input";
+
+function MyInput({
+                     placeHolder="Введите значение",
+                     name="_",
+                     type="text",
+                     required=false,
+                     data={},
+                     upsertFields=f=>f,
+                 }){
+    return (
+        <Input
+            name={name}
+            placeHolder={placeHolder}
+            type={type}
+            value={data[name]}
+            onChange={e=>upsertFields({[name]: e.target.value})}
+            required={required}
+        />
+    );
+}
+
+export default function HotelCrudForm({title='', onClose=f=>f, item=undefined}) {
+
+    const [data, setData] = useState(()=>({}));
+    function upsertFields(obj){
+        setData((prev)=>({...prev, ...obj}));
+    }
+
+    useEffect(()=>{
+        upsertFields({images: []});
+    }, [])
 
     function onSubmit() {
-        console.log('hotel create submit')
+        console.log('hotel create submit', data)
+    }
+
+    function setSelectedImages(selectedFiles){
+        upsertFields({
+            images: selectedFiles
+        })
     }
 
     return(<>
@@ -25,149 +61,51 @@ export default function HotelCrudForm({title='', onClose, item}) {
                 <Block>
                     <Typography weight={600} size={18}>Общее</Typography>
                     <GroupInput>
-                        <Input
-                            type={'text'}
-                            name={'name'}
-                            value={item ? item.name : ''}
-                            placeHolder={'Название *'}
-                            onChange={f=>f}
-                            required
-                        />
-                        <Input
-                            type={'number'}
-                            name={'stars'}
-                            value={''}
-                            placeHolder={'Звездность *'}
-                            onChange={f=>f}
-                            required
-                        />
+                        <MyInput type={'text'} placeHolder={'Название *'} name={'name'} data={data} upsertFields={upsertFields} required/>
+                        <MyInput type={'number'} name={'stars'} placeHolder={'Звездность *'} data={data} upsertFields={upsertFields} required/>
                     </GroupInput>
                     <GroupInput>
-                        <Input
-                            type={'text'}
-                            name={'name'}
-                            value={''}
-                            placeHolder={'Номер для связи *'}
-                            onChange={f=>f}
-                            required
-                        />
-                        <Input
-                            type={'number'}
-                            name={'stars'}
-                            value={''}
-                            placeHolder={'Второй номер'}
-                            onChange={f=>f}
-                            required
-                        />
+                        <MyInput type={'text'} name={'name'} placeHolder={'Номер для связи *'} data={data} upsertFields={upsertFields} required/>
+                        <MyInput type={'number'} name={'stars'} placeHolder={'Второй номер'} data={data} upsertFields={upsertFields} required/>
                     </GroupInput>
                 </Block>
 
                 <Block top={20}>
                     <Typography weight={600} size={18}>Местоположение</Typography>
                     <GroupInput>
-                        <Input
-                            type={'text'}
-                            name={'name'}
-                            value={''}
-                            placeHolder={'Город'}
-                            onChange={f=>f}
-                            required
-                        />
-                        <Input
-                            type={'number'}
-                            name={'stars'}
-                            value={''}
-                            placeHolder={'Адрес'}
-                            onChange={f=>f}
-                            required
-                        />
+                        <MyInput type={'text'} name={'name'} placeHolder={'Город'} data={data} upsertFields={upsertFields} required/>
+                        <MyInput type={'number'} name={'stars'} placeHolder={'Адрес'} required/>
                     </GroupInput>
-                    <Input
-                        type={'number'}
-                        name={'stars'}
-                        value={''}
-                        placeHolder={'Ссылка в 2GIS'}
-                        onChange={f=>f}
-                        required
-                    />
-                    <Input
-                        type={'number'}
-                        name={'stars'}
-                        value={''}
-                        placeHolder={'Описание'}
-                        onChange={f=>f}
-                        required
-                    />
+                    <MyInput type={'number'} name={'stars'} placeHolder={'Ссылка в 2GIS'} data={data} upsertFields={upsertFields} required/>
+                    <MyInput type={'number'} name={'stars'} placeHolder={'Описание'} data={data} upsertFields={upsertFields} required/>
                 </Block>
 
                 <Block top={20}>
                     <Typography weight={600} size={18}>Политика отеля</Typography>
                     <GroupInput>
-                        <Input
-                            type={'text'}
-                            name={'name'}
-                            value={''}
-                            placeHolder={'Город'}
-                            onChange={f=>f}
-                            required
-                        />
-                        <Input
-                            type={'number'}
-                            name={'stars'}
-                            value={''}
-                            placeHolder={'Адрес'}
-                            onChange={f=>f}
-                            required
-                        />
+                        <MyInput type={'text'} name={'name'} placeHolder={'Город'} data={data} upsertFields={upsertFields} required/>
+                        <MyInput type={'number'} name={'stars'} placeHolder={'Адрес'} data={data} upsertFields={upsertFields} required/>
                     </GroupInput>
                 </Block>
 
                 <Block top={20}>
                     <Typography weight={600} size={18}>Дети</Typography>
                     <GroupInput>
-                        <Input
-                            type={'number'}
-                            name={'name'}
-                            value={''}
-                            placeHolder={'Мин возраст'}
-                            onChange={f=>f}
-                            required
-                        />
-                        <Input
-                            type={'number'}
-                            name={'stars'}
-                            value={''}
-                            placeHolder={'Макс возраст'}
-                            onChange={f=>f}
-                            required
-                        />
+                        <MyInput type={'number'} name={'name'} placeHolder={'Мин возраст'} data={data} upsertFields={upsertFields} required/>
+                        <MyInput type={'number'} name={'stars'} placeHolder={'Макс возраст'} data={data} upsertFields={upsertFields} required/>
                     </GroupInput>
                 </Block>
 
                 <Block top={20}>
                     <Typography weight={600} size={18}>Цена</Typography>
                     <GroupInput>
-                        <Input
-                            type={'number'}
-                            name={'name'}
-                            value={''}
-                            placeHolder={'Цена за день, KZT'}
-                            onChange={f=>f}
-                            required
-                        />
-                        <Input
-                            type={'number'}
-                            name={'stars'}
-                            value={''}
-                            placeHolder={'Cегмент'}
-                            onChange={f=>f}
-                            required
-                        />
+                        <MyInput type={'number'} name={'name'} placeHolder={'Цена за день, KZT'} data={data} upsertFields={upsertFields} required/>
+                        <MyInput type={'number'} name={'stars'} placeHolder={'Cегмент'} data={data} upsertFields={upsertFields} required/>
                     </GroupInput>
                 </Block>
 
                 <Block top={30}>
-                    <Uploader isMultiple={false} id={1}/>
+                    <Uploader setSelectedFiles={setSelectedImages} isMultiple={true}/>
                 </Block>
 
 

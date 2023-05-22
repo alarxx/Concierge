@@ -11,12 +11,12 @@ import Link from "../../../shared/ui/link/Link";
 import HotelRoomForm from "../../../features/hotel/hotel_room_form/HotelRoomForm";
 
 
-function HotelTableItem({item, key}){
+function HotelTableItem({item}){
     const [isActive, toggle] = useToggle(false);
     const [isRoomActive, roomToggle] = useToggle(false);
 
     return (<>
-        <TableRow key={key}>
+        <TableRow>
             { isActive && <HotelCrudForm title={'Информация об отеле'} item={item} onClose={toggle}/> }
             { isRoomActive && <HotelRoomForm title={'Номера'} item={item} onClose={roomToggle}/> }
 
@@ -61,8 +61,8 @@ export default function HotelListTable({children, active}) {
                 {/*<TableRow isHead={true}>Кол-во номеров</TableRow>*/}
             </TableHead>
             <TableBody Loader={<Loader color={'black'}/>} isLoading={isLoading}>
-                { hotels.map( item => (
-                    <HotelTableItem key={item.id} item={item}/>
+                {hotels.map((item, index) => (
+                    <HotelTableItem key={index} item={item}/>
                 ))}
             </TableBody>
         </Table>
