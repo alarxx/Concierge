@@ -1,0 +1,67 @@
+.kidsBox-wrapper {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+.kidsBox-button {
+    position: relative;
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.kidsBox-button:hover {
+    border-color: #b5b5b5;
+}
+
+.kidsBox-select {
+    display: flex;
+    flex-direction: column;
+    top: 40px;
+    left: 0;
+    border-radius: 4px;
+    width: 100%;
+    height: 364px;
+    overflow: auto;
+    z-index: 12;
+}
+.kidsBox-select-item {
+    padding: 16px 8px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid silver;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+.kidsBox-select-item:hover {
+    background-color: #1E262F;
+    color: white;
+}
+
+.kidsBox-item--selected {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px;
+    border-radius: 6px;
+    background-color: #f4f4f4;
+}
+.kidsBox-item {
+    position: relative;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+.kidsBox-item:last-child {
+    margin-right: 0;
+}
+.kidsBox-item__text {
+    margin-right: 5px;
+}
+.kidsBox-item__close {
+    border: none;
+    cursor: pointer;
+}

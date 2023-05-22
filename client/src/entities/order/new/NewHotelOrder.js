@@ -15,6 +15,7 @@ import Iterator from "../../../shared/ui/iterator/Iterator";
 import GroupFlex from "../../../shared/ui/group_flex/GroupFlex";
 import Block from "../../../shared/ui/block/Block";
 import RangeDatepicker from "../../../shared/range_datepicker/RangeDatepicker";
+import KidsBox from "../../../shared/kids_box/KidsBox";
 // import Select from "../../../shared/ui/select/Select";
 
 export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f }){
@@ -138,14 +139,15 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                 {/*    /!*<MyInput placeHolder='Дата выезда' type='date' name='check_out_date' data={data} upsertFields={upsertFields}  />*!/*/}
                 {/*</GroupInputDate>*/}
 
-                <GroupInput>
-                    <Block right={20}>
+                <GroupInput isMobile={true} isAlignStart={true}>
+                    <Block width={'100%'}>
                         <label>Взрослые</label>
                         <Iterator minValue={1} value={data.number_of_adults} onChange={e => upsertFields({number_of_adults: e})}/>
                     </Block>
-                    <Block>
+                    <Block width={'100%'}>
                         <label>Дети</label>
-                        <Iterator value={data.number_of_children} onChange={e => upsertFields({number_of_children: e})}/>
+                        {/*<Iterator value={data.number_of_children} onChange={e => upsertFields({number_of_children: e})}/>*/}
+                        <KidsBox onChangeKids={agesOfKids => upsertFields({ages_of_kids: agesOfKids}) } />
                     </Block>
                 </GroupInput>
 
