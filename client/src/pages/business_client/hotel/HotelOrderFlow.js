@@ -17,7 +17,7 @@ const Steps = [
     // HotelRoomsList,
     // HotelRoom,
     HotelConfirm,
-];
+]
 
 function useHotelsListHandler(city){
 
@@ -60,12 +60,20 @@ export default function HotelOrderFlow(){
     const {Step, back, next} = useMultistep(Steps);
 
     /* *
-    * city всегда должен быть определен,
+    * data.city всегда должен быть определен,
     * hotel может быть null,
     * */
-    const { city } = data;
+    useEffect(()=>{
+        if(!data.city){
+            navigate(-1, {replace: true});
+        }
+    }, [data])
 
-    const hotelsListHandler = useHotelsListHandler(city);
+    if(!data.city){
+        return;
+    }
+
+    const hotelsListHandler = useHotelsListHandler(data.city);
 
     // const roomsListHandler = useRoomsListHandler(hotel);
 

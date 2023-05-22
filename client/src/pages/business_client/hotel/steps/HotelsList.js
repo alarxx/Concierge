@@ -50,6 +50,7 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
         return (<>
             <div style={style}>
                 <HotelCard
+                    images={item.images}
                     stars={item.stars}
                     title={item.name}
                     price={item.price ? item.price : 'от 50,000 KZT'}
