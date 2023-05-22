@@ -12,18 +12,18 @@ import styles from './slider.module.css'
 export const SliderContext = createContext();
 
 const Slider = function ({ width, height, autoPlay, autoPlayTime }) {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState([{title: "alar", url: '/file/6465d268d6005f56ee16c18b'}]);
   const [slide, setSlide] = useState(0);
   const [touchPosition, setTouchPosition] = useState(null)
 
-  useEffect(() => {
+  /*useEffect(() => {
     const loadData = async () => {
       const images = await getImages();
       setItems(images);
     };
 
     loadData().then(r => console.log(r));
-  }, []);
+  }, []);*/
 
   const changeSlide = (direction = 1) => {
     let slideNumber = 0;
