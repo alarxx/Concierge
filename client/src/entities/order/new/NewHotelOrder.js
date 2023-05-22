@@ -132,14 +132,13 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                     onChange={handleOnSelect}
                     required
                 />
-                <label>Даты проживания</label>
-                <RangeDatepicker initialDateRange={[data.check_in_date ? new Date(data.check_in_date) : null, data.check_out_date ? new Date(data.check_out_date) : null]} onChangeDates={dateRange => upsertFields({check_in_date: dateRange[0], check_out_date: dateRange[1]})} />
-                {/*<GroupInputDate>*/}
-                {/*    /!*<MyInput placeHolder='Дата заезда' type='date' name='check_in_date' data={data} upsertFields={upsertFields}  />*!/*/}
-                {/*    /!*<MyInput placeHolder='Дата выезда' type='date' name='check_out_date' data={data} upsertFields={upsertFields}  />*!/*/}
-                {/*</GroupInputDate>*/}
 
-                <GroupInput isMobile={true} isAlignStart={true}>
+                <Block top={10}>
+                    <label>Даты проживания</label>
+                    <RangeDatepicker initialDateRange={[data.check_in_date ? new Date(data.check_in_date) : null, data.check_out_date ? new Date(data.check_out_date) : null]} onChangeDates={dateRange => upsertFields({check_in_date: dateRange[0], check_out_date: dateRange[1]})} />
+                </Block>
+
+                <GroupInput top={10} isMobile={true} isAlignStart={true}>
                     <Block width={'100%'}>
                         <label>Взрослые</label>
                         <Iterator minValue={1} value={data.number_of_adults} onChange={e => upsertFields({number_of_adults: e})}/>
