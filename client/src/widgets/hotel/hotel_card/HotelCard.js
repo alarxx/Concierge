@@ -9,6 +9,7 @@ import ButtonLike from "../../../shared/ui/button_like/ButtonLike";
 import CardService from "../../../shared/ui/card_service/CardService";
 import Gallery from "../../../shared/ui/gallery/Gallery";
 import Stars from "../../../shared/ui/stars/Stars";
+import SliderNew from "../../../shared/slider_new/SliderNew";
 
 
 export default function HotelCard({title='', stars=0, price='', addInfo='', images=[], onClick=f=>f}) {
@@ -20,7 +21,8 @@ export default function HotelCard({title='', stars=0, price='', addInfo='', imag
                 {title}
             </CardServiceHeader>
             <CardServiceBody>
-                <Gallery images={images.map(id=>`/file/${id}`)} height={160} />
+                <SliderNew photos={['/file/646b038f1b08015b5e5ba2b6']} />
+                {/*<Gallery images={images.map(id=>`/file/${id}`)} height={160} />*/}
             </CardServiceBody>
             <CardServiceFooter>
                 <GroupFlex>
