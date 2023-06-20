@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 import Logger from "../../../../internal/Logger";
 
@@ -19,9 +19,15 @@ import MyList from "../../list/MyList";
 import Container from "../../../../shared/ui/box/Container";
 import ConciergeAction from "../../../../widgets/order/concierge_action/ConciergeAction";
 import Loader from "../../../../shared/ui/loader/Loader";
+import {useAppContext} from "../../../../context/AppContext";
+import GroupInline from "../../../../shared/ui/group_inline/GroupInline";
+import AppBar from "../../../../shared/ui/app_bar/AppBar";
+import Block from "../../../../shared/ui/block/Block";
+import Logo from "../../../../shared/ui/logo/Logo";
+import Nav from "../../../../shared/ui/nav/Nav";
+import NavLink from "../../../../shared/ui/nav/NavLink";
 
-
-export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields=f=>f, next=f=>f, close=f=>f }){
+const HotelsListPage = ({ data={}, hotelsListHandler={}, upsertFields=f=>f, next=f=>f}) => {
     // Логгер просто будет прописывать из какого модуля вызван лог
     // Плюс в production logger не будет выводить в консоль ничего.
     const logger = useMemo(()=>new Logger('HotelsList'), []);
@@ -62,9 +68,33 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
         </>);
     }
 
+    return (<>
+        {!notFound && hotels.length === 0 &&
+            <p>loading...</p>
+        }
 
-    return (
-        <>
+        {notFound &&
+            <p>Not found</p>
+        }
+
+        {!notFound &&
+            <MyList {...hotelsListHandler} itemSize={290}>
+                {Row}
+            </MyList>
+        }
+    </>)
+}
+export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields=f=>f, next=f=>f, close=f=>f}){
+
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
+
+    const { adaptiveHandler } = useAppContext();
+    const { device } = adaptiveHandler;
+
+    if (device === 'mobile') {
+        return (<>
+
             <NavbarPanel
                 LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => close()} />}
                 title={'Отели'}
@@ -72,21 +102,7 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
 
             <Box navbar={true} menu={true} yummy={true}>
                 <Container>
-
-                    {!notFound && hotels.length === 0 &&
-                        <p>loading...</p>
-                    }
-
-                    {notFound &&
-                        <p>Not found</p>
-                    }
-
-                    {!notFound &&
-                        <MyList {...hotelsListHandler} itemSize={290}>
-                            {Row}
-                        </MyList>
-                    }
-
+                    <HotelsListPage data={data} hotelsListHandler={hotelsListHandler} upsertFields={upsertFields} next={next} />
                 </Container>
             </Box>
 
@@ -95,5 +111,27 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
             </BottomControl>
 
             <NavigationPanel />
-        </>);
+        </>)
+    } else {
+        return (<>
+            <GroupInline width={'100%'} height={'100%'}>
+                <AppBar left={true} isClientView={true}>
+                    <Block>
+                        <Logo/>
+                        <Block top={80} isAlignCenter={true}>
+                            <Nav block={true}>
+                                <NavLink active={pathname.startsWith('/new')} text={'Главная'} onClick={e => navigate('/new', {replace: true,})}/>
+                                <NavLink active={pathname.startsWith('/orders')} text={'Заказы'} onClick={e => navigate('/orders', {replace: true,})}/>
+                                <NavLink active={pathname.startsWith('/chat')} text={'Чат'} onClick={e => navigate('/chat', {replace: true,})}/>
+                                <NavLink active={pathname.startsWith('/profile')} text={'Сервисы'} onClick={e => navigate('/profile', {replace: true,})}/>
+                            </Nav>
+                        </Block>
+                    </Block>
+                </AppBar>
+                <Container padding={'20px'}>
+                    <HotelsListPage  data={data} hotelsListHandler={hotelsListHandler} upsertFields={upsertFields} next={next}  />
+                </Container>
+            </GroupInline>
+        </>)
+    }
 }

@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo} from "react";
 
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 import BackIcon from "../../../../assets/icons/backbtn_icon.svg";
 
@@ -23,6 +23,13 @@ import GalleryThumbColumn from "../../../../shared/gallery/GalleryThumbColumn";
 import GalleryThumb from "../../../../shared/gallery/GalleryThumb";
 import {useAppContext} from "../../../../context/AppContext";
 import SliderNew from "../../../../shared/slider_new/SliderNew";
+import ConciergeAction from "../../../../widgets/order/concierge_action/ConciergeAction";
+import GroupInline from "../../../../shared/ui/group_inline/GroupInline";
+import AppBar from "../../../../shared/ui/app_bar/AppBar";
+import Block from "../../../../shared/ui/block/Block";
+import Logo from "../../../../shared/ui/logo/Logo";
+import Nav from "../../../../shared/ui/nav/Nav";
+import NavLink from "../../../../shared/ui/nav/NavLink";
 
 function getUrl(skip, limit, filter={}){
     return `/api/hotel/room/pagination/?` + new URLSearchParams({
@@ -33,11 +40,10 @@ function getUrl(skip, limit, filter={}){
     });
 }
 
-export default function HotelSingle({ data={}, next=f=>f, back=f=>f, }) {
+const HotelSinglePage = ({ data={}, next=f=>f }) => {
+
     const logger = useMemo(() => new Logger('HotelSingle'), []);
 
-    const { adaptiveHandler } = useAppContext();
-    const { device } = adaptiveHandler;
     const { hotel } = data;
     const rooms = hotel['hotel/rooms'];
 
@@ -47,52 +53,88 @@ export default function HotelSingle({ data={}, next=f=>f, back=f=>f, }) {
     for (let i = 1; i < images.length; i += 2) {
         groupedImages.push(images.slice(i, i + 2));
     }
-    useEffect(() => {
-        // console.log(hotel.images.map(id=>`/file/${id}`))
-    })
 
+    const { adaptiveHandler } = useAppContext();
+    const { device } = adaptiveHandler;
 
-    return(<>
-        <NavbarPanel
-            LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => back()} />}
-            title={hotel.name}
-        />
+    return (<>
 
-        <Box navbar={true} menu={true} yummy={true}>
-            <Container>
-                {device === 'mobile'
-                    ? <SliderNew photos={images} />
-                    : <GalleryNew>
-                            <GalleryThumb isBig={true}>
-                                <img src={images[0]} alt="images[0]"/>
-                            </GalleryThumb>
-                            {groupedImages.map((groupedImage, index) => {
-                                return (<>
-                                    <GalleryThumbColumn>
-                                        {groupedImage.map((image, index) => {
-                                            return (<GalleryThumb>
-                                                <img src={image} alt={`image[${index}`}/>
-                                            </GalleryThumb>)
-                                        })}
-                                    </GalleryThumbColumn>
-                                </>)
+        {device === 'mobile'
+            ? <SliderNew photos={images} />
+            : <GalleryNew>
+                <GalleryThumb isBig={true}>
+                    <img src={images[0]} alt="images[0]"/>
+                </GalleryThumb>
+                {groupedImages.map((groupedImage, index) => {
+                    return (<>
+                        <GalleryThumbColumn>
+                            {groupedImage.map((image, index) => {
+                                return (<GalleryThumb>
+                                    <img src={image} alt={`image[${index}`}/>
+                                </GalleryThumb>)
                             })}
-                        </GalleryNew>
-                }
-                {/*<Gallery images={hotel.images.map(id=>`/file/${id}`)} height={240} />*/}
+                        </GalleryThumbColumn>
+                    </>)
+                })}
+            </GalleryNew>
+        }
+        {/*<Gallery images={hotel.images.map(id=>`/file/${id}`)} height={240} />*/}
 
 
-                <HotelGeo />
-                {/*<HotelChoiceRoom />*/}
-                <HotelPolitics hotel={hotel} />
-                <HotelDetails hotel={hotel} />
-            </Container>
-        </Box>
+        <HotelGeo />
+        {/*<HotelChoiceRoom />*/}
+        <HotelPolitics hotel={hotel} />
+        <HotelDetails hotel={hotel} />
 
         <BottomControl>
             <Button variant={'control'} onClick={e => next()}>Выбрать отель</Button>
         </BottomControl>
-
-        <NavigationPanel />
     </>)
+}
+export default function HotelSingle({ data={}, next=f=>f, back=f=>f, }) {
+
+    const { hotel } = data;
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
+
+    const { adaptiveHandler } = useAppContext();
+    const { device } = adaptiveHandler;
+
+    if (device === 'mobile') {
+        return (<>
+            <NavbarPanel
+                LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => back()} />}
+                title={hotel?.name}
+            />
+
+            <Box navbar={true} menu={true} yummy={true}>
+                <Container>
+                    <HotelSinglePage data={data} next={next} back={back} />
+                </Container>
+            </Box>
+
+            <NavigationPanel />
+        </>)
+    } else {
+        return (<>
+            <GroupInline width={'100%'} height={'100%'}>
+                <AppBar left={true} isClientView={true}>
+                    <Block>
+                        <Logo/>
+                        <Block top={80} isAlignCenter={true}>
+                            <Nav block={true}>
+                                <NavLink active={pathname.startsWith('/new')} text={'Главная'} onClick={e => navigate('/new', {replace: true,})}/>
+                                <NavLink active={pathname.startsWith('/orders')} text={'Заказы'} onClick={e => navigate('/orders', {replace: true,})}/>
+                                <NavLink active={pathname.startsWith('/chat')} text={'Чат'} onClick={e => navigate('/chat', {replace: true,})}/>
+                                <NavLink active={pathname.startsWith('/profile')} text={'Сервисы'} onClick={e => navigate('/profile', {replace: true,})}/>
+                            </Nav>
+                        </Block>
+                    </Block>
+                </AppBar>
+                <Container padding={'20px'}>
+                    <HotelSinglePage data={data} next={next} back={back} />
+                </Container>
+            </GroupInline>
+        </>)
+    }
 }
