@@ -21,8 +21,12 @@ export default function NewRangeDatepicker({initialDateRange=[null, null], onCha
     // const [startDate, endDate] = dateRange;
 
     useEffect(()=> {
-        setDateRange([startDate, null])
+        // console.log('EDN DATA', endDate)
+    })
+
+    useEffect(()=> {
         setEndDate(null)
+        setDateRange([startDate, endDate])
     }, [startDate])
 
     useEffect(()=> {

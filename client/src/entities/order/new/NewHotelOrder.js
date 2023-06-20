@@ -38,6 +38,7 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
             obj.number_of_children = 0;
         }
         upsertFields(obj);
+        console.log('DATA CONCOLE', data)
     },[])
 
     const DropdownIndicator = (props) => {
