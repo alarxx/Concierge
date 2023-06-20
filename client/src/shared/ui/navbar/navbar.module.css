@@ -5,7 +5,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     background: #1E262F;
     box-shadow: 0px -7px 16px rgba(30, 38, 47, 0.12);
     border-radius: 0px 0px 28px 28px;
@@ -21,4 +21,13 @@
 .nav__center {
     width: 100%;
     text-align: center;
+}
+
+.nav__left {
+    position: absolute;
+    left: 20px;
+}
+.nav__right {
+    position: absolute;
+    right: 20px;
 }

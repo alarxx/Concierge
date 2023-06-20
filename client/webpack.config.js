@@ -68,7 +68,14 @@ module.exports = {
         ],
         exclude: /\.module\.css$/
       },
-
+      {
+        test: /\.(png|jpe?g)$/i,
+        use: [
+          {
+            loader: 'file-loader'
+          }
+        ]
+      },
     ]
   },
   plugins: [new HtmlWebpackPlugin({

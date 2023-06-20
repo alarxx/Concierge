@@ -11,7 +11,7 @@ export default function MyList({
                     itemCountLoader,
                     itemCountList,
 
-                    itemSize=290,
+                    itemSize=300,
 
                     children
                 }){

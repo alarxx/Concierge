@@ -16,6 +16,7 @@ import Block from "../../../shared/ui/block/Block";
 import ProfileSet from "./ProfileSet";
 import Button from "../../../shared/ui/button/Button";
 import LogoutAction from "../../../widgets/logout_action/LogoutAction";
+import GroupFlex from "../../../shared/ui/group_flex/GroupFlex";
 
 
 export default function Profile({}){
@@ -24,18 +25,30 @@ export default function Profile({}){
     const { authHandler } = useAppContext();
     const { user } = authHandler;
 
+    useEffect(()=> {
+        console.log(user)
+    })
+
     return (
         <>
             <NavbarPanel title={'Сервисы'}/>
             <Box navbar={true} menu={true}>
                 <Container>
-
                     <Card variant={'info'} >
                         <CardServiceHeader>
-                            <Typography>email: {user.email}</Typography>
-                            {/*<Typography>KazMunayGaz</Typography>*/}
-                            {/*<Typography>БИН: </Typography>*/}
-                            {/*<Typography>Level: </Typography>*/}
+                            <Typography bottom={15} size={21} weight={600}>Персональная информация</Typography>
+                            <GroupFlex>
+                                <div><Typography>Почта:</Typography></div>
+                                <div><Typography weight={600}>{user.email}</Typography></div>
+                            </GroupFlex>
+                            <GroupFlex>
+                                <Typography>Имя:</Typography>
+                                <div><Typography weight={600}>{user.name}</Typography></div>
+                            </GroupFlex>
+                            <GroupFlex>
+                                <div><Typography>Номер телефона:</Typography></div>
+                                <div><Typography weight={600}>{user.phone}</Typography></div>
+                            </GroupFlex>
                         </CardServiceHeader>
                     </Card>
 

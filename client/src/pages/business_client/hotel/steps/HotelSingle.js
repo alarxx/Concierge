@@ -48,13 +48,14 @@ export default function HotelSingle({ data={}, next=f=>f, back=f=>f, }) {
         groupedImages.push(images.slice(i, i + 2));
     }
     useEffect(() => {
-        console.log(hotel.images.map(id=>`/file/${id}`))
+        // console.log(hotel.images.map(id=>`/file/${id}`))
     })
+
 
     return(<>
         <NavbarPanel
             LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => back()} />}
-            title={'Отель'}
+            title={hotel.name}
         />
 
         <Box navbar={true} menu={true} yummy={true}>

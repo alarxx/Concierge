@@ -40,7 +40,7 @@ export default function ChatItemCard({
             <CardBody>
                 <div style={style}>
                     <Avatar right={12} />
-                    <div style={{width: '100%'}}>
+                    <div style={{maxWidth: '65%'}}>
                         <GroupFlex align={'ais'} justify={'jcsb'}>
                             <div>
                                 <div><Typography size={16} weight={600} bottom={2}>{user.role === 'admin' ? customerName : managerName}</Typography></div>
