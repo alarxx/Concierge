@@ -35,6 +35,10 @@ export default function OrderCard({ order={} }) {
 
     const orderInfo = getOrderInfo(order);
 
+    useEffect(() => {
+        // console.log("ORDER DETAIL", order)
+    })
+
     return(<>
         <CardService onClick={f=>f} isGrid={true} cursor={'default'}>
 
@@ -56,6 +60,9 @@ export default function OrderCard({ order={} }) {
                     </div>
                     <div>
                         <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>{orderInfo.description}</Typography>
+                    </div>
+                    <div>
+                        <Typography size={14} weight={500} bottom={2} color={'#959BA1'}>Создано: {new Date(order?.createdAt).toLocaleString()}</Typography>
                     </div>
                 </Block>
 
