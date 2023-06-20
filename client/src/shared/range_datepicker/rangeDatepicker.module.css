@@ -28,12 +28,34 @@
     display: flex;
     align-items: center;
 }
-.range_datepicker-input:first-child {
+
+/* когда range datepicker пикает сразу по два: старт и енд */
+/*.range_datepicker-input:first-child {*/
+/*    border-radius: 16px 0 0 16px;*/
+/*}*/
+/*.range_datepicker-input:last-child {*/
+/*    border-radius: 0 16px 16px 0;*/
+/*}*/
+
+/* когда range datepicker пикает по одному */
+.range_datepicker-input-wrapper {
+    width: 100%;
+}
+.range_datepicker-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+/* меням стили чтобы border radius был для 1st 2nd разный */
+.range_datepicker-input-wrapper--first input {
+    width: 100%;
     border-radius: 16px 0 0 16px;
 }
-.range_datepicker-input:last-child {
+.range_datepicker-input-wrapper--last input {
+    width: 100%;
     border-radius: 0 16px 16px 0;
 }
+
 
 
 

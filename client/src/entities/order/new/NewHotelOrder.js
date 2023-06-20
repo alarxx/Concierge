@@ -16,6 +16,8 @@ import GroupFlex from "../../../shared/ui/group_flex/GroupFlex";
 import Block from "../../../shared/ui/block/Block";
 import RangeDatepicker from "../../../shared/range_datepicker/RangeDatepicker";
 import KidsBox from "../../../shared/kids_box/KidsBox";
+import OneDatepicker from "../../../shared/one_datepicker/OneDatepicker";
+import NewRangeDatepicker from "../../../shared/range_datepicker/NewRangeDatepicker";
 // import Select from "../../../shared/ui/select/Select";
 
 export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f }){
@@ -135,7 +137,8 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
 
                 <Block top={15}>
                     <label>Даты проживания</label>
-                    <RangeDatepicker initialDateRange={[data.check_in_date ? new Date(data.check_in_date) : null, data.check_out_date ? new Date(data.check_out_date) : null]} onChangeDates={dateRange => upsertFields({check_in_date: dateRange[0], check_out_date: dateRange[1]})} />
+                    {/*<RangeDatepicker initialDateRange={[data.check_in_date ? new Date(data.check_in_date) : null, data.check_out_date ? new Date(data.check_out_date) : null]} onChangeDates={dateRange => upsertFields({check_in_date: dateRange[0], check_out_date: dateRange[1]})} />*/}
+                    <NewRangeDatepicker initialDateRange={[data.check_in_date ? new Date(data.check_in_date) : null, data.check_out_date ? new Date(data.check_out_date) : null]} onChangeDates={dateRange => upsertFields({check_in_date: dateRange[0], check_out_date: dateRange[1]})} />
                 </Block>
 
                 <GroupInput top={15} isMobile={true} isAlignStart={true}>
@@ -150,7 +153,7 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                 </GroupInput>
 
 
-                <Button type={'submit'}>Поиск отеля</Button>
+                <Button type={'button'} onClick={e => console.log('DATA', data)}>Поиск отеля</Button>
             </form>
         </div>
     );
