@@ -153,7 +153,7 @@ export default function NewHotelOrder({ data={}, cities=[], upsertFields=f=>f })
                 </GroupInput>
 
 
-                <Button type={'button'} onClick={e => console.log('DATA', data)}>Поиск отеля</Button>
+                <Button type={'submit'}>Поиск отеля</Button>
             </form>
         </div>
     );
