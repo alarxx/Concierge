@@ -26,6 +26,7 @@ import NavLink from "../../../shared/ui/nav/NavLink";
 
 const ProfilePage = () => {
 
+    const navigate = useNavigate();
     const { authHandler } = useAppContext();
     const { user } = authHandler;
 

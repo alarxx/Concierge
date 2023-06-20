@@ -15,6 +15,7 @@ import Chat from "../../widgets/chat/Chat";
 import HotelCrudAction from "../../widgets/manager/hotel_crud_action/HotelCrudAction";
 import OrderList from "../../widgets/order/order_list/OrderList";
 import HotelAdminPage from "./HotelAdminPage";
+import {ChatPagePage} from "../business_client/chat/ChatPage";
 
 export default function AdminDashboard() {
 
@@ -51,7 +52,7 @@ export default function AdminDashboard() {
                 <Container padding={'20px 0'}>
                     {activeTab === 'orders' && <OrderList />}
                     {activeTab === 'hotels' && <HotelAdminPage />}
-                    {activeTab === 'messenger' && <Chat />}
+                    {activeTab === 'messenger' && <ChatPagePage />}
                     {activeTab === 'employees' && <>employees</>}
                 </Container>
             </Box>

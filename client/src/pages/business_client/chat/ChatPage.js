@@ -14,21 +14,31 @@ import Logo from "../../../shared/ui/logo/Logo";
 import Nav from "../../../shared/ui/nav/Nav";
 import NavLink from "../../../shared/ui/nav/NavLink";
 
-export default function ChatPage(){
+export const ChatPagePage = () => {
     const logger = useMemo(()=>new Logger('ChatPage'), []);
 
+    const navigate = useNavigate();
 
     const { id: activeConversationId } = useParams(); // переименовываем id в activeConversationId
-
     function openConversation(conversation){
         // Мы должны проверить состоит ли пользователь в этом conversation
         navigate(`/chat/${conversation.id}`);
     }
-
     function closeConversation(){
         navigate('/chat ');
     }
 
+    return (<>
+        <Chat
+            activeConversationId={activeConversationId}
+            openConversation={openConversation}
+            closeConversation={closeConversation}
+        />
+
+        {!activeConversationId && <NavigationPanel />}
+    </>)
+}
+export default function ChatPage(){
 
     const navigate = useNavigate();
     const { pathname } = useLocation();
@@ -42,15 +52,10 @@ export default function ChatPage(){
 
             <Box navbar={true} menu={true}>
                 <Container>
-                    <Chat
-                        activeConversationId={activeConversationId}
-                        openConversation={openConversation}
-                        closeConversation={closeConversation}
-                    />
+                    <ChatPagePage />
                 </Container>
             </Box>
 
-            {!activeConversationId && <NavigationPanel />}
         </>)
     } else {
         return (<>
@@ -69,11 +74,7 @@ export default function ChatPage(){
                     </Block>
                 </AppBar>
                 <Container padding={'20px'}>
-                    <Chat
-                        activeConversationId={activeConversationId}
-                        openConversation={openConversation}
-                        closeConversation={closeConversation}
-                    />
+                    <ChatPagePage />
                 </Container>
             </GroupInline>
         </>)

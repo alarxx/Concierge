@@ -47,7 +47,6 @@ export default function Chat({ activeConversationId='', openConversation=(id)=>{
                     openConversation={openConversation}
                 />
             }
-
             {conversation &&
                 <Messenger
                     conversation={conversation}
