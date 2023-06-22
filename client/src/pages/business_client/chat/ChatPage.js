@@ -46,7 +46,7 @@ export default function ChatPage(){
     const { adaptiveHandler } = useAppContext();
     const { device } = adaptiveHandler;
 
-    if (device === 'mobile') {
+    if (device === 'mobile' || device === 'tablet') {
         return (<>
             <NavbarPanel title={'Чат'}/>
 
