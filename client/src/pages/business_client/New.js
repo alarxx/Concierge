@@ -31,7 +31,7 @@ export default function New(){
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
-    if (device === 'mobile') {
+    if (device === 'mobile' || device === 'tablet') {
         return (<>
             <Box menu={true}>
                 <Container>

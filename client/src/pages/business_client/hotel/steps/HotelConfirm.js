@@ -70,7 +70,7 @@ export default function HotelConfirm({ data={}, submit=f=>f, back=f=>f}) {
     const { adaptiveHandler } = useAppContext();
     const { device } = adaptiveHandler;
 
-    if (device === 'mobile') {
+    if (device === 'mobile' || device === 'tablet') {
         return (<>
             <NavbarPanel
                 LeftButton={<NavbarLeft Icon={<BackIcon />} onClick={e => back()} />}

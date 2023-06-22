@@ -31,7 +31,7 @@ export default function Orders({}){
     const { adaptiveHandler } = useAppContext();
     const { device } = adaptiveHandler;
 
-    if (device === 'mobile') {
+    if (device === 'mobile' || device === 'tablet') {
         return (<>
             <NavbarPanel title={'Заказы'} />
             <Box navbar={true} menu={true} yummy={true}>

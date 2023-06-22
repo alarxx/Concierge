@@ -92,7 +92,7 @@ export default function HotelsList({ data={}, hotelsListHandler={}, upsertFields
     const { adaptiveHandler } = useAppContext();
     const { device } = adaptiveHandler;
 
-    if (device === 'mobile') {
+    if (device === 'mobile' || device === 'tablet') {
         return (<>
 
             <NavbarPanel
