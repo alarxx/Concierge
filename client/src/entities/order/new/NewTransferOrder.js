@@ -8,9 +8,9 @@ export default function NewTransferOrder({ data={}, upsertFields=f=>f }){
     return (
         <div className="">
             <form>
-                <MyInput placeHolder='Город прибытия' type='text' name='city' data={data} upsertFields={upsertFields} />
-                <MyInput placeHolder='Дата прибытия' type='text' name='from_city' data={data} upsertFields={upsertFields} />
-                <MyInput placeHolder='Дата отлета' type='text' name='from_city' data={data} upsertFields={upsertFields} />
+                <MyInput placeHolder='Город' type='text' name='city' data={data} upsertFields={upsertFields} />
+                <MyInput placeHolder='Марка автомобиля' type='text' name='from_city' data={data} upsertFields={upsertFields} />
+                <MyInput placeHolder='Количество часов' type='text' name='from_city' data={data} upsertFields={upsertFields} />
                 <Button>Поиск трансфера</Button>
             </form>
         </div>
