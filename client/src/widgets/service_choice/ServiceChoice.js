@@ -53,9 +53,9 @@ export default function ServiceChoice() {
                 <IconHotel />Отель
             </Button>
 
-            <Button badge={true} variant={activeTab==='NewTransferOrder' ? '' : 'outline'} onClick={()=>setActiveTab('NewTransferOrder')}>
+            <Button badge={false} variant={activeTab==='NewTransferOrder' ? '' : 'outline'} onClick={()=>setActiveTab('NewTransferOrder')}>
                 <IconTransfer />Трансфер
-                <Badge air={true} bottom={-15} text={'Скоро'}/>
+                {/* <Badge air={true} bottom={-15} text={'Скоро'}/> */}
             </Button>
 
             <Button badge={true} variant={activeTab==='NewTicketsOrder' ? '' : 'outline'} onClick={()=>setActiveTab('NewTicketsOrder')}>
