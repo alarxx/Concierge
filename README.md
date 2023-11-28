@@ -2,6 +2,8 @@
 
 > Консьерж-служба, предоставляющая широкий спектр услуг в сфере персонального менеджмента и консалтинга. Предоставляет услуги по требованию для клиентов, которые варьируются от руководителей бизнеса до сотрудников и частных лиц.
 
+![logo alt](https://github.com/Alar-q/Concierge/blob/dev/presentation/landing.png)
+
 ## Описание
 [**Concierge Service**](https://github.com/Alar-q/Concierge) - это [SPA](https://medium.com/NeotericEU/single-page-application-vs-multiple-page-application-2591588efe58 "SPA") с архитектурой и структурой реализованной на стеке MERN.
 
