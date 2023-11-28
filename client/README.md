@@ -22,6 +22,14 @@ $ npm install
 
 ## Usage
 
+### Environmental file
+In ./client add .env.json file with content in form:
+```json
+{
+    "API_URL": "http://localhost:3000"
+}
+```
+
 ### Serving the app in development environment
 
 ```sh
