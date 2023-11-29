@@ -10,6 +10,12 @@
 
 [After co-operation](https://www.youtube.com/watch?v=jLCZrODe3J0)
 
+## Troubles 
+
+Leaving Concierge Service.  
+I have decided that I am leaving Concierge. We have been on standby for maybe a month or two for absolutely nothing. There are reasons to stay, but the reasons to leave outweighed as emotionally I felt like I needed to leave them and move on, even though I tried to change the vision of the company to fix things and become a truly venture-backed startup. I didn't feel supported and interested in developing the product with actions rather than words. The online platform was and still is on its own.... just to see if we can make something out of it. All the business logic has to be invented by us, as developers, while competent people do nothing. I don't see any support. Treating us like shit except for the moments we are brought into the company. Lots of promises and empty words, probably lying, manipulation and not dealing with the work. Total IT incompetence and misunderstanding and underestimating what we do.  
+As for "just in case", it was the same with the team from Almaty. I could not give them a task, as we were inventing and writing the foundation, which is very difficult to delegate. To delegate such tasks you need to be very confident in the person you are delegating to. We needed a full understanding of where we were going so that everyone could see for themselves where they could be useful and do the work. I'm not their mum and I'm not a senior tech lead who would wipe their arse. 
+
 ## Описание
 [**Concierge Service**](https://github.com/Alar-q/Concierge) - это [SPA](https://medium.com/NeotericEU/single-page-application-vs-multiple-page-application-2591588efe58 "SPA") с архитектурой и структурой реализованной на стеке MERN.
 
