@@ -185,7 +185,7 @@ See also the list of [contributors](https://github.com/alar-q/concierge/contribu
 When we wrote the project it was a time when ChatGPT had just come out. I suggested to integrate their API to create a prototype and mvp site to attract venture capital investments.
 CEO didn't want that idea and he just wanted a linear site where the client gets a call back like on watsapp, which is what they are doing now, for their task we made an overkill. Although we worked with them for the sake of attracting investment. At the end of the job he was supposed to pay us 5.000.000 tenge (10.000$), but he did not pay us at the end. Time and nerves were wasted, and our studies suffered.  
 
-Perhaps for me and my development team at that time it was too big a scope for me to qualify for venture capital investment. Although also there were useless project managers in the company along with the top executives, but it didn't affect anything. 
+Perhaps it was too big a scale for me and my development team at the time to qualify for venture capital investment. Although there were a few useless project managers in the company along with top managers, it didn't affect anything. 
 
 9th of June 2023:"
 Leaving Concierge Service.  
