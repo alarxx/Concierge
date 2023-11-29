@@ -179,16 +179,10 @@ See also the list of [contributors](https://github.com/alar-q/concierge/contribu
 
 
 
+## Review of the project work in the company
 
-## The problems of working together with the company after the competition
+Perhaps it was too big a scale for me and my development team at the time to qualify for venture capital investment. Although there were a few project managers in the company along with top managers, it didn't affect anything. 
 
-When we wrote the project it was a time when ChatGPT had just come out. I suggested to integrate their API to create a prototype and mvp site to attract venture capital investments.
-CEO didn't want that idea and he just wanted a linear site where the client gets a call back like on watsapp, which is what they are doing now, for their task we made an overkill. Although we worked with them for the sake of attracting investment. At the end of the job he was supposed to pay us 5.000.000 tenge (10.000$), but he did not pay us at the end. Time and nerves were wasted, and our studies suffered.  
+During the initial phase of our project, coinciding with the emergence of ChatGPT, our team explored the possibility of integrating its API. The objective was to develop a prototype with potential for venture capital investment. This approach, however, did not align with the CEO's preference for a simpler, more linear website design. Despite efforts to adapt our complex solution to meet these requirements, the project did not progress as anticipated.
 
-Perhaps it was too big a scale for me and my development team at the time to qualify for venture capital investment. Although there were a few useless project managers in the company along with top managers, it didn't affect anything. 
-
-9th of June 2023:"
-Leaving Concierge Service.  
-I spent most of my time planning the database, authentication methods, working with the web socket to work in-real-time, and architecting the project for future scalability and development.
-I have decided that I am leaving Concierge. We have been on standby for maybe a month or two for absolutely nothing. There are reasons to stay, but the reasons to leave outweighed as emotionally I felt like I needed to leave them and move on, even though I tried to change the vision of the company to fix things and become a truly venture-backed startup. I didn't feel supported and interested in developing the product with actions rather than words. The online platform was and still is on its own.... just to see if we can make something out of it. All the business logic has to be invented by us, as developers, while competent people do nothing. I don't see any support. Treating us like shit except for the moments we are brought into the company. Lots of promises and empty words, probably lying, manipulation and not dealing with the work. Total IT incompetence and misunderstanding and underestimating what we do.  
-As for "just in case", that was the case with the team from Almaty, which was brought in for absolutely nothing. I could not give them a task, as we were inventing and writing the foundation, which is very difficult to delegate. To delegate such tasks you need to be very confident in the person you are delegating to. We needed a full understanding of where we were going so that everyone could see for themselves where they could be useful and do the work. I'm not their mum and I'm not a senior tech lead who would wipe their arse." 
+Subsequently, I made the decision to depart from the Concierge Service project. My involvement primarily entailed database planning, implementation of authentication methods, and the development of real-time functionalities. As the project evolved, it became clear that the direction of our technical contributions was diverging from the overall strategic goals of the company.
