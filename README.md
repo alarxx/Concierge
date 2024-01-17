@@ -4,7 +4,7 @@
 
 ![logo alt](https://github.com/Alar-q/Concierge/blob/dev/presentation/landing.png)
 
-Uploading APC_14_Presentation.mp4…
+https://github.com/Alar-q/Concierge/assets/72505048/59f37ca9-9061-4520-8683-878654f6e393
 
 ## Demo
 
