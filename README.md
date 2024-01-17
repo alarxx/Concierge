@@ -4,17 +4,11 @@
 
 ![logo alt](https://github.com/Alar-q/Concierge/blob/dev/presentation/landing.png)
 
-## Live Demo
+## Demo
 
 [APC Stage](https://www.youtube.com/watch?v=-YloE9LHJfY)
 
-<a href="https://www.youtube.com/watch?v=-YloE9LHJfY">
-  <img src="https://github.com/Alar-q/Concierge/blob/dev/presentation/landing.png" alt="alt text">
-</a>
-
-https://github.com/Alar-q/Concierge/blob/dev/presentation/old_apc_version.mkv
-
-![alt](https://github.com/Alar-q/Concierge/blob/dev/presentation/old_apc_version.mkv)
+https://github.com/Alar-q/Concierge/assets/72505048/d064bc58-c491-4f29-b5b4-507b3801f9e6
 
 [After co-operation](https://www.youtube.com/watch?v=jLCZrODe3J0)
 
