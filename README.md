@@ -8,8 +8,9 @@
 
 [APC Stage](https://www.youtube.com/watch?v=-YloE9LHJfY)
 
-[![APC Stage](https://github.com/Alar-q/Concierge/blob/dev/presentation/landing.png)]
-(https://www.youtube.com/watch?v=-YloE9LHJfY "APC Stage") 
+<a href="https://www.youtube.com/watch?v=-YloE9LHJfY">
+  <img src="https://github.com/Alar-q/Concierge/blob/dev/presentation/landing.png" alt="alt text">
+</a>
 
 [After co-operation](https://www.youtube.com/watch?v=jLCZrODe3J0)
 
