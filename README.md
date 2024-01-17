@@ -8,7 +8,7 @@
 
 [APC Stage](https://www.youtube.com/watch?v=-YloE9LHJfY)
 
-[![Now in Android: 55](https://www.youtube.com/watch?v=-YloE9LHJfY)]
+[![APC Stage](https://github.com/Alar-q/Concierge/blob/dev/presentation/landing.png)]
 (https://www.youtube.com/watch?v=-YloE9LHJfY "APC Stage") 
 
 [After co-operation](https://www.youtube.com/watch?v=jLCZrODe3J0)
